@@ -9,6 +9,9 @@ default_password: (required)
 # User name used to connect via ssh. Must have passwordless sudo.
 ansible_ssh_user: (required)
 
+# Password used to connect via ssh.
+ansible_ssh_pass: (required)
+
 # SSH accessible IP address
 ansible_host: (required)
 
