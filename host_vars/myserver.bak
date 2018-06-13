@@ -1,0 +1,24 @@
+default_username: nick
+default_password: gangsterish
+ansible_ssh_user: nick
+ansible_host: 192.168.1.167
+domain: mapleton.busey.me
+darksky_key: 48101adfff1cb8f1d7f5388ae8ef870e
+latitude: 40.024888
+longitude: -105.262525
+openvpn_username: p2933907
+openvpn_password: 6EFNC32hPjj9286Fy4UiDDr2H)6R
+
+homeassistant_api_key: gangsterish
+
+nas_backups: /mnt/Gangsternas/Backups
+nas_music: /mnt/Gangsternas/Music
+nas_movies: /mnt/Gangsternas/Movies
+nas_tv: /mnt/Gangsternas/TV
+nas_downloads: /mnt/Gangsternas/Downloads
+nas_documents: /mnt/Privatenas/Documents
+
+s3_path: s3:http://192.168.1.212:9000/homelabos/
+s3_access_code: 8ID8HQ53HCZOW61GTAD2
+s3_secret_code: CDQilBPec6ELacIInCCrBLucvLzQy3ueCwr3W
+s3_backup_password: Zv6DAt36249W7KLrZXp4XEFs4WTEj8zW
