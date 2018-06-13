@@ -72,19 +72,19 @@ To make it easy for anyone to own all their data in an easy and secure way, with
 
 ## Requirements
 
-A server running Ubuntu 18.04 accessible via ssh with a user that has sudo.
-
-A domain configured with a `A` type DNS record of `*.yourdomain.com` pointed at your server's IP address.
-
-Ports 80 and 443 punched through any firewalls and port forwarded at your server in question.
-
-Ansible version 2.5+ installed on your computer (not the server).
+* A server running Ubuntu 18.04 with:
+  * User accessible via ssh that has passwordless sudo
+  * Python
+  * Ports 80 and 443 punched through any firewalls and port forwarded to your server.
+* A domain configured with a `A` type DNS record of `*.yourdomain.com` pointed at your server's IP address. This wildcard is required for the appliction proxy.
+* Ansible version 2.5+ installed on your computer (not the server).
 
 ## Installation
 
-Set your settings in `host_vars/myserver`. You can find the default settings in `group_vars/homelabos`.
-
-From your computer (not the server) simply run `make`.
+* Clone repository to the computer with Ansible (your desktop computer).
+* Copy `group_vars/homelabos` to `host_vars/myserver` and configure the settings in `host_vars/myserver`.
+* Run `make`.
+* Ansible will do the rest!
 
 ## Contributing
 
