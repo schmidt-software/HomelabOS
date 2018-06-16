@@ -124,6 +124,32 @@ services:
   #     - "traefik.admin.protocol={{ protocol }}"
   #     - "traefik.admin.port=5050"
 
+  # radarr:
+    # image: hotio/suitarr
+    # restart: always
+    # ports:
+      # - 7878:7878
+    # volumes:
+      # - /etc/localtime:/etc/localtime:ro
+      # - /var/homelabos/radarr/config:/config
+      # - /mnt/nas/Movies:/movies
+      # - /var/homelabos/radarr/downloads:/downloads
+    # environment:
+      # - APP=radarr
+      # - PUID=1000
+      # - PGID=1000
+      # - UMASK=022
+      # - VERSION=stable
+    # links:
+      # - jackett
+      # - transmission
+      # - nzbhydra
+    # labels:
+      # - "traefik.enable=true"
+      # - "traefik.admin.frontend.rule=Host:radarr.{{ domain }}"
+      # - "traefik.admin.protocol={{ protocol }}"
+      # - "traefik.admin.port=7878"
+
   darksky-influx:
     image: erwinsteffens/darksky-influxdb:latest
     restart: always
@@ -321,16 +347,25 @@ services:
       - 8086:8086
 
   # jackett:
-  #   image: linuxserver/jackett
-  #   restart: always
-  #   volumes: 
-  #     - /var/homelabos/jackett/config:/config
-  #     - /var/homelabos/jackett/downloads:/downloads
-  #     - /etc/localtime:/etc/localtime:ro
-  #   environment:
-  #     - TZ={{ timezone }}
-  #   ports:
-  #     - 9117:9117
+    # image: hotio/suitarr
+    # restart: always
+    # ports:
+      # - 9117:9117
+    # volumes:
+      # - /etc/localtime:/etc/localtime:ro
+      # - /var/homelabos/jackett/config:/config
+      # - /var/homelabos/jackett/downloads:/downloads
+    # environment:
+      # - APP=jackett
+      # - PUID=1000
+      # - PGID=1000
+      # - UMASK=022
+      # - VERSION=stable
+    # labels:
+      # - "traefik.enable=true"
+      # - "traefik.admin.frontend.rule=Host:jackett.{{ domain }}"
+      # - "traefik.admin.protocol={{ protocol }}"
+      # - "traefik.admin.port=9117"
 
   nextcloud:
     image: nextcloud
@@ -361,19 +396,25 @@ services:
       - MYSQL_USER=nextcloud
 
   # nzbget:
-  #   image: linuxserver/nzbget
-  #   ports:
-  #     - 6789:6789
-  #   environment:
-  #     - TZ={{ timezone }}
-  #   volumes:
-  #     - /var/homelabos/nzbget:/config
-  #     - /mnt/nas/Downloads:/downloads
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.admin.frontend.rule=Host:nzbget.{{ domain }}"
-  #     - "traefik.admin.protocol={{ protocol }}"
-  #     - "traefik.admin.port=6789"
+    # image: hotio/suitarr
+    # restart: always
+    # ports:
+      # - 6789:6789
+    # volumes:
+      # - /etc/localtime:/etc/localtime:ro
+      # - /var/homelabos/nzbget:/config
+      # - /mnt/nas/Downloads:/downloads
+    # environment:
+      # - APP=nzbget
+      # - PUID=1000
+      # - PGID=1000
+      # - UMASK=022
+      # - VERSION=stable
+    # labels:
+      # - "traefik.enable=true"
+      # - "traefik.admin.frontend.rule=Host:nzbget.{{ domain }}"
+      # - "traefik.admin.protocol={{ protocol }}"
+      # - "traefik.admin.port=6789"
 
   organizr:
     # image: lsiocommunity/organizr
@@ -460,26 +501,52 @@ services:
       - "traefik.admin.port=9000"
 
   # sonarr:
-  #   image: linuxserver/sonarr
-  #   ports:
-  #     - 8989:8989
-  #   environment:
-  #     - PGID=1000
-  #     - PUID=1000
-  #     - TZ={{ timezone }}
-  #   links:
-  #     - jackett
-  #     - transmission
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - /var/homelabos/sonarr/config:/config
-  #     - /mnt/nas/TV:/tv
-  #     - /var/homelabos/sonarr/downloads:/downloads
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.admin.frontend.rule=Host:sonarr.{{ domain }}"
-  #     - "traefik.admin.protocol={{ protocol }}"
-  #     - "traefik.admin.port=8989"
+    # image: hotio/suitarr
+    # restart: always
+    # ports:
+      # - 8989:8989
+    # volumes:
+      # - /etc/localtime:/etc/localtime:ro
+      # - /var/homelabos/sonarr/config:/config
+      # - /mnt/nas/TV:/tv
+      # - /var/homelabos/sonarr/downloads:/downloads
+    # environment:
+      # - APP=sonarr
+      # - PUID=1000
+      # - PGID=1000
+      # - UMASK=022
+      # - VERSION=stable
+    # links:
+      # - jackett
+      # - transmission
+      # - nzbhydra
+    # labels:
+      # - "traefik.enable=true"
+      # - "traefik.admin.frontend.rule=Host:sonarr.{{ domain }}"
+      # - "traefik.admin.protocol={{ protocol }}"
+      # - "traefik.admin.port=8989"
+
+  # nzbhydra:
+    # image: hotio/suitarr
+    # restart: always
+    # ports:
+      # - 5076:5076
+    # volumes:
+      # - /etc/localtime:/etc/localtime:ro
+      # - /var/homelabos/nzbhydra2/config:/config
+    # environment:
+      # - APP=nzbhydra2
+      # - PUID=1000
+      # - PGID=1000
+      # - UMASK=022
+      # - VERSION=stable
+    # links:
+      # - nzbget
+    # labels:
+      # - "traefik.enable=true"
+      # - "traefik.admin.frontend.rule=Host:nzbhydra.{{ domain }}"
+      # - "traefik.admin.protocol={{ protocol }}"
+      # - "traefik.admin.port=5076"
 
   sonerezh:
     image: sonerezh/sonerezh:latest
