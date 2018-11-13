@@ -66,6 +66,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+    <loc>/software/plex/</loc>
+    <lastmod>2018-11-13</lastmod>
+    <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>/software/firefly/</loc>
      <lastmod>2018-11-13</lastmod>
      <changefreq>daily</changefreq>

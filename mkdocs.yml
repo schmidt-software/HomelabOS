@@ -24,6 +24,7 @@ pages:
     - Darksky: software/darksky.md
     - Dasher: software/dasher.md
     - Emby: software/emby.md
+    - Plex: software/plex.md
     - Firefly III: software/firefly.md
     - Gitea: software/gitea.md
     - Grafana: software/grafana.md
