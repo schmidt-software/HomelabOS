@@ -1,0 +1,16 @@
+---
+  - name: thelounge
+    docker_container:
+      image: linuxserver/thelounge
+      volumes:
+        - /var/homelabos/thelounge:/config
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:thelounge.{{ domain }}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=9000"
+        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
+        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+        - "traefik.tor.frontend.rule=Host:thelounge.{{ tor_domain }}"
+        - "traefik.tor.protocol={{ protocol }}"
+        - "traefik.tor.port=9000"

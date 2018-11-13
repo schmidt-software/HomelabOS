@@ -1,0 +1,19 @@
+---
+  - name: huginn
+    docker_container:
+      image: huginn/huginn
+      depends_on:
+       - huginn_db
+      links:
+       - huginn_db:mysql
+      ports:
+        - 3132:3000
+      environment:
+        - HUGINN_DATABASE_NAME=huginn
+        - HUGINN_DATABASE_USERNAME=huginn
+        - HUGINN_DATABASE_PASSWORD=somethingsecret
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:huginn.{{ domain }}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=3000"

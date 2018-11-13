@@ -1,0 +1,27 @@
+---
+  - name: photoprism
+    docker_container:
+      image: photoprism
+      restart: always
+      ports:
+        - 2342:80
+      volumes:
+        - ~/Photos:/photos # change ~/Photos to whatever directory you want to use on your local computer
+        - photoprism-thumbnails:/var/photoprism/thumbnails # keep this (thumbnail cache)
+      environment:
+        PHOTOPRISM_IMPORT_PATH: "/Photos/Import" # ~/Photos/Import (files to be imported to originals)
+        PHOTOPRISM_EXPORT_PATH: "/Photos/Export" # ~/Photos/Export (files exported from originals)
+        PHOTOPRISM_ORIGINALS_PATH: "/Photos/Originals" # ~/Photos/Originals (original jpeg, raw and meta files)
+
+  - name: database
+    docker_container:
+      image: mysql:latest
+      restart: always
+      command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=1024
+      volumes:
+        - photoprism-database:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: photoprism
+        MYSQL_USER: photoprism
+        MYSQL_PASSWORD: photoprism
+        MYSQL_DATABASE: photoprism

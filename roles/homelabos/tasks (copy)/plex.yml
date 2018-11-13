@@ -1,0 +1,16 @@
+---
+  - name: Install Plex
+    docker_container:
+      name: plex
+      image: plexinc/pms-docker
+      volumes:
+        - /mnt/nas:/mnt/nas
+        - /mnt/nas/tmp:/config/transcoding-temp
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:plex.{{ domain }}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=32400"
+        - "traefik.tor.frontend.rule=Host:plex.{{ tor_domain }}"
+        - "traefik.tor.protocol={{ protocol }}"
+        - "traefik.tor.port=32400"

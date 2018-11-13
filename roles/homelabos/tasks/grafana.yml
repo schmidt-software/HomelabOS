@@ -1,0 +1,25 @@
+---
+  - name: grafana
+    docker_container:
+      image: grafana/grafana
+      restart: always
+      links:
+        - influxdb
+      volumes:
+        - /var/homelabos/grafana:/var/lib/grafana
+      environment:
+        - GF_INSTALL_PLUGINS=grafana-clock-panel,natel-discrete-panel,petrslavotinek-carpetplot-panel,vonage-status-panel,raintank-worldping-app
+        - GF_SMTP_ENABLED=true
+        - GF_SMTP_HOST={{ smtp_host }}:{{ smtp_port }}
+        - GF_SMTP_USER={{ smtp_user }}
+        - GF_SMTP_PASSWORD={{ smtp_pass }}
+        - GF_SMTP_FROM_ADDRESS={{ smtp_from_email }}
+        - GF_SMTP_FROM_NAME={{ smtp_from_name }}
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:grafana.{{ domain }}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=3000"
+        - "traefik.tor.frontend.rule=Host:grafana.{{ tor_domain }}"
+        - "traefik.tor.protocol={{ protocol }}"
+        - "traefik.tor.port=3000"

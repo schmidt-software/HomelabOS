@@ -1,0 +1,12 @@
+---
+  - name: firefly_iii_db
+    docker_container:
+      image: mariadb
+      restart: always
+      environment:
+        - MYSQL_DATABASE=firefly_db
+        - MYSQL_USER=firefly_db
+        - MYSQL_PASSWORD=firefly_db_secret
+        - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      volumes:
+        - /var/homelabos/firefly/db:/var/lib/mysql

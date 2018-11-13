@@ -1,0 +1,19 @@
+---
+  - name: nzbget
+    docker_container:
+     image: linuxserver/nzbget
+      restart: always
+      ports:
+        - 6789:6789
+      environment:
+        - TZ={{ timezone }}
+      volumes:
+        - /var/homelabos/nzbget:/config
+        - /mnt/nas/Downloads:/downloads
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:nzbget.{{ domain }}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=6789"
+
+    

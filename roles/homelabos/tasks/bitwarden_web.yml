@@ -1,0 +1,18 @@
+---
+  - name: bitwarden_web
+    docker_container:
+      image: mprasil/bitwarden
+      state: present
+      restart: yes
+      volumes:
+        - "/var/homelabos/bitwarden:/data"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:warden.{{domain}}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=80"
+        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
+        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+        - "traefik.tor.frontend.rule=Host:warden.{{ tor_domain }}"
+        - "traefik.tor.protocol={{ protocol }}"
+        - "traefik.tor.port=80"

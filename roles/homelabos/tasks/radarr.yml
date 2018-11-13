@@ -1,0 +1,25 @@
+---
+  - name: radarr
+    docker_container:
+      image: linuxserver/radarr
+      restart: always
+      environment:
+        - PGID=1000
+        - PUID=1000
+        - TZ={{ timezone }}
+      links:
+        - jackett
+        - transmission
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /var/homelabos/radarr/config:/config
+        - /mnt/nas/Movies:/movies
+        - /mnt/nas/Downloads/completed:/downloads
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.frontend.rule=Host:radarr.{{ domain }}"
+        - "traefik.http.protocol={{ protocol }}"
+        - "traefik.http.port=7878"
+        - "traefik.tor.frontend.rule=Host:radarr.{{ tor_domain }}"
+        - "traefik.tor.protocol={{ protocol }}"
+        - "traefik.tor.port=7878"

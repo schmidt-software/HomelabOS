@@ -1,0 +1,9 @@
+---
+  - name: Amazon Dash
+    docker_container:
+      image: hijinx/dasher
+      restart: always
+      network_mode: host
+      volumes:
+        - /var/homelabos/dasher/config.json:/usr/src/app/config/config.json
+      

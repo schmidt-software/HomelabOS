@@ -1,0 +1,16 @@
+---
+  - name: Darksky
+    docker_container:
+      image: erwinsteffens/darksky-influxdb:latest
+      state: present
+      restart: always
+      links:
+        - influxdb
+      environment:
+        - DARKSKY_KEY={{ darksky_key }}
+      # This is every 2 minutes. This is about as fast as you can go with the free API keys without running out of queries.
+        - CRON=0 */2 * * * *
+        - INFLUXDB_HOST=influxdb
+        - INFLUXDB_DATABASE=darksky
+        - DARKSKY_LATITUDE={{ latitude }}
+        - DARKSKY_LONGITUDE={{ longitude }}
