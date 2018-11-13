@@ -2,7 +2,7 @@
   - host: localhost
     tasks:
       - name: Darksky
-        hosts: local
+        
         docker_image:
           image: erwinsteffens/darksky-influxdb:latest
           state: present

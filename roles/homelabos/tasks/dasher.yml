@@ -2,7 +2,7 @@
   - hosts: localhost
     tasks:
       - name: Amazon Dash
-        hosts: local
+        
         docker_image:
           image: hijinx/dasher
           restart: always

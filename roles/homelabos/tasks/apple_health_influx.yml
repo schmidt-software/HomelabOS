@@ -3,7 +3,6 @@
   - hosts: localhost
     tasks:
       - name: Apple Health Influx
-        hosts: local
         docker_image:
           image: nickbusey/healthdata_influx:cron
           state: present
