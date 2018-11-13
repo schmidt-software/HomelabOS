@@ -1,13 +1,15 @@
 ---
-  - name: traefik
-    docker_container:
-      image: traefik
-      restart: always
-      ports:
-        - "80:80"
-        - "443:443"
-        - "8181:8080"
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-        - /var/homelabos/traefik/traefik.toml:/traefik.toml
-        - /var/homelabos/traefik/acme.json:/acme.json
+  - hosts: localhost
+    tasks:
+    - name: traefik
+      docker_image:
+        image: traefik
+        restart: always
+        ports:
+          - "80:80"
+          - "443:443"
+          - "8181:8080"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /var/homelabos/traefik/traefik.toml:/traefik.toml
+          - /var/homelabos/traefik/acme.json:/acme.json

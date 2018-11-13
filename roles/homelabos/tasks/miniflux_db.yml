@@ -1,10 +1,12 @@
 ---
-  - name: miniflux_db
-    docker_container:
-      image: postgres:10.1
-      restart: always
-      environment:
-        - POSTGRES_USER=miniflux
-        - POSTGRES_PASSWORD=EsQMeV35CskJPE9eJwwqeV3ZFfZZ
-      volumes:
-        - /var/homelabos/miniflux/db:/var/lib/postgresql/data
+  - hosts: localhost
+    tasks:
+    - name: miniflux_db
+      docker_image:
+        image: postgres:10.1
+        restart: always
+        environment:
+          - POSTGRES_USER=miniflux
+          - POSTGRES_PASSWORD=EsQMeV35CskJPE9eJwwqeV3ZFfZZ
+        volumes:
+          - /var/homelabos/miniflux/db:/var/lib/postgresql/data

@@ -1,27 +1,29 @@
 ---
-  - name: gitea
-    docker_container:
-      image: gitea/gitea:latest
-      restart: always
-      environment:
-        - USER_UID=1000
-        - USER_GID=1000
-      links:
-        - gitea_db:db
-      volumes:
-        - /var/lab/homelabos/gitea:/data
-      ports:
-        - "3030:3000"
-        - "222:22"
-      depends_on:
-        - gitea_db
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.frontend.rule=Host:git.{{ domain }}"
-        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
-        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
-        - "traefik.http.protocol={{ protocol }}"
-        - "traefik.http.port=3000"
-        - "traefik.tor.frontend.rule=Host:git.{{ tor_domain }}"
-        - "traefik.tor.protocol={{ protocol }}"
-        - "traefik.tor.port=3000"
+  - hosts: localhost
+    tasks:
+    - name: gitea
+      docker_image:
+        image: gitea/gitea:latest
+        restart: always
+        environment:
+          - USER_UID=1000
+          - USER_GID=1000
+        links:
+          - gitea_db:db
+        volumes:
+          - /var/lab/homelabos/gitea:/data
+        ports:
+          - "3030:3000"
+          - "222:22"
+        depends_on:
+          - gitea_db
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.frontend.rule=Host:git.{{ domain }}"
+          - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
+          - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+          - "traefik.http.protocol={{ protocol }}"
+          - "traefik.http.port=3000"
+          - "traefik.tor.frontend.rule=Host:git.{{ tor_domain }}"
+          - "traefik.tor.protocol={{ protocol }}"
+          - "traefik.tor.port=3000"

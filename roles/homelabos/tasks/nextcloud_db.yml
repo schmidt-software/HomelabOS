@@ -1,12 +1,14 @@
 ---
-  - name: nextcloud_db
-    docker_container:
-      image: mariadb
-      restart: always
-      volumes:
-        - /var/homelabos/nextcloud_db:/var/lib/mysql
-      environment:
-        - MYSQL_ROOT_PASSWORD=nextcloud
-        - MYSQL_PASSWORD=nextcloud
-        - MYSQL_DATABASE=nextcloud
-        - MYSQL_USER=nextcloud
+  - hosts: localhost
+    tasks:
+    - name: nextcloud_db
+      docker_image:
+        image: mariadb
+        restart: always
+        volumes:
+          - /var/homelabos/nextcloud_db:/var/lib/mysql
+        environment:
+          - MYSQL_ROOT_PASSWORD=nextcloud
+          - MYSQL_PASSWORD=nextcloud
+          - MYSQL_DATABASE=nextcloud
+          - MYSQL_USER=nextcloud

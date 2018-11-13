@@ -1,30 +1,34 @@
 ---
-  - name: Firefly Financial Tracker
-    docker_container:
-      image: jc5x/firefly-iii
-      restart: always
-      environment:
-        - FF_DB_HOST=firefly_iii_db
-        - FF_DB_NAME=firefly_db
-        - FF_DB_USER=firefly_db
-        - FF_DB_PASSWORD=firefly_db_secret
-        - FF_APP_KEY=S0m3R@nd0mStr1ngOf31Ch@rsEx@ctly
-        - FF_APP_ENV=local
-        - APP_URL=https://money.{{ domain }}
-        - TZ={{ timezone }}
-        - ServerName=money.{{ domain }}
-      links:
-      - firefly_iii_db
-      depends_on:
+  
+   - hosts: localhost
+     tasks:
+
+    - name: Firefly Financial Tracker
+      docker_image:
+        image: jc5x/firefly-iii
+        restart: always
+        environment:
+          - FF_DB_HOST=firefly_iii_db
+          - FF_DB_NAME=firefly_db
+          - FF_DB_USER=firefly_db
+          - FF_DB_PASSWORD=firefly_db_secret
+          - FF_APP_KEY=S0m3R@nd0mStr1ngOf31Ch@rsEx@ctly
+          - FF_APP_ENV=local
+          - APP_URL=https://money.{{ domain }}
+          - TZ={{ timezone }}
+          - ServerName=money.{{ domain }}
+        links:
         - firefly_iii_db
-      volumes:
-        - /var/homelabos/firefly/export:/var/www/firefly-iii/storage/export
-        - /var/homelabos/firefly/upload:/var/www/firefly-iii/storage/upload
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.frontend.rule=Host:money.{{ domain }}"
-        - "traefik.http.protocol={{ protocol }}"
-        - "traefik.http.port=80"
-        - "traefik.tor.frontend.rule=Host:money.{{ tor_domain }}"
-        - "traefik.tor.protocol={{ protocol }}"
-        - "traefik.tor.port=80"
+        depends_on:
+          - firefly_iii_db
+        volumes:
+          - /var/homelabos/firefly/export:/var/www/firefly-iii/storage/export
+          - /var/homelabos/firefly/upload:/var/www/firefly-iii/storage/upload
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.frontend.rule=Host:money.{{ domain }}"
+          - "traefik.http.protocol={{ protocol }}"
+          - "traefik.http.port=80"
+          - "traefik.tor.frontend.rule=Host:money.{{ tor_domain }}"
+          - "traefik.tor.protocol={{ protocol }}"
+          - "traefik.tor.port=80"

@@ -1,8 +1,10 @@
 ---
-  - name: kibitzr
-    docker_container:
-      image: peterdemin/kibitzr
-      restart: always
-      volumes:
-       - /var/homelabos/kibitzr/config:/root/.config/kibitzr
-       - /var/homelabos/kibitzr/pages:/pages
+  - hosts: localhost
+    tasks:
+    - name: kibitzr
+      docker_image:
+        image: peterdemin/kibitzr
+        restart: always
+        volumes:
+        - /var/homelabos/kibitzr/config:/root/.config/kibitzr
+        - /var/homelabos/kibitzr/pages:/pages

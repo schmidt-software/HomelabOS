@@ -1,27 +1,29 @@
 ---
-  - name: koel
-    docker_container:
-      image: 0xcaff/koel
-      restart: always
-      links:
-        - koel_database
-      depends_on:
-        - koel_database
-      environment:
-        DB_CONNECTION: mysql
-        DB_HOST: koel_database
-        DB_USERNAME: koel
-        DB_PASSWORD: koel
-        DB_DATABASE: koel
-      volumes:
-        - /mnt/nas/Music:/music
-        - /var/homelabos/koel/covers:/var/www/html/public/img/covers
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.frontend.rule=Host:koel.{{ domain }}"
-        - "traefik.http.protocol={{ protocol }}"
-        - "traefik.http.port=80"
-        - "traefik.tor.frontend.rule=Host:koel.{{ tor_domain }}"
-        - "traefik.tor.protocol={{ protocol }}"
-        - "traefik.tor.port=80"
+  - hosts: localhost
+    tasks:
+    - name: koel
+      docker_image:
+        image: 0xcaff/koel
+        restart: always
+        links:
+          - koel_database
+        depends_on:
+          - koel_database
+        environment:
+          DB_CONNECTION: mysql
+          DB_HOST: koel_database
+          DB_USERNAME: koel
+          DB_PASSWORD: koel
+          DB_DATABASE: koel
+        volumes:
+          - /mnt/nas/Music:/music
+          - /var/homelabos/koel/covers:/var/www/html/public/img/covers
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.frontend.rule=Host:koel.{{ domain }}"
+          - "traefik.http.protocol={{ protocol }}"
+          - "traefik.http.port=80"
+          - "traefik.tor.frontend.rule=Host:koel.{{ tor_domain }}"
+          - "traefik.tor.protocol={{ protocol }}"
+          - "traefik.tor.port=80"
 

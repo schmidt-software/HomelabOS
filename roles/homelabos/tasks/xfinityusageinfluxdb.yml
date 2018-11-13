@@ -1,11 +1,13 @@
 ---
-  - name: xfinityusageinfluxdb
-    docker_container:
-      image: nickbusey/xfinityusageinfluxdb
-      restart: unless-stopped
-      links:
-        - influxdb
-      environment:
-        - XFINITY_USER={{ xfinity_user }}
-        - XFINITY_PASSWORD={{ xfinity_password }}
-        - INFLUXDB_HOST=influxdb
+  - hosts: localhost
+    tasks:
+    - name: xfinityusageinfluxdb
+      docker_image:
+        image: nickbusey/xfinityusageinfluxdb
+        restart: unless-stopped
+        links:
+          - influxdb
+        environment:
+          - XFINITY_USER={{ xfinity_user }}
+          - XFINITY_PASSWORD={{ xfinity_password }}
+          - INFLUXDB_HOST=influxdb

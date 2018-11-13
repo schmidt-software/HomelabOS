@@ -1,20 +1,22 @@
 ---
-  - name: miniflux
-    docker_container:
-      image: miniflux/miniflux:2.0.11
-      restart: always
-      depends_on: miniflux_db
-      links:
-        - miniflux_db:db
-      environment:
-        - DATABASE_URL=postgres://miniflux:EsQMeV35CskJPE9eJwwqeV3ZFfZZ@db/miniflux?sslmode=disable
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.frontend.rule=Host:rss.{{ domain }}"
-        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
-        - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
-        - "traefik.http.protocol={{ protocol }}"
-        - "traefik.http.port=8080"
-        - "traefik.tor.frontend.rule=Host:rss.{{ tor_domain }}"
-        - "traefik.tor.protocol={{ protocol }}"
-        - "traefik.tor.port=80"
+  - hosts: localhost
+    tasks:
+    - name: miniflux
+      docker_image:
+        image: miniflux/miniflux:2.0.11
+        restart: always
+        depends_on: miniflux_db
+        links:
+          - miniflux_db:db
+        environment:
+          - DATABASE_URL=postgres://miniflux:EsQMeV35CskJPE9eJwwqeV3ZFfZZ@db/miniflux?sslmode=disable
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.frontend.rule=Host:rss.{{ domain }}"
+          - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
+          - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+          - "traefik.http.protocol={{ protocol }}"
+          - "traefik.http.port=8080"
+          - "traefik.tor.frontend.rule=Host:rss.{{ tor_domain }}"
+          - "traefik.tor.protocol={{ protocol }}"
+          - "traefik.tor.port=80"

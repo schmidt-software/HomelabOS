@@ -1,24 +1,26 @@
 ---
-  - name: homeassistant
-    docker_container:
-      image: homeassistant/home-assistant
-      volumes:
-        - /var/homelabos/homeassistant:/config
-        - /etc/localtime:/etc/localtime:ro
-        - /etc/letsencrypt:/etc/letsencrypt
-      restart: always
-      ports:
-        - 8123:8123
-        - 1883:1883
-        # - 8080:8080
-        - 51827:51827
-      links:
-        - influxdb
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.frontend.rule=Host:homeassistant.{{ domain }}"
-        - "traefik.http.protocol={{ protocol }}"
-        - "traefik.http.port=8123"
-        - "traefik.tor.frontend.rule=Host:homeassistant.{{ tor_domain }}"
-        - "traefik.tor.protocol={{ protocol }}"
-        - "traefik.tor.port=8123"
+  - hosts: localhost
+    tasks:
+    - name: homeassistant
+      docker_image:
+        image: homeassistant/home-assistant
+        volumes:
+          - /var/homelabos/homeassistant:/config
+          - /etc/localtime:/etc/localtime:ro
+          - /etc/letsencrypt:/etc/letsencrypt
+        restart: always
+        ports:
+          - 8123:8123
+          - 1883:1883
+          # - 8080:8080
+          - 51827:51827
+        links:
+          - influxdb
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.frontend.rule=Host:homeassistant.{{ domain }}"
+          - "traefik.http.protocol={{ protocol }}"
+          - "traefik.http.port=8123"
+          - "traefik.tor.frontend.rule=Host:homeassistant.{{ tor_domain }}"
+          - "traefik.tor.protocol={{ protocol }}"
+          - "traefik.tor.port=8123"

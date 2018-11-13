@@ -1,12 +1,14 @@
 ---
-  - name: matomo_db
-    docker_container:
-      image: mariadb
-      restart: always
-      volumes:
-        - /var/homelabos/matomo/db:/var/lib/mysql
-      environment:
-        - MYSQL_ROOT_PASSWORD=matomo
-        - MYSQL_USER=matomo
-        - MYSQL_PASSWORD=matomo
-        - MYSQL_DATABASE=matomo
+  - hosts: localhost
+    tasks:
+    - name: matomo_db
+      docker_image:
+        image: mariadb
+        restart: always
+        volumes:
+          - /var/homelabos/matomo/db:/var/lib/mysql
+        environment:
+          - MYSQL_ROOT_PASSWORD=matomo
+          - MYSQL_USER=matomo
+          - MYSQL_PASSWORD=matomo
+          - MYSQL_DATABASE=matomo

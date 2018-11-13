@@ -1,9 +1,11 @@
 ---
-  - name: monicahq_db
-    docker_container:
-      image: mariadb
-      restart: always
-      env_file:
-        - /var/homelabos/docker/monica.env
-      volumes:
-        - /var/homelabos/monica/mysql:/var/lib/mysql
+  - hosts: localhost
+    tasks:
+    - name: monicahq_db
+      docker_image:
+        image: mariadb
+        restart: always
+        env_file:
+          - /var/homelabos/docker/monica.env
+        volumes:
+          - /var/homelabos/monica/mysql:/var/lib/mysql

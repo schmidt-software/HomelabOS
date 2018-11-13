@@ -1,12 +1,14 @@
 ---
-  - name: gitea_db
-    docker_container:
-      image: mariadb
-      restart: always
-      environment:
-        - MYSQL_ROOT_PASSWORD=gitea
-        - MYSQL_USER=gitea
-        - MYSQL_PASSWORD=gitea
-        - MYSQL_DATABASE=gitea
-      volumes:
-        - /var/homelabos/gitea_db:/var/lib/mysql
+  - hosts: localhost
+    tasks:
+    - name: gitea_db
+      docker_image:
+        image: mariadb
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=gitea
+          - MYSQL_USER=gitea
+          - MYSQL_PASSWORD=gitea
+          - MYSQL_DATABASE=gitea
+        volumes:
+          - /var/homelabos/gitea_db:/var/lib/mysql

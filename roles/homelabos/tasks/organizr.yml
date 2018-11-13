@@ -1,17 +1,19 @@
 ---
-  - name: organizr
-    docker_container:
-      image: lsiocommunity/organizr
-      restart: always
-      ports:
-        - 8083:80
-      volumes:
-        - /var/homelabos/organizr:/config
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.frontend.rule=Host:{{ domain }}"
-        - "traefik.http.protocol={{ protocol }}"
-        - "traefik.http.port=80"
-        - "traefik.tor.frontend.rule=Host:{{ tor_domain }}"
-        - "traefik.tor.protocol={{ protocol }}"
-        - "traefik.tor.port=80"
+  - hosts: localhost
+    tasks:
+    - name: organizr
+      docker_image:
+        image: lsiocommunity/organizr
+        restart: always
+        ports:
+          - 8083:80
+        volumes:
+          - /var/homelabos/organizr:/config
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.frontend.rule=Host:{{ domain }}"
+          - "traefik.http.protocol={{ protocol }}"
+          - "traefik.http.port=80"
+          - "traefik.tor.frontend.rule=Host:{{ tor_domain }}"
+          - "traefik.tor.protocol={{ protocol }}"
+          - "traefik.tor.port=80"
