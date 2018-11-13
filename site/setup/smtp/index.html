@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>SMTP - HomelabOS</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">HomelabOS</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li >
+                        <a href="../installation/">Installation</a>
+                    </li>
+                    <li >
+                        <a href="../gettingstarted/">Getting Started</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../backups/">Backups</a>
+</li>
+                            
+<li class="active">
+    <a href="./">SMTP</a>
+</li>
+                            
+<li >
+    <a href="../tor/">Tor Onion Services</a>
+</li>
+                            
+<li >
+    <a href="../vpn/">VPN Setup</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Included Software <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../software/applehealth/">Apple Health</a>
+</li>
+                            
+<li >
+    <a href="../../software/bitwarden/">Bitwarden</a>
+</li>
+                            
+<li >
+    <a href="../../software/convos/">Convos</a>
+</li>
+                            
+<li >
+    <a href="../../software/darksky/">Darksky</a>
+</li>
+                            
+<li >
+    <a href="../../software/dasher/">Dasher</a>
+</li>
+                            
+<li >
+    <a href="../../software/emby/">Emby</a>
+</li>
+                            
+<li >
+    <a href="../../software/firefly/">Firefly III</a>
+</li>
+                            
+<li >
+    <a href="../../software/gitea/">Gitea</a>
+</li>
+                            
+<li >
+    <a href="../../software/grafana/">Grafana</a>
+</li>
+                            
+<li >
+    <a href="../../software/homeassistant/">Home Assistant</a>
+</li>
+                            
+<li >
+    <a href="../../software/influxdb/">InfluxDB</a>
+</li>
+                            
+<li >
+    <a href="../../software/jackett/">Jackett</a>
+</li>
+                            
+<li >
+    <a href="../../software/koel/">Koel</a>
+</li>
+                            
+<li >
+    <a href="../../software/matomo/">Matomo</a>
+</li>
+                            
+<li >
+    <a href="../../software/miniflux/">Miniflux</a>
+</li>
+                            
+<li >
+    <a href="../../software/minio/">Minio</a>
+</li>
+                            
+<li >
+    <a href="../../software/monica/">Monica</a>
+</li>
+                            
+<li >
+    <a href="../../software/nextcloud/">NextCloud</a>
+</li>
+                            
+<li >
+    <a href="../../software/paperless/">Paperless</a>
+</li>
+                            
+<li >
+    <a href="../../software/pihole/">Pi-hole</a>
+</li>
+                            
+<li >
+    <a href="../../software/portainer/">Portainer</a>
+</li>
+                            
+<li >
+    <a href="../../software/radarr-sonarr/">Radarr / Sonarr</a>
+</li>
+                            
+<li >
+    <a href="../../software/syncthing/">Synchthing</a>
+</li>
+                            
+<li >
+    <a href="../../software/thelounge/">The Lounge</a>
+</li>
+                            
+<li >
+    <a href="../../software/transmission/">Transmission</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../backups/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../tor/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://gitlab.com/NickBusey/HomelabOS/edit/master/docs/setup/smtp.md">Edit on Gitlab</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#smtp">SMTP</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="smtp">SMTP</h1>
+<p>In order for your applications to be able to send out emails, you
+need an SMTP server. A nice free one is <a href="http://mailgun.com/">Mailgun</a>.</p>
+<p>Create an account, and follow their steps to register your domain.</p>
+<p>Once that is completed, you can plug the settings they provide into
+Nextcloud and other apps that send emails.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/require.js"></script>
+        <script src="../../search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>

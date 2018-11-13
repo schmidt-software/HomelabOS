@@ -83,7 +83,7 @@
   loop:
     - docker
     - docs
-    - emby
+    - plex
     - git
     - grafana
     - homeassistant

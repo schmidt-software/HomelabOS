@@ -83,6 +83,23 @@ services:
       - "traefik.tor.protocol={{ protocol }}"
       - "traefik.tor.port=8096"
 
+  # Plex Media Server
+  plex:
+    image: plexinc/pms-docker:latest
+    restart: always
+    volumes:
+      - /var/homelabos/plex:/config
+      - /mnt/nas:/mnt/nas
+      - /mnt/nas/tmp:/config/transcoding-temp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.frontend.rule=Host:plex.{{ domain }}"
+      - "traefik.http.protocol={{ protocol }}"
+      - "traefik.http.port=32400"
+      - "traefik.tor.frontend.rule=Host:plex.{{ tor_domain }}"
+      - "traefik.tor.protocol={{ protocol }}"
+      - "traefik.tor.port=32400"
+      
   # Financial Tracker
   firefly_iii_app:
     restart: always
@@ -596,6 +613,7 @@ services:
       - docker.{{ domain }}:{{ ansible_ssh_host }}
       - docs.{{ domain }}:{{ ansible_ssh_host }}
       - emby.{{ domain }}:{{ ansible_ssh_host }}
+      - plex.{{ domain }}:{{ ansible_ssh_host }}
       - git.{{ domain }}:{{ ansible_ssh_host }}
       - grafana.{{ domain }}:{{ ansible_ssh_host }}
       - homeassistant.{{ domain }}:{{ ansible_ssh_host }}

@@ -4,7 +4,7 @@ repo_url: https://gitlab.com/NickBusey/HomelabOS
 edit_uri: edit/master/docs
 
 theme:
-  name: material
+  name: mkdocs
   logo:
     icon: home
 

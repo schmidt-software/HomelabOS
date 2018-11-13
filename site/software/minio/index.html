@@ -1,773 +1,297 @@
-
-
-
-
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      
-      
-      
-      
-        <meta name="lang:clipboard.copy" content="Copy to clipboard">
-      
-        <meta name="lang:clipboard.copied" content="Copied to clipboard">
-      
-        <meta name="lang:search.language" content="en">
-      
-        <meta name="lang:search.result.none" content="No matching documents">
-      
-        <meta name="lang:search.result.one" content="1 matching document">
-      
-        <meta name="lang:search.result.other" content="# matching documents">
-      
-        <meta name="lang:search.tokenizer" content="[\s\-]+">
-      
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.5.3">
-    
-    
-      
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>Minio - HomelabOS</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
-      
-    
-    
-      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
-    
-    
-      
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    <svg class="md-svg">
-      <defs>
-        
-        
-          <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" id="gitlab"><path fill="currentColor" d="M93.667 473.347l90.684-279.097H2.983l90.684 279.097z" transform="translate(156.198 1.16)"/><path fill="currentColor" d="M221.333 473.345L130.649 194.25H3.557l217.776 279.095z" transform="translate(28.531 1.16)" opacity=".7"/><path fill="currentColor" d="M32 195.155L4.441 279.97a18.773 18.773 0 0 0 6.821 20.99l238.514 173.29L32 195.155z" transform="translate(.089 .256)" opacity=".5"/><path fill="currentColor" d="M2.667-84.844h127.092L75.14-252.942c-2.811-8.649-15.047-8.649-17.856 0L2.667-84.844z" transform="translate(29.422 280.256)"/><path fill="currentColor" d="M2.667 473.345L93.351 194.25h127.092L2.667 473.345z" transform="translate(247.198 1.16)" opacity=".7"/><path fill="currentColor" d="M221.334 195.155l27.559 84.815a18.772 18.772 0 0 1-6.821 20.99L3.557 474.25l217.777-279.095z" transform="translate(246.307 .256)" opacity=".5"/><path fill="currentColor" d="M130.667-84.844H3.575l54.618-168.098c2.811-8.649 15.047-8.649 17.856 0l54.618 168.098z" transform="translate(336.974 280.256)"/></svg>
-        
-      </defs>
-    </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
-    
-      <a href="#minio" tabindex="1" class="md-skip">
-        Skip to content
-      </a>
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <div class="md-flex">
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="HomelabOS" class="md-header-nav__button md-logo">
-          
-            <i class="md-icon">home</i>
-          
-        </a>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
-      </div>
-      <div class="md-flex__cell md-flex__cell--stretch">
-        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          
-            
-              <span class="md-header-nav__topic">
-                HomelabOS
-              </span>
-              <span class="md-header-nav__topic">
-                Minio
-              </span>
-            
-          
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">HomelabOS</a>
         </div>
-      </div>
-      <div class="md-flex__cell md-flex__cell--shrink">
-        
-          
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
-<div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
-        &#xE5CD;
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result">
-          <div class="md-search-result__meta">
-            Type to start searching
-          </div>
-          <ol class="md-search-result__list"></ol>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li >
+                        <a href="../../setup/installation/">Installation</a>
+                    </li>
+                    <li >
+                        <a href="../../setup/gettingstarted/">Getting Started</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Setup <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../setup/backups/">Backups</a>
+</li>
+                            
+<li >
+    <a href="../../setup/smtp/">SMTP</a>
+</li>
+                            
+<li >
+    <a href="../../setup/tor/">Tor Onion Services</a>
+</li>
+                            
+<li >
+    <a href="../../setup/vpn/">VPN Setup</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Included Software <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../applehealth/">Apple Health</a>
+</li>
+                            
+<li >
+    <a href="../bitwarden/">Bitwarden</a>
+</li>
+                            
+<li >
+    <a href="../convos/">Convos</a>
+</li>
+                            
+<li >
+    <a href="../darksky/">Darksky</a>
+</li>
+                            
+<li >
+    <a href="../dasher/">Dasher</a>
+</li>
+                            
+<li >
+    <a href="../emby/">Emby</a>
+</li>
+                            
+<li >
+    <a href="../firefly/">Firefly III</a>
+</li>
+                            
+<li >
+    <a href="../gitea/">Gitea</a>
+</li>
+                            
+<li >
+    <a href="../grafana/">Grafana</a>
+</li>
+                            
+<li >
+    <a href="../homeassistant/">Home Assistant</a>
+</li>
+                            
+<li >
+    <a href="../influxdb/">InfluxDB</a>
+</li>
+                            
+<li >
+    <a href="../jackett/">Jackett</a>
+</li>
+                            
+<li >
+    <a href="../koel/">Koel</a>
+</li>
+                            
+<li >
+    <a href="../matomo/">Matomo</a>
+</li>
+                            
+<li >
+    <a href="../miniflux/">Miniflux</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Minio</a>
+</li>
+                            
+<li >
+    <a href="../monica/">Monica</a>
+</li>
+                            
+<li >
+    <a href="../nextcloud/">NextCloud</a>
+</li>
+                            
+<li >
+    <a href="../paperless/">Paperless</a>
+</li>
+                            
+<li >
+    <a href="../pihole/">Pi-hole</a>
+</li>
+                            
+<li >
+    <a href="../portainer/">Portainer</a>
+</li>
+                            
+<li >
+    <a href="../radarr-sonarr/">Radarr / Sonarr</a>
+</li>
+                            
+<li >
+    <a href="../syncthing/">Synchthing</a>
+</li>
+                            
+<li >
+    <a href="../thelounge/">The Lounge</a>
+</li>
+                            
+<li >
+    <a href="../transmission/">Transmission</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../miniflux/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../monica/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://gitlab.com/NickBusey/HomelabOS/edit/master/docs/software/minio.md">Edit on Gitlab</a>
+                    </li>
+            </ul>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-          
-        
-      </div>
-      
-        <div class="md-flex__cell md-flex__cell--shrink">
-          <div class="md-header-nav__source">
-            
 
-
-  
-
-
-  <a href="https://gitlab.com/NickBusey/HomelabOS/" title="Go to repository" class="md-source" data-md-source="gitlab">
-    
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#gitlab" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      Gitlab
-    </div>
-  </a>
-
-          </div>
-        </div>
-      
-    </div>
-  </nav>
-</header>
-    
-    <div class="md-container">
-      
-        
-      
-      
-      <main class="md-main">
-        <div class="md-main__inner md-grid" data-md-component="container">
-          
-            
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
-      
-        <i class="md-icon">home</i>
-      
-    </span>
-    HomelabOS
-  </label>
-  
-    <div class="md-nav__source">
-      
-
-
-  
-
-
-  <a href="https://gitlab.com/NickBusey/HomelabOS/" title="Go to repository" class="md-source" data-md-source="gitlab">
-    
-      <div class="md-source__icon">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <use xlink:href="#gitlab" width="24" height="24"></use>
-        </svg>
-      </div>
-    
-    <div class="md-source__repository">
-      Gitlab
-    </div>
-  </a>
-
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../.." title="Home" class="md-nav__link">
-      Home
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
-    
-    <label class="md-nav__link" for="nav-2">
-      Setup
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        Setup
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../setup/installation/" title="Installation" class="md-nav__link">
-      Installation
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../setup/gettingstarted/" title="Getting Started" class="md-nav__link">
-      Getting Started
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../setup/backups/" title="Backups" class="md-nav__link">
-      Backups
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../setup/tor/" title="Tor Onion Services" class="md-nav__link">
-      Tor Onion Services
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../setup/vpn/" title="VPN Setup" class="md-nav__link">
-      VPN Setup
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
-    
-    <label class="md-nav__link" for="nav-3">
-      Included Software
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        Included Software
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../applehealth/" title="Apple Health" class="md-nav__link">
-      Apple Health
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../bitwarden/" title="Bitwarden" class="md-nav__link">
-      Bitwarden
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../convos/" title="Convos" class="md-nav__link">
-      Convos
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../darksky/" title="Darksky" class="md-nav__link">
-      Darksky
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../dasher/" title="Dasher" class="md-nav__link">
-      Dasher
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../emby/" title="Emby" class="md-nav__link">
-      Emby
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../firefly/" title="Firefly III" class="md-nav__link">
-      Firefly III
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../gitea/" title="Gitea" class="md-nav__link">
-      Gitea
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../grafana/" title="Grafana" class="md-nav__link">
-      Grafana
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../homeassistant/" title="Home Assistant" class="md-nav__link">
-      Home Assistant
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../influxdb/" title="InfluxDB" class="md-nav__link">
-      InfluxDB
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../koel/" title="Koel" class="md-nav__link">
-      Koel
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../matomo/" title="Matomo" class="md-nav__link">
-      Matomo
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Minio
-      </label>
-    
-    <a href="./" title="Minio" class="md-nav__link md-nav__link--active">
-      Minio
-    </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" title="Configuration" class="md-nav__link">
-    Configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access" title="Access" class="md-nav__link">
-    Access
-  </a>
-  
-</li>
-      
-      
-      
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#minio">Minio</a></li>
+            <li><a href="#configuration">Configuration</a></li>
+            <li><a href="#access">Access</a></li>
     </ul>
-  
-</nav>
-    
-  </li>
+</div></div>
+                <div class="col-md-9" role="main">
 
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../miniflux/" title="Miniflux" class="md-nav__link">
-      Miniflux
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../monica/" title="Monica" class="md-nav__link">
-      Monica
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../nextcloud/" title="NextCloud" class="md-nav__link">
-      NextCloud
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../paperless/" title="Paperless" class="md-nav__link">
-      Paperless
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../pihole/" title="Pi-hole" class="md-nav__link">
-      Pi-hole
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../portainer/" title="Portainer" class="md-nav__link">
-      Portainer
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../terminal/" title="Terminal" class="md-nav__link">
-      Terminal
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../transmission/" title="Transmission" class="md-nav__link">
-      Transmission
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-  </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" title="Configuration" class="md-nav__link">
-    Configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access" title="Access" class="md-nav__link">
-    Access
-  </a>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://gitlab.com/NickBusey/HomelabOS/edit/master/docs/software/minio.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
-                
-                
-                <h1 id="minio">Minio</h1>
+<h1 id="minio">Minio</h1>
 <p>Minio is an S3 storage utility.</p>
 <h2 id="configuration">Configuration</h2>
 <p>Refer to the <a href="../../setup/backups">Backup Guide</a> for configuration details.</p>
 <h2 id="access">Access</h2>
 <p>The dashboard is available at <a href="https://minio.{{ domain }}/">https://minio.{{ domain }}/</a> or <a href="http://minio.{{ domain }}/">http://minio.{{ domain }}/</a></p>
-<p>It is also available via Tor at <a href="http://minio.{{ tor_domain }}/">http://minio.{{ tor_domain }}/</a></p>
-                
-                  
-                
-              
-              
-                
-              
-            </article>
-          </div>
+<p>It is also available via Tor at <a href="http://minio.{{ tor_domain }}/">http://minio.{{ tor_domain }}/</a></p></div>
         </div>
-      </main>
-      
-        
-<footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../matomo/" title="Matomo" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/require.js"></script>
+        <script src="../../search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Matomo
-              </span>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
             </div>
-          </a>
-        
-        
-          <a href="../miniflux/" title="Miniflux" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Miniflux
-              </span>
+            <div class="modal-footer">
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
+        </div>
     </div>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
-          Material for MkDocs</a>
-      </div>
-      
-        
-      
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
-  </div>
-</footer>
-      
-    </div>
-    
-      <script src="../../assets/javascripts/application.f041762f.js"></script>
-      
-      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
-      
-    
-    
-      
-    
-  </body>
+</div>
+
+
+    </body>
 </html>
