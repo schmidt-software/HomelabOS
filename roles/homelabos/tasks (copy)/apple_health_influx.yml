@@ -1,9 +1,0 @@
----
-  - name: Apple Health Influx
-    docker_container:
-      image: nickbusey/healthdata_influx:cron
-      state: present
-      restart: always
-      volumes:
-        - "/var/homelabos/nextcloud/data/{{apple_health_nextcloud_username}}/files/export/:/export/"
-        - "/var/homelabos/apple_health_influx/config.yml:/config.yml"

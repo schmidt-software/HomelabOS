@@ -1,9 +1,0 @@
----
-  - name: influxdb
-    docker_container:
-      image: influxdb
-      restart: always
-      volumes:
-        - /var/homelabos/influxdb:/var/lib/influxdb
-      ports:
-        - 8086:8086
