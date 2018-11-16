@@ -80,3 +80,11 @@ smtp_user:
 smtp_pass:
 smtp_from_email:
 smtp_from_name:
+
+# Leave as is, unless you know what you're doing
+vpn_ip: 10.0.0.1
+netname: homelabos
+physical_ip: 8.8.8.8
+vpn_interface: tun0
+vpn_netmask: 255.255.0.0
+vpn_subnet_cidr_netmask: 32

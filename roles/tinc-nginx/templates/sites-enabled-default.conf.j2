@@ -1,0 +1,47 @@
+{% for host in groups['homelabos'] %}
+  
+  upstream homelabos {
+      server {{ hostvars[host]['inventory_hostname'] }}:80 weight=50 fail_timeout=30s;
+  }
+
+  server {
+    listen  80;
+    server_name *.{{ hostvars[host].domain }};
+
+    server_name ~^(?<subdomain>.+)\.{{ hostvars[host].domain|replace(".", "\.") }}$;
+
+    location / {
+        proxy_pass http://homelabos;
+        proxy_set_header   Host             $subdomain.{{ hostvars[host].domain }};
+    }
+
+    error_page 404 /500.html;
+    error_page 500 502 503 504 /500.html;
+    location /500.html {
+        root /etc/nginx;
+    }
+    location /logo.png {
+        root /etc/nginx;
+    }
+  }
+
+  server {
+    listen 80;
+
+    server_name {{ hostvars[host].domain }};
+    location / {
+      proxy_pass http://homelabos;
+      proxy_set_header   Host             {{ hostvars[host].domain }};
+    }
+
+    error_page 404 /500.html;
+    error_page 500 502 503 504 /500.html;
+    location /500.html {
+        root /etc/nginx;
+    }
+    location /logo.png {
+        root /etc/nginx;
+    }
+  }
+
+{% endfor %}

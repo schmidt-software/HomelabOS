@@ -69,7 +69,12 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 
 ## Requirements
 
-A server running Ubuntu 18.04 accessible via paswordless ssh with a user that has passwordless sudo.
+A server with:
+
+* 8G of RAM (to run all services, you can disable a bunch potentially and run with less memory)
+* Ubuntu 18.04
+* Passwordless SSH (with ssh keys)
+* A user that has passwordless sudo
 
 Ansible version 2.5+ installed on your computer (not the server).
 
