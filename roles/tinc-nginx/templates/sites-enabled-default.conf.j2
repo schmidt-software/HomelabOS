@@ -6,6 +6,7 @@
 
   server {
     listen  80;
+    #listen 443;
     server_name *.{{ hostvars[host].domain }};
 
     server_name ~^(?<subdomain>.+)\.{{ hostvars[host].domain|replace(".", "\.") }}$;
@@ -27,6 +28,7 @@
 
   server {
     listen 80;
+    #listen 443;
 
     server_name {{ hostvars[host].domain }};
     location / {
