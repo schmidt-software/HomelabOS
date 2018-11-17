@@ -33,28 +33,8 @@
 
 - name: Add each service to /etc/hosts
   lineinfile: dest=/etc/hosts line="10.0.0.1 {{item}}.{{domain}}" state=present
-  loop:
-    - warden
-    - docs
-    - emby
-    - money
-    - git
-    - grafana
-    - homeassistant
-    - koel
-    - matomo
-    - rss
-    - minio
-    - monica
-    - nextcloud
-    - paperless
-    - pihole
-    - docker
-    - sonarr
-    - radarr
-    - sync
-    - thelounge
-    - torrent
+  with_items:
+    - "{{ services }}"
 
 - service:
     name: nginx
