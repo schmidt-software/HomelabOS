@@ -48,6 +48,29 @@
 - hosts: homelabos
   become: "True"
   gather_facts: "True"
+  vars:
+    services:
+      - warden
+      - docs
+      - emby
+      - money
+      - git
+      - grafana
+      - homeassistant
+      - koel
+      - matomo
+      - rss
+      - minio
+      - monica
+      - nextcloud
+      - paperless
+      - pihole
+      - docker
+      - sonarr
+      - radarr
+      - sync
+      - thelounge
+      - torrent
   tags:
     - homelabos
     - deploy
@@ -65,31 +88,32 @@
 
 - name: "Update Tinc NGINX Servers"
   hosts: tinc
+  vars:
+    services:
+      - warden
+      - docs
+      - emby
+      - money
+      - git
+      - grafana
+      - homeassistant
+      - koel
+      - matomo
+      - rss
+      - minio
+      - monica
+      - nextcloud
+      - paperless
+      - pihole
+      - docker
+      - sonarr
+      - radarr
+      - sync
+      - thelounge
+      - torrent
   become: yes
   become_method: sudo
   tags: tinc-nginx
-  vars:
-    - warden
-    - docs
-    - emby
-    - money
-    - git
-    - grafana
-    - homeassistant
-    - koel
-    - matomo
-    - rss
-    - minio
-    - monica
-    - nextcloud
-    - paperless
-    - pihole
-    - docker
-    - sonarr
-    - radarr
-    - sync
-    - thelounge
-    - torrent
   roles:
     - {role: tinc-nginx}
 ...

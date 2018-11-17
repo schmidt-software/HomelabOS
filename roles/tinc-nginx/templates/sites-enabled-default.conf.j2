@@ -7,11 +7,11 @@
     {% for service in services %}
   server {
     listen  80;
-    server_name {{ service.name }}.{{ hostvars[host].domain }};
+    server_name {{ service }}.{{ hostvars[host].domain }};
 
     location / {
         proxy_pass http://homelabos;
-        proxy_set_header   Host             {{ service.name }}.{{ hostvars[host].domain }};
+        proxy_set_header   Host             {{ service }}.{{ hostvars[host].domain }};
     }
 
     error_page 404 /500.html;
@@ -25,11 +25,11 @@
   }
     server {
     listen  443 ssl;
-    server_name {{ service.name }}.{{ hostvars[host].domain }};
+    server_name {{ service }}.{{ hostvars[host].domain }};
 
     location / {
         proxy_pass https://homelabos;
-        proxy_set_header   Host             {{ service.name }}.{{ hostvars[host].domain }};
+        proxy_set_header   Host             {{ service }}.{{ hostvars[host].domain }};
     }
 
     error_page 404 /500.html;
