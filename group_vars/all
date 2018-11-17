@@ -88,3 +88,26 @@ physical_ip: 8.8.8.8
 vpn_interface: tun0
 vpn_netmask: 255.255.0.0
 vpn_subnet_cidr_netmask: 32
+
+services:
+  - warden
+  - docs
+  - emby
+  - money
+  - git
+  - grafana
+  - homeassistant
+  - koel
+  - matomo
+  - rss
+  - minio
+  - monica
+  - nextcloud
+  - paperless
+  - pihole
+  - docker
+  - sonarr
+  - radarr
+  - sync
+  - thelounge
+  - torrent

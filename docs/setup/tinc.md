@@ -11,12 +11,13 @@ This is desirable for three reasons.
 
 ## Setup
 
-Edit the `host_vars/tincserver` file with your server's IP and ssh username.
+First you need a cloud server through a provider such as AWS or Digital Ocean.
 
-This user should have passwordless SSH and Sudo just like the HomelabOS server.
+Copy the `group_vars/tinc` file to `host_vars/tincserver`. Fill out all the required fields.
+
+The ansible ssh user should have passwordless SSH and Sudo just like the HomelabOS server.
 
 Now run `make update` as normal, and HomelabOS will take care of everything else.
 
-Now point your domain name to your cloud server's IP address, and everything should be happy!
-
-A domain configured with a `A` type DNS record of `*.yourdomain.com` pointed at your server's IP address. (This is optional because you can use Tor to access your services without registering a domain. For best support from 3rd party clients an actual domain is highly recommended. Also certain services do not work through TOR at the moment.) Note you can hang this off a subdomain as well, so `*.homelab.yourdomain.com` will work as well.
+Now point your domain name to your cloud server's IP address rather than your home IP address,
+and everything should be happy!
