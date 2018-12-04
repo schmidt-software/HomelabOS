@@ -37,4 +37,21 @@
   vars:
     tor_domain: "{{ tor_domain_file.stdout }}"
     tor_ssh_domain: "{{ tor_ssh_domain_file.stdout }}"
+
+- name: Copy HomelabOS docker-compose.yml file into place.
+  template:
+    src: docker-compose.docs.yml.j2
+    dest: /var/homelabos/docs/docker-compose.docs.yml
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout }}"
+
+- name: Configure HomelabOS systemd service.
+  template: src=homelabos_docs.service dest=/etc/systemd/system/homelabos_docs.service
+
+- name: Start HomelabOS Docs
+  systemd:
+    name: homelabos_docs
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: restarted
 ...

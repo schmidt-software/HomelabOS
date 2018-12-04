@@ -20,9 +20,9 @@
 
   roles:
     # Install Docker, configure basic server settings
-    - common
+    - homelabos_common
     # Configure a TOR hidden service for remote access without a public IP
-    - role: toke.tor
+    - role: tor
       hidden_services:
         - dir: /var/lib/tor/ssh-onion
           port: 22
@@ -34,17 +34,6 @@
           port: 80
           source: 127.0.0.1:80
 
-# Install and configure HomelabOS documentation
-- hosts: homelabos
-  become: "True"
-  gather_facts: "True"
-  tags:
-    - homelabos
-    - docs
-
-  roles:
-    - docs
-
 # Install and configure HomelabOS services
 - hosts: homelabos
   become: "True"
@@ -52,9 +41,19 @@
   tags:
     - homelabos
     - deploy
-
   roles:
+    - homelabos_base
+
+# Install and configure HomelabOS documentation
+- hosts: homelabos
+  become: "True"
+  gather_facts: "True"
+  tags:
     - homelabos
+    - docs
+  roles:
+    - role: homelabos_docs
+      when: enable_docs
 
 - name: "Setup tinc VPN"
   tags: tinc
@@ -62,7 +61,7 @@
   become: yes
   become_method: sudo
   roles:
-    - role: tinc
+    - role: homelabos_tinc
       when:
         - "vpn_ip is defined"
 
@@ -72,7 +71,28 @@
   become_method: sudo
   tags: tinc-nginx
   roles:
-    - role: tinc-nginx
+    - role: homelabos_tinc-nginx
       when:
         - "vpn_ip is defined"
+
+- name: "Deploy enabled services"
+  hosts: homelabos
+  become: "True"
+  gather_facts: "True"
+  tags:
+    - deploy
+  roles:
+    - role: apple_health_influx
+      when: enable_apple_health_influx
+    - role: bitwarden
+      when: enable_bitwarden
+    - role: bulletnotes
+      when: enable_bulletnotes
+    - role: bitwarden
+      when: enable_bitwarden
+    - role: firefly_iii
+      when: enable_firefly_iii
+    - role: thelounge
+      when: enable_thelounge
+
 ...
