@@ -34,26 +34,6 @@
           port: 80
           source: 127.0.0.1:80
 
-# Install and configure HomelabOS services
-- hosts: homelabos
-  become: "True"
-  gather_facts: "True"
-  tags:
-    - homelabos
-    - deploy
-  roles:
-    - homelabos_base
-
-# Install and configure HomelabOS documentation
-- hosts: homelabos
-  become: "True"
-  gather_facts: "True"
-  tags:
-    - homelabos
-    - docs
-  roles:
-    - role: homelabos_docs
-      when: enable_docs
 
 - name: "Setup tinc VPN"
   tags: tinc
@@ -63,7 +43,7 @@
   roles:
     - role: homelabos_tinc
       when:
-        - "vpn_ip is defined"
+        - enable_tinc
 
 - name: "Update Tinc NGINX Servers"
   hosts: tinc
@@ -72,27 +52,16 @@
   tags: tinc-nginx
   roles:
     - role: homelabos_tinc-nginx
-      when:
-        - "vpn_ip is defined"
+      when: enable_tinc
 
-- name: "Deploy enabled services"
-  hosts: homelabos
+# Install and configure HomelabOS services
+- hosts: homelabos
   become: "True"
   gather_facts: "True"
   tags:
+    - homelabos
     - deploy
   roles:
-    - role: apple_health_influx
-      when: enable_apple_health_influx
-    - role: bitwarden
-      when: enable_bitwarden
-    - role: bulletnotes
-      when: enable_bulletnotes
-    - role: bitwarden
-      when: enable_bitwarden
-    - role: firefly_iii
-      when: enable_firefly_iii
-    - role: thelounge
-      when: enable_thelounge
+    - homelabos_base
 
 ...

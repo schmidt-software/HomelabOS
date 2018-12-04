@@ -28,6 +28,7 @@ services:
       - /var/homelabos/firefly/upload:/var/www/firefly-iii/storage/upload
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.frontend.rule=Host:money.{{ domain }}"
       - "traefik.http.protocol=http"
       - "traefik.http.port=80"

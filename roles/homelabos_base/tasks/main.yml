@@ -65,6 +65,22 @@
   shell: cat /var/lib/tor/ssh-onion/hostname
   register: tor_ssh_domain_file
 
+- name: Deploy enabled services.
+  include_role:
+    name: "{{ item }}"
+  when: enable_{{ item }}
+  with_items:
+    - "{{ services }}"
+
+- name: Ensure disabled services are not running
+  systemd:
+    name: "{{ item }}"
+    state: stopped
+  when: enable_{{ item }} == False
+  with_items:
+    - "{{ services }}"
+  ignore_errors: "yes"
+
 - debug:
     msg: "HomelabOS Installed successfully! Go to https://{{ domain }}/ to get started. You can also access your services via Tor at http://{{ tor_http_domain_file.stdout }}/ Finally you can SSH to {{ tor_ssh_domain_file.stdout }}"
 

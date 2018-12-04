@@ -17,11 +17,12 @@ services:
       - /var/homelabos/bitwarden:/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.frontend.rule=Host:warden.{{ domain }}"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.frontend.rule=Host:bitwarden.{{ domain }}"
       - "traefik.http.protocol=http"
       - "traefik.http.port=80"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
-      - "traefik.tor.frontend.rule=Host:warden.{{ tor_domain }}"
+      - "traefik.tor.frontend.rule=Host:bitwarden.{{ tor_domain }}"
       - "traefik.tor.protocol=http"
       - "traefik.tor.port=80"

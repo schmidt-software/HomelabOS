@@ -34,6 +34,7 @@ enable_radarr: False
 enable_restic: False
 enable_syncthing: False
 enable_thelounge: False
+enable_tick: False
 enable_transmission: False
 enable_xfinityusageinfluxdb: False
 
@@ -80,24 +81,27 @@ s3_backup_cron: 0 4 * * *
 
 # Service List
 services:
-  - warden
+  - bitwarden
   - bulletnotes
   - docs
   - emby
-  - money
-  - git
+  - firefly_iii
+  - gitea
   - grafana
   - homeassistant
+  - inventario
   - matomo
-  - rss
+  - miniflux
   - minio
-  - monica
+  - monicahq
   - nextcloud
   - paperless
   - pihole
-  - docker
+  - portainer
   - sonarr
   - radarr
-  - sync
+  - syncthing
   - thelounge
-  - torrent
+  - tick
+  - tinc
+  - transmission
