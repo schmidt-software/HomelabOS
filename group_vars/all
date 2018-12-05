@@ -17,6 +17,7 @@ enable_homeassistant: False
 enable_inventario: False
 enable_jackett: False
 enable_kibitzr: False
+enable_mashio: False
 enable_matomo: False
 enable_miniflux: False
 enable_minio: False
@@ -90,11 +91,13 @@ services:
   - grafana
   - homeassistant
   - inventario
+  - mashio
   - matomo
   - miniflux
   - minio
   - monicahq
   - nextcloud
+  - organizr
   - paperless
   - pihole
   - portainer
