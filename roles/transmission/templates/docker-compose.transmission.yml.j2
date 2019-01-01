@@ -33,6 +33,7 @@ services:
       - OPENVPN_PROVIDER={{ openvpn_provider }}
       - OPENVPN_USERNAME={{ openvpn_username }}
       - OPENVPN_PASSWORD={{ openvpn_password }}
+      - OPENVPN_CONFIG={{ openvpn_config }}
       - OPENVPN_OPTS=--inactive 3600 --ping 10 --ping-exit 300
       - PGID=0
       - PUID=0
