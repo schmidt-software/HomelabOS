@@ -21,12 +21,12 @@ services:
       - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.frontend.rule=Host:ghost.{{ domain }}"
       - "traefik.http.protocol=http"
-      - "traefik.http.port=80"
+      - "traefik.http.port=2368"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
       - "traefik.tor.frontend.rule=Host:ghost.{{ tor_domain }}"
       - "traefik.tor.protocol=http"
-      - "traefik.tor.port=80"
+      - "traefik.tor.port=2368"
     # environment:
       ## see https://docs.ghost.org/docs/config#section-running-ghost-with-config-env-variables
       # database__client: mysql
