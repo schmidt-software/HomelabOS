@@ -10,12 +10,23 @@ logo:
 	@./check_version.sh
 	@echo "MOTD:\x1B[01;93m" && curl https://gitlab.com/NickBusey/HomelabOS/raw/master/MOTD && echo "\n\x1B[0m"
 
-git_sync:
-	@mkdir settings > /dev/null 2>&1; cd settings && \
+directory = settings/.git
+dir_target = $(directory)-$(wildcard $(directory))
+dir_present = $(directory)-$(directory)
+dir_absent = $(directory)-
+
+git_sync: | $(dir_target)
+	@mkdir settings > /dev/null 2>&1; cd settings
+
+$(dir_present):
+	@cd settings && \
 	 	git pull > /dev/null 2>&1 && \
 		git add * > /dev/null 2>&1 && \
 		git commit -a -m "Settings update" > /dev/null 2>&1 ; \
 		git push > /dev/null 2>&1
+
+$(dir_absent):
+	  @echo "Git Sync not available"
 
 # Initial configuration
 config: logo git_sync
