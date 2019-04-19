@@ -20,9 +20,6 @@
   tags:
     - dependencies
 
-- name: GPG key for the official Docker repository
-  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
-
 - name: Install necessities and nice-to-haves
   apt:
     name:
