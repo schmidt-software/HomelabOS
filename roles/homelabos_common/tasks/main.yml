@@ -96,6 +96,16 @@
     warn: "no"
   ignore_errors: "yes"
 
+# Configure a TOR hidden service for remote access without a public IP
+- name: "Setup TOR"
+  tags: tinc
+  hosts: all
+  become: true
+  become_method: sudo
+  roles:
+    - role: tor
+      when: enable_tor
+
 - name: Configure HomelabOS systemd service.
   template: src=homelabos.service dest=/etc/systemd/system/homelabos.service
 
