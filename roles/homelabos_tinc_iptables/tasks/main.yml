@@ -93,3 +93,6 @@
 
 - name: Persist iptable routing across reboots
   shell: iptables-save > /etc/iptables/rules.v4
+
+- name: Enable IP Forwarding
+  shell: sysctl net.ipv4.ip_forward=1
