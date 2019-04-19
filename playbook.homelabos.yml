@@ -12,12 +12,21 @@
     - name: 'Install Python'
       raw: sudo apt-get -y install python-simplejson
 
+# Configure a TOR hidden service for remote access without a public IP
+- name: "Setup TOR"
+  tags: tinc
+  hosts: all
+  become: true
+  become_method: sudo
+  roles:
+    - role: tor
+      when: enable_tor
+
 # Configure the server itself
 - hosts: all
   become: true
   gather_facts: "True"
   tags: common
-
   roles:
     # Install Docker, configure basic server settings
     - homelabos_common
