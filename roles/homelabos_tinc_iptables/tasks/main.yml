@@ -3,12 +3,12 @@
   apt:
     name: iptables-persistent
 
-- name: Set ipTables port 2223->22
+- name: Set ipTables port 2222->22
   iptables:
     table: nat
     chain: PREROUTING
     protocol: tcp
-    destination_port: 2223
+    destination_port: 2222
     to_destination: 10.0.0.1:22
     jump: DNAT
   become: yes
@@ -44,7 +44,7 @@
     jump: DNAT
   become: yes
 
-- name: Set ipTables port 2223->22
+- name: Set ipTables port 143->143
   iptables:
     table: nat
     chain: PREROUTING
