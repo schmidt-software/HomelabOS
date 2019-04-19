@@ -5,6 +5,9 @@
 - debug:
     msg: "Problems? File an issue at https://gitlab.com/NickBusey/HomelabOS/issues"
 
+- name: GPG key for the official Docker repository
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
 - apt_repository:
     repo: "{{item}}"
     update_cache: false  # We will do ourselfs afterwards
@@ -21,9 +24,6 @@
   ignore_errors: true
   tags:
     - dependencies
-
-- name: GPG key for the official Docker repository
-  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
 
 - name: Install necessities and nice-to-haves
   apt:
