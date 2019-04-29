@@ -5,6 +5,10 @@
 Copy an existing role folder like 'inventario' from the `roles/` folder,
 then adapt the values as needed.
 
+### Use hardcoded volume paths
+
+All mounted docker volumes should point to a folder named after the service that is using it, and located under `/var/homelabos`.
+
 ## Add Service to Documentation
 
 ### Create a Documentation Page
@@ -21,7 +25,7 @@ Update the `mkdocs.yml` file with a reference to the newly created doc file.
 The service needs to be added to 3 places within
 `group_vars/all`.
 
-Finally under the `# Enabled List` section.
+First under the `# Enabled List` section.
 All services here should default to `False`.
 Next under the `enabled_services:` section in alphabetical order. 
 Finally under the `services:` section.

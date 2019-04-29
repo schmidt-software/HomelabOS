@@ -23,11 +23,13 @@ enable_codeserver: False
 enable_darksky_influx: False
 enable_dasher: False
 enable_docs: False
+enable_duplicati: False
 enable_emby: False
 enable_firefly_iii: False
 enable_ghost: False
 enable_gitea: False
 enable_grafana: False
+enable_guacamole: False
 enable_homeassistant: False
 enable_homedash: False
 enable_inventario: False
@@ -73,11 +75,13 @@ enabled_services:
   darksky_influx: "{{ enable_darksky_influx }}"
   dasher: "{{ enable_dasher }}"
   docs: "{{ enable_docs }}"
+  duplicati: "{{ enable_duplicati }}"
   emby: "{{ enable_emby }}"
   firefly_iii: "{{ enable_firefly_iii }}"
   ghost: "{{ enable_ghost }}"
   gitea: "{{ enable_gitea }}"
   grafana: "{{ enable_grafana }}"
+  guacamole: "{{ enable_guacamole }}"
   homeassistant: "{{ enable_homeassistant }}"
   homedash: "{{ enable_homedash }}"
   inventario: "{{ enable_inventario }}"
@@ -164,11 +168,13 @@ services:
   - bulletnotes
   - codeserver
   - docs
+  - duplicati
   - emby
   - firefly_iii
   - ghost
   - gitea
   - grafana
+  - guacamole
   - homeassistant
   - homedash
   - inventario

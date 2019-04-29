@@ -26,10 +26,12 @@ pages:
       - BulletNotes: software/bulletnotes.md
       - Darksky: software/darksky.md
       - Dasher: software/dasher.md
+      - Duplicati: software/duplicati.md
       - Emby: software/emby.md
       - Firefly III: software/firefly.md
       - Gitea: software/gitea.md
       - Grafana: software/grafana.md
+      - Guacamole: software/guacamole.md
       - Home Assistant: software/homeassistant.md
       - Inventario: software/inventario.md
       - Jackett: software/jackett.md

@@ -58,6 +58,7 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 - [Ghost](https://ghost.org/) - Ghost is a platform for building and running a modern online publication
 - [Gitea](https://gitea.io/en-US/) - Git hosting
 - [Grafana](https://grafana.com/) - Pretty graphs
+- [Guacamole](https://guacamole.apache.org) - a clientless remote desktop gateway
 - [Home Assistant](https://www.home-assistant.io/) - Home Automation
 - [Homedash](https://lamarios.github.io/Homedash2/) - Dashboard
 - [InfluxDB](https://www.influxdata.com/time-series-platform/influxdb/) - Time series data storage
@@ -71,7 +72,7 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 - [Minio](https://minio.io/) - S3 hosting
 - [Miniflux](https://miniflux.app/) - Miniflux is a minimalist and opinionated feed reader.
 - [Monica](https://www.monicahq.com/) - Contact / relationship manager
-- [Netdata](https://my-netdata.io) - Real-time performance monitoring, done right!
+- [NetData](http://my-netdata.io/) - Monitor your systems and applications, the right way!
 - [NextCloud](https://nextcloud.com/) - Private Cloud Storage, Calendar, Contacts, etc.
 - [Organizr](https://github.com/causefx/Organizr) - Access all your HomelabOS services in one easy place.
 - [Paperless](https://github.com/danielquinn/paperless) - Document management
