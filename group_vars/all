@@ -40,6 +40,7 @@ enable_matomo: False
 enable_miniflux: False
 enable_minio: False
 enable_monicahq: False
+enable_netdata: False
 enable_nextcloud: False
 enable_nzbget: False
 enable_openldap: False
@@ -89,6 +90,7 @@ enabled_services:
   miniflux: "{{ enable_miniflux }}"
   minio: "{{ enable_minio }}"
   monicahq: "{{ enable_monicahq }}"
+  netdata: "{{ enable_netdata }}"
   nextcloud: "{{ enable_nextcloud }}"
   nzbget: "{{ enable_nzbget }}"
   openldap: "{{ enable_openldap }}"
@@ -178,6 +180,7 @@ services:
   - miniflux
   - minio
   - monicahq
+  - netdata
   - nextcloud
   - openldap
   - openvpn
