@@ -10,7 +10,7 @@
       - apache2-utils
 
 - name: Test Setting Fact.
-  shell: $(htpasswd -nbB {{ default_username }} "{{ default_password }}") | sed -e s/\\$/\\$\\$/g
+  shell: htpasswd -nbB {{ default_username }} "{{ default_password }}" | sed -e s/\\$/\\$\\$/g
   register: htpasswd
 
 - debug:
@@ -22,6 +22,7 @@
     dest: /var/homelabos/netdata/docker-compose.netdata.yml
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+    htpasswd: "{{htpasswd.stdout}}"
 
 - name: Configure netdata systemd service.
   template: src=service.j2 dest=/etc/systemd/system/netdata.service

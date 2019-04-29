@@ -32,6 +32,7 @@ services:
       - "traefik.http.port=19999"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+      - "traefik.frontend.auth.basic={{htpasswd.stdout}}"
 {% if enable_tor %}
       - "traefik.tor.frontend.rule=Host:netdata.{{ tor_domain }}"
       - "traefik.tor.protocol=http"
