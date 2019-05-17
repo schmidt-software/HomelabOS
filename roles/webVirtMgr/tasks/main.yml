@@ -1,0 +1,22 @@
+---
+- name: Make webVirtMgr directory.
+  file:
+    path: "/var/homelabos/webVirtMgr"
+    state: directory
+
+- name: Copy webVirtMgr docker-compose.yml file into place.
+  template:
+    src: docker-compose.webVirtMgr.yml.j2
+    dest: /var/homelabos/webVirtMgr/docker-compose.webVirtMgr.yml
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+
+- name: Configure webVirtMgr systemd service.
+  template: src=service.j2 dest=/etc/systemd/system/webVirtMgr.service
+
+- name: Start webVirtMgr
+  systemd:
+    name: webVirtMgr
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started
