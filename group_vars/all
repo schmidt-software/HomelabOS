@@ -63,6 +63,7 @@ enable_thelounge: False
 enable_tick: False
 enable_transmission: False
 enable_wallabag: False
+enable_webVirtMgr: False
 enable_xfinityusageinfluxdb: False
 enable_zulip: False
 
@@ -117,6 +118,7 @@ enabled_services:
   tick: "{{ enable_tick }}"
   transmission: "{{ enable_transmission }}"
   wallabag: "{{ enable_wallabag }}"
+  webVirtMgr: "{{ enable_webVirtMgr }}"
   xfinityusageinfluxdb: "{{ enable_xfinityusageinfluxdb }}"
   zulip: "{{ enable_zulip }}"
 
@@ -210,4 +212,5 @@ services:
   - tick
   - transmission
   - wallabag
+  - webVirtMgr
   - zulip
