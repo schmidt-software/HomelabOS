@@ -22,5 +22,8 @@ true` is included.
   shell: mv /var/lab/homelabos/gitea /var/homelabos/gitea
   ignore_errors: true
 
+- name: Migrate old folders if needed
+  file: path=/var/lab state=absent
+
 # END MIGRATION
 ```
