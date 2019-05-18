@@ -57,3 +57,4 @@ pages:
       - WebVirtMgr: software/webVirtMgr.md
   - Development:
       - Adding Services: development/adding_services.md
+      - Migrations: development/migrations.md
