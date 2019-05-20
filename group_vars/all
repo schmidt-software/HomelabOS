@@ -51,6 +51,7 @@ enable_nzbget: False
 enable_openldap: False
 enable_openvpn: False
 enable_organizr: True
+enable_ownPhotos: False
 enable_paperless: False
 enable_pihole: False
 enable_plex: False
@@ -105,6 +106,7 @@ enabled_services:
   openldap: "{{ enable_openldap }}"
   openvpn: "{{ enable_openvpn }}"
   organizr: "{{ enable_organizr }}"
+  ownphotos: "{{ enable_ownPhotos }}"
   paperless: "{{ enable_paperless }}"
   pihole: "{{ enable_pihole }}"
   plex: "{{ enable_plex }}"
@@ -202,6 +204,7 @@ services:
   - openldap
   - openvpn
   - organizr
+  - ownPhotos
   - paperless
   - pihole
   - plex
