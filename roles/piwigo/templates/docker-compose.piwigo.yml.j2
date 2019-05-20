@@ -1,0 +1,51 @@
+---
+version: '3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  mysqlpiwigo:
+    restart: unless-stopped
+    image: mysql:5.5
+    volumes:
+      - /home/piwigo/mysql/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=MYROOTPASSWORD
+      - MYSQL_DATABASE=piwigo
+      - MYSQL_USER=piwigo
+      - MYSQL_PASSWORD=MYUSERPASSWORD
+    
+  piwigo:
+    restart: unless-stopped
+    domainname: localhost
+    ports:
+      - 8088:80
+    image: mathieuruellan/piwigo
+    links:
+        - mysqlpiwigo:mysql
+    volumes:
+        - /var/homelabos/piwigo/config:/config
+        - /var/homelabos/piwigo/data/galleries:/var/www/galleries
+        - /var/homelabos/piwigo/data/local:/var/www/local
+        - /var/homelabos/piwigo/data/plugins:/var/www/plugins
+        - /var/homelabos/piwigo/data/themes:/var/www/themes
+        - /var/homelabos/piwigo/cache:/var/www/_data/i
+        - /var/homelabos/piwigo/upload:/var/www/upload
+        - /var/log
+        - /var/homelabos/piwigo/logs:/var/log/apache2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.frontend.rule=Host:piwigo.{{ domain }}"
+      - "traefik.http.protocol=http"
+      - "traefik.http.port=80"
+      - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
+      - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+{% if enable_tor %}
+      - "traefik.tor.frontend.rule=Host:piwigo.{{ tor_domain }}"
+      - "traefik.tor.protocol=http"
+      - "traefik.tor.port=80"
+{% endif %}
