@@ -106,7 +106,7 @@ enabled_services:
   openldap: "{{ enable_openldap }}"
   openvpn: "{{ enable_openvpn }}"
   organizr: "{{ enable_organizr }}"
-  ownphotos: "{{ enable_ownPhotos }}"
+  ownPhotos: "{{ enable_ownPhotos }}"
   paperless: "{{ enable_paperless }}"
   pihole: "{{ enable_pihole }}"
   plex: "{{ enable_plex }}"
