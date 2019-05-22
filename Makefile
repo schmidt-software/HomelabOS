@@ -43,7 +43,7 @@ update: logo git_sync config
 update_one: logo git_sync config
 	@ansible-playbook --extra-vars='{"services":["$(filter-out $@,$(MAKECMDGOALS))"]}' --extra-vars="@settings/config.yml" -i inventory -t deploy playbook.homelabos.yml
 
-uninstall: logo git_sync config --extra-vars="@settings/config.yml" -i inventory -t deploy playbook.homelabos.yml
+uninstall: logo git_sync config --extra-vars="@settings/config.yml" -i inventory -t inventory playbook.remove.yml
 
 remove_one: logo git_sync config
 	@ansible-playbook --extra-vars='{"services":["$(filter-out $@,$(MAKECMDGOALS))"]}' --extra-vars="@settings/config.yml" -i inventory playbook.remove.yml
