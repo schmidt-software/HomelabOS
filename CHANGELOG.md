@@ -12,6 +12,7 @@
 - Added Zulip - Threaded Chat Software
 - Added Duplicati - Free backup software to store encrypted backups online. For Windows, macOS and Linux
 - Added Guacamole - clientless remote desktop gateway
+- Added FreshRSS - A free, self-hostable aggregator
 - Various improvements and bug fixes
 
 # 0.4
