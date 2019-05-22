@@ -10,7 +10,6 @@ services:
   proxy:
     image: guysoft/ownphotos-proxy
     tty: true
-    container_name: ownphotos-proxy
     networks:
       - traefik_network
     restart: always
@@ -35,7 +34,6 @@ services:
       
   ownphotos-db:
     image: postgres
-    container_name: ownphotos-db
     networks:
       - traefik_network
     restart: always
@@ -43,11 +41,10 @@ services:
       - POSTGRES_PASSWORD={{ lookup('password', './settings/passwords/ownphotos_db_password chars=digits') }}
       - POSTGRES_DB=ownphotos
     volumes:
-      - /var/homelabos/ownPhotos/db-data:/var/lib/postgresql/data
+      - /var/homelabos/ownphotos/db-data:/var/lib/postgresql/data
 
   frontend:
     image: hooram/ownphotos-frontend:dev
-    container_name: ownphotos-frontend
     networks:
       - traefik_network
     tty: true
@@ -58,13 +55,12 @@ services:
 
   backend:
     image: hooram/ownphotos:dev
-    container_name: ownphotos-backend
     networks:
       - traefik_network
     volumes:
       - /mnt/nas/Pictures:/data
-      - /var/homelabos/ownPhotos/thumbnails/:/code/protected_media
-      - /var/homelabos/ownPhotos/logs:/code/logs
+      - /var/homelabos/ownphotos/thumbnails/:/code/protected_media
+      - /var/homelabos/ownphotos/logs:/code/logs
     environment:
       - SECRET_KEY={{ lookup('password', './settings/passwords/ownphotos_secret_key chars=digits') }}
       - BACKEND_HOST=backend # DON'T CHANGE ME
