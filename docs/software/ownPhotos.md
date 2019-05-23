@@ -1,6 +1,6 @@
-# ownPhotos
+# OwnPhotos
 
-[ownPhotos](https://github.com/hooram/ownphotos) Self hosted Google Photos clone.
+[OwnPhotos](https://github.com/hooram/ownphotos) Self hosted Google Photos clone.
 
 ## Access
 
