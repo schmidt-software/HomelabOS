@@ -24,7 +24,6 @@ services:
     volumes:
       - /var/homelabos/gitea:/data
     ports:
-      - "3030:3000"
       - "222:22"
     depends_on:
       - gitea_db
