@@ -24,6 +24,7 @@ pages:
       - Apple Health: software/applehealth.md
       - Bitwarden: software/bitwarden.md
       - BulletNotes: software/bulletnotes.md
+      - Calibre: software/calibre.md
       - Darksky: software/darksky.md
       - Dasher: software/dasher.md
       - Duplicati: software/duplicati.md
@@ -45,6 +46,7 @@ pages:
       - Monica: software/monica.md
       - Netdata: software/netdata.md
       - NextCloud: software/nextcloud.md
+      - OwnPhotos: software/ownPhotos.md
       - Paperless: software/paperless.md
       - Pi-hole: software/pihole.md
       - Piwigo: software/piwigo.md
@@ -55,6 +57,7 @@ pages:
       - The Lounge: software/thelounge.md
       - TICK: software/tick.md
       - Transmission: software/transmission.md
+      - WebVirtMgr: software/webvirtmgr.md
   - Development:
       - Adding Services: development/adding_services.md
       - Migrations: development/migrations.md

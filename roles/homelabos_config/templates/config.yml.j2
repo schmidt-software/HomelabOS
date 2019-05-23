@@ -6,11 +6,18 @@
 # Default Ubuntu release name to follow. Valid examples include: bionic, cosmic, disco 
 ubuntu_release: {{ ubuntu_release }}
 
+# SUDO password
+ansible_become_password: {{ ansible_become_password | default() }}
+
 # Default user name to create as admin with services
 default_username: {{ default_username }}
 
 # Default password to go with the default user
 default_password: {{ default_password }}
+
+# Minio access keys
+minio_access_key: {{ minio_access_key | default() }}
+minio_secret_access_key: {{ minio_secret_access_key | default() }}
 
 # User name used to connect via ssh. Must have passwordless sudo.
 tincserver_ssh_user: {{ tincserver_ssh_user }}
@@ -56,6 +63,7 @@ enable_airsonic: {{ enable_airsonic }}
 enable_bitwarden: {{ enable_bitwarden }}
 enable_bookstack: {{ enable_bookstack }}
 enable_bulletnotes: {{ enable_bulletnotes }}
+enable_calibre: {{ enable_calibre }}
 enable_codeserver: {{ enable_codeserver }}
 enable_darksky_influx: {{ enable_darksky_influx }}
 enable_dasher: {{ enable_dasher }}
@@ -86,6 +94,7 @@ enable_nzbget: {{ enable_nzbget }}
 enable_openldap: {{ enable_openldap }}
 enable_openvpn: {{ enable_openvpn }}
 enable_organizr: {{ enable_organizr }}
+enable_ownphotos: {{ enable_ownphotos }}
 enable_paperless: {{ enable_paperless }}
 enable_pihole: {{ enable_pihole }}
 enable_piwigo: {{ enable_piwigo }}
@@ -100,6 +109,7 @@ enable_tick: {{ enable_tick }}
 enable_transmission: {{ enable_transmission }}
 enable_xfinityusageinfluxdb: {{ enable_xfinityusageinfluxdb }}
 enable_wallabag: {{ enable_wallabag }}
+enable_webvirtmgr: {{ enable_wallabag }}
 enable_zulip: {{ enable_zulip }}
 
 ### END REQUIRED ###
@@ -124,6 +134,9 @@ nas_path: {{ nas_path }}
 nas_user: {{ nas_user }}
 nas_pass: {{ nas_pass }}
 nas_workgroup: {{ nas_workgroup }}
+
+# Mapbox Api keys: Used for OwnPhotos
+mapbox_api_key: {{ mapbox_api_key | default() }}
 
 # Restic S3 Backup Server Information name: Docs: https://nickbusey.gitlab.io/HomelabOS/setup/backups/
 s3_access_key: {{ s3_access_key }}

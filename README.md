@@ -49,6 +49,7 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 - [Bitwarden](https://bitwarden.com/) - Password and secrets manager via [bitwarden-rs](https://github.com/dani-garcia/bitwarden_rs)
 - [BookStack](https://www.bookstackapp.com/) - Simple & Free Wiki Software
 - [BulletNotes](https://gitlab.com/NickBusey/BulletNotes.git) - Note taking application
+- [Calibre](https://calibre-ebook.com) - Complete ebook library management.
 - [Code-Server](https://github.com/codercom/code-server) - Run VS Code on a remote server.
 - [Darksky](http://darksky.net/) - Local weather reported via [darksky-influxdb](https://github.com/ErwinSteffens/darksky-influxdb)
 - [Dasher](https://github.com/maddox/dasher) - Amazon Dash button support
@@ -70,12 +71,14 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 - [Mailserver](https://github.com/hardware/mailserver/) - Fully featured mail server
 - [Mashio](https://gitlab.com/NickBusey/mashio) - Home brewery management software
 - [Matomo](https://matomo.org/) - Web analytics
+- [Mayan EDMS](https://gitlab.com/mayan-edms/mayan-edms) - Free Open Source DMS (document management system).
 - [Minio](https://minio.io/) - S3 hosting
 - [Miniflux](https://miniflux.app/) - Miniflux is a minimalist and opinionated feed reader.
 - [Monica](https://www.monicahq.com/) - Contact / relationship manager
 - [NetData](http://my-netdata.io/) - Monitor your systems and applications, the right way!
 - [NextCloud](https://nextcloud.com/) - Private Cloud Storage, Calendar, Contacts, etc.
 - [Organizr](https://github.com/causefx/Organizr) - Access all your HomelabOS services in one easy place.
+- [OwnPhotos](https://github.com/hooram/ownphotos) Self hosted Google Photos clone.
 - [Paperless](https://github.com/danielquinn/paperless) - Document management
 - [phpLDAPadmin](https://github.com/osixia/docker-phpLDAPadmin) - LDAP management interface
 - [Pi-hole](https://pi-hole.net/) - Ad blocking
@@ -89,16 +92,18 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 - [The Lounge](https://thelounge.chat/) - Always-on IRC client (IRC bouncer)
 - [Transmission](https://transmissionbt.com/) - BitTorrent client
 - [Wallabag](https://wallabag.org/en) - Save and classify articles. Read them later. Freely.
+- [WebVirtMg](https://github.com/retspen/webvirtmgr) is a complete Kernel Virtual Machine (KVM) hypervisor manager.
 - [Zulip](https://github.com/zulip/zulip) - Threaded chat software
 
 ## Requirements
 
 A server with:
 
-- Ubuntu 18.04
-- Passwordless SSH (with ssh keys) to a user that has passwordless sudo.
+- Ubuntu 18.04 and passwordless SSH via SSH keys
 
-Ansible version 2.5+ installed on your computer (not the server).
+Another computer with:
+
+- Ansible version 2.5+
 
 ## Optional Items
 
