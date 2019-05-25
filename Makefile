@@ -106,6 +106,10 @@ restart_one: logo git_sync config
 	@ansible-playbook --extra-vars="@settings/config.yml" --extra-vars='{"services":["$(filter-out $@,$(MAKECMDGOALS))"]}' -i inventory playbook.restart.yml
 	@echo "\x1B[01;93m========== Done restarting '$(filter-out $@,$(MAKECMDGOALS))'! ==========\n\x1B[0m"
 
+# Add a package
+add_package: logo git_sync
+	@bin/addPkg.rb
+
 # Hacky fix to allow make to accept multiple arguments
 %:
 	@:
