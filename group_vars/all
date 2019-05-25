@@ -1,13 +1,8 @@
-# These are the defaults. They are overridden by values in your config.yml file.
-
-volumes_root: /var/homelabos
-
-# Enabled List
-
+---
+volumes_root: "/var/homelabos"
 enabled_services:
   tinc: "{{ enable_tinc }}"
   tor: "{{ enable_tor }}"
-
   apple_health_influx: "{{ enable_apple_health_influx }}"
   airsonic: "{{ enable_airsonic }}"
   beets: "{{ enable_beets }}"
@@ -65,75 +60,15 @@ enabled_services:
   xfinityusageinfluxdb: "{{ enable_xfinityusageinfluxdb }}"
   webvirtmgr: "{{ enable_webvirtmgr }}"
   zulip: "{{ enable_zulip }}"
-
-#####################################################################################
-#          Leave everything below as is, unless you know what you're doing          #
-#####################################################################################
-
-# Tinc Stuff
-enable_tinc: False
+  ombi: "{{ enable_ombi }}"
+enable_tinc: false
 vpn_ip: 10.0.0.1
 netname: homelabos
 physical_ip: 8.8.8.8
 vpn_interface: tun0
 vpn_netmask: 255.255.0.0
 vpn_subnet_cidr_netmask: 32
-tincserver_ip:
-tincserver_ssh_user:
-
-smtp:
-mailserver:
-# # Service List
-# services:
-#   - airsonic
-#   - beets
-#   - bitwarden
-#   - bookstack
-#   - bulletnotes
-#   - calibre
-#   - codeserver
-#   - docs
-#   - duplicati
-#   - drone
-#   - emby
-#   - firefly_iii
-#   - freshrss
-#   - ghost
-#   - gitea
-#   - grafana
-#   - guacamole
-#   - homeassistant
-#   - homedash
-#   - inventario
-#   - jackett
-#   - jellyfin
-#   - kibitzr
-#   - lidarr
-#   - mailserver
-#   - mashio
-#   - matomo
-#   - mayan
-#   - miniflux
-#   - minio
-#   - monicahq
-#   - netdata
-#   - nextcloud
-#   - openldap
-#   - openvpn
-#   - organizr
-#   - ownphotos
-#   - paperless
-#   - pihole
-#   - piwigo
-#   - plex
-#   - portainer
-#   - sonarr
-#   - radarr
-#   - restic
-#   - syncthing
-#   - thelounge
-#   - tick
-#   - transmission
-#   - wallabag
-#   - webvirtmgr
-#   - zulip
+tincserver_ip: 
+tincserver_ssh_user: 
+smtp: 
+mailserver: 

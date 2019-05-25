@@ -1,5 +1,6 @@
 # 0.5
 
+- Added Ombi - Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves!
 - Greatly improved deployment - Each service is now fully independent from each other
 - Improved SMTP Configuration - More services set up outgoing SMTP out of the box
 - Improved Bastion Host Proxying - Better routing through iptables

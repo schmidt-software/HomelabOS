@@ -80,6 +80,7 @@ If you have the latest version of Vagrant and Virtual Box setup you can demo thi
 - [Monica](https://www.monicahq.com/) - Contact / relationship manager
 - [NetData](http://my-netdata.io/) - Monitor your systems and applications, the right way!
 - [NextCloud](https://nextcloud.com/) - Private Cloud Storage, Calendar, Contacts, etc.
+- [Ombi](https://ombi.io/) - Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves!
 - [Organizr](https://github.com/causefx/Organizr) - Access all your HomelabOS services in one easy place.
 - [OwnPhotos](https://github.com/hooram/ownphotos) Self hosted Google Photos clone.
 - [Paperless](https://github.com/danielquinn/paperless) - Document management
