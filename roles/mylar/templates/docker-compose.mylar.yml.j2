@@ -1,0 +1,36 @@
+---
+version: '3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  mylar:
+    image: linuxserver/mylar
+    environment:
+      - UID={{ uid }}
+      - GID={{ gid }}
+    volumes:
+      - /var/homelabos/mylar/config:/config
+      - /mnt/nas/Comics:/comics
+      - /mnt/nas/Comics/downloads:/downloads
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.frontend.rule=Host:inventario.{{ domain }}"
+      - "traefik.http.protocol=http"
+      - "traefik.http.port=8090"
+      - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
+      - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
+{% if enable_tor %}
+      - "traefik.tor.frontend.rule=Host:inventario.{{ tor_domain }}"
+      - "traefik.tor.protocol=http"
+      - "traefik.tor.port=8090"
+{% endif %}
