@@ -18,10 +18,21 @@ services:
       - /mnt/nas/Music:/music
       - /mnt/nas/NewMusic:/downloads
     restart: unless-stopped
+    ports:
+      - 8337:8337
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.frontend.rule=Host:beets.{{ domain }}"
+      - "traefik.http.frontend.passHostHeader=true"
+      - "traefik.http.frontend.headers.SSLRedirect=true"
+      - "traefik.http.frontend.headers.STSSeconds=315360000"
+      - "traefik.http.frontend.headers.browserXSSFilter=true"
+      - "traefik.http.frontend.headers.contentTypeNosniff=true"
+      - "traefik.http.frontend.headers.forceSTSheader=true"
+      - "traefik.http.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.http.frontend.headers.STSPreload=true"
+      - "traefik.http.frontend.headers.frameDeny=true"
       - "traefik.http.protocol=http"
       - "traefik.http.port=8337"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
