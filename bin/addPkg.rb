@@ -4,6 +4,7 @@ require 'rubygems'
 require 'psych'
 require 'fileutils'
 
+puts 'Step 0. Gathering Info'
 puts 'Enter the package name in title case: '
 unsafe_package_name = gets
 package_name = unsafe_package_name.chomp
@@ -15,25 +16,24 @@ puts 'Enter one-liner package description: '
 unsafe_package_one_liner = gets
 package_one_liner = unsafe_package_one_liner.chomp
 
-
 puts 'Step 1. Creating role folder'
-FileUtils.copy_entry "roles/inventario", "roles/#{package_file_name}"
+FileUtils.copy_entry "package_template/roles/template", "roles/#{package_file_name}"
 puts 'Done!'
 
 puts 'Step 2. Editing role tasks and renaming docker-compose template'
-search_and_replace_in_file("roles/#{package_file_name}/tasks/main.yml", 'inventario', package_file_name)
-FileUtils.mv "roles/#{package_file_name}/templates/docker-compose.inventario.yml.j2", "roles/#{package_file_name}/templates/docker-compose.#{package_file_name}.yml.j2"
+search_and_replace_in_file("roles/#{package_file_name}/tasks/main.yml", 'pkgtemplate', package_file_name)
+FileUtils.mv "roles/#{package_file_name}/templates/docker-compose.template.yml.j2", "roles/#{package_file_name}/templates/docker-compose.#{package_file_name}.yml.j2"
 puts 'Done!'
 
 puts 'Step 3. Copying doc template'
-FileUtils.copy_entry "docs/software/inventario.md", "docs/software/#{package_file_name}.md"
+FileUtils.copy_entry "package_template/docs/software/template.md", "docs/software/#{package_file_name}.md"
 puts 'Done!'
 
 puts 'Step 4. Editing doc file'
-search_and_replace_in_file("docs/software/#{package_file_name}.md", "https://gitlab.com/NickBusey/inventario", "#{package_url}")
-search_and_replace_in_file("docs/software/#{package_file_name}.md", "is a home inventory managament system.", "#{package_one_liner}")
-search_and_replace_in_file("docs/software/#{package_file_name}.md", "inventario", "#{package_file_name}")
-search_and_replace_in_file("docs/software/#{package_file_name}.md", "Inventario", "#{package_name}")
+search_and_replace_in_file("docs/software/#{package_file_name}.md", "PackageURL", "#{package_url}")
+search_and_replace_in_file("docs/software/#{package_file_name}.md", "PackageOneLiner", "#{package_one_liner}")
+search_and_replace_in_file("docs/software/#{package_file_name}.md", "packageFileName", "#{package_file_name}")
+search_and_replace_in_file("docs/software/#{package_file_name}.md", "PackageTitleCase", "#{package_name}")
 puts 'Done!'
 
 puts 'Step 5. Adding docs to mkdocs.yml'
