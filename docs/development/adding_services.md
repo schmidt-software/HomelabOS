@@ -1,5 +1,24 @@
 # How to Add Services to HomelabOS
 
+## Using the addPkg.rb script
+
+Included in the bin directory is a ruby script called addPkg.rb that automates most of the work for adding a new service or package.
+
+### Caveat Emptor
+
+The script requires a functional installation of Ruby 2.2+ and installation of the Psych gem (for parsing and writing YML files)
+
+### Usage.
+
+1. From the project root directory call:
+   `bin/addPkg.rb'
+2. Answer the questions
+3. Edit the docker compose file under `roles/your_package_name/templates` directory
+4. Test!
+5. Push your branch as a MR.
+
+## Adding a package manually
+
 ## Create Role Folder
 
 Copy an existing role folder like 'inventario' from the `roles/` folder,
@@ -27,7 +46,7 @@ The service needs to be added to 3 places within
 
 First under the `# Enabled List` section.
 All services here should default to `False`.
-Next under the `enabled_services:` section in alphabetical order. 
+Next under the `enabled_services:` section in alphabetical order.
 Finally under the `services:` section.
 
 ## Add Service to README
