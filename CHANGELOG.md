@@ -1,5 +1,6 @@
 # 0.5
 
+- Added Trilium - Build your personal knowledge base with Trilium Notes
 - Greatly improved deployment - Each service is now fully independent from each other
 - Improved SMTP Configuration - More services set up outgoing SMTP out of the box
 - Improved Bastion Host Proxying - Better routing through iptables
