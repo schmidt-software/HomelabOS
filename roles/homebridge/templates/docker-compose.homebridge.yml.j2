@@ -1,0 +1,22 @@
+---
+version: '3'
+
+# This networks section required for the pacakge to be visible to Traefik. 
+# DO NOT Remove
+networks:
+  hostnet:
+    external: true
+    name: host
+
+services:
+  homebridge:
+    restart: unless-stopped
+    networks:
+    - hostnet
+    environment:
+        - PUID=<uid>
+        - PGID=<gid>
+        - TZ=<timezone>
+    volumes:
+        - '/var/homelabos/homebridge/:/homebridge'
+    image: oznu/homebridge
