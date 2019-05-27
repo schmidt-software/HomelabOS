@@ -1,7 +1,7 @@
 ---
-- name: Make mylar directory.
+- name: Make mylarr directory.
   file:
-    path: "/var/homelabos/mylar"
+    path: "/var/homelabos/mylarr"
     state: directory
 
 - name: Get UID
@@ -14,21 +14,21 @@
   register: gid_output
   become: no
 
-- name: Copy mylar docker-compose.yml file into place.
+- name: Copy mylarr docker-compose.yml file into place.
   template:
-    src: docker-compose.mylar.yml.j2
-    dest: /var/homelabos/mylar/docker-compose.mylar.yml
+    src: docker-compose.mylarr.yml.j2
+    dest: /var/homelabos/mylarr/docker-compose.mylarr.yml
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
     uid: "{{ uid_output.stdout }}"
     gid: "{{ gid_output.stdout }}"
 
-- name: Configure mylar systemd service.
-  template: src=service.j2 dest=/etc/systemd/system/mylar.service
+- name: Configure mylarr systemd service.
+  template: src=service.j2 dest=/etc/systemd/system/mylarr.service
 
-- name: Start mylar
+- name: Start mylarr
   systemd:
-    name: mylar
+    name: mylarr
     enabled: "yes"
     daemon-reload: "yes"
     state: started
