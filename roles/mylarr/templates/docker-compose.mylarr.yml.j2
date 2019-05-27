@@ -16,8 +16,6 @@ services:
       - /var/homelabos/mylar/config:/config
       - /mnt/nas/Comics:/comics
       - /mnt/nas/Comics/downloads:/downloads
-    ports:
-      - 8090:8090
     restart: unless-stopped
     networks:
       - traefik_network
