@@ -183,5 +183,9 @@ smtp:
 mailserver:
   forward_to_smtp: {{ mailserver.forward_to_smtp | default(False)  }}
 
+traefik:
+  traefik.expose_internally {{ traefik.expose_internally | default(False)  }}
+  traefik.expose_externally {{ traefik.expose_externally | default(False)  }}
+
 # LDAP Settings
 ldap_org_name: {{ ldap_org_name | default() }}
