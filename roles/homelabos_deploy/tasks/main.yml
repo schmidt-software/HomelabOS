@@ -12,7 +12,7 @@
 - name: Deploy enabled services.
   include_role:
     name: "{{ service_item }}"
-  when: "enabled_services[service_item]"
+  when: "lookup('vars', 'enable_' ~ service_item)"
   loop: "{{ services|flatten(levels=1) }}"
   loop_control:
     loop_var: service_item
