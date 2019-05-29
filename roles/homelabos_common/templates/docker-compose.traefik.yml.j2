@@ -13,7 +13,7 @@ services:
     networks:
       - traefik
     ports:
-{% if traefik.expose_externally %}
+{% if traefik.expose_internally %}
       - "8181:8080"
 {% endif %}
       - "80:80"
