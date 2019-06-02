@@ -8,6 +8,7 @@
 
 # 0.6.1
 
+- Added HomeBridge - HomeKit support for the impatient
 - Fixed various deployment issues
 
 # 0.6
