@@ -5,6 +5,9 @@
 
 # 0.6.1
 
+- Added Ombi - Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves!
+- Added Test Ing 5 - testing
+- Added Testing Please Ignore - testing please ignore
 - Fixed various deployment issues
 
 # 0.6
