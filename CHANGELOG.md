@@ -2,10 +2,10 @@
 
 - Added Digikam - Professional Photo Management with the Power of Open Source
 - Added Tautulli - Monitor your Plex Server
+- Added HomeBridge - HomeKit support for the impatient
 
 # 0.6.1
 
-- Added HomeBridge - HomeKit support for the impatient
 - Fixed various deployment issues
 
 # 0.6
