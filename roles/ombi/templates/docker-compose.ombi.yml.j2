@@ -1,40 +1,33 @@
 ---
 version: '3'
 
-# This networks section required for the pacakge to be visible to Traefik. 
-# DO NOT Remove
 networks:
   traefik_network:
     external:
       name: homelabos_traefik
 
 services:
-  app:
-    # REQUIRED
-    image: 
-    restart: unless-stopped
+  ombi:
     networks:
       - traefik_network
+    image: hotio/ombi
+    environment:
+      - UID={{ uid }}
+      - GID={{ gid }}
+      - TZ={{common_timezone}}
+    volumes:
+      - /var/homelabos/ombi/config:/config
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.frontend.rule=Host:ombi.{{ domain }}"
       - "traefik.http.protocol=http"
-      - "traefik.http.port=80"
+      - "traefik.http.port=5000"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM http://{{ domain }}"
       - "traefik.http.frontend.headers.customFrameOptionsValue=ALLOW-FROM https://{{ domain }}"
 {% if enable_tor %}
       - "traefik.tor.frontend.rule=Host:ombi.{{ tor_domain }}"
       - "traefik.tor.protocol=http"
-      - "traefik.tor.port=80"
+      - "traefik.tor.port=5000"
 {% endif %}
-    # OPTIONAL 
-    #links: 
-    #  - inventario_db
-    #environment:
-    #  - MYSQL_DATABASE=package_name
-    #  - MYSQL_TEST_DATABASE=package_name
-    #  - MYSQL_USER=package_name
-    # The next line demonstrates how to generate a random, secure password and store it locally in the settings
-    # folder so that your service password doesn't change on every deploy.
-    #  - MYSQL_PASSWORD="{{ lookup('password', './settings/passwords/package_name_db_password chars=digits') }}"
