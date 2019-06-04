@@ -4,11 +4,11 @@
 - Added Mylar - An automated Comic Book manager
 - Added Tautulli - Monitor your Plex Server
 - Added Watchtower - A process for automating Docker container base image updates
+- Added HomeBridge - HomeKit support for the impatient
 - Added Wekan - Open source Kanban board with MIT license
 
 # 0.6.1
 
-- Added HomeBridge - HomeKit support for the impatient
 - Fixed various deployment issues
 
 # 0.6
