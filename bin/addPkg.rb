@@ -102,9 +102,7 @@ insert_in_config "roles/homelabos_config/templates/config.yml.j2", "#== PARSE ##
 puts 'Done!'
 
 puts 'Step 9. Adding service to Changelog'
-version = File.read("VERSION")
-version_tag = "# #{version}"
-insert_in_config "CHANGELOG.md", version_tag, "- Added #{package_name} - #{package_one_liner}"
+insert_in_config "CHANGELOG.md", '#', "- Added #{package_name} - #{package_one_liner}"
 %x{git add CHANGELOG.md}
 %x{git commit -m "Adding updated Changelog"}
 puts 'Done!'
