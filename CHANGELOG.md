@@ -6,10 +6,10 @@
 - Added Tautulli - Monitor your Plex Server
 - Added Watchtower - A process for automating Docker container base image updates
 - Added Wekan - Open source Kanban board with MIT license
+- Added Ombi - Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves!
 
 # 0.6.1
 
-- Added Ombi - Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves!
 - Added Test Ing 5 - testing
 - Added Testing Please Ignore - testing please ignore
 - Fixed various deployment issues
