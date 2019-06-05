@@ -1,10 +1,10 @@
 # 0.7
 
 - Added Digikam - Professional Photo Management with the Power of Open Source
+- Added HomeBridge - HomeKit support for the impatient
 - Added Mylar - An automated Comic Book manager
 - Added Tautulli - Monitor your Plex Server
 - Added Watchtower - A process for automating Docker container base image updates
-- Added HomeBridge - HomeKit support for the impatient
 - Added Wekan - Open source Kanban board with MIT license
 
 # 0.6.1
