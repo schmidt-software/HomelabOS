@@ -25,6 +25,7 @@ enabled_services:
   grafana: "{{ enable_grafana }}"
   guacamole: "{{ enable_guacamole }}"
   homeassistant: "{{ enable_homeassistant }}"
+  homebridge: "{{ enable_homebridge }}"
   homedash: "{{ enable_homedash }}"
   inventario: "{{ enable_inventario }}"
   jackett: "{{ enable_jackett }}"
@@ -64,7 +65,6 @@ enabled_services:
   webvirtmgr: "{{ enable_webvirtmgr }}"
   zulip: "{{ enable_zulip }}"
   wekan: "{{ enable_wekan }}"
-  homebridge: "{{ enable_homebridge }}"
   watchtower: "{{ enable_watchtower }}"
 enable_tinc: false
 vpn_ip: 10.0.0.1
