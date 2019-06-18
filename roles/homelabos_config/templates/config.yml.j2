@@ -205,6 +205,7 @@ mailserver:
 traefik:
   expose_internally: {{ traefik.expose_internally | default(True)  }}
   expose_externally: {{ traefik.expose_externally | default(False)  }}
+  dns_challenge_provider: {{ traefik.dns_challenge_provider | default() }}
 
 gitea:
   use_mariadb: {{ gitea.use_mariadb | default(True)  }}

@@ -29,8 +29,13 @@ defaultEntryPoints = ["http", "https"]
   storage = "acme.json"
   entryPoint = "https"
   onHostRule = true
+{% if traefik.dns_challenge_provider %}
+  [acme.dnsChallenge]
+   provider = "{{ traefik.dns_challenge_provider }}"
+{% else %}
   [acme.httpChallenge]
     entryPoint = "http"
+{% endif %}
 
 [[acme.domains]]
   main = "*.{{ domain }}"
