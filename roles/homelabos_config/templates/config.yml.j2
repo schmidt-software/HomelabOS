@@ -206,6 +206,16 @@ traefik:
   expose_internally: {{ traefik.expose_internally | default(True)  }}
   expose_externally: {{ traefik.expose_externally | default(False)  }}
   dns_challenge_provider: {{ traefik.dns_challenge_provider | default() }}
+# Extra mapping, for name -> internal address, like myservice: 'http://otherhost:12345'
+{% if traefik.extra_mapping | default(False) %}
+  extra_mapping:
+{% for service_name in traefik.extra_mapping %}
+    {{ service_name }}: {{ traefik.extra_mapping[service_name] }}
+{% endfor %}
+{% else %}
+# extra_mapping:
+#   myservice: http://otherhost:12345
+{% endif %}
 
 gitea:
   use_mariadb: {{ gitea.use_mariadb | default(True)  }}

@@ -40,3 +40,22 @@ defaultEntryPoints = ["http", "https"]
 [[acme.domains]]
   main = "*.{{ domain }}"
   sans = ["{{ domain }}"]
+
+{% if traefik.extra_mapping | default(False) %}
+[file]
+
+[backends]
+{% for service_name in traefik.extra_mapping %}
+[backends.{{ service_name }}_backend]
+    [backends.{{ service_name }}_backend.servers.server1]
+    url = "{{ traefik.extra_mapping[service_name] }}"
+{% endfor %}
+
+[frontends]
+{% for service_name in traefik.extra_mapping %}
+  [frontends.{{ service_name }}_frontend]
+  backend = "{{ service_name }}_backend"
+  [frontends.{{ service_name }}_frontend.routes.test_1]
+    rule = "Host: {{ service_name }}.{{ domain }}"
+{% endfor %}
+{% endif %}
