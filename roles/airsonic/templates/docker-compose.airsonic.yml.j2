@@ -8,8 +8,13 @@ networks:
 
 services:
   airsonic_web:
-    image: airsonic/airsonic
+    image: linuxserver/airsonic
     restart: unless-stopped
+    environment:
+      - PUID={{ uid_output.stdout }}
+      - PGID={{ gid_output.stdout }}
+      - TZ={{ common_timezone }}
+      - JAVA_OPTS=-Dserver.use-forward-headers=true
     networks:
       - traefik_network
     volumes:
