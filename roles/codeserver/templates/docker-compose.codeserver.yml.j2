@@ -8,22 +8,28 @@ networks:
 
 services:
   code-server:
+    #image: linuxserver/code-server
     image: codercom/code-server
+    environment:
+      - PUID={{ uid_output.stdout }}
+      - PGID={{ gid_output.stdout }}
+      - TZ={{ common_timezone }}
+      - PASSWORD="{{lookup('password', './settings/passwords/code_server_password ')}}"
+      - SUDO_PASSWORD="{{lookup('password', './settings/passwords/code_server_sudo_password ')}}"
+    command: --allow-http
     volumes:
-      - /var/homelabos/codeserver/code:/root/project
+      - /var/homelabos/codeserver/config:/config
     restart: unless-stopped
     networks:
       - traefik_network
-    ports:
-      - 8443:8443
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
-      - "traefik.http.frontend.rule=Host:code-server.{{ domain }}"
+      - "traefik.http.frontend.rule=Host:vscode.{{ domain }}"
       - "traefik.http.protocol=http"
       - "traefik.http.port=8443"
 {% if enable_tor %}
-      - "traefik.tor.frontend.rule=Host:code-server.{{ tor_domain }}"
+      - "traefik.tor.frontend.rule=Host:vscode.{{ tor_domain }}"
       - "traefik.tor.protocol=http"
       - "traefik.tor.port=8443"
 {% endif %}
