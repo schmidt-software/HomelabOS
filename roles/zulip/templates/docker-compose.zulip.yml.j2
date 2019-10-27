@@ -14,7 +14,7 @@ services:
     environment:
       POSTGRES_DB: 'zulip'
       POSTGRES_USER: 'zulip'
-      POSTGRES_PASSWORD: "{{lookup('password', './settings/passwords/zulip_db_password chars=digits')}}"
+      POSTGRES_PASSWORD: "{{lookup('password', './settings/passwords/zulip_postgres_password chars=digits')}}"
     volumes:
       - '/var/homelabos/zulip/postgresql:/var/lib/postgresql/data:rw'
 
