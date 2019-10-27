@@ -56,7 +56,7 @@ services:
       SETTING_MEMCACHED_LOCATION: 'memcached:11211'
       SETTING_RABBITMQ_HOST: 'rabbitmq'
       SETTING_REDIS_HOST: 'redis'
-      SECRETS_email_password: '123456789'
+      SECRETS_email_password: "{{lookup('password', './settings/passwords/zulip_email_password chars=digits')}}"
       SECRETS_rabbitmq_password: "{{lookup('password', './settings/passwords/zulip_rabbitmq_password chars=digits')}}"
       SECRETS_postgres_password: "{{lookup('password', './settings/passwords/zulip_db_password chars=digits')}}"
       SECRETS_secret_key: "{{lookup('password', './settings/passwords/zulip_secret_key chars=digits')}}"
