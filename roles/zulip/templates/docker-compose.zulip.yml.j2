@@ -56,7 +56,7 @@ services:
       SETTING_MEMCACHED_LOCATION: 'memcached:11211'
       SETTING_RABBITMQ_HOST: 'rabbitmq'
       SETTING_REDIS_HOST: 'redis'
-      SECRETS_email_password: "{{lookup('password', './settings/passwords/zulip_email_password chars=digits')}}"
+      SECRETS_email_password: "{{ smtp.pass }}"
       SECRETS_rabbitmq_password: "{{lookup('password', './settings/passwords/zulip_rabbitmq_password chars=digits')}}"
       SECRETS_postgres_password: "{{lookup('password', './settings/passwords/zulip_db_password chars=digits')}}"
       SECRETS_secret_key: "{{lookup('password', './settings/passwords/zulip_secret_key chars=digits')}}"
@@ -65,7 +65,6 @@ services:
       SETTING_EMAIL_HOST: "{{ smtp.host }}"  # e.g. smtp.example.com
       SETTING_EMAIL_HOST_USER: "{{ smtp.user }}"
       SETTING_EMAIL_PORT: "{{ smtp.port }}"
-      SETTING_EMAIL_PASSWORD: "{{ smtp.pass }}"
       # It seems that the email server needs to use ssl or tls and can't be used without it
       SETTING_EMAIL_USE_SSL: 'False'
       SETTING_EMAIL_USE_TLS: 'True'
