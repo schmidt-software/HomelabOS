@@ -14,7 +14,7 @@ services:
     environment:
       POSTGRES_DB: 'zulip'
       POSTGRES_USER: 'zulip'
-      POSTGRES_PASSWORD: "{{lookup('password', './settings/passwords/zulip_db_password chars=digits')}}"
+      POSTGRES_PASSWORD: "{{lookup('password', './settings/passwords/zulip_postgres_password chars=digits')}}"
     volumes:
       - '/var/homelabos/zulip/postgresql:/var/lib/postgresql/data:rw'
 
@@ -56,15 +56,15 @@ services:
       SETTING_MEMCACHED_LOCATION: 'memcached:11211'
       SETTING_RABBITMQ_HOST: 'rabbitmq'
       SETTING_REDIS_HOST: 'redis'
-      SECRETS_email_password: '123456789'
+      SECRETS_email_password: "{{ smtp.pass }}"
       SECRETS_rabbitmq_password: "{{lookup('password', './settings/passwords/zulip_rabbitmq_password chars=digits')}}"
       SECRETS_postgres_password: "{{lookup('password', './settings/passwords/zulip_db_password chars=digits')}}"
       SECRETS_secret_key: "{{lookup('password', './settings/passwords/zulip_secret_key chars=digits')}}"
       SETTING_EXTERNAL_HOST: 'zulip.{{ domain }}'
-      SETTING_ZULIP_ADMINISTRATOR: 'admin@example.com'
-      SETTING_EMAIL_HOST: ''  # e.g. smtp.example.com
-      SETTING_EMAIL_HOST_USER: 'noreply@example.com'
-      SETTING_EMAIL_PORT: '587'
+      SETTING_ZULIP_ADMINISTRATOR: "{{ smtp.from_email }}"
+      SETTING_EMAIL_HOST: "{{ smtp.host }}"  # e.g. smtp.example.com
+      SETTING_EMAIL_HOST_USER: "{{ smtp.user }}"
+      SETTING_EMAIL_PORT: "{{ smtp.port }}"
       # It seems that the email server needs to use ssl or tls and can't be used without it
       SETTING_EMAIL_USE_SSL: 'False'
       SETTING_EMAIL_USE_TLS: 'True'
