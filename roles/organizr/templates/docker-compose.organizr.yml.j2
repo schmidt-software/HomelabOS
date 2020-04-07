@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.organizr.tls.certresolver=http"
 {% endif %}
 {% if enable_tor %}
-      - "traefik.tor.frontend.rule=Host:{{ tor_domain }}"
-      - "traefik.tor.protocol=http"
-      - "traefik.tor.port=80"
+      - "traefik.http.routers.organizr-tor.rule=Host(`{{ tor_domain }}`)"
+      - "traefik.http.routers.organizr-tor.entrypoints=http"
+      - "traefik.http.routers.organizr-tor.middlewares={% if organizr.https_only %}redirect@file, {% else %}{% if organizr.auth %}{% if enable_authelia %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
 {% endif %}
