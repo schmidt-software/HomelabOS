@@ -144,7 +144,7 @@ services:
     enabled: {{ services.codeserver.enabled | default(enable_codeserver, None) | default(False) }}
     https_only: {{ services.codeserver.https_only | default(False) }}
     auth: {{ services.authelia.enabled | default(enable_authelia, None) | default(False) }}
-    subdomain: {{ services.chowdown.subdomain | default("codeserver") }}
+    subdomain: {{ services.codeserver.subdomain | default("codeserver") }}
   dark_sky:
     enabled: {{ services.dark_sky.enabled | default(enable_dark_sky, None) | default(False) }}
     https_only: {{ services.dark_sky.https_only | default(False) }}
@@ -500,10 +500,10 @@ services:
     auth: {{ services.authelia.enabled | default(enable_authelia, None) | default(False) }}
     subdomain: {{ services.xfinityusageinfluxdb.subdomain | default("xfinityusageinfluxdb") }} 
   wallabag:
-    enabled: {{ services.xfinityusageinfluxdb.enabled | default(enable_xfinityusageinfluxdb, None) | default(False) }}
-    https_only: {{ services.xfinityusageinfluxdb.https_only | default(False) }}
+    enabled: {{ services.wallabag.enabled | default(enable_wallabag, None) | default(False) }}
+    https_only: {{ services.wallabag.https_only | default(False) }}
     auth: {{ services.authelia.enabled | default(enable_authelia, None) | default(False) }}
-    subdomain: {{ services.xfinityusageinfluxdb.subdomain | default("wallabag") }} 
+    subdomain: {{ services.wallabag.subdomain | default("wallabag") }} 
   webvirtmgr: 
     enabled: {{ services.webvirtmgr.enabled | default(enable_webvirtmgr, None) | default(False) }}
     https_only: {{ services.webvirtmgr.https_only | default(False) }}
