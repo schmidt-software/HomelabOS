@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.folding_at_home.middlewares={% if folding_at_home.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
       - "traefik.http.routers.folding_at_home.tls=true"
 {% if enable_tor %}
-      - "traefik.http.routers.folding_at_home-tor-http.rule=Host(`{{ folding_at_home.tor_domain }}`)"
+      - "traefik.http.routers.folding_at_home-tor-http.rule=Host(`folding.{{ tor_domain }}`)"
       - "traefik.http.routers.folding_at_home-tor-http.entrypoints=http"
       - "traefik.http.routers.folding_at_home-tor-http.middlewares={% if folding_at_home.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
 {% endif %}

@@ -43,7 +43,7 @@ services:
       - "traefik.http.routers.ombi.tls.certresolver=http"
 {% endif %}
 {% if enable_tor %}
-      - "traefik.http.routers.ombi-tor-http.rule=Host(`{{ ombi.tor_domain }}`)"
+      - "traefik.http.routers.ombi-tor-http.rule=Host(`ombi.{{ tor_domain }}`)"
       - "traefik.http.routers.ombi-tor-http.entrypoints=http"
       - "traefik.http.routers.ombi-tor-http.middlewares={% if ombi.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
 {% endif %}

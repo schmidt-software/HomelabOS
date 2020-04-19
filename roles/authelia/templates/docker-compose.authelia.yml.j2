@@ -42,7 +42,7 @@ services:
       - "traefik.http.routers.authelia.tls.certresolver=http"
 {% endif %}
 {% if enable_tor %}
-      - "traefik.http.routers.authelia-tor-http.rule=Host(`{{ authelia.tor_domain }}`)"
+      - "traefik.http.routers.authelia-tor-http.rule=Host(`auth.{{ tor_domain }}`)"
       - "traefik.http.routers.authelia-tor-http.entrypoints=http"
 {% endif %}
     volumes:

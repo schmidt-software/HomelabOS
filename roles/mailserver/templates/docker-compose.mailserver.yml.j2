@@ -37,7 +37,7 @@ services:
       - "traefik.http.routers.mail.tls.certresolver=http"
 {% endif %}
 {% if enable_tor %}
-      - "traefik.http.routers.mail-tor-http.rule=Host(`{{ mailserver.tor_domain }}`)"
+      - "traefik.http.routers.mail-tor-http.rule=Host(`mail.{{ tor_domain }}`)"
       - "traefik.http.routers.mail-tor-http.entrypoints=http"
       - "traefik.http.routers.mail-tor-http.middlewares={% if mail.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
 {% endif %}
