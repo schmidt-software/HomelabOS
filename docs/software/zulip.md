@@ -4,7 +4,7 @@
 
 ## Setup
 
-[https://{{ github.com/zulip/docker-zulip](https://github.com/zulip/docker-zulip)
+[https://github.com/zulip/docker-zulip](https://github.com/zulip/docker-zulip)
 
 ## Access
 
