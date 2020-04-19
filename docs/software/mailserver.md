@@ -71,7 +71,7 @@ lookup you need.
 ## Access
 
 Postfix admin is available at [https://postfixadmin.{{ domain }}/](https://postfixadmin.{{ domain }}/) or
-[http://postfixadmin.{{ domain }}/](http://{{ postfixadmin.domain }}/).
+[http://postfixadmin.{{ domain }}/](http://postfixadmin.{{ domain }}/).
 
 `rspamd` is available at [https://mail.{{ domain }}/](https://mail.{{ domain }}/) or
 [http://mail.{{ domain }}/](http://mail.{{domain }}/).
