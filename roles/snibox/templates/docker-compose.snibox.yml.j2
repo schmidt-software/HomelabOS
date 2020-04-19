@@ -16,7 +16,8 @@ services:
       - traefik_network
       - snibox
     volumes:
-      - '{{ volumes_root }}/snibox/static-files:/var/www/html'
+      #- '{{ volumes_root }}/snibox/static-files:/var/www/html'
+      - static-files:/var/www/html
     depends_on:
       - backend
     labels:
@@ -68,7 +69,8 @@ services:
       #MAILGUN_PUBLIC_KEY: "${MAILGUN_PUBLIC_KEY}"
       SECRET_KEY_BASE: "{{lookup('password', './settings/passwords/snibox_secret_key chars=digits')}}"
     volumes:
-      - '{{ volumes_root }}/snibox/static-files:/app/public'
+      #- '{{ volumes_root }}/snibox/static-files:/app/public'
+      - static-files:/app/public
     depends_on:
       - database
     networks:
@@ -77,7 +79,11 @@ services:
   database:
     image: postgres:10.7-alpine
     volumes:
-      - '{{ volumes_root }}/snibox/pg-data:/var/lib/postgresql/data'
+      #- '{{ volumes_root }}/snibox/pg-data:/var/lib/postgresql/data'
+      - pg-data:/var/lib/postgresql/data
     networks:
       - snibox
     
+volumes:
+  pgdata:
+  static-files:
