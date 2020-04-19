@@ -7,5 +7,5 @@
 It is available at [https://{{ ownphotos.domain }}/](https://ownphotos.domain }}/) or [http://{{ ownphotos.domain }}/](http://{{ ownphotos.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ ownphotos.tor_domain }}/](http://{{ ownphotos.tor_domain }}/)
+It is also available via Tor at [http://ownphotos.{{ tor_domain }}/](http://ownphotos.{{ tor_domain }}/)
 {% endif %}

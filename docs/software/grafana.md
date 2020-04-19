@@ -18,5 +18,5 @@ To reset the admin password run `docker exec -it grafana_grafana_1 grafana-cli a
 It is available at [https://{{ grafana.domain }}/](https://{{ grafana.domain }}/) or [http://{{ grafana.domain }}/](http://{{ grafana.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ grafana.tor_domain }}/](http://{{ grafana.tor_domain }}/)
+It is also available via Tor at [http:// grafana.{{tor_domain }}/](http:// grafana.{{tor_domain }}/)
 {% endif %}

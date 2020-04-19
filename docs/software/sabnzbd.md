@@ -7,7 +7,7 @@
 It is available at [https://{{ sabnzbd.domain }}/](https://sabnzbd.domain }}/) or [http://{{ sabnzbd.domain }}/](http://{{ sabnzbd.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ sabnzbd.tor_domain }}/](http://{{ sabnzbd.tor_domain }}/)
+It is also available via Tor at [http://sabnzbd.{{ tor_domain }}/](http://sabnzbd.{{ tor_domain }}/)
 {% endif %}
 
 ## Security enable/disable https_only and auth

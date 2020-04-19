@@ -7,5 +7,5 @@
 It is available at [https://{{ jellyfin.domain }}/](https://jellyfin.domain }}/) or [http://{{ jellyfin.domain }}/](http://{{ jellyfin.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ jellyfin.tor_domain }}/](http://{{ jellyfin.tor_domain }}/)
+It is also available via Tor at [http://jellyfin.{{ tor_domain }}/](http://jellyfin.{{ tor_domain }}/)
 {% endif %}

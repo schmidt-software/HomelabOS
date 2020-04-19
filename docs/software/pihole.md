@@ -11,5 +11,5 @@ Login with the default password you set.
 The dashboard is available at [https://{{ pihole.domain }}/](https://pihole.domain }}/) or [http://{{ pihole.domain }}/](http://{{ pihole.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ pihole.tor_domain }}/](http://{{ pihole.tor_domain }}/)
+It is also available via Tor at [http://pihole.{{ tor_domain }}/](http://pihole.{{ tor_domain }}/)
 {% endif %}

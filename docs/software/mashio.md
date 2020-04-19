@@ -7,5 +7,5 @@
 It is available at [https://{{ mashio.domain }}/](https://mashio.domain }}/) or [http://{{ mashio.domain }}/](http://{{ mashio.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ mashio.tor_domain }}/](http://{{ mashio.tor_domain }}/)
+It is also available via Tor at [http://mashio.{{ tor_domain }}/](http://mashio.{{ tor_domain }}/)
 {% endif %}

@@ -6,7 +6,7 @@
 
 This requires some manual setup unfortunately.
 
-Drive your web browser to `http://postfixadmin.domain }}/setup.php`.  Loading this page performs the
+Drive your web browser to `http://postfixadmin.{{ domain }}/setup.php`.  Loading this page performs the
 needed database migrations for `postfix` to operate.  Use the form to generate an password used to
 configure the admin user.
 
@@ -70,16 +70,16 @@ lookup you need.
 
 ## Access
 
-Postfix admin is available at [https://{{ postfixadmin.domain }}/](https://postfixadmin.domain }}/) or
+Postfix admin is available at [https://postfixadmin.{{ domain }}/](https://postfixadmin.{{ domain }}/) or
 [http://{{ postfixadmin.domain }}/](http://{{ postfixadmin.domain }}/).
 
-`rspamd` is available at [https://{{ mail.domain }}/](https://mail.domain }}/) or
-[http://{{ mail.domain }}/](http://{{ mail.domain }}/).
+`rspamd` is available at [https://mail.{{ domain }}/](https://mail.{{ domain }}/) or
+[http://mail.{{ domain }}/](http://mail.{{domain }}/).
 
 {% if enable_tor %}
 The services are also available via Tor at
 
-* [http://{{ postfixadmin.tor_domain }}/](http://{{ postfixadmin.tor_domain }}/)
-* [http://{{ mail.tor_domain }}/](http://{{ mail.tor_domain }}/)
+* [http://postfixadmin.{{ tor_domain }}/](http://postfixadmin.{{ tor_domain }}/)
+* [http://mail.{{ tor_domain }}/](http://mail.{{ tor_domain }}/)
 {% endif %}
 

@@ -7,5 +7,5 @@
 It is available at [https://{{ organizr.domain }}/](https://organizr.domain }}/) or [http://{{ organizr.domain }}/](http://{{ organizr.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ organizr.tor_domain }}/](http://{{ organizr.tor_domain }}/)
+It is also available via Tor at [http://{{ tor_domain }}/](http://{{ tor_domain }}/)
 {% endif %}

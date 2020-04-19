@@ -4,8 +4,8 @@
 
 ## Access
 
-It is available at [https://{{ mylar.domain }}/](https://mylar.domain }}/) or [http://{{ mylar.domain }}/](http://{{ mylar.domain }}/)
+It is available at [https://{{ mylar.domain }}/](https://{{ mylar.domain }}/) or [http://{{ mylar.domain }}/](http://{{ mylar.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ mylar.tor_domain }}/](http://{{ mylar.tor_domain }}/)
+It is also available via Tor at [http://mylar.{{ tor_domain }}/](http://mylar.{{ tor_domain }}/)
 {% endif %}

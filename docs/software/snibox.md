@@ -7,5 +7,5 @@
 It is available at [https://{{ snibox.domain }}/](https://snibox.domain }}/) or [http://{{ snibox.domain }}/](http://{{ snibox.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://{{ snibox.tor_domain }}/](http://{{ snibox.tor_domain }}/)
+It is also available via Tor at [http://snibox.{{ tor_domain }}/](http://snibox.{{ tor_domain }}/)
 {% endif %}
