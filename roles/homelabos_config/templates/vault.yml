@@ -47,7 +47,7 @@ smtp:
 traefik:
   https_only: {{ traefik.https_only | default(False) }}
   domain: {{ traefik.domain | default("traefik." + domain) }}
-  tor_subdomain: {{ traefik.tor_subdomain | default("traefik." + tor_domain) }}
+  tor_subdomain: {{ traefik.tor_subdomain | default("traefik") }}
   auth: {{ traefik.auth | default(False) }}
   expose_internally: {{ traefik.expose_internally | default(True)  }}
   expose_externally: {{ traefik.expose_externally | default(False)  }}
