@@ -4,8 +4,8 @@
 
 ## Access
 
-It is available at [https://inventario.{{ domain }}/](https://inventario.{{ domain }}/) or [http://inventario.{{ domain }}/](http://inventario.{{ domain }}/)
+It is available at [https://{{ inventario.domain }}/](https://inventario.domain }}/) or [http://{{ inventario.domain }}/](http://{{ inventario.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://inventario.{{ tor_domain }}/](http://inventario.{{ tor_domain }}/)
+It is also available via Tor at [http://{{ inventario.tor_domain }}/](http://{{ inventario.tor_domain }}/)
 {% endif %}

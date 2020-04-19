@@ -4,8 +4,8 @@
 
 ## Access
 
-It is available at [https://speedtest.{{ domain }}/](https://speedtest.{{ domain }}/) or [http://speedtest.{{ domain }}/](http://speedtest.{{ domain }}/)
+It is available at [https://{{ speedtest.domain }}/](https://speedtest.domain }}/) or [http://{{ speedtest.domain }}/](http://{{ speedtest.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://speedtest.{{ tor_domain }}/](http://speedtest.{{ tor_domain }}/)
+It is also available via Tor at [http://{{ speedtest.tor_domain }}/](http://{{ speedtest.tor_domain }}/)
 {% endif %}

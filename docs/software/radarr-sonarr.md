@@ -56,14 +56,14 @@ and downloaded according to your settings.
 
 ## Access
 
-Sonarr available at [https://sonarr.{{ domain }}/](https://sonarr.{{ domain }}/) or [http://sonarr.{{ domain }}/](http://sonarr.{{ domain }}/)
+Sonarr available at [https://{{ sonarr.domain }}/](https://sonarr.domain }}/) or [http://{{ sonarr.domain }}/](http://{{ sonarr.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://sonarr.{{ tor_domain }}/](http://sonarr.{{ tor_domain }}/)
+It is also available via Tor at [http://{{ sonarr.tor_domain }}/](http://{{ sonarr.tor_domain }}/)
 {% endif %}
 
-Radarr available at [https://radarr.{{ domain }}/](https://radarr.{{ domain }}/) or [http://radarr.{{ domain }}/](http://radarr.{{ domain }}/)
+Radarr available at [https://{{ radarr.domain }}/](https://radarr.domain }}/) or [http://{{ radarr.domain }}/](http://{{ radarr.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://radarr.{{ tor_domain }}/](http://radarr.{{ tor_domain }}/)
+It is also available via Tor at [http://{{ radarr.tor_domain }}/](http://{{ radarr.tor_domain }}/)
 {% endif %}

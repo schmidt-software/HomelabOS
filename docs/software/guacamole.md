@@ -4,8 +4,8 @@
 
 ## Access
 
-It is available at [https://Guacamole.{{ domain }}/](https://Guacamole.{{ domain }}/) or [http://Guacamole.{{ domain }}/](http://Guacamole.{{ domain }}/)
+It is available at [https://{{ guacamole.domain }}/](https://{{ guacamole.domain }}/) or [http://{{ guacamole.domain }}/](http://{{ guacamole.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://Guacamole.{{ tor_domain }}/](http://Guacamole.{{ tor_domain }}/)
+It is also available via Tor at [http://{{ guacamole.tor_domain }}/](http://{{ guacamole.tor_domain }}/)
 {% endif %}

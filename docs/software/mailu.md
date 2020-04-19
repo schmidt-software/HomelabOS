@@ -4,8 +4,8 @@
 
 ## Access
 
-It is available at [https://mailu.{{ domain }}/](https://mailu.{{ domain }}/) or [http://mailu.{{ domain }}/](http://mailu.{{ domain }}/)
+It is available at [https://{{ mailu.domain }}/](https://mailu.domain }}/) or [http://{{ mailu.domain }}/](http://{{ mailu.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://mailu.{{ tor_domain }}/](http://mailu.{{ tor_domain }}/)
+It is also available via Tor at [http://{{ mailu.tor_domain }}/](http://{{ mailu.tor_domain }}/)
 {% endif %}

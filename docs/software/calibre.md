@@ -6,7 +6,7 @@
 
 ## Access
 
-It is available at [https://calibre.{{ domain }}/](https://calibre.{{ domain }}/) or [http://calibre.{{ domain }}/](http://calibre.{{ domain }}/)
+It is available at [https://{{ calibre.domain }}/](https://{{ calibre.domain }}/) or [http://{{ calibre.domain }}/](http://{{ calibre.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://calibre.{{ tor_domain }}/](http://calibre.{{ tor_domain }}/)

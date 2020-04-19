@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://emby.{{ domain }}/](https://emby.{{ domain }}/) or [http://emby.{{ domain }}/](http://emby.{{ domain }}/)
+It is available at [https://{{ emby.domain }}/](https://{{ emby.domain }}/) or [http://{{ emby.domain }}/](http://{{ emby.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://emby.{{ tor_domain }}/](http://emby.{{ tor_domain }}/)

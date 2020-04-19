@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://chowdown.{{ domain }}/](https://chowdown.{{ domain }}/) or [http://chowdown.{{ domain }}/](http://chowdown.{{ domain }}/)
+It is available at [https://{{ chowdown.domain }}/](https://{{ chowdown.domain }}/) or [http://{{ chowdown.domain }}/](http://{{ chowdown.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://chowdown.{{ tor_domain }}/](http://chowdown.{{ tor_domain }}/)

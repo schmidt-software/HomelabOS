@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://beets.{{ domain }}/](https://beets.{{ domain }}/) or [http://beets.{{ domain }}/](http://beets.{{ domain }}/)
+It is available at [https://{{ beets.domain }}/](https://{{ beets.domain }}/) or [http://{{ beets.domain }}/](http://{{ beets.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://beets.{{ tor_domain }}/](http://beets.{{ tor_domain }}/)
