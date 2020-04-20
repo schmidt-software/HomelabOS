@@ -14,7 +14,7 @@ services:
   codeserver: 
   dark_sky: 
   dasher: 
-  digikam: 
+  digikam:
   docs: 
   drone: 
   duplicati: 
