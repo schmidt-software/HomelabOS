@@ -47,7 +47,7 @@ if gl
       mr_result = gl.create_merge_request(HOMELABOS_PROJECT_ID,
                                 "WIP: Resolve \"#{issue_result.title}\"",
                                 :source_branch => @branch_name,
-                                :target_branch => 'ConfigRefactor')
+                                :target_branch => 'dev')
     end
   end
 end
