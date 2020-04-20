@@ -173,7 +173,7 @@ config_block = <<~CONFIG
   enable: {{ #{to_insert}.enable | default(enable_#{to_insert}, None) | default(False) }}
   https_only: {{ #{to_insert}.https_only | default(False) }}
   auth: {{ authelia.enable | default(enable_authelia, None) | default(False) }}
-  subdomain: {{ #{to_insert}.subdomain | default("#{to_insert})"}}
+  subdomain: {{ #{to_insert}.subdomain | default("#{to_insert}")}}
 CONFIG
     next_name = find_name_index_for_next_service to_insert
     lines = File.readlines filename
