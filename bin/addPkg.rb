@@ -149,9 +149,9 @@ BEGIN {
 
 config_block = <<~CONFIG
 #{to_insert}:
-  enable: {{ #{to_insert}.enable or enable_#{to_insert} | default(False) }},
+  enable: {{ #{to_insert}.enable | default(enable_#{to_insert}, None) | default(False) }},
   https_only: {{ #{to_insert}.https_only | default(False) }},
-  auth: {{ authelia.enable or enable_authelia | default(False) }},
+  auth: {{ authelia.enable | default(enable_authelia) | default(False) }},
   subdomain: {{ #{to_insert}.subdomain | default(#{to_insert}) }}
 CONFIG
     binding.pry
