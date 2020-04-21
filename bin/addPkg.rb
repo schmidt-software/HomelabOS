@@ -33,22 +33,31 @@ package_one_liner = unsafe_package_one_liner.chomp
 
 if gl
   puts 'Creating gitlab issue'
-  issue_result = gl.create_issue(HOMELABOS_PROJECT_ID,
-                "Add #{package_name}",
-                :description => "Please add #{package_name}",
-                :labels => 'package', :assignee_id => gl.user.id)
-  @branch_name = "#{issue_result.iid}-#{package_name.gsub(/ /, '-')}"
-  if issue_result.iid
-    @iid = issue_result.iid
-    branch_result = gl.create_branch(HOMELABOS_PROJECT_ID,
-                                      @branch_name,
-                                      'HEAD')
-    if !branch_result.nil?
-      mr_result = gl.create_merge_request(HOMELABOS_PROJECT_ID,
-                                "WIP: Resolve \"#{issue_result.title}\"",
-                                :source_branch => @branch_name,
-                                :target_branch => 'dev')
+  begin
+    issue_result = gl.create_issue(HOMELABOS_PROJECT_ID,
+                  "Add #{package_name}",
+                  :description => "Please add #{package_name}",
+                  :labels => 'package', :assignee_id => gl.user.id)
+    @branch_name = "#{issue_result.iid}-#{package_name.gsub(/ /, '-')}"
+    if issue_result.iid
+      @iid = issue_result.iid
+      branch_result = gl.create_branch(HOMELABOS_PROJECT_ID,
+                                        @branch_name,
+                                        'HEAD')
+      if !branch_result.nil?
+        mr_result = gl.create_merge_request(HOMELABOS_PROJECT_ID,
+                                  "WIP: Resolve \"#{issue_result.title}\"",
+                                  :source_branch => @branch_name,
+                                  :target_branch => 'dev')
+      end
     end
+  rescue
+    puts 'Gitlab returned an error, working in offline mode'
+  ensure
+    @branch_name = "Adds-#{package_name.gsub(/ /, '-')}"
+    `git fetch`
+    `git checkout dev`
+    `git branch #{@branch_name}`
   end
 end
 
