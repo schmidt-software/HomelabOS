@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://minecraft.{{ domain }}/](https://minecraft.{{ domain }}/) or [http://minecraft.{{ domain }}/](http://minecraft.{{ domain }}/)
+It is available at [https://{{ minecraft.domain }}/](https://minecraft.domain }}/) or [http://{{ minecraft.domain }}/](http://{{ minecraft.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://minecraft.{{ tor_domain }}/](http://minecraft.{{ tor_domain }}/)

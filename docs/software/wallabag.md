@@ -10,7 +10,7 @@
 
 > _You should change that password._
 
-It is available at [https://wallabag.{{ domain }}/](https://wallabag.{{ domain }}/) or [http://wallabag.{{ domain }}/](http://wallabag.{{ domain }}/)
+It is available at [https://{{ wallabag.domain }}/](https://wallabag.domain }}/) or [http://{{ wallabag.domain }}/](http://{{ wallabag.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://wallabag.{{ tor_domain }}/](http://wallabag.{{ tor_domain }}/)

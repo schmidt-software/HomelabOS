@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://homedash.{{ domain }}/](https://homedash.{{ domain }}/) or [http://homedash.{{ domain }}/](http://homedash.{{ domain }}/)
+It is available at [https://{{ homedash.domain }}/](https://homedash.domain }}/) or [http://{{ homedash.domain }}/](http://{{ homedash.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://homedash.{{ tor_domain }}/](http://homedash.{{ tor_domain }}/)

@@ -46,7 +46,8 @@ smtp:
 
 traefik:
   https_only: {{ traefik.https_only | default(False) }}
-  subdomain: {{ traefik.subdomain | default("traefik") }}
+  domain: {{ traefik.domain | default("traefik." + domain) }}
+  tor_subdomain: {{ traefik.tor_subdomain | default("traefik") }}
   auth: {{ traefik.auth | default(False) }}
   expose_internally: {{ traefik.expose_internally | default(True)  }}
   expose_externally: {{ traefik.expose_externally | default(False)  }}
@@ -66,7 +67,8 @@ authelia:
   enable: {{ authelia.enable | default(enable_authelia, None) | default(False) }}
   https_only: {{ authelia.https_only | default(False) }}
   auth: {{ authelia.enable | default(enable_authelia, None) | default(False) }}
-  subdomain: {{ authelia.subdomain | default("auth") }} 
+  domain: {{ authelia.domain | default("auth." + domain) }}
+  tor_subdomain: {{ authelia.tor_subdomain | default("auth") }} 
   # Determines how verbose the logs are
   log_level: {{ authelia.log_level | default('debug') }}
   # Do you want to login with your common name "john doe" or your username "jdoe"?

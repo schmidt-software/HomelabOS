@@ -13,7 +13,7 @@ Set up some indexers in the interface, and now in [Sonarr](/software/sonarr.md) 
 
 ## Access
 
-The dashboard is available at [https://jackett.{{ domain }}/](https://jackett.{{ domain }}/) or [http://jackett.{{ domain }}/](http://jackett.{{ domain }}/)
+The dashboard is available at [https://{{ jackett.domain }}/](https://jackett.domain }}/) or [http://{{ jackett.domain }}/](http://{{ jackett.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://jackett.{{ tor_domain }}/](http://jackett.{{ tor_domain }}/)

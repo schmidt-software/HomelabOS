@@ -8,7 +8,7 @@ Password managers like Bitwarden should only be used over HTTPS. Ensure you have
 
 ## Access
 
-It is available at [https://bitwarden.{{ domain }}/](https://bitwarden.{{ domain }}/) or [http://bitwarden.{{ domain }}/](http://bitwarden.{{ domain }}/)
+It is available at [https://{{ bitwarden.domain }}/](https://{{ bitwarden.domain }}/) or [http://{{ bitwarden.domain }}/](http://{{ bitwarden.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://bitwarden.{{ tor_domain }}/](http://bitwarden.{{ tor_domain }}/)

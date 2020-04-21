@@ -6,8 +6,8 @@
 
 Default login is user admin with password admin, please change the password immediately (see user menu).
 
-It is available at [https://grocy.{{ domain }}/](https://grocy.{{ domain }}/) or [http://grocy.{{ domain }}/](http://grocy.{{ domain }}/)
+It is available at [https://{{ grocy.domain }}/](https://{{ grocy.domain }}/) or [http://{{ grocy.domain }}/](http://{{ grocy.domain }}/)
 
 {% if enable_tor %}
-It is also available via Tor at [http://grocy.{{ tor_domain }}/](http://grocy.{{ tor_domain }}/)
+It is also available via Tor at [http://grocy.{{tor_domain }}/](http://grocy.{{tor_domain }}/)
 {% endif %}

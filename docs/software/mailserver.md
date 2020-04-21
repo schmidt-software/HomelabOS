@@ -24,7 +24,7 @@ the big email players (gmail etc) will reject email from you because you look ve
 
 #### A Record
 
-**`mail.{{ domain }}`**
+**`mail.domain }}`**
 ```
 instance_ip4
 ```
@@ -33,17 +33,17 @@ instance_ip4
 
 **`{{ domain }}`**
 ```
-mail.{{ domain }}
+mail.domain }}
 ```
 
 #### TXT Records
 
-**`_dmarc.{{ domain }}`**
+**`_dmarc.domain }}`**
 ```
 v=DMARC1; p=none; rua=mailto:postmaster@{{ domain }}; ruf=mailto:postmaster@{{ domain }}; sp=none; ri=86400
 ```
 
-**`mail._domainkey.{{ domain }}`**
+**`mail._domainkey.domain }}`**
 ```
 v=DKIM1; k=rsa; p=some_big_long_hash
 ```
@@ -62,7 +62,7 @@ On install `mailserver` creates the details for the `_domainkey` DNS record.  On
 
 A reverse DNS lookup is often needed for sending email to be processed.  Digital Ocean's DNS system does
 not directly provide for creating a PTR record in their networking UI.  You can however, easily create
-this DNS entry, simply name your droplet as `mail.{{ domain }}`.  Digital Ocean will then create the reverse
+this DNS entry, simply name your droplet as `mail.domain }}`.  Digital Ocean will then create the reverse
 lookup you need.
 
 
@@ -74,7 +74,7 @@ Postfix admin is available at [https://postfixadmin.{{ domain }}/](https://postf
 [http://postfixadmin.{{ domain }}/](http://postfixadmin.{{ domain }}/).
 
 `rspamd` is available at [https://mail.{{ domain }}/](https://mail.{{ domain }}/) or
-[http://mail.{{ domain }}/](http://mail.{{ domain }}/).
+[http://mail.{{ domain }}/](http://mail.{{domain }}/).
 
 {% if enable_tor %}
 The services are also available via Tor at

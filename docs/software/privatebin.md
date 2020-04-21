@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://privatebin.{{ domain }}/](https://privatebin.{{ domain }}/) or [http://privatebin.{{ domain }}/](http://privatebin.{{ domain }}/)
+It is available at [https://{{ privatebin.domain }}/](https://privatebin.domain }}/) or [http://{{ privatebin.domain }}/](http://{{ privatebin.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://privatebin.{{ tor_domain }}/](http://privatebin.{{ tor_domain }}/)

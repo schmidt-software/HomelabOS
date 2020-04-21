@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://plex.{{ domain }}/](https://plex.{{ domain }}/) or [http://plex.{{ domain }}/](http://plex.{{ domain }}/)
+It is available at [https://{{ plex.domain }}/](https://plex.domain }}/) or [http://{{ plex.domain }}/](http://{{ plex.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://plex.{{ tor_domain }}/](http://plex.{{ tor_domain }}/)

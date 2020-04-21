@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://sync.{{ domain }}/](https://sync.{{ domain }}/) or [http://sync.{{ domain }}/](http://sync.{{ domain }}/)
+It is available at [https://{{ syncthing.domain }}/](https://{{ syncthing.domain }}/) or [http://{{ syncthing.domain }}/](http://{{ syncthing.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://sync.{{ tor_domain }}/](http://sync.{{ tor_domain }}/)

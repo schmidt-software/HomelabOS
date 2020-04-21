@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://erpnext.{{ domain }}/](https://erpnext.{{ domain }}/) or [http://erpnext.{{ domain }}/](http://erpnext.{{ domain }}/)
+It is available at [https://{{ erpnext.domain }}/](https://{{ erpnext.domain }}/) or [http://{{ erpnext.domain }}/](http://{{ erpnext.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://erpnext.{{ tor_domain }}/](http://erpnext.{{ tor_domain }}/)

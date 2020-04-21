@@ -4,7 +4,7 @@
 
 ## Access
 
-It is available at [https://poli.{{ domain }}/](https://poli.{{ domain }}/) or [http://poli.{{ domain }}/](http://poli.{{ domain }}/)
+It is available at [https://{{ poli.domain }}/](https://poli.domain }}/) or [http://{{ poli.domain }}/](http://{{ poli.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://poli.{{ tor_domain }}/](http://poli.{{ tor_domain }}/)

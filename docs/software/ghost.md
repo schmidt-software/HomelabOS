@@ -4,11 +4,11 @@
 
 ## Configuration
 
-It is important to secure Ghost! Access the Ghost admin with [https://ghost.{{ domain }}/ghost/](https://ghost.{{ domain }}/ghost/), and create an account.
+It is important to secure Ghost! Access the Ghost admin with [https://{{ ghost.domain }}/ghost/](https://{{ ghost.domain }}/ghost/), and create an account.
 
 ## Access
 
-The dashboard is available at [https://ghost.{{ domain }}/](https://ghost.{{ domain }}/) or [http://ghost.{{ domain }}/](http://ghost.{{ domain }}/)
+The dashboard is available at [https://{{ ghost.domain }}/](https://{{ ghost.domain }}/) or [http://{{ ghost.domain }}/](http://{{ ghost.domain }}/)
 
 {% if enable_tor %}
 It is also available via Tor at [http://ghost.{{ tor_domain }}/](http://ghost.{{ tor_domain }}/)
