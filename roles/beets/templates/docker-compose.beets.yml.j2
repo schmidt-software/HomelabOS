@@ -18,6 +18,8 @@ services:
       - "{{ storage_dir }}/Music:/music"
       - "{{ storage_dir }}/Downloads/Music:/downloads"
     restart: unless-stopped
+    networks:
+      - traefik_network
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
