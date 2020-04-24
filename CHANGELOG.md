@@ -5,7 +5,6 @@
 - Added Encrypted Secrets - All secrets stored in the settings repo are now automatically encrypted with Ansible Vault. Use `make decrypt` to see the values in the file. It re-encrypts when you run `make`.
 - Added Huginn - Create agents that monitor and act on your behalf. Your agents are standing by!
 - Added Minecraft - Minecraft server with select-able version 
-- Added MinecraftBedrockServer - Minecraft Bedrock Server
 - Added One-Line Deploy - `bash <(curl -s https://gitlab.com/NickBusey/HomelabOS/-/raw/dev/install_homelabos.sh)`
 - Added Snibox - Self-hosted snippet manager. Developed to collect and organize code snippets.
 
@@ -46,6 +45,8 @@
 - Added folding_at_home - Folding@home software allows you to share your unused computer power with scientists researching diseases.
 - Updated everything to use traefik version 2
 - Added Barcode Buddy - Barcode system for Grocy
+- Added MinecraftBedrockServer - Minecraft Bedrock Server
+
 
 ## Release Notes
 
