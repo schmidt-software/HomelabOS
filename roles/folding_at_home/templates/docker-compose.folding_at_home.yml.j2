@@ -20,7 +20,7 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.services.folding_at_home.loadbalancer.server.scheme=http"
-      - "traefik.http.services.folding_at_home.loadbalancer.server.port=0"
+      - "traefik.http.services.folding_at_home.loadbalancer.server.port=7396"
       - "traefik.http.routers.folding_at_home-http.rule=Host(`{{ folding_at_home.subdomain }}.{{ domain }}`)"
       - "traefik.http.routers.folding_at_home-http.entrypoints=http"
 {% if not folding_at_home.https_only %}
