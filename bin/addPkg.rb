@@ -87,39 +87,41 @@ search_and_replace_in_file("docs/software/#{package_file_name}.md", 'PackageTitl
 `git add docs/software/#{package_file_name}.md`
 puts 'Done!'
 
-puts 'Step 5. Adding docs to mkdocs.yml'
-# 'nav', 4, 'Included Software'
-add_to_array_at_key('mkdocs.yml', ['nav', 6, 'Included Software', 16, 'Misc/Other'], { package_name.to_s => "software/#{package_file_name}.md" })
-`git add mkdocs.yml`
-puts 'Done!'
+# puts 'Step 5. Adding docs to mkdocs.yml'
+# # 'nav', 4, 'Included Software'
+# # add_to_array_at_key('mkdocs.yml', ['nav', 6, 'Included Software', 16, 'Misc/Other'], { package_name.to_s => "software/#{package_file_name}.md" })
+# # `git add mkdocs.yml`
+# puts 'Done!'
 
-puts 'Step 6. Adding service to Inventory file'
+puts 'Step 5. Adding service to Inventory file'
 add_to_hash_at_key('group_vars/all', ['services'], { package_file_name.to_s => nil })
 insert_service_name_into_group_vars_second_instance(package_file_name)
 `git add group_vars/all`
 puts 'Done!'
 
-puts 'Step 7. Adding service to Readme.md'
+puts 'Step 6. Adding service to Readme.md'
 insert_in_config 'README.md', '## Available Software', "- [#{package_name}](#{package_url}) - #{package_one_liner}"
 `git add README.md`
 puts 'Done!'
 
-puts 'Step 8. Adding service to Config Template'
+puts 'Step 7. Adding service to Config Template'
 insert_new_service_in_config_template 'roles/homelabos_config/templates/config.yml', package_file_name # to_insert
 `git add roles/homelabos_config/templates/config.yml`
 puts 'Done!'
 
-puts 'Step 9. Adding service to Changelog'
+puts 'Step 8. Adding service to Changelog'
 insert_in_config 'CHANGELOG.md', '#', "- Added #{package_name} - #{package_one_liner}"
 `git add CHANGELOG.md`
 puts 'Done!'
 
 puts <<-FINAL
 
-Two things: 
+Four things: 
 1. This script places the docs page in the misc/other section. 
     Please edit mkdocs.yml to place this package in the appropriate section.
 2. Please Don't forget to edit the docker-compose file
+3. Place this in the appropriate section of mkdocs.yml: #{package_name.to_s}: "software/#{package_file_name}.md" }
+4. Edit the docs/index.md and add this in the appropriate section: - [#{package_name.to_s}](software/#{package_file_name}) - #{package_one_liner}
 FINAL
 # puts "\n\nAll files added by this script, with the exception of the docker-compose file have been staged in git."
 
