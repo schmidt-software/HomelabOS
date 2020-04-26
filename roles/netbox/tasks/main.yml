@@ -1,0 +1,24 @@
+---
+- name: Make netbox directory.
+  file:
+    path: "{{ volumes_root }}/netbox"
+    state: directory
+
+- name: Copy netbox docker-compose.yml file into place.
+  template:
+    src: docker-compose.netbox.yml.j2
+    dest: "{{ volumes_root }}/netbox/docker-compose.netbox.yml"
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+
+- name: Configure netbox systemd service.
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/netbox.service
+
+- name: Start netbox
+  systemd:
+    name: netbox
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started

@@ -1,0 +1,56 @@
+---
+version: '3'
+
+# This networks section required for the pacakge to be visible to Traefik. 
+# DO NOT Remove
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  app:
+    # REQUIRED
+    image: 
+    restart: unless-stopped
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.services.netbox.loadbalancer.server.scheme=http"
+      - "traefik.http.services.netbox.loadbalancer.server.port=3000"
+      - "traefik.http.routers.netbox-http.rule=Host(`{{ netbox.subdomain }}.{{ domain }}`)"
+      - "traefik.http.routers.netbox-http.entrypoints=http"
+{% if not netbox.https_only %}
+      - "traefik.http.routers.netbox-http.middlewares={% if netbox.https_only %}redirect@file, {% else %}{% if netbox.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
+{% else %}
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.netbox-http.middlewares=redirect-to-https"
+{% endif %}
+      - "traefik.http.routers.netbox.rule=Host(`{{ netbox.subdomain }}.{{ domain }}`)"
+      - "traefik.http.routers.netbox.entrypoints=https"
+      - "traefik.http.routers.netbox.middlewares={% if netbox.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.netbox.tls=true"
+{% if traefik.dns_challenge_provider %}
+      - "traefik.http.routers.netbox.tls.certresolver=dns"
+      - "traefik.http.routers.netbox.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.netbox.tls.domains[0].sans=*.{{ domain }}"
+{% else %}
+      - "traefik.http.routers.netbox.tls.certresolver=http"
+{% endif %}
+{% if enable_tor %}
+      - "traefik.http.routers.netbox-tor-http.rule=Host(`netbox.{{ tor_domain }}`)"
+      - "traefik.http.routers.netbox-tor-http.entrypoints=http"
+      - "traefik.http.routers.netbox-tor-http.middlewares={% if netbox.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
+{% endif %}
+    # OPTIONAL 
+    #links: 
+    #  - inventario_db
+    #environment:
+    #  - MYSQL_DATABASE=package_name
+    #  - MYSQL_TEST_DATABASE=package_name
+    #  - MYSQL_USER=package_name
+    # The next line demonstrates how to generate a random, secure password and store it locally in the settings
+    # folder so that your service password doesn't change on every deploy.
+    #  - MYSQL_PASSWORD={{"lookup('password', './settings/passwords/package_name_db_password chars=digits')"}}
