@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: '3.4'
 
 # This networks section required for the pacakge to be visible to Traefik. 
 # DO NOT Remove
@@ -11,10 +11,20 @@ networks:
 services:
   app:
     # REQUIRED
-    image: 
+    image: netboxcommunity:netbox:latest
     restart: unless-stopped
     networks:
       - traefik_network
+    user: '{{ uid.stdout }}'
+    volumes:
+      - "{{ volumes_root }}/netbox/startup_scripts:/opt/netbox/startup_scripts:z,ro"
+      - "{{ volumes_root }}/netbox/configuration:etc/netbox/config:z,ro"
+      - "{{ volumes_root }}/netbox/reports:/etc/netbox/reports:z,ro"
+      - "{{ volumes_root }}/netbox/scripts:/etc/netbox/scripts:z,ro"
+      - "{{ volumes_root }}/netbox/"
+      - netbox-static-files:/opt/netbox/netbox/static:z
+      - netbox-media-files:/opt/netbox/netbox/media:z
+      - netbox-nginx-config:/etc/netbox-nginx:z
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
@@ -44,13 +54,44 @@ services:
       - "traefik.http.routers.netbox-tor-http.entrypoints=http"
       - "traefik.http.routers.netbox-tor-http.middlewares={% if netbox.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
 {% endif %}
-    # OPTIONAL 
-    #links: 
-    #  - inventario_db
-    #environment:
-    #  - MYSQL_DATABASE=package_name
-    #  - MYSQL_TEST_DATABASE=package_name
-    #  - MYSQL_USER=package_name
-    # The next line demonstrates how to generate a random, secure password and store it locally in the settings
-    # folder so that your service password doesn't change on every deploy.
-    #  - MYSQL_PASSWORD={{"lookup('password', './settings/passwords/package_name_db_password chars=digits')"}}
+
+  netbox-worker:
+    <<: *app
+    depends_on:
+      - redis
+    entrypoint:
+      - python3
+      - /opt/netbox/netbox/manage.py
+    command:
+      - rqworker
+  nginx:
+    command: nginx -c /etc/netbox-nginx/nginx.conf
+    image: nginx:1.17-alpine
+    depends_on:
+    - netbox
+    ports:
+    - 8080
+    volumes:
+    - netbox-static-files:/opt/netbox/netbox/static:ro
+    - netbox-nginx-config:/etc/netbox-nginx/:ro
+  postgres:
+    image: postgres:11-alpine
+    env_file: env/postgres.env
+    volumes:
+    - netbox-postgres-data:/var/lib/postgresql/data
+  redis:
+    image: redis:5-alpine
+    command:
+    - sh
+    - -c # this is to evaluate the $REDIS_PASSWORD from the env
+    - redis-server --appendonly yes --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+    env_file: env/redis.env
+    volumes:
+    - netbox-redis-data:/data
+  redis-cache:
+    image: redis:5-alpine
+    command:
+    - sh
+    - -c # this is to evaluate the $REDIS_PASSWORD from the env
+    - redis-server --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+    env_file: env/redis-cache.env
