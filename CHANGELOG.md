@@ -47,6 +47,8 @@
 - Added Barcode Buddy - Barcode system for Grocy
 - Added MinecraftBedrockServer - Minecraft Bedrock Server
 - Added Funkwhale - A social platform to enjoy and share music
+- Added Netbox - IP address management (IPAM) and data center infrastructure management (DCIM) tool.
+
 
 
 ## Release Notes

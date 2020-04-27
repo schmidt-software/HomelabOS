@@ -373,6 +373,11 @@ mylar:
   https_only: {{ mylar.https_only | default(False) }}
   auth: {{ mylar.auth | default(False) }}
   subdomain: {{ mylar.subdomain | default("mylar") }}
+netbox:
+  enable: {{ netbox.enable | default(enable_netbox, None) | default(False) }}
+  https_only: {{ netbox.https_only | default(False) }}
+  auth: {{ netbox.auth | default(False) }}
+  subdomain: {{ netbox.subdomain | default("netbox")}}
 netdata:
   enable: {{ netdata.enable | default(enable_netdata, None) | default(False) }}
   https_only: {{ netdata.https_only | default(False) }}
