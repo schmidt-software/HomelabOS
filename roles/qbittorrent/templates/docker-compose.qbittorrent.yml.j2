@@ -17,8 +17,8 @@ services:
       - "{{ volumes_root }}/qbittorrent/config:/config"
       - "{{ storage_dir }}/Downloads:/downloads"
     environment:
-      - VPN_ENABLED=yes
-      - LAN_NETWORK=192.168.1.0/24
+      - VPN_ENABLED={{ qbittorrent.vpn_enabled }}
+      - LAN_NETWORK={{ qbittorrent.lan_network }}
       - VPN_USERNAME={{ openvpn_username }}
       - VPN_PASSWORD={{ openvpn_password }}
       - PUID={{ uid_output.stdout }}
