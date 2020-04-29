@@ -1,89 +1,216 @@
-# These are the defaults. They are overridden by values in your config.yml file.
-
-volumes_root: /var/homelabos
-
-# Enabled List
-
-tinc: "{{ enable_tinc }}"
-tor: "{{ enable_tor }}"
-
-enabled_services:
-  apple_health_influx: "{{ enable_apple_health_influx }}"
-  airsonic: "{{ enable_airsonic }}"
-  beets: "{{ enable_beets }}"
-  bitwarden: "{{ enable_bitwarden }}"
-  bookstack: "{{ enable_bookstack }}"
-  bulletnotes: "{{ enable_bulletnotes }}"
-  calibre: "{{ enable_calibre }}"
-  codeserver: "{{ enable_codeserver }}"
-  darksky_influx: "{{ enable_darksky_influx }}"
-  dasher: "{{ enable_dasher }}"
-  docs: "{{ enable_docs }}"
-  duplicati: "{{ enable_duplicati }}"
-  drone: "{{ enable_drone }}"
-  emby: "{{ enable_emby }}"
-  firefly_iii: "{{ enable_firefly_iii }}"
-  freshrss: "{{ enable_freshrss }}"
-  ghost: "{{ enable_ghost }}"
-  gitea: "{{ enable_gitea }}"
-  grafana: "{{ enable_grafana }}"
-  guacamole: "{{ enable_guacamole }}"
-  homeassistant: "{{ enable_homeassistant }}"
-  homedash: "{{ enable_homedash }}"
-  inventario: "{{ enable_inventario }}"
-  jackett: "{{ enable_jackett }}"
-  jellyfin: "{{ enable_jellyfin }}"
-  kibitzr: "{{ enable_kibitzr }}"
-  lidarr: "{{ enable_lidarr }}"
-  mailserver: "{{ enable_mailserver }}"
-  mashio: "{{ enable_mashio }}"
-  matomo: "{{ enable_matomo }}"
-  mayan: "{{ enable_mayan }}"
-  miniflux: "{{ enable_miniflux }}"
-  minio: "{{ enable_minio }}"
-  monicahq: "{{ enable_monicahq }}"
-  netdata: "{{ enable_netdata }}"
-  nextcloud: "{{ enable_nextcloud }}"
-  nzbget: "{{ enable_nzbget }}"
-  openldap: "{{ enable_openldap }}"
-  openvpn: "{{ enable_openvpn }}"
-  organizr: "{{ enable_organizr }}"
-  ownphotos: "{{ enable_ownphotos }}"
-  paperless: "{{ enable_paperless }}"
-  pihole: "{{ enable_pihole }}"
-  piwigo: "{{ enable_piwigo }}"
-  plex: "{{ enable_plex }}"
-  portainer: "{{ enable_portainer }}"
-  sonarr: "{{ enable_sonarr }}"
-  radarr: "{{ enable_radarr }}"
-  restic: "{{ enable_restic }}"
-  syncthing: "{{ enable_syncthing }}"
-  thelounge: "{{ enable_thelounge }}"
-  tick: "{{ enable_tick }}"
-  transmission: "{{ enable_transmission }}"
-  wallabag: "{{ enable_wallabag }}"
-  xfinityusageinfluxdb: "{{ enable_xfinityusageinfluxdb }}"
-  webvirtmgr: "{{ enable_webvirtmgr }}"
-  zulip: "{{ enable_zulip }}"
-
-#####################################################################################
-#          Leave everything below as is, unless you know what you're doing          #
-#####################################################################################
-
-# Tinc Stuff
-enable_tinc: False
+---
+services:
+  airsonic: 
+  apache2: 
+  apple_health_influx: 
+  authelia: 
+  barcodebuddy: 
+  beets: 
+  bitwarden: 
+  bookstack: 
+  bulletnotes: 
+  calibre: 
+  chowdown: 
+  codeserver: 
+  dark_sky: 
+  dasher: 
+  digikam: 
+  docs: 
+  drone: 
+  duplicati: 
+  emby: 
+  erpnext: 
+  factorio: 
+  firefly_iii: 
+  folding_at_home: 
+  freshrss: 
+  funkwhale: 
+  ghost: 
+  gitea: 
+  gitlab:
+  gotify: 
+  grafana: 
+  grocy: 
+  grownetics: 
+  guacamole: 
+  healthchecks: 
+  heimdall: 
+  homeassistant: 
+  homebridge: 
+  homedash: 
+  huginn: 
+  inventario: 
+  jackett: 
+  jellyfin: 
+  kibitzr: 
+  lidarr: 
+  mailserver: 
+  mailu: 
+  mashio: 
+  massivedecks: 
+  matomo: 
+  mayan: 
+  minecraft: 
+  minecraftbedrockserver: 
+  miniflux: 
+  minio: 
+  monicahq: 
+  mstream: 
+  mylar: 
+  n8n: 
+  netdata: 
+  nextcloud: 
+  nodered: 
+  nzbget: 
+  ombi: 
+  openldap: 
+  openvpn: 
+  organizr: 
+  ownphotos: 
+  paperless: 
+  photoprism: 
+  pihole: 
+  piwigo: 
+  pixelfed: 
+  plex: 
+  poli: 
+  portainer: 
+  privatebin: 
+  qbittorrent: 
+  radarr: 
+  restic: 
+  sabnzbd: 
+  searx: 
+  sickchill: 
+  snibox: 
+  sonarr: 
+  speedtest: 
+  syncthing: 
+  tautulli: 
+  thelounge: 
+  tick: 
+  tiddlywiki: 
+  transmission: 
+  trilium: 
+  ubooquity: 
+  wallabag: 
+  watchtower: 
+  webvirtmgr: 
+  wekan: 
+  xfinityusageinfluxdb: 
+  zulip: 
+docs: 
+apache2: 
+apple_health_influx: 
+airsonic: 
+authelia:
+  enable: 
+bitwarden: 
+beets: 
+bookstack: 
+bulletnotes: 
+calibre: 
+chowdown: 
+codeserver: 
+dark_sky: 
+dasher: 
+digikam: 
+drone: 
+duplicati: 
+emby: 
+erpnext: 
+factorio: 
+firefly_iii: 
+folding_at_home: 
+freshrss: 
+funkwhale: 
+ghost: 
+gitea: 
+gitlab:
+gotify: 
+grafana: 
+grocy: 
+grownetics: 
+guacamole: 
+healthchecks: 
+heimdall:
+homeassistant: 
+homebridge: 
+homedash: 
+huginn: 
+inventario: 
+jackett: 
+jellyfin: 
+kibitzr: 
+lidarr: 
+mailserver: 
+mailu: 
+massivedecks: 
+mashio: 
+matomo: 
+mayan: 
+minecraft: 
+minecraftbedrockserver: 
+miniflux: 
+minio: 
+monicahq: 
+mstream: 
+mylar: 
+n8n:
+netdata: 
+nextcloud: 
+nodered:
+nzbget: 
+ombi: 
+openldap: 
+openvpn: 
+organizr: 
+ownphotos: 
+paperless: 
+photoprism: 
+pihole: 
+piwigo: 
+pixelfed: 
+plex: 
+poli: 
+portainer: 
+privatebin: 
+qbittorrent:
+radarr: 
+restic: 
+sabnzbd: 
+searx: 
+sickchill: 
+snibox: 
+sonarr: 
+speedtest: 
+syncthing: 
+tautulli: 
+thelounge: 
+tick: 
+tiddlywiki: 
+transmission: 
+trilium: 
+ubooquity: 
+wekan: 
+watchtower: 
+xfinityusageinfluxdb: 
+wallabag: 
+webvirtmgr: 
+zulip: 
+enable_tinc: false
 vpn_ip: 10.0.0.1
 netname: homelabos
-physical_ip: 8.8.8.8
 vpn_interface: tun0
 vpn_netmask: 255.255.0.0
 vpn_subnet_cidr_netmask: 32
-tincserver_ip:
-tincserver_ssh_user:
-
 smtp:
-mailserver:
-
 traefik:
-
-gitea:
+  additional_env_vars:
+bastion:
+  wireguard:
+  enable: false
+open_ldap:
+  seed:
+tinc: "{{ enable_tinc }}"
+tor: "{{ enable_tor }}"

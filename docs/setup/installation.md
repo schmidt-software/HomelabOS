@@ -1,192 +1,190 @@
 # Installation
 
-## [Watch Video Tutorial - Cloud Based Server](https://youtu.be/p8cD349BGRI)
-## [Watch Video Tutorial - Local Server](https://youtu.be/Zy6Xfl5b5z4)
+!!! Warning "Beta Software Warning"
 
-[Download the latest version from GitLab](https://gitlab.com/NickBusey/HomelabOS/tags).
+    This software has not reached version 1.0 and should therefore be considered unstable. While any tagged version should work well on its own, a nice friendly upgrade path from one version to another is not guaranteed.
 
-# Requirements
+    If you like getting your hands dirty in early versions of software, this is for you. If you prefer to wait till things are stable and friendly, maybe hold off for a while.
 
-## Client:
-    *  Docker
-    
-If you don't want to install docker to your client (or if you're on windows), you can do everything on your server. Just make sure to setup Docker on your server first.
+    Also, if you trash your server or wreck your data, that's on you. Test your backups. Trust nothing.
 
-Verify docker is installed correctly on your client
-```
-[client]$ docker run hello-world
-``` 
+* [Watch Video Tutorial - Cloud Based Server](https://youtu.be/p8cD349BGRI)
+* [Watch Video Tutorial - Local Server](https://youtu.be/Zy6Xfl5b5z4)
 
+## Requirements
 
-## Server:
-    * Running Ubuntu 18.04
-    * passwordless SSH via SSH keys
-    
-Ensure you can access your server with a IP through
-[passwordless SSH](https://www.linuxbabe.com/linux-server/setup-passwordless-ssh-login)
-and your user has sudo access.
+### Server
 
-# Set-up
+- Ubuntu Server 18.04 or Debian 10.3
+- [Passwordless SSH via SSH keys](https://linuxconfig.org/passwordless-ssh) working.
 
-1) Download the latest version from the link above to your client computer and extract the folder.
+!!! Warning
+    If you are running on an ARM infrastructure such as Raspberry PI, set `arm` to true. Run: `make set arm True`
 
-   IF you are going to be using HomelabOS to provision a cloud server, walk through the process. Otherwise you can skip this.
-   
-   ```
-   [client]$ make terraform 
-   ```
+## Optional Items
 
+### Client Computer
 
-2) From inside the HomelabOS folder, set up the initial config
+* Docker installed and working.
 
-    ```
-    [client]$ cd HomelabOS
-    [client]$ make config
-    ``` 
-    
-   You will be prompted for the basic information to get started. The passwords entered here
-   will be stored on the client computer and are used by ansible to configure your server. After you enter the information, 
-   HomelabOS will configure your local docker images and build your initial `settings/config.yml`
-   file.
+!!! Note
+    Two separate computers are not required, but are highly recommended. The idea is you have a server and then your personal computer, say a laptop or desktop. You deploy from your personal computer to the server. This way your settings are saved on your personal computer, and can be used to re-build the server and restore from backups if anything goes wrong.
 
-3) To change any setting, you can either edit your `settings/config.yml` file, 
-or use the `make set` command, e.g., `make set enable_bitwarden true`.
+!!! Warning
+    If you do install HomelabOS directly on the server and deploy from there, make sure to back up your `settings/` folder from the server to somewhere safe, otherwise you could lose your settings.
 
-4) Once you have updated the `settings/config.yml` file through either method,
-simply deploy HomelabOS. You can run `make` as many times as
+### Domain Name
+
+A domain configured with a `A` type DNS record of `*.yourdomain.com` pointed at your server's IP address. You can also use a subdomain as well, so `*.homelab.yourdomain.com` would work.
+
+!!! Note
+    This is optional because you can use Tor to access your services without registering a domain. For best support from 3rd party clients an actual domain is highly recommended. Also certain services do not work through TOR at the moment.
+
+!!! Note
+    It's easiest to have an actual domain to point at your services, but you can `fake` it by adding DNS overrides to your `/etc/hosts` file on *nix and MacOS if needed or for testing.
+
+#### DNS Settings
+
+You need to point your `{{ domain }}`, as well as `*.{{ domain }}` to the IP address your HomelabOS install is accessible at. If you are using a [bastion](/docs/setup/bastion) host, then you would point at that IP. If you are using your home IP address, you would point it at that IP. You need to set up a wildcard DNS entry because all the services are served off of subdomains such as `emby.{{ domain }}`
+
+!!! Warning
+    If you are not using a real domain, but using `/etc/hosts` entries to 'fake' it, wildcard entries do not work in `/etc/hosts`. You need to create an entry for each service enabled. You can use the `/var/homelabos/homelab_hosts` file.
+
+#### Changing your domain
+
+If you need to change your domain (or subdomain) simply run `make set domain new.domain.com` then run `make` again.
+
+### Port Forwarding
+
+Ports 80 and 443 punched through any firewalls and port forwarded at your server in question.
+
+!!! Note
+    This is optional because if you are using the [bastion](bastion.md) server or [TOR access](tor.md), you do not need to deal with port forwarding or firewalls.
+
+### [Cloud Bastion Server](bastion.md)
+
+Rather than pointing the domain at your home IP and having to manage DDNS, you can utilize a cloud server
+to act as a bastion host via Tinc vpn and nginx.
+
+### S3 Account
+
+S3 is Amazon's Simple Storage Service which HomelabOS can optionally use to back up to. You can use Amazon's service, or one of many other S3 compatible providers. You can also back up to another HomelabOS instance if that other instance is running Minio, a self-hosted S3 service.
+
+## Automatic Set-up (One-liner)
+
+* On your server run: `bash <(curl -s https://gitlab.com/NickBusey/HomelabOS/-/raw/dev/install_homelabos.sh)`
+
+* Make sure to back up your `{{ volumes_root }}/install` directory nightly.
+
+## Manual Set-up
+
+* Download the [latest version](https://gitlab.com/NickBusey/HomelabOS/-/releases) to your client computer and extract the folder.
+
+!!! Note
+    If you are using HomelabOS to provision a [bastion](bastion.md) server, run: `$ make terraform`
+
+* From inside the HomelabOS folder, set up the initial config: `make config`
+
+!!! Note
+    You will be prompted for the basic information to get started. The passwords entered here will be stored on the client computer and are used by ansible to configure your server. After you enter the information, HomelabOS will configure your local docker images and build your initial `settings/` files.
+
+* Once you have updated your settings simply deploy HomelabOS with `make`. You can run `make` as many times as
 needed to get your settings correct.
 
-    ```
-    [client]$ make
-    ```
+You can check http://{{ homelab_ip }}:8181 in a browser to see the Traefik dashboard.
 
-To reset your settings, run `make config_reset`, then run `make config` again.
+See a full list of commands in the [Getting Started Section](/docs/setup/gettingstarted)
 
-See a full list of commands in the Getting Started Section
+## Enabling Services
 
-## Deploying to Cloud Services with Terraform
+Run `make set SERVICENAME.enable true` where SERVICENAME is the name of the service you want to enable.
 
-You can use our 
-[Terraform scripts](https://gitlab.com/NickBusey/HomelabOS/blob/dev/docs/setup/terraform.md)
-to spin up cloud servers to deploy against rather than needing
-physical servers configured.
+!!! example
+    `make set miniflux.enable true`
+
+Then run `make` again. That's it. It will take a few minutes for your server to download and start the relevant images.
+
+You can SSH into the server, and run `systemctl status SERVICENAME` where SERVICENAME is the name of the server you want to check  is running. It will show you status and/or errors of the service.
+
+!!! example
+    `systemctl status miniflux`
 
 ## Syncing Settings via Git
 
 HomelabOS will automatically keep the `settings/` folder in sync with a git repo if it has one.
 So you can create a private repo on your Gitea instance for example, then clone that repo over the
-settings folder. Now any changes you make to `config.yml` will be commited and pushed to that git
+settings folder. Now any changes you make to `settings/` files will be commited and pushed to that git
 repo whenever you run `make`, `make update` or `make config`.
 
-# Debugging
+## Backing up your Vault Password
 
-### `make config` throws an error
+!!! danger
+    This bit is important.
 
-Build initial docker images on the client.
+If you installed with the Automatic/One-Liner install, your vault password exists at `~/.homelabos_vault_pass` for the user you ran the script as. Make sure to back this password up somewhere safe, and ideally _not_ in your `settings/` folder. If someone gains access to your `settings/` folder and the vault password, bad things can happen. Store them separately.
 
-```
-[client]$ make logo
-```
-
-### `make` command throws a docker related error
-
-1) Make sure homelabOS successfully installed docker on the server. If its not installed, try installing it manually.
-
-    ```
-    [server]$ docker run hello-world
-    ``` 
-
-2) Make sure you are running the latest docker and docker compose on both your client and server. The Docker version installed via `apt` can be old. Recommended install directions are [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-
-3) Check HomelabOS status on the server and make sure it is loaded and active.
-
-    ```
-    [server]$ systemctl status homelabos
-    ``` 
-
-4) Make sure the admin user specified during `make config` is created.
-
-    ```
-    [server]$ compgen -u
-    ```
-
-   If the user isn't listed, run the following commands to make one and add it to the sudo and docker groups.
-   
-    ```
-    [server]$ sudo adduser <username>
-    [server]$ sudo usermod -aG sudo <username>
-    [server]$ sudo usermod -aG docker <username>
-    ```
-
-### [WARNING] Ansible is in a world writable directory (../HomelabOS), ignoring it as an ansible.cfg source.
-
-Run chmod 775 against the HomelabOS folder.
-```
-[client]$ chmod 775 HomelabOS/
-```
-
-### 404
-
-If you're up and running, but getting a 404, load [http://YOURSERVERIP:8181/]. This is the Traefik dashboard.
-Each service under the `Frontends` column has a section `Route Rule - Host:`. The hostname after `Host:` is the
-hostname that Traefik is listening to for that particular service. You need to be able to `ping` that hostname
-from your computer, and you should get back the IP address of your server. Once that is the case, accessing the
-hostname in a browser should load the respective service.
-
-### No Traefik Dashboard
-
-If you can't even access the dashboard listed above at :8181, check the status of the HomelabOS service.
-```
-[server]$ systemctl status homelabos
-```
-
-This should give you some insight into what the issue is. Also you should be able to run 
-```
-[server]$ docker ps | grep traefik
-```
-and get an output like:
-```
-8f00f6b3cdb6        traefik                        "/traefik"               13 hours ago        Up 13 hours                     0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 0.0.0.0:8181->8080/tcp           homelabos_traefik_1
-```
-
-### SSL Not working
-
-Traefik generates SSL certs via LetsEncrypt, and LetsEncrypt has rate limiting. So it may take several days before
-all of your services get valid SSL certs generated for them. You can tail the logs of the traefik container to see
-the status of it's generation.
+## [Troubleshooting / FAQ](faq.md)
 
 ## Network Configuration
 
 It is recommended to register an actual domain to point at your Homelab, but if you can't or would prefer not to, you can use HomelabOS fully inside your network. Simply make up a domain that ends in `.local` and enter that as your domain in `host_vars/myserver`.
 
-When HomelabOS `make` command completes, it creates a file on the server at `/var/homelabos/homelabos_hosts`. You can take the contents of this file and create local DNS overrides using it. All your requests should complete as expected.
+When HomelabOS `make` command completes, it creates a file on the server at `{{ volumes_root }}/homelabos_hosts`. You can take the contents of this file and create local DNS overrides using it. All your requests should complete as expected.
 
-## NAS Network Area Storage Configuration
+## NAS Network Attached Storage Configuration
 
-It is a good idea to keep your files as a whole, media, documents, etc., on a Network Area Storage device or NAS.
+Different HomelabOS services operate on libraries of media (Airsonic, Plex, and Piwigo as examples). Since these libraries can be large, it makes sense to keep them on another machine with lots of storage.
 
-For a typical HomelabOS setup you will want at least the following directories inside your NAS:
+NAS shares are mounted on the HomelabOS host under `{{ storage_dir }}`, which defaults to `/mnt/nas`. By default, NAS is disabled, and the services that can use it will instead use local folders under `{{ storage_dir }}`.
+
+For example, [Emby](/software/emby) will map `{{ storage_dir }}/Video/TV` and `{{ storage_dir }}/Video/Movies` into its container, and [Paperless](/software/paperless) will mount `{{ storage_dir }}/Documents`. Check the `docker-compose` files for each service to see what directories are used.
+
+HomelabOS takes an all-or-nothing approach to remote storage. If you configure a NAS, all services that can use it will. For a full HomelabOS setup, the following shares should be present on your NAS:
 
 ```
 Backups
-Music
-Movies
-TV
-Downloads
+Books
 Documents
+Downloads
+Music
+Pictures
+temp
+Video
 ```
 
-All you have to do is enter your NAS network path, username and password into your `host_vars/myserver` file. You can find the template in `host_vars/all` in the `# NAS Config` section.
+These shares will be individually mounted on the HomelabOS host.
 
-It should look something like this, depending on your setup:
+To configure your NAS, edit the `# NAS Config` section of `settings/config.yml`.
+
+1. Enable NAS by setting `nas_enable: True`
+2. Set `nas_host` to the hostname, FQDN, or IP address of your NAS.
+3. Choose your network share type (`nfs` or `smb`) and set `nas_share_type` to that value.
+4. Set your `nas_share_path`, if applicable. SMB shares will probably not have a value for this, but NFS will.
+5. If authenticating to access SMB shares, set your username and password in `nas_user` and `nas_path`.
+6. Set your Windows domain in `nas_workgroup`, if applicable.
+
+Re-run `make` to configure and enable your NAS.
+
+Here's an example NFS configuration, specifically for [unRAID](https://unraid.net):
 
 ```
-nas_path: //192.168.1.1/Mynas
-nas_user: guest
+nas_enable: True
+nas_host: unraid.mydomain.com
+nas_mount_type: nfs
+nas_share_path: /mnt/user
+nas_user:
 nas_pass:
+nas_workgroup:
+```
+
+Here's an example SMB configuration, this time using its IP address, an authenticated user and share name:
+
+```
+nas_enable: True
+nas_host: 192.168.1.12
+nas_mount_type: smb
+nas_share_path: homelab
+nas_user: user
+nas_pass: 12345
 nas_workgroup: WORKGROUP
 ```
-
-This NAS resource will be mounted under `/mnt/nas` in the various containers that would benefit from access.
-
-Assuming you have created the folders above, for [Emby](/software/emby) for example you could point it to `/mnt/nas/TV` and `/mnt/nas/Movies` while [Paperless](/software/paperless) would point at `/mnt/nas/Documents`.

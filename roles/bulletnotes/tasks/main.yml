@@ -1,18 +1,20 @@
 ---
 - name: Make bulletnotes directory.
   file:
-    path: "/var/homelabos/bulletnotes"
+    path: "{{ volumes_root }}/bulletnotes"
     state: directory
 
 - name: Copy bulletnotes docker-compose.yml file into place.
   template:
     src: docker-compose.bulletnotes.yml.j2
-    dest: /var/homelabos/bulletnotes/docker-compose.bulletnotes.yml
+    dest: "{{ volumes_root }}/bulletnotes/docker-compose.bulletnotes.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
 - name: Configure bulletnotes systemd service.
-  template: src=service.j2 dest=/etc/systemd/system/bulletnotes.service
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/bulletnotes.service
 
 - name: Start bulletnotes
   systemd:

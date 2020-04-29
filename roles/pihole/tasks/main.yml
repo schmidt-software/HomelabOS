@@ -1,26 +1,25 @@
 ---
 - name: Make pihole directory.
   file:
-    path: "/var/homelabos/pihole"
+    path: "{{ volumes_root }}/pihole"
     state: directory
 
 - name: Copy pihole docker-compose.yml file into place.
   template:
     src: docker-compose.pihole.yml.j2
-    dest: /var/homelabos/pihole/docker-compose.pihole.yml
+    dest: "{{ volumes_root }}/pihole/docker-compose.pihole.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
-    services: "{{ enabled_services|flatten(levels=1) }}"
 
-- name: Stop systemd-resolve
-  systemd:
-    name: systemd-resolved
-    enabled: "no"
-    daemon-reload: "no"
-    state: stopped
+- name: Pull pihole docker images
+  docker_image:
+    name: pihole/pihole
+    pull: true
 
 - name: Configure pihole systemd service.
-  template: src=service.j2 dest=/etc/systemd/system/pihole.service
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/pihole.service
 
 - name: Start pihole
   systemd:
@@ -28,3 +27,10 @@
     enabled: "yes"
     daemon-reload: "yes"
     state: started
+
+- name: Stop systemd-resolve
+  systemd:
+    name: systemd-resolved
+    enabled: "no"
+    daemon-reload: "no"
+    state: stopped

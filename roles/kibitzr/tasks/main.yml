@@ -1,18 +1,20 @@
 ---
 - name: Make kibitzr directory.
   file:
-    path: "/var/homelabos/kibitzr"
+    path: "{{ volumes_root }}/kibitzr"
     state: directory
 
 - name: Copy kibitzr docker-compose.yml file into place.
   template:
     src: docker-compose.kibitzr.yml.j2
-    dest: /var/homelabos/kibitzr/docker-compose.kibitzr.yml
+    dest: "{{ volumes_root }}/kibitzr/docker-compose.kibitzr.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
 - name: Configure kibitzr systemd service.
-  template: src=service.j2 dest=/etc/systemd/system/kibitzr.service
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/kibitzr.service
 
 - name: Start kibitzr
   systemd:

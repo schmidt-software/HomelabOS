@@ -1,25 +1,27 @@
 ---
 - name: Make monicahq directory.
   file:
-    path: "/var/homelabos/monicahq"
+    path: "{{ volumes_root }}/monicahq"
     state: directory
 
 - name: Copy monicahq docker-compose.yml file into place.
   template:
     src: docker-compose.monicahq.yml.j2
-    dest: /var/homelabos/monicahq/docker-compose.monicahq.yml
+    dest: "{{ volumes_root }}/monicahq/docker-compose.monicahq.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
 - name: Copy monicahq .env file into place.
   template:
     src: monicahq.env.j2
-    dest: /var/homelabos/monicahq/monicahq.env
+    dest: "{{ volumes_root }}/monicahq/monicahq.env"
   vars:
-    monica_db_password: "{{ lookup('password', './settings/passwords/monica_db_password chars=digits') }}"
+    monicahq_db_password: "{{lookup('password', './settings/passwords/monicahq_db_password chars=digits')}}"
 
 - name: Configure monicahq systemd service.
-  template: src=service.j2 dest=/etc/systemd/system/monicahq.service
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/monicahq.service
 
 - name: Start monicahq
   systemd:

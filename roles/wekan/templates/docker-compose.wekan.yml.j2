@@ -1,0 +1,67 @@
+---
+version: '3'
+
+# This networks section required for the pacakge to be visible to Traefik. 
+# DO NOT Remove
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+  wekan-tier:
+    driver: bridge
+
+services:
+  wekandb:
+    image: mongo:3.2.12
+    container_name: wekan-db
+    restart: unless-stopped
+    command: mongod --smallfiles --oplogSize 128
+    networks:
+      - wekan-tier
+    expose:
+      - 27017
+    volumes:
+      - "{{ volumes_root }}/wekan/wekan-db:/data/db"
+      - "{{ volumes_root }}/wekan/wekan-db-dump:/dump"
+
+  wekan:
+    image: quay.io/wekan/wekan
+    container_name: wekan-app
+    restart: unless-stopped
+    networks:
+      - traefik_network
+      - wekan-tier
+    environment:
+      - MONGO_URL=mongodb://wekandb:27017/wekan
+      - ROOT_URL=http://localhost
+    depends_on:
+      - wekandb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.services.wekan.loadbalancer.server.scheme=http"
+      - "traefik.http.services.wekan.loadbalancer.server.port=8080"
+      - "traefik.http.routers.wekan-http.rule=Host(`{% if wekan.domain %}{{ wekan.domain }}{% else %}{{ wekan.subdomain + "." + domain }}{% endif %}`)"
+      - "traefik.http.routers.wekan-http.entrypoints=http"
+{% if not wekan.https_only %}
+      - "traefik.http.routers.wekan-http.middlewares={% if wekan.https_only %}redirect@file, {% else %}{% if wekan.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
+{% else %}
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.wekan-http.middlewares=redirect-to-https"
+{% endif %}
+      - "traefik.http.routers.wekan.rule=Host(`{% if wekan.domain %}{{ wekan.domain }}{% else %}{{ wekan.subdomain + "." + domain }}{% endif %}`)"
+      - "traefik.http.routers.wekan.entrypoints=https"
+      - "traefik.http.routers.wekan.middlewares={% if wekan.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.wekan.tls=true"
+{% if traefik.dns_challenge_provider %}
+      - "traefik.http.routers.wekan.tls.certresolver=dns"
+      - "traefik.http.routers.wekan.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.wekan.tls.domains[0].sans=*.{{ domain }}"
+{% else %}
+      - "traefik.http.routers.wekan.tls.certresolver=http"
+{% endif %}
+{% if enable_tor %}
+      - "traefik.http.routers.wekan-tor-http.rule=Host(`{{ wekan.subdomain }}.{{ tor_domain }}`)"
+      - "traefik.http.routers.wekan-tor-http.entrypoints=http"
+      - "traefik.http.routers.wekan-tor-http.middlewares={% if wekan.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
+{% endif %}

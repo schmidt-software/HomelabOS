@@ -1,0 +1,177 @@
+---
+version: '3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+
+  growdash:
+    restart: always
+    networks:
+        - traefik_network
+    environment:
+        - DEV
+        - FACILITY_NAME
+        - FACILITY_ID
+        - CERES
+        - DEMO
+        - ENVIRONMENT
+        - REMOTE_URL
+        - VERSION
+        - SHORT_NAME
+
+        - SET_POINT_ALARM_TOLERANCE_PERCENTAGE
+        - BURNOUT_PROTECTION_DELAY
+
+        - DB_HOSTNAME
+        - MYSQL_ROOT_PASSWORD
+        - MYSQL_DATABASE
+        - MYSQL_TEST_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+
+        - REDIS_HOSTNAME
+        - RABBIT_HOST
+        - RABBIT_PORT
+        - RABBIT_USER
+        - RABBIT_PASS
+        - INFLUX_HOST
+        - INFLUX_PORT
+        
+        - SMTP_HOST
+        - SMTP_USER
+        - SMTP_PASS
+    image: grownetics/growdash:${VERSION}
+    volumes:
+        - ./tmp:/tmp:cached
+
+  deviceapi:
+    restart: always
+    networks:
+        - traefik_network
+    links:
+        - appdb
+        - redis
+        - rabbitmq
+    environment:
+        - DEV
+        - FACILITY_NAME
+        - FACILITY_ID
+        - CERES
+        - ENVIRONMENT
+        - REMOTE_URL
+        - VERSION
+        - SHORT_NAME
+
+        - SET_POINT_ALARM_TOLERANCE_PERCENTAGE
+        - BURNOUT_PROTECTION_DELAY
+
+        - DB_HOSTNAME
+        - MYSQL_ROOT_PASSWORD
+        - MYSQL_DATABASE
+        - MYSQL_TEST_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+
+        - REDIS_HOSTNAME
+        - RABBIT_HOST
+        - RABBIT_PORT
+        - RABBIT_USER
+        - RABBIT_PASS
+        - INFLUX_HOST
+        - INFLUX_PORT
+    image: grownetics/growdash:${VERSION}
+    volumes:
+        - ./tmp:/tmp:cached
+
+  nginx:
+    image: grownetics/nginx:${VERSION}
+    networks:
+        - traefik_network
+    restart: always
+    links:
+        - growdash
+        - deviceapi
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.services.grownetics.loadbalancer.server.scheme=http"
+      - "traefik.http.services.grownetics.loadbalancer.server.port=80"
+      - "traefik.http.routers.grownetics-http.rule=Host(`{% if grownetics.domain %}{{ grownetics.domain }}{% else %}{{ grownetics.subdomain + "." + domain }}{% endif %}`)"
+      - "traefik.http.routers.grownetics-http.entrypoints=http"
+{% if not grownetics.https_only %}
+      - "traefik.http.routers.grownetics-http.middlewares={% if grownetics.https_only %}redirect@file, {% else %}{% if grownetics.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
+{% else %}
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.grownetics-http.middlewares=redirect-to-https"
+{% endif %}
+      - "traefik.http.routers.grownetics.rule=Host(`{% if grownetics.domain %}{{ grownetics.domain }}{% else %}{{ grownetics.subdomain + "." + domain }}{% endif %}`)"
+      - "traefik.http.routers.grownetics.entrypoints=https"
+      - "traefik.http.routers.grownetics.middlewares={% if grownetics.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.grownetics.tls=true"
+{% if traefik.dns_challenge_provider %}
+        - "traefik.http.routers.grownetics.tls.certresolver=dns"
+        - "traefik.http.routers.grownetics.tls.domains[0].main={{ domain }}"
+        - "traefik.http.routers.grownetics.tls.domains[0].sans=*.{{ domain }}"
+{% else %}
+        - "traefik.http.routers.grownetics.tls.certresolver=http"
+{% endif %}
+{% if enable_tor %}
+        - "traefik.http.routers.grownetics-tor-http.rule=Host(`{{ grownetics.subdomain }}.{{ tor_domain }}`)"
+        - "traefik.http.routers.grownetics-tor-http.entrypoints=http"
+        - "traefik.http.routers.grownetics-tor-http.middlewares={% if grownetics.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
+{% endif %}
+
+  appdb:
+    image: mariadb #:10.3
+    restart: always
+    command: mysqld --sql_mode=""
+    environment:
+        - MYSQL_ROOT_PASSWORD
+        - MYSQL_DATABASE
+        - MYSQL_TEST_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+    volumes:
+        - ./data/appdb:/var/lib/mysql
+    networks:
+        - traefik_network
+
+  redis:
+    image: redis
+    restart: always
+    networks:
+        - traefik_network
+
+  growsocket:
+    image: grownetics/socketio:latest
+    restart: always
+    ports:
+        - 8989:8989
+    links:
+        - rabbitmq
+        - nginx
+    labels:
+        io.rancher.container.pull_image: always
+        io.rancher.scheduler.affinity:host_label_ne: onsite=true
+    networks:
+        - traefik_network
+
+  rabbitmq:
+    image: rabbitmq:3.6-management-alpine
+    restart: always
+    environment:
+        # - RABBITMQ_DEFAULT_USER:RABBIT_USER
+        - RABBITMQ_DEFAULT_USER=rabbit
+        # - RABBITMQ_DEFAULT_PASS:RABBIT_PASS
+        - RABBITMQ_DEFAULT_PASS=rabbit
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+    networks:
+        - traefik_network
+
+

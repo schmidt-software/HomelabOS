@@ -1,18 +1,19 @@
 ---
 - name: Make mashio directory.
   file:
-    path: "/var/homelabos/mashio"
+    path: "{{ volumes_root }}/mashio"
     state: directory
 
 - name: Copy mashio docker-compose.yml file into place.
   template:
     src: docker-compose.mashio.yml.j2
-    dest: /var/homelabos/mashio/docker-compose.mashio.yml
-  vars:
-    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+    dest: "{{ volumes_root }}/mashio/docker-compose.mashio.yml"
+
 
 - name: Configure mashio systemd service.
-  template: src=service.j2 dest=/etc/systemd/system/mashio.service
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/mashio.service
 
 - name: Start mashio
   systemd:
