@@ -81,6 +81,7 @@ nav:
           - Factorio: software/factorio.md
           - Minecraft: software/minecraft.md
           - MinecraftBedrockServer: software/minecraftbedrockserver.md
+          - MassiveDecks: software/massivedecks.md
       - Gateways and terminal sharing:
           - Guacamole: software/guacamole.md
           - WebVirtMgr: software/webvirtmgr.md
@@ -89,7 +90,6 @@ nav:
           - Beets: software/beets.md
           - Emby: software/emby.md
           - Jellyfin: software/jellyfin.md
-          - MassiveDecks: software/massivedecks.md
           - Mstream: software/mstream.md
           - Plex: software/plex.md
           - Funkwhale: software/funkwhale.md
