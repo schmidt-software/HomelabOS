@@ -16,9 +16,9 @@ Setup the APP_KEY
 
 Whilst the container is up and running, find the name of the Cachet container via docker ps.
 
-Run `docker exec -i cachet_cachet_1 php artisan key:generate`.
+Run `docker-compose -f docker-compose.cachet.yml logs -f cachet`.
 
-Replace `${APP_KEY:-null}` in `docker-compose.override.yml` with the newly generated Application key.
+Replace `${APP_KEY:-null}` in `docker-compose.override.yml` with the newly generated Application key shown in the logs.
 
 Note: make sure you include `base64:` prefix. E.g. `base64:YOUR_UNIQUE_KEY`
 
