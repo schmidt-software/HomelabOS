@@ -7,7 +7,7 @@
 - name: Copy cachet docker-compose.yml file into place.
   template:
     src: docker-compose.cachet.yml.j2
-    dest: "{{ volumes_root }}/cachet/docker-compose.cachet.yml"
+    dest: "{{ volumes_root }}/cachet/docker-compose.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
