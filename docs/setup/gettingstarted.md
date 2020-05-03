@@ -24,6 +24,12 @@ The URLs for all the services can be found in their individual documentation sec
 
 HomelabOS will use Traefik's built in LetsEncrypt integration to automatically generate SSL certificates for your various services. If initially some of the certificates don't appear valid, you have likely run into [LetsEncrypt rate limits](https://letsencrypt.org/docs/rate-limits/). Unfortunately the only fix we have for that right now is 'wait a week'.
 
+## Custom Domains
+
+Use **`make set SERVICENAME.domain new.domain.com`** to enable a custom domain for a specific service; then run **`make update_one SERVICENAME`**
+Make sure you change `SERVICENAME` with the appropriate service, and change `new.domain.com` to the appropriate domain.
+NOTE: HomelabOS supports both root and subdomains. Eg. `domain.com` and `sub.domain.com`
+
 ## Homelab Commands
 
 `[client]$ make` - Deploys HomelabOS to the server 
@@ -38,21 +44,21 @@ HomelabOS will use Traefik's built in LetsEncrypt integration to automatically g
 
 `[client]$ make build` - Builds the HomelabOS deploy docker image
 
-`[client]$ make remove_one <service>` - Removes the specified service e.g. `[client]$ make remove_one inventario`
+`[client]$ make remove_one <service>` - Removes the specified service e.g. **`make remove_one inventario`**
 
 `[client]$ make restart` - Restarts all enabled services
 
-`[client]$ make restart_one <service>` - Restarts the specified service e.g. `[client]$ make restart_one inventario`
+`[client]$ make restart_one <service>` - Restarts the specified service e.g. **`make restart_one inventario`**
 
-`[client]$ make reset_one <service>` - Resets the specified service's data e.g. `[client]$ make reset_one inventario`
+`[client]$ make reset_one <service>` - Resets the specified service's data e.g. **`make reset_one inventario`**
 
 `[client]$ make restore` - Restores a server with the most recent backup. Assuming Backups were running.
 
-`[client]$ make set <setting> <value>` - Sets the setting to value, e.g. `[client]$ make set organizr.enable True`
+`[client]$ make set <setting> <value>` - Sets the setting to value, e.g. **`make set organizr.enable True`**
 
-`[client]$ make get <setting>` - Displays the current setting of value, e.g. `[client]$ make get organizr.enable`
+`[client]$ make get <setting>` - Displays the current setting of value, e.g. **`make get organizr.enable`**
 
-`[client]$ make tag <tag>` - Runs just the items tagged with a specific tag e.g. `[client]$ make tag tinc`
+`[client]$ make tag <tag>` - Runs just the items tagged with a specific tag e.g. **`make tag tinc`**
 
 `[client]$ make terraform` - Spin up cloud servers with Terraform [See documentation](https://homelabos.com/docs/setup/terraform/)
 
@@ -60,7 +66,7 @@ HomelabOS will use Traefik's built in LetsEncrypt integration to automatically g
 
 `[client]$ make update` - Skips the initial setup and updates HomelabOS services
 
-`[client]$ make update_one <serive>` - Updates just one HomelabOS service e.g. `[client]$ make update_one inventario`
+`[client]$ make update_one <service>` - Updates just one HomelabOS service e.g. **`make update_one inventario`**
 
 `[client]$ make uninstall` - Removes HomelabOS services
 
@@ -68,4 +74,4 @@ HomelabOS will use Traefik's built in LetsEncrypt integration to automatically g
 
 `[client]$ make stop` - Stops all enabled services
 
-`[client]$ make stop_one <service>` - Stops the specified service e.g. `[client]$ make stop_one inventario`
+`[client]$ make stop_one <service>` - Stops the specified service e.g. **`make stop_one inventario`**
