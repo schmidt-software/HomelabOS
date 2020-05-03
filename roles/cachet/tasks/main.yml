@@ -1,0 +1,24 @@
+---
+- name: Make cachet directory.
+  file:
+    path: "{{ volumes_root }}/cachet"
+    state: directory
+
+- name: Copy cachet docker-compose.yml file into place.
+  template:
+    src: docker-compose.cachet.yml.j2
+    dest: "{{ volumes_root }}/cachet/docker-compose.cachet.yml"
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+
+- name: Configure cachet systemd service.
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/cachet.service
+
+- name: Start cachet
+  systemd:
+    name: cachet
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started
