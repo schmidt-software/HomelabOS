@@ -15,6 +15,8 @@ It is also available via Tor at [http://PackageFileName.{{ tor_domain }}/](http:
 To enable https_only or auth set the service config to True
 `settings/config.yml`
 
+```
 PackageFileName:
   https_only: True
   auth: True
+```
