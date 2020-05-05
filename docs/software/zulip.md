@@ -11,7 +11,7 @@ For further information, check out Zulip on [Github](https://github.com/zulip/zu
 
 ## Access
 
-By default, Zluip will be available at either:
+By default, Zulip will be available at either:
 
 [https://zulip.{{ domain }}/](https://zulip.{{ domain }}/)
 
