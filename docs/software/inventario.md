@@ -7,7 +7,7 @@
 
 To enable Inventario; run **`make set inventario.enable true`**, then run **`make update`** to update HomelabOS
 
-[Gitlab](https://gitlab.com/NickBusey/inventario)
+For further information, check out Inventario on [Gitlab](https://gitlab.com/NickBusey/inventario)
 
 ## Access
 
