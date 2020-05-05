@@ -37,6 +37,7 @@ nav:
       - VPN Setup: setup/vpn.md
   - Included Software:
       - Analytics:
+          - Cachet: software/cachet.md
           - Matomo: software/matomo.md
       - Automation:
           - Home Assistant: software/homeassistant.md

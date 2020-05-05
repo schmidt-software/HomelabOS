@@ -130,6 +130,12 @@ bulletnotes:
   auth: {{ bulletnotes.auth | default(False) }}
   domain: {{ bulletnotes.domain| default(False) }}
   subdomain: {{ bulletnotes.subdomain | default("bulletnotes") }}
+cachet:
+  enable: {{ cachet.enable | default(enable_cachet, None) | default(False) }}
+  https_only: {{ cachet.https_only | default(False) }}
+  auth: {{ cachet.auth | default(False) }}
+  domain: {{ cachet.domain | default(False) }}
+  subdomain: {{ cachet.subdomain | default("cachet")}}
 calibre:
   enable: {{ calibre.enable | default(enable_calibre, None) | default(False) }}
   https_only: {{ calibre.https_only | default(False) }}
