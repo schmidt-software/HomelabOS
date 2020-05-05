@@ -27,8 +27,10 @@ HomelabOS will use Traefik's built in LetsEncrypt integration to automatically g
 ## Custom Domains
 
 Use **`make set SERVICENAME.domain new.domain.com`** to enable a custom domain for a specific service; then run **`make update_one SERVICENAME`**
-Make sure you change `SERVICENAME` with the appropriate service, and change `new.domain.com` to the appropriate domain.
-NOTE: HomelabOS supports both root and subdomains. Eg. `domain.com` and `sub.domain.com`
+Make sure you change:
+`SERVICENAME` with the appropriate service, eg. `make set inventario.domain new.domain.com`
+`new.domain.com` to the appropriate domain, eg . `make set inventario.domain home.mydomain.com`
+NOTE: HomelabOS supports changes to both root and subdomains, eg. `domain.com` and `new.domain.com`
 
 ## Homelab Commands
 
