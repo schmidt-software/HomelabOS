@@ -10,7 +10,7 @@ To enable Portainer; run **`make set portainer.enable true`**, then run **`make 
 
 ## Access
 
-By default, Inventario will be available at either:
+By default, Portainer will be available at either:
 
 [https://portainer.{{ domain }}/](https://portainer.{{ domain }}/)
 
