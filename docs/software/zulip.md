@@ -1,6 +1,7 @@
 # Zulip
 
 [Zulip](https://github.com/zulip/zulip) is a threaded chat service.
+Check it out at [ZulipChat.com](https://zulipchat.com)
 
 ## Setup
 
