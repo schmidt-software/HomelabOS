@@ -2,9 +2,11 @@
 
 [Inventario](https://gitlab.com/NickBusey/inventario) is a home inventory management system.
 
-## Access
+## Setup
 
 To enable Inventario; run **`make set inventario.enable true`**, then run **`make update`** to update HomelabOS
+
+## Access
 
 By default, Inventario will be available at either:
 [https://inventario.{{ domain }}/](https://inventario.{{ domain }}/)
