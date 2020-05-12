@@ -61,11 +61,11 @@
 
 - name: Install CIText postgres extension
   shell: >
-    docker-compose -f docker-compose.pleroma.yml up -d pleromadb; docker-compose -f docker-compose.pleroma.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f docker-compose.pleroma.yml down
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml up -d pleromadb; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml down
   
 - name: Capture web push keys
   shell: >
-    docker-compose run --rm web mix web_push.gen.keypair
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml run --rm web mix web_push.gen.keypair
   register: keypair
 
 - local_action:

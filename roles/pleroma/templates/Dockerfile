@@ -1,9 +1,9 @@
-FROM elixir:1.8-alpine
+FROM elixir:1.10.3-alpine
 
 ENV UID=911 GID=911 \
   MIX_ENV=prod
 
-ARG PLEROMA_VER=develop
+ARG PLEROMA_VER=stable
 
 RUN apk -U upgrade \
   && apk add --no-cache \

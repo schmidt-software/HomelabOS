@@ -32,12 +32,12 @@ services:
     networks:
       - traefik_network
     depends_on:
-      - pleroma_postgres
+      - pleromadb
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.services.pleroma.loadbalancer.server.scheme=http"
-      - "traefik.http.services.pleroma.loadbalancer.server.port=3000"
+      - "traefik.http.services.pleroma.loadbalancer.server.port=4000"
       - "traefik.http.routers.pleroma-http.rule=Host(`{% if pleroma.domain %}{{ pleroma.domain }}{% else %}{{ pleroma.subdomain + "." + domain }}{% endif %}`)"
       - "traefik.http.routers.pleroma-http.entrypoints=http"
 {% if not pleroma.https_only %}
