@@ -73,7 +73,7 @@
     dest=./settings/passwords/pleroma_webpush_keypair
 
 - debug: 
-  msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.pleroma.yml build. Finally, restart pleroma."
+    msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.pleroma.yml build. Finally, restart pleroma."
   
 - name: Configure pleroma systemd service.
   template:
