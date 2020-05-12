@@ -14,7 +14,7 @@
 - name: Configure upload directory
   file:
     state: directory
-    path: {{ volumes_root }}/pleroma/upload
+    path: "{{ volumes_root }}/pleroma/upload"
     owner: "{{ ansible_effective_user_id }}"
     group: "{{ ansible_effective_group_id }}"
     recurse: yes
@@ -22,7 +22,7 @@
 - name: Configure config directory
   file:
     state: directory
-    path: {{ volumes_root }}/pleroma/config
+    path: "{{ volumes_root }}/pleroma/config"
     owner: "{{ ansible_effective_user_id }}"
     group: "{{ ansible_effective_group_id }}"
     recurse: yes
@@ -44,23 +44,37 @@
   vars: 
     secret_key: secret_key
 
+- name: Determine if Docker Image exists
+  shell: >
+    docker image inspect pleroma
+  register: docker_image
+  ignore_errors: True
+  
 - name: Build Docker Image
   shell: >
-    docker build -t pleroma .
-
-- name: Install CIText postgres extension
-  shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml run pleroma_postgress --rm exec psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"
+    docker build -t pleroma {{ volumes_root }}/pleroma/
+  when: docker_image.rc > 0
 
 - name: Run DB migrations
   shell: >
     docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml run --rm web mix ecto.migrate
 
+- name: Install CIText postgres extension
+  shell: >
+    docker-compose -f docker-compose.pleroma.yml up -d pleromadb; docker-compose -f docker-compose.pleroma.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f docker-compose.pleroma.yml down
+  
 - name: Capture web push keys
   shell: >
     docker-compose run --rm web mix web_push.gen.keypair
   register: keypair
 
+- local_action:
+    copy content={{ keypair.stdout }}
+    dest=./settings/passwords/pleroma_webpush_keypair
+
+- debug: 
+  msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.pleroma.yml build. Finally, restart pleroma."
+  
 - name: Configure pleroma systemd service.
   template:
     src: service.j2

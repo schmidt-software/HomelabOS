@@ -3,7 +3,7 @@ use Mix.Config
 config :pleroma, Pleroma.Web.Endpoint,
    http: [ ip: {0, 0, 0, 0}, ],
    url: [host: "{% if pleroma.domain %}{{ pleroma.domain }}{% else %}{{ pleroma.subdomain + "." + domain }}{% endif %}", scheme: "https", port: 443],
-   secret_key_base: "{{secret_key}}"
+   secret_key_base: "{{secret_key.stdout}}"
 
 config :pleroma, :instance,
   name: "Pleroma",
@@ -22,5 +22,5 @@ config :pleroma, Pleroma.Repo,
   username: "pleroma",
   password: "{{lookup('password', './settings/passwords/pleroma_db_password chars=digits')}}",
   database: "pleroma",
-  hostname: "pleromoa_postgres",
-  pool_size: 10
+  hostname: "pleromadb",
+  pool_size: 20
