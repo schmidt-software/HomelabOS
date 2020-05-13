@@ -9,7 +9,7 @@ networks:
       name: homelabos_traefik
 
 services:
-  pleromadb:
+  db:
     image: postgres:9.6-alpine
     restart: always
     networks:
@@ -17,7 +17,7 @@ services:
     environment:
       - POSTGRES_USER=pleroma
       - POSTGRES_PASSWORD={{lookup('password', './settings/passwords/pleroma_db_password chars=digits')}}
-      #
+      - DB_PASS={{lookup('password', './settings/passwords/pleroma_db_password chars=digits')}}
       - POSTGRES_DB=pleroma
     volumes:
       - ./postgres:/var/lib/postgresql/data
@@ -31,7 +31,11 @@ services:
     networks:
       - traefik_network
     depends_on:
-      - pleromadb
+      - db
+    environment:
+      - POSTGRES_USER=pleroma
+      - DB_PASS={{lookup('password', './settings/passwords/pleroma_db_password chars=digits')}}
+      - POSTGRES_DB=pleroma
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"

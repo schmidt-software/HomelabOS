@@ -27,11 +27,6 @@
     group: "{{ ansible_effective_group_id }}"
     recurse: yes
 
-- name: Copy pleroma docker file into place.
-  template:
-    src: Dockerfile
-    dest: "{{ volumes_root }}/pleroma/Dockerfile"
-
 - name: Generate Pleroma Secret Key Base
   shell: >
     openssl rand -base64 48
@@ -44,40 +39,9 @@
   vars: 
     secret_key: secret_key
 
-- name: Determine if Docker Image exists
-  shell: >
-    docker image inspect pleroma
-  register: docker_image
-  ignore_errors: True
-  
-- name: Build Docker Image
-  shell: >
-    docker build -t pleroma {{ volumes_root }}/pleroma/
-  when: docker_image.rc > 0
-
-- name: Run DB migrations
-  shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml run --rm web mix ecto.migrate
-
-- name: Install CIText postgres extension
-  shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml up -d pleromadb; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml down
-  
-- name: Capture web push keys
-  shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml run --rm web mix web_push.gen.keypair
-  register: keypair
-
-- local_action:
-    copy content={{ keypair.stdout }}
-    dest=./settings/passwords/pleroma_webpush_keypair
-
-- name: Create Admin User
-  shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml run --rm web mix pleroma.user new {{default_username}} {{admin_email}} --name {{default_username}} --password {{default_password}} --admin --moderator -y
-
-- debug: 
-    msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.yml build. Finally, restart pleroma."
+# - name: Install CIText postgres extension
+#   shell: >
+#     docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml up -d pleromadb; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml down
   
 - name: Configure pleroma systemd service.
   template:
@@ -90,3 +54,7 @@
     enabled: "yes"
     daemon-reload: "yes"
     state: started
+
+- name: Create Admin User
+  shell: >
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml exec web /opt/pleroma/bin/pleroma_ctl user new {{default_username}} {{admin_email}} --name {{default_username}} --password {{default_password}} --admin --moderator -y
