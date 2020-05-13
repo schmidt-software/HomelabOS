@@ -18,7 +18,7 @@
   register: host_ip
 
 - name: Copy cockpit.conf into place
-  template: 
+  template:
     src: cockpit.conf
     dest: /etc/cockpit/cockpit.conf
   vars:
@@ -31,4 +31,3 @@
   vars:
     service_name: "cockpit"
     host_ip: host_ip.stdout
-
