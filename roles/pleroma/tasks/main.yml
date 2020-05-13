@@ -72,6 +72,10 @@
     copy content={{ keypair.stdout }}
     dest=./settings/passwords/pleroma_webpush_keypair
 
+- name: Create Admin User
+  shell: >
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml run --rm web mix pleroma.user new {{default_username}} {{admin_email}} --name {{default_username}} --password {{default_password}} --admin --moderator -y
+
 - debug: 
     msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.yml build. Finally, restart pleroma."
   
