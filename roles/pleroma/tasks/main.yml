@@ -36,13 +36,13 @@
   template:
     src: secret.exs
     dest: "{{ volumes_root }}/pleroma/config/secret.exs"
-  vars: 
+  vars:
     secret_key: secret_key
 
 # - name: Install CIText postgres extension
 #   shell: >
 #     docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml up -d pleromadb; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml down
-  
+
 - name: Configure pleroma systemd service.
   template:
     src: service.j2
@@ -54,7 +54,3 @@
     enabled: "yes"
     daemon-reload: "yes"
     state: started
-
-- name: Create Admin User
-  shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml exec web /opt/pleroma/bin/pleroma_ctl user new {{default_username}} {{admin_email}} --name {{default_username}} --password {{default_password}} --admin --moderator -y
