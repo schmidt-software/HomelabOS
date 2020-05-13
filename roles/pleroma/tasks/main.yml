@@ -7,7 +7,7 @@
 - name: Copy pleroma docker-compose.yml file into place.
   template:
     src: docker-compose.pleroma.yml.j2
-    dest: "{{ volumes_root }}/pleroma/docker-compose.pleroma.yml"
+    dest: "{{ volumes_root }}/pleroma/docker-compose.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
@@ -57,15 +57,15 @@
 
 - name: Run DB migrations
   shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml run --rm web mix ecto.migrate
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml run --rm web mix ecto.migrate
 
 - name: Install CIText postgres extension
   shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml up -d pleromadb; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml down
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml up -d pleromadb; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml exec pleromadb psql -U pleroma -c "CREATE EXTENSION IF NOT EXISTS citext;"; docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml down
   
 - name: Capture web push keys
   shell: >
-    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.pleroma.yml run --rm web mix web_push.gen.keypair
+    docker-compose -f {{ volumes_root}}/pleroma/docker-compose.yml run --rm web mix web_push.gen.keypair
   register: keypair
 
 - local_action:
@@ -73,7 +73,7 @@
     dest=./settings/passwords/pleroma_webpush_keypair
 
 - debug: 
-    msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.pleroma.yml build. Finally, restart pleroma."
+    msg: "*** Attention!, an optional web-push keypair has been written to settings/passwords/pleroma_webpush_keypair. \n If you want to use it, copy and paste the contents of that file to the bottom of your config/secret.exs file, and run docker-compose -f docker-compose.yml build. Finally, restart pleroma."
   
 - name: Configure pleroma systemd service.
   template:
