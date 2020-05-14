@@ -63,7 +63,7 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
       DB_TYPE: postgres
-      DB_NAME: {{ default_username }}_hub
+      DB_NAME: {{ default_username | default(hubzilla) }}_hub
       DB_USER: {{ default_username | default(hubzilla) }}
       DB_PASSWORD: {{ default_password | default(hubzilla) }}"
       HUBZILLA_DOMAIN: "{% if hubzilla.domain %}{{ hubzilla.domain }}{% else %}{{ hubzilla.subdomain + "." + domain }}{% endif %}"
@@ -87,7 +87,7 @@ services:
     environment:
       POSTGRES_PASSWORD: {{ default_password | default(hubzilla) }}
       POSTGRES_USER: {{ default_username | default(hubzilla) }}
-      POSTGRES_DB: {{ default_username }}_hub
+      POSTGRES_DB: {{ default_username | default(hubzilla) }}_hub
     volumes:
       - {{ volumes_root }}/hubzilla/db:/var/lib/postgresql/data/
     networks:
