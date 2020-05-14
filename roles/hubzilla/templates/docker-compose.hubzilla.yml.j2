@@ -63,15 +63,15 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
       DB_TYPE: postgres
-      DB_NAME: {{ default_username | default('hubzilla') }}_hub
-      DB_USER: {{ default_username | default('hubzilla') }}
-      DB_PASSWORD: {{ default_password | default('hubzilla') }}"
+      DB_NAME: {{ default_username }}_hub
+      DB_USER: {{ default_username }}
+      DB_PASSWORD: "{%if default_password %}{{ default_password }}{% else %}hubzilla{% endif %}"
       HUBZILLA_DOMAIN: "{% if hubzilla.domain %}{{ hubzilla.domain }}{% else %}{{ hubzilla.subdomain + "." + domain }}{% endif %}"
       HUBZILLA_ADMIN: "admin@{% if hubzilla.domain %}{{ hubzilla.domain }}{% else %}{{ hubzilla.subdomain + "." + domain }}{% endif %}"
-      SMTP_HOST: {{ smtp.host | default('') }}
-      SMTP_PORT: {{ smtp.port | default('') }}
-      SMTP_USER: {{ smtp.user | default('') }}
-      SMTP_PASS: {{ smtp.pass | default('') }}
+      SMTP_HOST: {{ smtp.host }}
+      SMTP_PORT: {{ smtp.port }}
+      SMTP_USER: {{ smtp.user }}
+      SMTP_PASS: {{ smtp.pass }}
       ADDON_LIST: "nsfw superblock diaspora pubcrawl"
       TIMEZONE: {{ common_timezone | default("Etc/UTC") }}
     networks:
@@ -85,9 +85,9 @@ services:
     image: postgres:12-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: {{ default_password | default('hubzilla') }}
-      POSTGRES_USER: {{ default_username | default('hubzilla') }}
-      POSTGRES_DB: {{ default_username | default('hubzilla') }}_hub
+      POSTGRES_PASSWORD: "{%if default_password %}{{ default_password }}{% else %}hubzilla{% endif %}"
+      POSTGRES_USER: {{ default_username }}
+      POSTGRES_DB: {{ default_username }}_hub
     volumes:
       - {{ volumes_root }}/hubzilla/db:/var/lib/postgresql/data/
     networks:
