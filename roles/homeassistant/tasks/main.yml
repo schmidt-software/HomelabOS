@@ -1,8 +1,10 @@
 ---
+### Docker version - no Plugins.
 - name: Make homeassistant directory.
   file:
     path: "{{ volumes_root }}/homeassistant"
     state: directory
+  when: not homeassistant.use_supervisord
 
 - name: Copy homeassistant docker-compose.yml file into place.
   template:
@@ -10,11 +12,13 @@
     dest: "{{ volumes_root }}/homeassistant/docker-compose.yml"
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+  when: not homeassistant.use_supervisord
 
 - name: Configure homeassistant systemd service.
   template:
     src: service.j2
     dest: /etc/systemd/system/homeassistant.service
+  when: not homeassistant.use_supervisord
 
 - name: Start homeassistant
   systemd:
@@ -22,3 +26,38 @@
     enabled: "yes"
     daemon-reload: "yes"
     state: started
+  when: not homeassistant.use_supervisord
+
+  ### Start Supervised version - with Plugins
+
+- name: Install HomeAssistant pre-requisites
+  apt:
+    name: 
+      - apparmor-utils
+      - avahi-daemon
+      - dbus
+      - jq
+      - network-manager
+      - socat
+  when: homeassistant.use_supervisord
+
+- name: Install Home Assistant Supervised
+  shell: >
+    curl -sL "https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh" | bash -s
+  when: homeassistant.use_supervisord
+
+- name: Find the IP address of the docker host from within traefik
+  shell: >
+    docker-compose -f {{volumes_root}}/traefik/docker-compose.traefik.yml run --rm traefik route | awk '/^default/ { print $2 }'
+  register: host_ip
+  when: homeassistant.use_supervisord
+
+- name: Copy HomeAssistant Traefik config file into place.
+  template:
+    src: traefik.yaml
+    dest: "{{ volumes_root }}/traefik/conf.d/homeassistant.yaml"
+  vars:
+    service_name: homeassistant.domain
+
+    host_ip: host_ip.stdout
+  when: homeassistant.use_supervisord
