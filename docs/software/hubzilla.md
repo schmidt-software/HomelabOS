@@ -23,8 +23,8 @@ To do this:
 1. go to your Hubzilla instance, and on the login screen, click `register`
 2. create an account using the admin email that was set during installation.
 ```
-Unless you modified the docker-compose file, the default admin email will be admin@your.domain.com..
-check out the [access](#access) part of these docs, if you're unsure, which domain you used.
+Unless you modified the docker-compose file, the default admin email will be admin@your.domain.com
+check out the **Access** part of these docs, if you're unsure, which domain you used.
 ```
 3. Unless you have some immediate administration tasks that need finishing, log out and create your own user account using your own email address.
 4. Now you can log back into the admin account, and play around. I suggest setting the verify email option, or closing registrations to your hub.
