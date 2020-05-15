@@ -17,14 +17,21 @@ eg.
 hubzilla:
   enable: True
 ```
-The first time you access Hubzilla, you will need to set up the admin account BEFORE you set any other user account.
+The first time you access Hubzilla, you will need to **set up the admin account BEFORE** you set any other user account.
 
-To do this: On the login screen, click `register` and create an account using the admin email that was set during installation.
-Unless you modified the docker-compose file, the default will be admin@your.domain.com.. check out the [access](#access) part of these docs, if you're unsure, which domain you used.
-
-Unless you have some immediate administration tasks that need finishing, log out and follow the above steps again, using your own email address instead, to create your own user account.
-
-Next, { set email registration }
+To do this:
+1. go to your Hubzilla instance, and on the login screen, click `register`
+2. create an account using the admin email that was set during installation.
+```
+Unless you modified the docker-compose file, the default admin email will be admin@your.domain.com..
+check out the [access](#access) part of these docs, if you're unsure, which domain you used.
+```
+3. Unless you have some immediate administration tasks that need finishing, log out and create your own user account using your own email address.
+4. Now you can log back into the admin account, and play around. I suggest setting the verify email option, or closing registrations to your hub.
+```
+Step 4 is a suggestion/ reminder from HomelabOS. It is beyond the scope of HomelabOS to provide 'how-to' specifics to Hubzilla.
+Hubzilla isn't new, so there is plenty of information out there.
+```
 
 ## SMTP/ Mail
 
