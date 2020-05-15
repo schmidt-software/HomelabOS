@@ -66,8 +66,8 @@ services:
       DB_NAME: "{%if default_username %}{{ default_username }}{% else %}hubzilla{% endif %}_hub"
       DB_USER: "{%if default_username %}{{ default_username }}{% else %}hubzilla{% endif %}"
       DB_PASSWORD: "{%if default_password %}{{ default_password }}{% else %}hubzilla{% endif %}"
-      HUBZILLA_DOMAIN: "{% if hubzilla.domain %}{{ hubzilla.domain }}{% else %}{{ hubzilla.subdomain + "." + domain }}{% endif %}"
-      HUBZILLA_ADMIN: "admin@{% if hubzilla.domain %}{{ hubzilla.domain }}{% else %}{{ hubzilla.subdomain + "." + domain }}{% endif %}"
+      HUBZILLA_DOMAIN: {{ service_domain }}
+      HUBZILLA_ADMIN: admin@{{ service_domain }}
       SMTP_HOST: {{ smtp.host }}
       SMTP_PORT: {{ smtp.port }}
       SMTP_USER: {{ smtp.user }}
