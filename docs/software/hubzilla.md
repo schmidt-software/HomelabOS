@@ -17,6 +17,15 @@ eg.
 hubzilla:
   enable: True
 ```
+The first time you access Hubzilla, you will need to set up the admin account BEFORE you set any other user account.
+
+To do this: On the login screen, click `register` and create an account using the admin email that was set during installation.
+Unless you modified the docker-compose file, the default will be admin@your.domain.com.. check out the [access](#access) part of these docs, if you're unsure, which domain you used.
+
+Unless you have some immediate administration tasks that need finishing, log out and follow the above steps again, using your own email address instead, to create your own user account.
+
+Next, { set email registration }
+
 ## SMTP/ Mail
 
 Hubzilla makes pretty good use of a mail server. If you don't want to run your own, sign up for a service like [mailgun](https://www.mailgun.com/).
