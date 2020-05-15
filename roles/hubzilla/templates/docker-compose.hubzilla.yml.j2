@@ -12,7 +12,7 @@ networks:
 services:
   nginx:
     # Nginx Web server
-    image: nginx:alpine
+    image: nginx:1.17.10-alpine
     restart: unless-stopped
     networks:
       - traefik_network
@@ -82,7 +82,7 @@ services:
 
   postgres:
   # PostgreSQL
-    image: postgres:12-alpine
+    image: postgres:12.2-alpine
     restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: "{%if default_password %}{{ default_password }}{% else %}hubzilla{% endif %}"
