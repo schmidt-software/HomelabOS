@@ -19,7 +19,7 @@
   when: folder_present.stat.exists
 
 - name: Move wallabag_db to wallabag/db
-  command: mv "{{ volumes_root }}/wallabag_db" "{{ volumes_root }}/nextcloud/db"
+  command: mv "{{ volumes_root }}/wallabag_db" "{{ volumes_root }}/wallabag/db"
   when: folder_present.stat.exists
 # End Migration v0.7 - Thanks to @denis.ev
 
