@@ -20,8 +20,6 @@
   vars:
     service_domain: "{% if hubzilla.domain %}{{ hubzilla.domain }}{% else %}{{ hubzilla.subdomain }}.{{ domain }}{% endif %}"
 
-
-
 - name: Configure hubzilla systemd service.
   template:
     src: service.j2
