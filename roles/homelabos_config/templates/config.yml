@@ -559,6 +559,11 @@ wallabag:
   https_only: {{ wallabag.https_only | default(False) }}
   auth: {{ wallabag.auth | default(False) }}
   subdomain: {{ wallabag.subdomain | default("wallabag") }}
+webdavserver:
+  enable: {{ webdavserver.enable | default(enable_webdavserver, None) | default(False) }}
+  https_only: {{ webdavserver.https_only | default(False) }}
+  auth: {{ webdavserver.auth | default(False) }}
+  subdomain: {{ webdavserver.subdomain | default("webdav")}}
 webvirtmgr:
   enable: {{ webvirtmgr.enable | default(enable_webvirtmgr, None) | default(False) }}
   https_only: {{ webvirtmgr.https_only | default(False) }}

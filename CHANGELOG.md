@@ -32,6 +32,7 @@
 - Added Sabnzbd - Free and easy binary newsreader
 - Added Searx - A privacy-respecting, hackable metasearch engine.
 - Added Tiddlywiki - a unique non-linear notebook for capturing, organizing and sharing complex information
+- Added WebDAV Server - A simple WebDAV service.
 - Added [Pixelfed](https://pixelfed.org/) - A free and ethical photo sharing platform, powered by ActivityPub federation.
 - Added SickChill - SickChill is an automatic Video Library Manager for TV Shows.
 - Added Snibox - Self-hosted snippet manager. Developed to collect and organize code snippets.
