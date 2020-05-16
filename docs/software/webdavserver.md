@@ -4,7 +4,7 @@
 file transfer service setup, which is useful for e.g. syncing your notes from Joplin.  If you don't need all the extra from NextCloud/OwnCloud,
 this service could be what you need.
 
-Files are stored in {{ volume_root }}/webdav/data .
+Files are stored in {{ storage_dir }}/webdav/data .
 
 It is strongly recommended to only allow access over https.
 

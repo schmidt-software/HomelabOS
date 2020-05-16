@@ -13,7 +13,7 @@ services:
     image: bytemark/webdav
     restart: unless-stopped
     volumes:
-      - "{{ volumes_root }}/webdav:/var/lib/dav"
+      - "{{ storage_dir }}/webdav:/var/lib/dav"
     environment:
       - AUTH_TYPE=Digest
       - USERNAME={{ default_username }}
