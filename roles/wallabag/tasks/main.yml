@@ -1,8 +1,9 @@
 ---
 - name: Make wallabag directory.
   file:
-    path: "{{ volumes_root }}/wallabag"
+    path: "{{ volumes_root }}/wallabag/{{ item }}"
     state: directory
+  with_item: ["data", "images", "db"]
 
 - name: Copy wallabag docker-compose.yml file into place.
   template:
