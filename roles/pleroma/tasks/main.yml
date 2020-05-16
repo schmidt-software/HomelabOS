@@ -17,7 +17,7 @@
     path: "{{ volumes_root }}/pleroma/upload"
     owner: "{{ ansible_effective_user_id }}"
     group: "{{ ansible_effective_group_id }}"
-    recurse: yes
+    recurse: true
 
 - name: Configure config directory
   file:
@@ -25,7 +25,7 @@
     path: "{{ volumes_root }}/pleroma/config"
     owner: "{{ ansible_effective_user_id }}"
     group: "{{ ansible_effective_group_id }}"
-    recurse: yes
+    recurse: true
 
 - name: Generate Pleroma Secret Key Base
   shell: >
