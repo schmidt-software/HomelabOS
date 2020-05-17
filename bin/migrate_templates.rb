@@ -43,7 +43,7 @@ BEGIN {
       "      - \"traefik.http.services.#{service}.loadbalancer.server.port=#{port}\"",
       "      - \"traefik.http.routers.#{service}-http.rule=Host(`{{ service_domain }}`)\"",
       "      - \"traefik.http.routers.#{service}-http.entrypoints=http\"",
-      "      - \"traefik.http.routers.#{service}-http.middlewares={% if #{service}.https_only %}redirect@file, security-headers@file{% else %}{% if #{service}.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file\"",
+      "      - \"traefik.http.routers.#{service}-http.middlewares={% if #{service}.https_only %}redirect@file, security-headers@file, {% else %}{% if #{service}.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file\"",
       "      - \"traefik.http.routers.#{service}.rule=Host(`{{ service_domain }}`)\"",
       "      - \"traefik.http.routers.#{service}.entrypoints=https\"",
       "      - \"traefik.http.routers.#{service}.middlewares={% if #{service}.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file\"",

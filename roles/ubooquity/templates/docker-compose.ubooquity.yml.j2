@@ -32,7 +32,7 @@ services:
       - "traefik.http.services.ubooquity.loadbalancer.server.port=2202"
       - "traefik.http.routers.ubooquity-http.rule=Host(`{{ service_domain }}`)"
       - "traefik.http.routers.ubooquity-http.entrypoints=http"
-      - "traefik.http.routers.ubooquity-http.middlewares={% if ubooquity.https_only %}redirect@file, security-headers@file{% else %}{% if ubooquity.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.ubooquity-http.middlewares={% if ubooquity.https_only %}redirect@file, security-headers@file, {% else %}{% if ubooquity.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
       - "traefik.http.routers.ubooquity.rule=Host(`{{ service_domain }}`)"
       - "traefik.http.routers.ubooquity.entrypoints=https"
       - "traefik.http.routers.ubooquity.middlewares={% if ubooquity.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"

@@ -36,7 +36,7 @@ services:
       - "traefik.http.services.funkwhale.loadbalancer.server.port=80"
       - "traefik.http.routers.funkwhale-http.rule=Host(`{{ service_domain }}`)"
       - "traefik.http.routers.funkwhale-http.entrypoints=http"
-      - "traefik.http.routers.funkwhale-http.middlewares={% if funkwhale.https_only %}redirect@file, security-headers@file{% else %}{% if funkwhale.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.funkwhale-http.middlewares={% if funkwhale.https_only %}redirect@file, security-headers@file, {% else %}{% if funkwhale.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
       - "traefik.http.routers.funkwhale.rule=Host(`{{ service_domain }}`)"
       - "traefik.http.routers.funkwhale.entrypoints=https"
       - "traefik.http.routers.funkwhale.middlewares={% if funkwhale.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
