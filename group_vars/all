@@ -87,6 +87,7 @@ services:
   tiddlywiki: 
   transmission: 
   trilium: 
+  turtl: 
   ubooquity: 
   wallabag: 
   watchtower: 
@@ -182,12 +183,13 @@ tick:
 tiddlywiki: 
 transmission: 
 trilium: 
+turtl:
 ubooquity: 
 wekan: 
 watchtower: 
 xfinityusageinfluxdb: 
 wallabag: 
-webdavserver:
+webdavserver: 
 webvirtmgr: 
 zulip: 
 enable_tinc: false
