@@ -28,8 +28,6 @@
     state: started
   when: not homeassistant.use_supervisord
 
-  ### Start Supervised version - with Plugins
-
 - name: Install HomeAssistant pre-requisites
   apt:
     name: 
@@ -40,6 +38,38 @@
       - network-manager
       - socat
   when: homeassistant.use_supervisord
+
+- name: Create System Home Assistant Config file
+  template:
+    src: system_config.json
+    dest: "/etc/hassio.json"
+  vars:
+    machine_type: 
+      i386: "qemux86"
+      i686: "qemux86"
+      x86_64: "qemux86-64"
+      armv7l: "raspberrypi3-64"
+      aarch64: "raspberrypi4-64"
+    override: 
+      i386: "i386"
+      i686: "i386"
+      x86_64: "amd64"
+      armv7l: "armv7"
+      aarch64: "aarch64"
+    ha_docker: "homeassistant/{{machine_type[ansible_architecture] | default(\"qemux86-64\")}}-homeassistant"
+    hassio_docker: "homeassistant/{{override[ansible_architecture] | default(\"amd64\")}}-hassio-supervisor"
+  when: homeassistant.use_supervisord
+
+- name: Pull version info matching the CPU Architecture
+  shell: >
+    curl -s https://version.home-assistant.io/stable.json | jq -e -r '.supervisor'
+  register: version
+  when: homeassistant.use_supervisord
+
+- name: Pull Supervisor Docker Image
+  docker_image: 
+    name: "homeassistant/{{override[ansible_architecture] | default(\"amd64\")}}-hassio-supervisor"
+    source: pull
 
 - name: Install Home Assistant Supervised
   shell: >
@@ -61,3 +91,15 @@
 
     host_ip: host_ip.stdout
   when: homeassistant.use_supervisord
+
+
+
+  # Determine Architecture
+  # Setup Config directory
+  # Pull Supervisor Image 
+  # Pull Supervisor Binary
+  # Edit Supervisor Binary - likely done as a template
+  # install supervisor service
+  # Start supervisor via service
+
+  # Install AppArmor
