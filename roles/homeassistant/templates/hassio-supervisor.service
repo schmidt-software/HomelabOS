@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=5s
 ExecStartPre=-/usr/bin/docker stop hassio_supervisor
-ExecStart=/sbin/hassio-supervisor
+ExecStart=/usr/sbin/hassio-supervisor
 ExecStop=-/usr/bin/docker stop hassio_supervisor
 
 [Install]

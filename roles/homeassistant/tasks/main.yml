@@ -70,23 +70,60 @@
   docker_image: 
     name: "homeassistant/{{override[ansible_architecture] | default(\"amd64\")}}-hassio-supervisor"
     source: pull
+  when: homeassistant.use_supervisord
 
 - name: Install supervisor startup script
-  template:
+  copy:
     src: hassio-supervisor
-    dest: "/usr/sbin/hassio-supervisor" mode=a+x
+    dest: /usr/sbin/hassio-supervisor
+    mode: 'a+x'
+  when: homeassistant.use_supervisord
 
 - name: Install supervisor service file
   template:
     src: hassio-supervisor.service
     dest: /etc/systemd/system/hassio-supervisor.service
+  when: homeassistant.use_supervisord
 
+- name: Install Hass.io AppArmor Bin
+  template:
+    src: hassio-apparmor
+    dest: /usr/sbin/hassio-apparmor
+    mode: a+x
+  when: homeassistant.use_supervisord
 
+- name: Install Hass.io AppArmor Service
+  template:
+    src: hassio-apparmor.service
+    dest: /etc/systemd/system/hassio-apparmor.service
+  when: homeassistant.use_supervisord
 
+- name: Create needed directories
+  file:
+    path: /var/homelabos/homeassistant/share/hassio/apparmor/
+    state: directory
+    mode: '0755'
+  when: homeassistant.use_supervisord
 
-- name: Install Home Assistant Supervised
-  shell: >
-    curl -sL "https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh" | bash -s
+- name: Install Hass.io AppArmor Profile
+  template:
+    src: apparmor.j2
+    dest: /var/homelabos/homeassistant/share/hassio/apparmor/hassio-supervisor
+  when: homeassistant.use_supervisord
+
+- name: Start homeassistant app armor
+  systemd:
+    name: hassio-apparmor
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started
+  when: homeassistant.use_supervisord
+
+- name: Install CLI
+  template:
+    src: cli
+    dest: /usr/bin/ha
+    mode: a+x
   when: homeassistant.use_supervisord
 
 - name: Find the IP address of the docker host from within traefik
@@ -100,19 +137,14 @@
     src: traefik.yaml
     dest: "{{ volumes_root }}/traefik/conf.d/homeassistant.yaml"
   vars:
-    service_name: homeassistant.domain
-
+    service_name: "HomeAssistant"
     host_ip: host_ip.stdout
   when: homeassistant.use_supervisord
 
-
-
-  # Determine Architecture
-  # Setup Config directory
-  # Pull Supervisor Image 
-  # Pull Supervisor Binary
-  # Edit Supervisor Binary - likely done as a template
-  # install supervisor service
-  # Start supervisor via service
-
-  # Install AppArmor
+- name: Start homeassistant
+  systemd:
+    name: hassio-supervisor
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started
+  when: homeassistant.use_supervisord
