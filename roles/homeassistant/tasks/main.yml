@@ -71,6 +71,19 @@
     name: "homeassistant/{{override[ansible_architecture] | default(\"amd64\")}}-hassio-supervisor"
     source: pull
 
+- name: Install supervisor startup script
+  template:
+    src: hassio-supervisor
+    dest: "/usr/sbin/hassio-supervisor" mode=a+x
+
+- name: Install supervisor service file
+  template:
+    src: hassio-supervisor.service
+    dest: /etc/systemd/system/hassio-supervisor.service
+
+
+
+
 - name: Install Home Assistant Supervised
   shell: >
     curl -sL "https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh" | bash -s
