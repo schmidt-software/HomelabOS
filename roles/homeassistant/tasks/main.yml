@@ -30,7 +30,7 @@
 
 - name: Install HomeAssistant pre-requisites
   apt:
-    name: 
+    name:
       - apparmor-utils
       - avahi-daemon
       - dbus
@@ -44,13 +44,13 @@
     src: system_config.json
     dest: "/etc/hassio.json"
   vars:
-    machine_type: 
+    machine_type:
       i386: "qemux86"
       i686: "qemux86"
       x86_64: "qemux86-64"
       armv7l: "raspberrypi3-64"
       aarch64: "raspberrypi4-64"
-    override: 
+    override:
       i386: "i386"
       i686: "i386"
       x86_64: "amd64"
@@ -67,7 +67,7 @@
   when: homeassistant.use_supervisord
 
 - name: Pull Supervisor Docker Image
-  docker_image: 
+  docker_image:
     name: "homeassistant/{{override[ansible_architecture] | default(\"amd64\")}}-hassio-supervisor"
     source: pull
   when: homeassistant.use_supervisord
