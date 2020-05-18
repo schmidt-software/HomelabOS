@@ -19,6 +19,7 @@ services:
   digikam: 
   docs: 
   drone: 
+  duckdns: 
   duplicati: 
   elkstack: 
   emby: 
@@ -87,11 +88,13 @@ services:
   restic: 
   sabnzbd: 
   searx: 
+  shinobi: 
   sickchill: 
   snibox: 
   sonarr: 
   speedtest: 
   statping: 
+  sui: 
   syncthing: 
   tautulli: 
   thelounge: 
@@ -127,6 +130,7 @@ dark_sky:
 dasher: 
 digikam: 
 drone: 
+duckdns: 
 duplicati: 
 elkstack: 
 emby: 
@@ -185,7 +189,7 @@ photoprism:
 pihole: 
 piwigo: 
 pixelfed: 
-pleroma:
+pleroma: 
 plex: 
 poli: 
 portainer: 
@@ -195,6 +199,7 @@ radarr:
 restic: 
 sabnzbd: 
 searx: 
+shinobi:
 sickchill: 
 snibox: 
 sonarr: 
