@@ -2,17 +2,17 @@
 
 ## Features
 
-- Added CodiMD - The best platform to write and share markdown
 - Added Encrypted Secrets - All secrets stored in the settings repo are now automatically encrypted with Ansible Vault. Use `make decrypt` to see the values in the file. It re-encrypts when you run `make`.
+- Added Lazylibrarian - LazyLibrarian is a program to follow authors and grab metadata for all your digital reading needs.
 - Added One-Line Deploy - `bash <(curl -s https://gitlab.com/NickBusey/HomelabOS/-/raw/dev/install_homelabos.sh)`
-- Added Pleroma - Pleroma is a federated social networking platform, compatible with GNU social and other OStatus implementations. It is free software licensed under the AGPLv3.
-- Updated everything to use traefik version 2
+- Updated everything to use Traefik v2
 
 ## Services Added
 
 - Added Apache 2 - Web server
 - Added Authelia - Authelia is an open-source full-featured authentication server available on Github
 - Added Barcode Buddy - Barcode system for Grocy
+- Added CodiMD - The best platform to write and share markdown
 - Added Cockpit - Cockpit admin interface package for configuring and troubleshooting a system
 - Added Chowdown -  Simple recipes in Markdown format
 - Added Digikam - Professional Photo Management with the Power of Open Source
@@ -42,11 +42,13 @@
 - Added PeerTube - ActivityPub Video Sharing
 - Added PhotoPrism - Clearly structured Web interface for browsing, organizing and sharing your personal photo collection.
 - Added Pixelfed - A free and ethical photo sharing platform, powered by ActivityPub federation.
+- Added Pleroma - Pleroma is a federated social networking platform, compatible with GNU social and other OStatus implementations. It is free software licensed under the AGPLv3.
 - Added Poli - An easy-to-use BI server built for SQL lovers. Power data analysis in SQL and gain faster business insights.
 - Added PrivateBin - PrivateBin is a minimalist, open source online pastebin where the server has zero knowledge of pasted data.
 - Added qBittorrent - An open-source alternative to µTorrent
 - Added Sabnzbd - Free and easy binary newsreader
 - Added Searx - A privacy-respecting, hackable metasearch engine.
+- Added Shinobi - The Free Open Source CCTV platform written in Node.JS
 - Added SickChill - SickChill is an automatic Video Library Manager for TV Shows.
 - Added Snibox - Self-hosted snippet manager. Developed to collect and organize code snippets.
 - Added Speedtest - A tool to run periodic speedtests and save them in InfluxDB for graphing in Grafana
@@ -54,8 +56,10 @@
 - Added Tautulli - Monitor your Plex Server
 - Added Tiddlywiki - a unique non-linear notebook for capturing, organizing and sharing complex information
 - Added Trilium - Build your personal knowledge base with Trilium Notes
+- Added Turtl - A note taking API server with E2E encryption
 - Added Ubooquity - Ubooquity is a free home server for your comics and ebooks library
 - Added Watchtower - A process for automating Docker container base image updates
+- Added WebDAV - a WebDAV service for secure http file transfer needs
 - Added WebTrees - Online Genealogy
 - Added Wekan - Open source Kanban board with MIT license
 - Added WireGuard - Replaced tinc with WireGuard for faster Bastion host access
