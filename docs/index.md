@@ -66,9 +66,9 @@ If you are having problems you can:
 
 ### Chat
 
+- [Matterbridge](software/matterbridge) - Links chat serices
 - [The Lounge](software/thelounge) - Always-on IRC client (IRC bouncer)
 - [Zulip](software/zulip) - Threaded chat software
-- [Matterbridge](software/matterbridge) - Links chat serices
 
 ### Document Management
 

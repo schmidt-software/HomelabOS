@@ -33,6 +33,7 @@
 - Added Huginn - Create agents that monitor and act on your behalf. Your agents are standing by!
 - Added Mailu - is a simple yet full-featured mail server as a set of Docker images.
 - Added MassiveDecks - Massive Decks is a comedy party game based on Cards against Humanity. Play with friends! It works great with a bunch of people in the same room on phones, or on voice chat online.
+- Added matterbridge - A program that allows users to link multiple chat platforms.
 - Added Minecraft - Minecraft server with select-able version
 - Added MinecraftBedrockServer - Minecraft Bedrock Server
 - Added MStream - All your music, everywhere you go.
@@ -66,7 +67,7 @@
 - Added WireGuard - Replaced tinc with WireGuard for faster Bastion host access
 - Added Zammad - Zammad is a web-based, open source user support/ticketing solution.
 - Added SUI - a startpage for your server and / or new tab page
-- Added matterbridge - A program that allows users to link multiple chat platforms.
+
 
 ## Services Removed
 
