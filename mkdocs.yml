@@ -49,6 +49,7 @@ nav:
     - Chat:
       - The Lounge: software/thelounge.md
       - Zulip: software/zulip.md
+      - Matterbridge: software/matterbridge.md
     - Document Management:
       - Mayan: software/mayan.md
       - Paperless: software/paperless.md
