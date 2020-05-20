@@ -5,6 +5,7 @@
 - Added Encrypted Secrets - All secrets stored in the settings repo are now automatically encrypted with Ansible Vault. Use `make decrypt` to see the values in the file. It re-encrypts when you run `make`.
 - Added Lazylibrarian - LazyLibrarian is a program to follow authors and grab metadata for all your digital reading needs.
 - Added One-Line Deploy - `bash <(curl -s https://gitlab.com/NickBusey/HomelabOS/-/raw/dev/install_homelabos.sh)`
+
 - Updated everything to use Traefik v2
 
 ## Services Added
@@ -65,6 +66,7 @@
 - Added WireGuard - Replaced tinc with WireGuard for faster Bastion host access
 - Added Zammad - Zammad is a web-based, open source user support/ticketing solution.
 - Added SUI - a startpage for your server and / or new tab page
+- Added matterbridge - A program that allows users to link multiple chat platforms.
 
 ## Services Removed
 
