@@ -3,6 +3,7 @@
 ## Features
 
 - Added Encrypted Secrets - All secrets stored in the settings repo are now automatically encrypted with Ansible Vault. Use `make decrypt` to see the values in the file. It re-encrypts when you run `make`.
+- Added Lazylibrarian - LazyLibrarian is a program to follow authors and grab metadata for all your digital reading needs.
 - Added One-Line Deploy - `bash <(curl -s https://gitlab.com/NickBusey/HomelabOS/-/raw/dev/install_homelabos.sh)`
 - Updated everything to use Traefik v2
 
@@ -55,8 +56,10 @@
 - Added Tautulli - Monitor your Plex Server
 - Added Tiddlywiki - a unique non-linear notebook for capturing, organizing and sharing complex information
 - Added Trilium - Build your personal knowledge base with Trilium Notes
+- Added Turtl - A note taking API server with E2E encryption
 - Added Ubooquity - Ubooquity is a free home server for your comics and ebooks library
 - Added Watchtower - A process for automating Docker container base image updates
+- Added WebDAV - a WebDAV service for secure http file transfer needs
 - Added WebTrees - Online Genealogy
 - Added Wekan - Open source Kanban board with MIT license
 - Added WireGuard - Replaced tinc with WireGuard for faster Bastion host access

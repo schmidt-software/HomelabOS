@@ -132,3 +132,7 @@ watchtower:
 duckdns:
   enable: {{ duckdns.enable | default(enable_duckdns, None) | default(False) }}
   token: {{ duckdns.token | default(False) }}
+  
+drone:
+  gitea_id: {{ drone.gitea_id | default(False) }}
+  gitea_secret: {{ drone.gitea_secret | default(False) }}
