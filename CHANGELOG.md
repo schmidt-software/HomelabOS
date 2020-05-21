@@ -10,6 +10,7 @@
 
 - Added Encrypted Secrets - All secrets stored in the settings repo are now automatically encrypted with Ansible Vault. Use `make decrypt` to see the values in the file. It re-encrypts when you run `make`.
 - Added One-Line Deploy - `bash <(curl -s https://gitlab.com/NickBusey/HomelabOS/-/raw/dev/install_homelabos.sh)`
+
 - Updated everything to use Traefik v2
 
 ## Services Added
@@ -38,6 +39,7 @@
 - Added Lazylibrarian - LazyLibrarian is a program to follow authors and grab metadata for all your digital reading needs.
 - Added Mailu - is a simple yet full-featured mail server as a set of Docker images.
 - Added MassiveDecks - Massive Decks is a comedy party game based on Cards against Humanity. Play with friends! It works great with a bunch of people in the same room on phones, or on voice chat online.
+- Added matterbridge - A program that allows users to link multiple chat platforms.
 - Added Minecraft - Minecraft server with select-able version
 - Added MinecraftBedrockServer - Minecraft Bedrock Server
 - Added MStream - All your music, everywhere you go.
@@ -71,6 +73,7 @@
 - Added WireGuard - Replaced tinc with WireGuard for faster Bastion host access
 - Added Zammad - Zammad is a web-based, open source user support/ticketing solution.
 - Added SUI - a startpage for your server and / or new tab page
+
 
 ## Services Removed
 
