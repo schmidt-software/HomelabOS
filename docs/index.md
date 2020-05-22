@@ -66,6 +66,7 @@ If you are having problems you can:
 
 ### Chat
 
+- [matterbridge](software/matterbridge) - A program that allows users to link multiple chat platforms.
 - [The Lounge](software/thelounge) - Always-on IRC client (IRC bouncer)
 - [Zulip](software/zulip) - Threaded chat software
 
