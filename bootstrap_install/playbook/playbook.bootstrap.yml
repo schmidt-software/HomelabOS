@@ -1,0 +1,118 @@
+---
+- name: Bootstrap server for HLOS deployment
+  hosts: all
+
+  tasks:
+  - name: Add my user
+    user: >
+      name={{ user_name }}
+      password={{ user_pass }}
+      shell=/bin/bash
+      groups=sudo
+      append=yes
+      generate_ssh_key=no
+      ssh_key_bits=2048
+      state=present
+
+  - name: Add my workstation user's public key to the new user
+    authorized_key:
+      user: "{{ user_name }}"
+      key: "{{ lookup('file', 'certificates/id_rsa.pub') }}"
+      state: present
+
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 14400
+      # Cache does not need to be updated withtin 4 hours time span
+
+  - name: Install required system packages
+    apt: name={{ item }} state=latest update_cache=no
+    loop: [ 'git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'gnupg-agent', 'python3-docker', 'python3-distutils']
+
+  # https://docs.docker.com/engine/install/debian/
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      #url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker Repository
+    apt_repository:
+      #repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+      state: present
+
+  - name: Update apt and install docker-ce
+    apt: name={{ item }} state=latest update_cache=yes
+    loop: [ 'docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose']
+
+  - name: Add user '{{ user_name }}' to group docker
+    user:
+      name: '{{ user_name }}'
+      groups: docker
+      append: yes
+
+## This one might actually be the only thing to deploy, then we fetch the docker file and what not from in there.
+  - name: Deploy hlos files to server
+    git:
+      repo: https://gitlab.com/NickBusey/HomelabOS.git
+      version: master
+      dest: "{{ volumes_root }}/install"
+      accept_hostkey: yes
+
+  - name: Change ownership to correct user
+    file:
+      path: "{{ volumes_root }}/install"
+      owner: "{{ user_name }}"
+      group: "{{ user_name }}"
+      recurse: yes
+
+  - name: Copy ansible-api Docker files to remote
+    copy:
+      src: docker
+      dest: "{{ volumes_root }}/ansible-api/"
+      owner: "{{ user_name }}"
+      group: "{{ user_name }}"
+#### To here ####
+
+  - name: Build ansible-api image
+    docker_image:
+      name: ansible-api
+      tag: latest
+      build:
+        path: "{{ volumes_root }}/ansible-api/docker"
+        pull: yes
+        rm: yes
+      source: build
+      state: present
+
+  - name: Copy docker-compose into place
+    template:
+      src: docker-compose.yml.j2
+      dest: "{{ volumes_root }}/ansible-api/docker-compose.yml"
+      owner: "{{ user_name }}"
+      group: "{{ user_name }}"
+
+  - name: Configure ansible-api systemd service.
+    template:
+      src: service.j2
+      dest: /etc/systemd/system/ansible-api.service
+
+  - name: Start ansible-api
+    systemd:
+      name: ansible-api
+      enabled: "yes"
+      daemon-reload: "yes"
+      state: started 
+
+
+
+#  - name: Deploy Source
+#    synchronize:
+#      archive: yes
+#      checksum: yes
+#      compress: yes
+#      dest: '/tmp/docker'
+#      src: ./docker
+

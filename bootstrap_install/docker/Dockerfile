@@ -1,0 +1,61 @@
+FROM python:3.8-alpine
+
+ENV ANSIBLE_VERSION 2.9.9
+RUN set -x && \
+    \
+    echo "==> Adding build-dependencies..."  && \
+    apk --update add --virtual build-dependencies \
+      gcc \
+      g++ \
+      make \
+      musl-dev \
+      libffi-dev \
+      openssl-dev \
+      python3-dev && \
+    \
+    echo "==> Upgrading apk and system..."  && \
+    apk update && apk upgrade && \
+    \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python get-pip.py && \
+    if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
+    if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python ; fi && \
+    pip install --upgrade pip && \
+    \
+    echo "==> Installing Ansible..."  && \
+    pip install ansible==${ANSIBLE_VERSION} && \
+    pip3 install ansible-runner sanic && \
+    \
+    echo "==> Cleaning up..."  && \
+    apk del build-dependencies && \
+    rm -rf /var/cache/apk/* && \
+    \
+    echo "==> Adding hosts for convenience..."  && \
+    mkdir -p /etc/ansible /ansible && \
+    echo "[local]" >> /etc/ansible/hosts && \
+    echo "localhost" >> /etc/ansible/hosts
+
+RUN echo "==> Adding ansible-api and requirements" && \
+    wget https://github.com/kpoppel/ansible-api/archive/master.zip && \
+    unzip master.zip && \
+    mv ansible-api-master ansible-api
+
+WORKDIR /ansible-api
+
+ENV API_ALLOW_IP=
+ENV API_WS_SUB=
+ENV API_TIMEOUT 3600
+ENV API_WORKERS 1
+ENV API_LOG_PATH /tmp/ansible-api.log
+ENV API_SIGN_KEY secret
+ENV API_SIGN_MODE sha256
+ENV API_PORT 8765
+ENV API_PLAYBOOK_PATH /playbooks
+ENV API_SCRIPT_PATH /scripts
+
+EXPOSE $API_PORT
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
