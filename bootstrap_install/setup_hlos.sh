@@ -1,14 +1,13 @@
 #!/bin/bash
 echo "#####################################################################################################"
-echo "## This script is supposed to be run on a client machine, NOT on the server to which it deploy HLOS"
+echo "## This script can be used both from a client machine, and on the server to which you want to deploy HLOS"
 echo "## We expect the server to be Debian or Ubuntu based"
-echo "##"
-echo "## Until further we also expect this machine to be Debian or Ubuntu based (apt, not yum, dnf, emerge, pkg, packman, sqg, swupd)"
+echo "##    (apt, not yum, dnf, emerge, pkg, packman, sqg, swupd)"
 echo "##"
 echo "## The script bootstraps the server, preparing it for setup and deployment of services."
 echo "## Your client computer needs to have a few things installed, so make sure your current user has sudo access"
 echo "## If not, login as root and install sudo, then add your user to the sudoers group.  Logout and login again."
-echo "## you only have to do this step once."
+echo "## You only have to do this step once."
 echo "##"
 echo "## You also need to have access to the server, and be able to use sudo there. Check this before continuing"
 echo "## by ssh user@youserver.org . You should get a shell without typing your password."
@@ -29,16 +28,18 @@ read -s -p "Enter your server password: " pass
 
 # Install ansible, sshpass to get started
 echo
-echo "* I need sshpass, you may be asked to enter your sudo credentials (for this machine):"
-sudo apt install -qy sshpass
+echo "* I need sshpass and Python, you may be asked to enter your sudo credentials (for this machine):"
+sudo apt update
+sudo apt install -qy sshpass python3 python3-pip
 
 if [ ! -f "ansible/bin/ansible" ]; then
   echo "* Installing ansible in a Python virtual environment.  This means you can delete it after bootstrapping the server"
   echo "* if you want, and no changes were made on your client PC."
-  python -m virtualenv ansible
+  pip3 install virtualenv
+  python3 -m virtualenv ansible
   cd ansible
   source bin/activate
-  pip install ansible docker-py
+  pip3 install ansible docker-py
 else
   cd ansible
   source bin/activate
@@ -125,7 +126,7 @@ echo "* Now running the ansible playbook to get the hlos user setup"
 ansible-playbook  -i inventory playbook.bootstrap.yml
 
 echo "* Finally test the hlos user is setup correctly.  You should see the message 'All is okay'..."
-ssh $user@$ip echo "All is okay at \$HOME"
+ssh hlos@$ip echo "All is okay at \$HOME"
 
 echo "* Test the ansible-api service is running.  You should see a message coming back.  Pause for a few seconds to let the service start up."
 sleep 10
