@@ -22,51 +22,52 @@
 
   - name: Update apt cache
     apt:
-      update_cache: yes
+      update_cache: true
       cache_valid_time: 14400
       # Cache does not need to be updated withtin 4 hours time span
 
   - name: Install required system packages
     apt: name={{ item }} state=latest update_cache=no
-    loop: [ 'git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'gnupg-agent', 'python3-docker', 'python3-distutils']
+    loop: ['git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common',
+           'gnupg-agent', 'python3-docker', 'python3-distutils']
 
   # https://docs.docker.com/engine/install/debian/
   - name: Add Docker GPG apt Key
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
-      #url: https://download.docker.com/linux/ubuntu/gpg
+      # url: https://download.docker.com/linux/ubuntu/gpg
       state: present
 
   - name: Add Docker Repository
     apt_repository:
-      #repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      # repo: deb https://download.docker.com/linux/ubuntu bionic stable
       repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
       state: present
 
   - name: Update apt and install docker-ce
     apt: name={{ item }} state=latest update_cache=yes
-    loop: [ 'docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose']
+    loop: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'docker-compose']
 
   - name: Add user '{{ user_name }}' to group docker
     user:
       name: '{{ user_name }}'
       groups: docker
-      append: yes
+      append: true
 
-## This one might actually be the only thing to deploy, then we fetch the docker file and what not from in there.
+  ## This one might actually be the only thing to deploy, then we fetch the docker file and what not from in there.
   - name: Deploy hlos files to server
     git:
       repo: https://gitlab.com/NickBusey/HomelabOS.git
       version: master
       dest: "{{ volumes_root }}/install"
-      accept_hostkey: yes
+      accept_hostkey: true
 
   - name: Change ownership to correct user
     file:
       path: "{{ volumes_root }}/install"
       owner: "{{ user_name }}"
       group: "{{ user_name }}"
-      recurse: yes
+      recurse: true
 
   - name: Copy ansible-api Docker files to remote
     copy:
@@ -74,7 +75,7 @@
       dest: "{{ volumes_root }}/ansible-api/"
       owner: "{{ user_name }}"
       group: "{{ user_name }}"
-#### To here ####
+  #### To here ####
 
   - name: Build ansible-api image
     docker_image:
@@ -82,8 +83,8 @@
       tag: latest
       build:
         path: "{{ volumes_root }}/ansible-api/docker"
-        pull: yes
-        rm: yes
+        pull: true
+        rm: true
       source: build
       state: present
 
@@ -102,11 +103,9 @@
   - name: Start ansible-api
     systemd:
       name: ansible-api
-      enabled: "yes"
-      daemon-reload: "yes"
+      enabled: true
+      daemon-reload: true
       state: started 
-
-
 
 #  - name: Deploy Source
 #    synchronize:
@@ -115,4 +114,3 @@
 #      compress: yes
 #      dest: '/tmp/docker'
 #      src: ./docker
-
