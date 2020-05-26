@@ -1,0 +1,21 @@
+---
+- name: Create the hlos user for HLOS
+  hosts: all
+
+  tasks:
+  - name: Add my user
+    user: >
+      name={{ user_name }}
+      password={{ user_pass }}
+      shell=/bin/bash
+      groups=sudo,docker
+      append=yes
+      generate_ssh_key=yes
+      ssh_key_bits=2048
+      state=present
+
+  - name: Add the workstation user's public key to the 'hlos' user
+    authorized_key:
+      user: "{{ user_name }}"
+      key: "{{ lookup('file', 'certificates/id_rsa.pub') }}"
+      state: present

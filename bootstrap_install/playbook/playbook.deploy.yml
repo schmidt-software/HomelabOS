@@ -1,0 +1,81 @@
+---
+- name: Deploy HLOS services
+  hosts: all
+
+  tasks:
+  ## This one might actually be the only thing to deploy, then we fetch the docker file and what not from in there.
+  ## 
+  - name: Deploy hlos files to server
+    git:
+      repo: https://gitlab.com/NickBusey/HomelabOS.git
+      # version: master
+      version: 220_add_remote_deploy_of_hlos_ansible_api
+      dest: "{{ volumes_root }}/install"
+      accept_hostkey: true
+
+#  - name: Change ownership to correct user
+#    file:
+#      path: "{{ volumes_root }}/install"
+##      owner: "{{ user_name }}"
+##      group: "{{ user_name }}"
+#      recurse: true
+
+  #### To here ####
+#  - name: Copy ansible-api Docker files to remote
+#    copy:
+#      src: docker
+#      dest: "{{ volumes_root }}/ansible-api/"
+##      owner: "{{ user_name }}"
+##      group: "{{ user_name }}"
+
+  - name: Copy ansible-api Docker file to remote
+    copy:
+      src: docker
+      dest: "{{ volumes_root }}/ansible-api/"
+      # owner: "{{ user_name }}"
+      # group: "{{ user_name }}"
+
+  - name: Copy docker build files into place
+    template:
+      src: templates/entrypoint.sh.j2
+      dest: "{{ volumes_root }}/ansible-api/docker/entrypoint.sh"
+
+  - name: Build ansible-api image
+    docker_image:
+      name: ansible-api
+      tag: latest
+      build:
+        path: "{{ volumes_root }}/ansible-api/docker"
+        pull: true
+        rm: true
+      source: build
+      state: present
+
+  - name: Copy docker-compose into place
+    template:
+      src: docker-compose.yml.j2
+      dest: "{{ volumes_root }}/ansible-api/docker-compose.yml"
+      # owner: "{{ user_name }}"
+      # group: "{{ user_name }}"
+
+  - name: Configure ansible-api systemd service.
+    template:
+      src: service.j2
+      dest: /etc/systemd/system/ansible-api.service
+    become: true
+
+  - name: Start ansible-api
+    systemd:
+      name: ansible-api
+      enabled: true
+      daemon-reload: true
+      state: started
+    become: true
+
+#  - name: Deploy Source
+#    synchronize:
+#      archive: yes
+#      checksum: yes
+#      compress: yes
+#      dest: '/tmp/docker'
+#      src: ./docker

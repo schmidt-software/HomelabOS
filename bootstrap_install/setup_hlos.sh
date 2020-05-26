@@ -29,8 +29,10 @@ read -s -p "Enter your server password: " pass
 # Install ansible, sshpass to get started
 echo
 echo "* I need sshpass and Python, you may be asked to enter your sudo credentials (for this machine):"
-sudo apt update
-sudo apt install -qy sshpass python3 python3-pip
+if [ ! -f "/usr/bin/python3" ]; then
+  sudo apt update
+  sudo apt install -qy sshpass python3 python3-pip
+fi
 
 if [ ! -f "ansible/bin/ansible" ]; then
   echo "* Installing ansible in a Python virtual environment.  This means you can delete it after bootstrapping the server"
@@ -88,45 +90,81 @@ if [ ! -f "$HOME/.homelabos_hlos_password" ]; then
   echo "$hlospass $playbookpass" > $HOME/.homelabos_hlos_password
 else
   echo "* Using password stored in $HOME/.homelabos_hlos_password for the 'hlos' user"
+  hlospass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f1`
   playbookpass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f2`
 fi
 
 # Secure the inventory, then put stuff in it.
-touch inventory
-chmod 600 inventory
+# There are two: One for the original server user, and the one to use for the hlos user we create.
+touch inventory_user
+chmod 600 inventory_user
 
-generate_inventory_file()
+generate_inventory_user_file()
 {
 cat <<EOF
 [remotenode]
 $ip
 
 [all:vars]
-ansible_connection=ssh
-ansible_ssh_user=$user
-ansible_ssh_pass=$pass
+# ssh credentials:
+ansible_user=$user
+ansible_password=$pass
+# sudo credentials:
 ansible_become=true
-ansible_become_pass="{{ ansible_ssh_pass }}"
+ansible_become_pass="{{ ansible_password }}"
+# variables for user creation:
 user_name=hlos
 user_pass="$playbookpass"
-volumes_root="/home/{{ user_name }}"
 EOF
 }
-echo "$(generate_inventory_file)" > inventory
+echo "$(generate_inventory_user_file)" > inventory_user
+
+touch inventory
+chmod 600 inventory
+
+generate_inventory_hlos_file()
+{
+cat <<EOF
+[remotenode]
+$ip
+
+[all:vars]
+ansible_user=hlos
+host_ip=$ip
+docker_ansible_user=hlos
+docker_ansible_password="$hlospass"
+ansible_become_pass="{{ docker_ansible_password }}"
+user_name="{{ ansible_user }}"
+volumes_root="/home/{{ ansible_user }}"
+EOF
+}
+echo "$(generate_inventory_hlos_file)" > inventory
 
 echo
 echo "* Trying to contact your server using the credentials given"
-ansible -m ping -i inventory remotenode
+ansible -m ping -i inventory_user remotenode
 read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate. Maybe a mistyped password?"
 
 cp -R ../playbook/* .
 cp -R ../docker .
+cp -R ../templates .
 
-echo "* Now running the ansible playbook to get the hlos user setup"
-ansible-playbook  -i inventory playbook.bootstrap.yml
+echo "* Now installing prerequisites on the server"
+ansible-playbook  -i inventory_user playbook.bootstrap.yml
 
-echo "* Finally test the hlos user is setup correctly.  You should see the message 'All is okay'..."
+echo "* Now creating the hlos user on the server"
+ansible-playbook  -i inventory_user playbook.create_user.yml
+
+echo "* Test the hlos user is setup correctly with passwordless connection.  You should see the message 'All is okay'..."
 ssh hlos@$ip echo "All is okay at \$HOME"
+read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
+
+echo "* Trying to contact your server using the hlos user"
+ansible -m ping -i inventory remotenode
+read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
+
+echo "* Now deploying initial HLOS services"
+ansible-playbook  -i inventory playbook.deploy.yml
 
 echo "* Test the ansible-api service is running.  You should see a message coming back.  Pause for a few seconds to let the service start up."
 sleep 10
