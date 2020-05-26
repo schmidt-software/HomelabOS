@@ -105,7 +105,7 @@
       name: ansible-api
       enabled: true
       daemon-reload: true
-      state: started 
+      state: started
 
 #  - name: Deploy Source
 #    synchronize:
