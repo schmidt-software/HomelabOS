@@ -1,0 +1,17 @@
+---
+version: '3'
+
+services:
+  # Web API for Ansible - never expose through Traefik!
+  ansible-api:
+    image: ansible-api:latest
+    restart: unless-stopped
+    ports:
+      - 8765:8765
+    volumes:
+      - "{{ volumes_root }}/ansible-api/playbooks:/playbooks"
+      - "{{ volumes_root }}/ansible-api/scripts:/scripts"
+      - "/home/hlos/.ssh/id_rsa:/root/.ssh/id_rsa"
+      - "/home/hlos/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub"
+      - "/home/hlos/.homelabos_vault_pass:/ansible_vault_pass"
+

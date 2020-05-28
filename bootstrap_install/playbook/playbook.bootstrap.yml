@@ -3,6 +3,26 @@
   hosts: all
 
   tasks:
+<<<<<<< HEAD
+=======
+  - name: Add my user
+    user: >
+      name={{ user_name }}
+      password={{ user_pass }}
+      shell=/bin/bash
+      groups=sudo
+      append=yes
+      generate_ssh_key=yes
+      ssh_key_bits=2048
+      state=present
+
+  - name: Add my workstation user's public key to the new user
+    authorized_key:
+      user: "{{ user_name }}"
+      key: "{{ lookup('file', 'certificates/id_rsa.pub') }}"
+      state: present
+
+>>>>>>> 63bb6a9ed060acc95b3896c8d22b4479b41012be
   - name: Update apt cache
     apt:
       update_cache: true
