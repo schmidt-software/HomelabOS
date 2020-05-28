@@ -15,33 +15,31 @@ RUN set -x && \
     \
     echo "==> Upgrading apk and system..."  && \
     apk update && apk upgrade && \
+    apk add openssh-client ca-certificates sshpass
     \
     wget https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python ; fi && \
-    pip install --upgrade pip && \
+    pip3 install --upgrade pip && \
     \
     echo "==> Installing Ansible..."  && \
-    pip install ansible==${ANSIBLE_VERSION} && \
+    pip3 install ansible==${ANSIBLE_VERSION} && \
     pip3 install ansible-runner sanic && \
     \
     echo "==> Cleaning up..."  && \
     apk del build-dependencies && \
-    rm -rf /var/cache/apk/* && \
-    \
-    echo "==> Adding hosts for convenience..."  && \
-    mkdir -p /etc/ansible /ansible && \
-    echo "[local]" >> /etc/ansible/hosts && \
-    echo "localhost" >> /etc/ansible/hosts
+    rm -rf /var/cache/apk/*
 
 RUN echo "==> Adding ansible-api and requirements" && \
     wget https://github.com/kpoppel/ansible-api/archive/master.zip && \
     unzip master.zip && \
-    mv ansible-api-master ansible-api
+    mv ansible-api-master ansible-api && \
+    rm master.zip
 
 WORKDIR /ansible-api
 
+ENV API_HOST=
 ENV API_ALLOW_IP=
 ENV API_WS_SUB=
 ENV API_TIMEOUT 3600

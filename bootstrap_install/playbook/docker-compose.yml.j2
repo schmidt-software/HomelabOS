@@ -11,3 +11,7 @@ services:
     volumes:
       - "{{ volumes_root }}/ansible-api/playbooks:/playbooks"
       - "{{ volumes_root }}/ansible-api/scripts:/scripts"
+      - "/home/hlos/.ssh/id_rsa:/root/.ssh/id_rsa"
+      - "/home/hlos/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub"
+      - "/home/hlos/.homelabos_vault_pass:/ansible_vault_pass"
+

@@ -102,11 +102,11 @@ cat <<EOF
 $ip
 
 [all:vars]
-ansible_connection=ssh
-ansible_ssh_user=$user
-ansible_ssh_pass=$pass
-ansible_become=true
-ansible_become_pass="{{ ansible_ssh_pass }}"
+#ansible_connection=ssh
+#ansible_ssh_user=$user
+#ansible_ssh_pass=$pass
+#ansible_become=true
+#ansible_become_pass="{{ ansible_ssh_pass }}"
 user_name=hlos
 user_pass="$playbookpass"
 volumes_root="/home/{{ user_name }}"

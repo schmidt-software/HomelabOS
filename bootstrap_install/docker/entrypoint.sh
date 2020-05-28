@@ -1,7 +1,7 @@
 #!/bin/sh
 ## Setup the application configuration based on environment variable settings
 
-generate_cfg()
+generate_api_cfg()
 {
 cat <<EOF
 [default]
@@ -21,7 +21,20 @@ script         = $API_SCRIPT_PATH
 EOF
 }
 
-echo "$(generate_cfg)" > /ansible-api/data/api.cfg
+echo "$(generate_api_cfg)" > /ansible-api/data/api.cfg
+
+generate_ansible_cfg()
+{
+cat <<EOF
+[local]
+localhost
+$API_HOST
+EOF
+}
+
+mkdir -p /etc/ansible /ansible
+echo "$(generate_ansible_cfg)" > /etc/ansible/hosts
+
 mkdir -p /playbooks
 mkdir -p /scripts
 
