@@ -27,8 +27,8 @@ generate_ansible_cfg()
 {
 cat <<EOF
 [local]
-localhost
 $API_HOST
+localhost
 EOF
 }
 
