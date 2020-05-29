@@ -26,6 +26,14 @@ RUN set -x && \
     echo "==> Installing Ansible..."  && \
     pip3 install ansible==${ANSIBLE_VERSION} && \
     pip3 install ansible-runner sanic && \
+    pip install mitogen && \
+    \
+    echo "==> Setting ansible defaults" && \
+    mkdir -p /etc/ansible && \
+    echo "[defaults]" > /etc/ansible/ansible.cfg && \
+    echo "host_key_checking=False" >> /etc/ansible/ansible.cfg && \
+    echo "strategy_plugins=/usr/local/lib/python3.8/site-packages/ansible_mitogen/plugins/strategy" >> /etc/ansible/ansible.cfg && \
+    echo "strategy=mitogen_linear" >> /etc/ansible/ansible.cfg && \
     \
     echo "==> Cleaning up..."  && \
     apk del build-dependencies && \
@@ -48,8 +56,8 @@ ENV API_LOG_PATH /tmp/ansible-api.log
 ENV API_SIGN_KEY secret
 ENV API_SIGN_MODE sha256
 ENV API_PORT 8765
-ENV API_PLAYBOOK_PATH /playbooks
-ENV API_SCRIPT_PATH /scripts
+ENV API_PLAYBOOK_PATH /playbooks/
+ENV API_SCRIPT_PATH /scripts/
 
 EXPOSE $API_PORT
 

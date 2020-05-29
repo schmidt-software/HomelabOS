@@ -19,17 +19,56 @@ echo "##"
 echo "## Press ctrl-c if you do not have sudo access with your user. Otherwise press <enter> to continue"
 read
 
-echo
-echo "* First a few questions, then we are off."
-echo "* Enter your server IP and credentials.  Then we can get your ssh keys on the server."
-read -p "Enter your server IP-address: " ip
-read -p "Enter your server username: " user
-read -s -p "Enter your server password: " pass
+if [ -f server_credentials ]; then
+  source server_credentials
+else
+  echo
+  echo "* First a few questions, then we are off."
+  echo "* Enter your server IP and credentials.  Then we can get your ssh keys on the server."
+  read -p "Enter your server IP-address: " ip
+  read -p "Enter your server username: " user
+  read -s -p "Enter your server password: " pass
+  echo
+  echo "* NOTE: This data is saved in a file called 'server_credentials'.  Delete or change the file if you want to change credentials."
+  echo "ip=$ip" > server_credentials
+  echo "user=$user" >> server_credentials
+  echo "pass=$pass" >> server_credentials
+  chmod 600 server_credentials
+fi
+
+if [ -z $user_can_login ]; then
+  ## check the user can access the server with the given credentials
+  echo "* Test the server user is setup correctly with password or key connection, and can sudo."
+  echo "* You may have to type your server password followed by sudo password (usually the same) now."
+  ssh -t $user@$ip sudo echo "Successful login and upgrade to sudo.  You can continue installation."
+  read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate. Maybe a mistyped password?"
+  echo "user_can_login=yes" >> server_credentials
+else
+  echo "* Already determined the user can login to the server."
+fi
+
+if [ -z $server_has_python ]; then
+  echo "* mitogen 0.2.9 needs /usr/bin/python to exist.  We check for it and create a link to /usr/bin/python3 if this is so."
+  echo "* If this does not work (you can see the ping/pong below), then comment out the lines in this script about mitogen in the ansible.cfg part."
+  ssh -t $user@$ip '[ ! -f /usr/bin/python ] && [ -f /usr/bin/python3 ] && echo "/usr/bin/python not found - making symlink" && sudo ln -s /usr/bin/python3 /usr/bin/python'
+  echo "user_has_python=yes" >> server_credentials
+else
+  echo "* Server is known to have /usr/bin/python. Mitogen will work now."
+fi
+
+##
+## We could require docker on the client PC instead of Python, but for once it takes a lot longer to first install
+## Docker, and setup permissions for the current user. Secondly it takes time to build the container, and
+## thirdly, this is a one-off operation, whereas all the hard lifting is done onthe server side.
+##
+## All that is left on the client PC is the Python3, and askpass installation, which would be installed on any
+## usable Linux PC anyway.
+##
 
 # Install ansible, sshpass to get started
 echo
-echo "* I need sshpass and Python, you may be asked to enter your sudo credentials (for this machine):"
-if [ ! -f "/usr/bin/python3" ]; then
+if [ ! -f "/usr/bin/python3" ] || [ ! -f "/usr/bin/sshpass" ]; then
+  echo "* I need sshpass and Python on this PC, you may be asked to enter your sudo credentials (for this machine):"
   sudo apt update
   sudo apt install -qy sshpass python3 python3-pip
 fi
@@ -38,11 +77,12 @@ if [ ! -f "ansible/bin/ansible" ]; then
   echo "* Installing ansible in a Python virtual environment.  This means you can delete it after bootstrapping the server"
   echo "* if you want, and no changes were made on your client PC."
   pip3 install virtualenv
-  python3 -m virtualenv ansible
+  python3 -m virtualenv ansible --python=python3
   cd ansible
   source bin/activate
-  pip3 install ansible docker-py
+  pip3 install ansible docker-py mitogen
 else
+  echo "* Activating existing ansible virtualenv"
   cd ansible
   source bin/activate
 fi
@@ -68,18 +108,12 @@ else
     ssh-keygen -t rsa
 fi
 
+######
+## Prepare SSH keys
+#######################
 # Create certificates folder and copy SSH public key
 mkdir -p certificates
 cp $HOME/.ssh/id_rsa.pub certificates
-
-generate_ansible_cfg()
-{
-cat <<EOF
-[defaults]
-host_key_checking=false
-EOF
-}
-echo "$(generate_ansible_cfg)" > ansible.cfg
 
 if [ ! -f "$HOME/.homelabos_hlos_password" ]; then
   echo "* Generating a password for the 'hlos' user. It is stored in $HOME/.homelabos_hlos_password"
@@ -94,8 +128,26 @@ else
   playbookpass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f2`
 fi
 
+######
+##  Prepare Ansible
+#########################
+# Get the python version installed in the virtualenv.  This varies from distro to distro.
+py=$(ls lib)
+
+generate_ansible_cfg()
+{
+cat <<EOF
+[defaults]
+host_key_checking=false
+strategy_plugins=$PWD/lib/$py/site-packages/ansible_mitogen/plugins/strategy
+strategy=mitogen_linear
+EOF
+}
+echo "$(generate_ansible_cfg)" > ansible.cfg
+
 # Secure the inventory, then put stuff in it.
-# There are two: One for the original server user, and the one to use for the hlos user we create.
+# There are two: One for the original server user, used for creating the hlos user
+# and the one to use with hlos user we create to deploy the server.
 touch inventory_user
 chmod 600 inventory_user
 
@@ -141,7 +193,7 @@ EOF
 echo "$(generate_inventory_hlos_file)" > inventory
 
 echo
-echo "* Trying to contact your server using the credentials given"
+echo "* Trying to contact your server using the server credentials given"
 ansible -m ping -i inventory_user remotenode
 read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate. Maybe a mistyped password?"
 
