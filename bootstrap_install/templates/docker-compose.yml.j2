@@ -20,6 +20,7 @@ services:
 #      - API_PORT 8765
 #      - API_PLAYBOOK_PATH /playbooks
 #      - API_SCRIPT_PATH /scripts
+      - ANSIBLE_VAULT_PASSWORD_FILE=/ansible_vault_pass
     volumes:
       - "{{ volumes_root }}/install:/playbooks"
       - "{{ volumes_root }}/ansible-api/scripts:/scripts"

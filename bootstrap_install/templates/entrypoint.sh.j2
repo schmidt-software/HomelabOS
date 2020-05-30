@@ -28,7 +28,7 @@ generate_ansible_cfg()
 cat <<EOF
 [local]
 $API_HOST
-localhost
+#localhost
 
 [all:vars]
 ansible_user="{{ docker_ansible_user }}"
