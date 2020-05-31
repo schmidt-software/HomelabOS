@@ -39,12 +39,18 @@
       dest: "{{ volumes_root }}/ansible-api/"
       # owner: "{{ user_name }}"
       # group: "{{ user_name }}"
-
+      
   - name: Copy docker build files into place
     template:
       src: templates/entrypoint.sh.j2
       dest: "{{ volumes_root }}/ansible-api/docker/entrypoint.sh"
 
+  - name: Copy host ssh keys into place
+    copy:
+      remote_src: yes
+      src: /home/{{ user_name }}/.ssh/
+      dest: "{{ volumes_root }}/ansible-api/docker/"
+  
   - name: Build ansible-api image
     docker_image:
       name: ansible-api
@@ -76,11 +82,3 @@
       daemon-reload: true
       state: started
     become: true
-
-#  - name: Deploy Source
-#    synchronize:
-#      archive: yes
-#      checksum: yes
-#      compress: yes
-#      dest: '/tmp/docker'
-#      src: ./docker

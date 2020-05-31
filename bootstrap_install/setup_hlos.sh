@@ -10,7 +10,7 @@ echo "## If not, login as root and install sudo, then add your user to the sudoe
 echo "## You only have to do this step once."
 echo "##"
 echo "## You also need to have access to the server, and be able to use sudo there. Check this before continuing"
-echo "## by ssh user@youserver.org . You should get a shell without typing your password."
+echo "## by ssh user@yourserver.org . You should get a shell on the server."
 echo "##"
 echo "## Once logged in on the server try 'sudo ls'.  If this is fine, you are good to go."
 echo "## If sudo does not work, su to root and add your user to /etc/group -> sudo line."
@@ -49,9 +49,9 @@ fi
 
 if [ -z $server_has_python ]; then
   echo "* mitogen 0.2.9 needs /usr/bin/python to exist.  We check for it and create a link to /usr/bin/python3 if this is so."
-  echo "* If this does not work (you can see the ping/pong below), then comment out the lines in this script about mitogen in the ansible.cfg part."
+  echo "* If this does not work, then comment out the lines in this script about mitogen in the ansible.cfg part."
   ssh -t $user@$ip '[ ! -f /usr/bin/python ] && [ -f /usr/bin/python3 ] && echo "/usr/bin/python not found - making symlink" && sudo ln -s /usr/bin/python3 /usr/bin/python'
-  echo "user_has_python=yes" >> server_credentials
+  echo "server_has_python=yes" >> server_credentials
 else
   echo "* Server is known to have /usr/bin/python. Mitogen will work now."
 fi
@@ -103,30 +103,33 @@ else
     echo "* You have no SSH keys in your home directory: $HOME"
     echo "* If you think this is an error, please copy your key to $HOME/.ssh/id_rsa and id_rsa.pub"
     read -p "Press ctrl-c and fix your ssh keys, or <enter> to generate a new key."
-    echo "* Generating a set of keys."
-    echo "* Do not use a passphrase, and save the file in $HOME/.ssh/id_rsa"
-    ssh-keygen -t rsa
+    echo "* Generating a set of keys with no passphrase, and save the file in $HOME/.ssh/id_rsa"
+    ssh-keygen -N "" -t rsa -f $HOME/.ssh/id_rsa
 fi
 
 ######
-## Prepare SSH keys
-#######################
+## Generate hlos user password
+################################
+## TODO: DELETE THIS PART - we don't allow any password log in to the hlos user.
+#if [ ! -f "$HOME/.homelabos_hlos_password" ]; then
+#  echo "* Generating a password for the 'hlos' user. It is stored in $HOME/.homelabos_hlos_password"
+#  echo "* Ignore the warning about ignoring null character - it is all okay."
+#  hlospass=`shuf -zer -n32  {A..Z} {a..z} {0..9}`
+#  salt=`shuf -zer -n16  {A..Z} {a..z} {0..9}`
+#  playbookpass=`echo -e $hlospass|mkpasswd -s --method=SHA-512 -S $salt`
+#  echo "$hlospass $playbookpass" > $HOME/.homelabos_hlos_password
+#else
+#  echo "* Using password stored in $HOME/.homelabos_hlos_password for the 'hlos' user"
+#  hlospass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f1`
+#  playbookpass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f2`
+#fi
+
+######
+## Prepare SSH keys for Ansible
+################################
 # Create certificates folder and copy SSH public key
 mkdir -p certificates
 cp $HOME/.ssh/id_rsa.pub certificates
-
-if [ ! -f "$HOME/.homelabos_hlos_password" ]; then
-  echo "* Generating a password for the 'hlos' user. It is stored in $HOME/.homelabos_hlos_password"
-  echo "* Ignore the warning about ignoring null character - it is all okay."
-  hlospass=`shuf -zer -n32  {A..Z} {a..z} {0..9}`
-  salt=`shuf -zer -n16  {A..Z} {a..z} {0..9}`
-  playbookpass=`echo -e $hlospass|mkpasswd -s --method=SHA-512 -S $salt`
-  echo "$hlospass $playbookpass" > $HOME/.homelabos_hlos_password
-else
-  echo "* Using password stored in $HOME/.homelabos_hlos_password for the 'hlos' user"
-  hlospass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f1`
-  playbookpass=`cat $HOME/.homelabos_hlos_password|cut -d' ' -f2`
-fi
 
 ######
 ##  Prepare Ansible
@@ -139,8 +142,11 @@ generate_ansible_cfg()
 cat <<EOF
 [defaults]
 host_key_checking=false
-strategy_plugins=$PWD/lib/$py/site-packages/ansible_mitogen/plugins/strategy
-strategy=mitogen_linear
+interpreter_python=/usr/bin/python3
+#TODO: mitogen insists on using /usr/bin/python, which on some distros is _still_ python 2.7!
+#TODO: 0.2.10 mitogen will fix this issue.  Don't enable before.
+#strategy_plugins=$PWD/lib/$py/site-packages/ansible_mitogen/plugins/strategy
+#strategy=mitogen_linear
 EOF
 }
 echo "$(generate_ansible_cfg)" > ansible.cfg
@@ -166,7 +172,7 @@ ansible_become=true
 ansible_become_pass="{{ ansible_password }}"
 # variables for user creation:
 user_name=hlos
-user_pass="$playbookpass"
+#TODO: Remove user_pass="$playbookpass"
 EOF
 }
 echo "$(generate_inventory_user_file)" > inventory_user
@@ -183,19 +189,25 @@ $ip
 [all:vars]
 ansible_user=hlos
 host_ip=$ip
-docker_ansible_user=hlos
-docker_ansible_password="$hlospass"
-ansible_become_pass="{{ docker_ansible_password }}"
+docker_ansible_user={{ ansible_user }}
+#TODO: Remove docker_ansible_password="$hlospass"
+#TODO: ansible-api Dockerfile must get ssh key installed instead.
+#TODO: Remove ansible_become_pass="{{ docker_ansible_password }}"
 user_name="{{ ansible_user }}"
 volumes_root="/home/{{ ansible_user }}"
 EOF
 }
-echo "$(generate_inventory_hlos_file)" > inventory
+echo "$(generate_inventory_hlos_file)" > inventory_hlos
 
 echo
 echo "* Trying to contact your server using the server credentials given"
-ansible -m ping -i inventory_user remotenode
-read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate. Maybe a mistyped password?"
+result=$(ansible -m ping -i inventory_user remotenode|grep pong)
+if [ -z result ]; then
+  echo "* Ansible cannot contact the server.  Please check your inputs and try again."
+  exit 1
+else
+  echo "* Ansible Ping/Pong succeeded."
+fi
 
 cp -R ../playbook/* .
 cp -R ../docker .
@@ -208,15 +220,28 @@ echo "* Now creating the hlos user on the server"
 ansible-playbook  -i inventory_user playbook.create_user.yml
 
 echo "* Test the hlos user is setup correctly with passwordless connection.  You should see the message 'All is okay'..."
-ssh hlos@$ip echo "All is okay at \$HOME"
-read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
+result=$(ssh hlos@$ip echo "All is okay at \$HOME"|grep okay)
+if [ -z result ]; then
+  echo "* SSH connection using SSH keys did not work.  Please check your inputs and try again."
+  exit 1
+else
+  echo "* SSH connection using SSH keys succeeded."
+fi
 
 echo "* Trying to contact your server using the hlos user"
-ansible -m ping -i inventory remotenode
-read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
+result=$(ansible -m ping -i inventory_hlos remotenode|grep pong)
+if [ -z result ]; then
+  echo "* Ansible cannot contact the server.  Please check your inputs and try again."
+  exit 1
+else
+  echo "* Ansible Ping/Pong succeeded."
+fi
+
+#ansible -m ping -i inventory_hlos remotenode
+#read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
 
 echo "* Now deploying initial HLOS services"
-ansible-playbook  -i inventory playbook.deploy.yml
+ansible-playbook  -i inventory_hlos playbook.deploy.yml
 
 echo "* Test the ansible-api service is running.  You should see a message coming back.  Pause for a few seconds to let the service start up."
 sleep 10

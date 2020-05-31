@@ -23,6 +23,8 @@ EOF
 
 echo "$(generate_api_cfg)" > /ansible-api/data/api.cfg
 
+# TODO: Maybe get inventory from the outside...
+# This one is locked to the HLOS host (I like that)
 generate_ansible_cfg()
 {
 cat <<EOF
@@ -32,7 +34,7 @@ $API_HOST
 
 [all:vars]
 ansible_user="{{ docker_ansible_user }}"
-ansible_password="{{ docker_ansible_password }}"
+#ansible_password="{ { docker_ansible_password } }"
 EOF
 }
 

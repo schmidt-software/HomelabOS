@@ -1,6 +1,7 @@
 ---
 - name: Bootstrap server for HLOS deployment
   hosts: all
+  become: yes
 
   tasks:
   - name: Update apt cache
