@@ -61,7 +61,6 @@ ENV API_SCRIPT_PATH /scripts/
 
 EXPOSE $API_PORT
 
-COPY id_rsa* /root/.ssh/
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

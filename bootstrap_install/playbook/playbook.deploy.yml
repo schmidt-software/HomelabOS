@@ -13,44 +13,22 @@
       dest: "{{ volumes_root }}/install"
       accept_hostkey: true
 
-#  - name: Change ownership to correct user
-#    file:
-#      path: "{{ volumes_root }}/install"
-##      owner: "{{ user_name }}"
-##      group: "{{ user_name }}"
-#      recurse: true
-
-  #### To here ####
-#  - name: Copy ansible-api Docker files to remote
-#    copy:
-#      src: docker
-#      dest: "{{ volumes_root }}/ansible-api/"
-##      owner: "{{ user_name }}"
-##      group: "{{ user_name }}"
-
   - name: Copy vault password file to remote
     copy:
       src: "{{ lookup('env', 'HOME') }}/.homelabos_vault_pass"
       dest: "/home/{{ user_name }}/.homelabos_vault_pass"
 
+  ## NOTE: Maybe copy from remote to remote, but copy from client eases development.
   - name: Copy ansible-api Docker file to remote
     copy:
       src: docker
       dest: "{{ volumes_root }}/ansible-api/"
-      # owner: "{{ user_name }}"
-      # group: "{{ user_name }}"
       
   - name: Copy docker build files into place
     template:
       src: templates/entrypoint.sh.j2
       dest: "{{ volumes_root }}/ansible-api/docker/entrypoint.sh"
 
-  - name: Copy host ssh keys into place
-    copy:
-      remote_src: yes
-      src: /home/{{ user_name }}/.ssh/
-      dest: "{{ volumes_root }}/ansible-api/docker/"
-  
   - name: Build ansible-api image
     docker_image:
       name: ansible-api
@@ -66,8 +44,6 @@
     template:
       src: docker-compose.yml.j2
       dest: "{{ volumes_root }}/ansible-api/docker-compose.yml"
-      # owner: "{{ user_name }}"
-      # group: "{{ user_name }}"
 
   - name: Configure ansible-api systemd service.
     template:
