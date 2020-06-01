@@ -11,6 +11,7 @@
     query: "{{ service_item + '.enable' }}"
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
     tor_ssh_domain: "{{ tor_ssh_domain_file.stdout | default('') }}"
+  become: yes
 
 - name: Ensure disabled services are not running
   systemd:
