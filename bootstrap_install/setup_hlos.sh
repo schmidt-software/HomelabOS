@@ -214,11 +214,15 @@ cp -R ../playbook/* .
 cp -R ../docker .
 cp -R ../templates .
 
-echo "* Now installing prerequisites on the server"
-ansible-playbook  -i inventory_user playbook.bootstrap.yml
+if [ -z $deploy_done ]; then
+  echo "* Now installing prerequisites on the server"
+  ansible-playbook  -i inventory_user playbook.bootstrap.yml
 
-echo "* Now creating the hlos user on the server"
-ansible-playbook  -i inventory_user playbook.create_user.yml
+  echo "* Now creating the hlos user on the server"
+  ansible-playbook  -i inventory_user playbook.create_user.yml
+
+  echo "deploy_done=yes" >> ../server_credentials
+fi
 
 echo "* Test the hlos user is setup correctly with passwordless connection.  You should see the message 'All is okay'..."
 result=$(ssh hlos@$ip echo "All is okay at \$HOME"|grep okay)
@@ -240,8 +244,7 @@ fi
 
 #ansible -m ping -i inventory_hlos remotenode
 #read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
-
-echo "* Now deploying initial HLOS services"
+echo "* Deploying Ansible API Service"
 ansible-playbook  -i inventory_hlos playbook.deploy.yml
 
 echo "* Test the ansible-api service is running.  You should see a message coming back.  Pause for a few seconds to let the service start up."
