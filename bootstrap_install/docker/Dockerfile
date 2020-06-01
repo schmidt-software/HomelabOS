@@ -23,15 +23,14 @@ RUN set -x && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python ; fi && \
     pip3 install --upgrade pip && \
     \
-    echo "==> Installing Ansible..."  && \
-    pip3 install ansible==${ANSIBLE_VERSION} && \
-    pip3 install ansible-runner sanic && \
-    pip install mitogen && \
+    echo "==> Installing Ansible, mitogen and API dependencies..."  && \
+    pip3 install ansible==${ANSIBLE_VERSION} ansible-runner sanic mitogen && \
     \
     echo "==> Setting ansible defaults" && \
     mkdir -p /etc/ansible && \
     echo "[defaults]" > /etc/ansible/ansible.cfg && \
     echo "host_key_checking=False" >> /etc/ansible/ansible.cfg && \
+    echo "interpreter_python=/usr/bin/python3" >> /etc/ansible/ansible.cfg && \
     echo "strategy_plugins=/usr/local/lib/python3.8/site-packages/ansible_mitogen/plugins/strategy" >> /etc/ansible/ansible.cfg && \
     echo "strategy=mitogen_linear" >> /etc/ansible/ansible.cfg && \
     \

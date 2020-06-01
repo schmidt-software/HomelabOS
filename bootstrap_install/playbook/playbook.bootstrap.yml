@@ -13,7 +13,7 @@
   - name: Install required system packages
     apt: name={{ item }} state=latest update_cache=no
     loop: ['git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common',
-           'gnupg-agent', 'python3-docker', 'python3-distutils']
+           'gnupg-agent', 'python3-docker', 'python3-distutils', 'python3-passlib']
 
   # https://docs.docker.com/engine/install/debian/
   - name: Add Docker GPG apt Key

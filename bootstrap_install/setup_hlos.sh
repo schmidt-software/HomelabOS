@@ -50,6 +50,7 @@ fi
 if [ -z $server_has_python ]; then
   echo "* mitogen 0.2.9 needs /usr/bin/python to exist.  We check for it and create a link to /usr/bin/python3 if this is so."
   echo "* If this does not work, then comment out the lines in this script about mitogen in the ansible.cfg part."
+  ssh -t $user@$ip 'rm -f /usr/bin/python'
   ssh -t $user@$ip '[ ! -f /usr/bin/python ] && [ -f /usr/bin/python3 ] && echo "/usr/bin/python not found - making symlink" && sudo ln -s /usr/bin/python3 /usr/bin/python'
   echo "server_has_python=yes" >> server_credentials
 else

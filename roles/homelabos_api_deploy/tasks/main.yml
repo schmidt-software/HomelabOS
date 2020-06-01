@@ -7,7 +7,6 @@
   loop:
     - "{{ volumes_root }}/traefik"
     - "{{ volumes_root }}/traefik/conf.d"
-    - /etc/docker
   ignore_errors: "yes"
 
 - name: Configure docker log settings
@@ -16,7 +15,7 @@
     dest: /etc/docker/daemon.json
   become: yes
 
-# Needs passlib
+# Needs passlib built into the ansible container
 - name: Write user to basic auth file
   htpasswd:
     path: "{{ volumes_root }}/traefik/basicAuth"
