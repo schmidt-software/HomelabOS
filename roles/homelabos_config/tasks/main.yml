@@ -4,6 +4,7 @@
     path: settings/passwords
     state: directory
     mode: '0755'
+    
 - name: Copy HomelabOS config file into place
   template:
     src: "config.yml"
