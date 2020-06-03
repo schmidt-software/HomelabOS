@@ -3,7 +3,7 @@
 - name: Install pipenv
   pip:
     name: pipenv
-    executable: /usr/bin/pip
+    executable: /usr/bin/pip3
 
 - name: Make HomelabOS documentation directory.
   file:
