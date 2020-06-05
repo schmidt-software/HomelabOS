@@ -14,6 +14,12 @@
     apt: name={{ item }} state=latest update_cache=no
     loop: ['git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common',
            'gnupg-agent', 'python3-docker', 'python3-distutils', 'python3-passlib']
+    # TODO: python3-pip and mkdocs is used by the 'docs' service.  Why are the docs not built in a container?
+    # 'python3-pip', 'mkdocs']
+    # It pulls in a massive amount of packages just for this purpose.
+    # Need theme: material
+    # Need : pymdownx.details , git-revision-date-localized
+    # service docs is non-functional.
 
   # https://docs.docker.com/engine/install/debian/
   - name: Add Docker GPG apt Key
