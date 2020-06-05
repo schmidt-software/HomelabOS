@@ -498,6 +498,13 @@ inventario:
   auth: {{ inventario.auth | default(False) }}
   domain: {{ inventario.domain | default(False) }}
   subdomain: {{ inventario.subdomain | default("inventario") }}
+invoiceninja:
+  enable: {{ invoiceninja.enable | default(enable_invoiceninja, None) | default(False) }}
+  https_only: {{ invoiceninja.https_only | default(False) }}
+  auth: {{ invoiceninja.auth | default(False) }}
+  domain: {{ invoiceninja.domain | default(False) }}
+  subdomain: {{ invoiceninja.subdomain | default("invoiceninja")}}
+  version: {{ invoiceninja.version | default('latest')}}
 jackett:
   enable: {{ jackett.enable | default(enable_jackett, None) | default(False) }}
   https_only: {{ jackett.https_only | default(False) }}

@@ -25,6 +25,7 @@ If you are having problems you can:
 - [Analytics](#analytics)
 - [Automation](#automation)
 - [Blogging Platforms](#blogging-platforms)
+- [Business Tools](#business-tools)
 - [Calendaring and Contacts Management](#calendaring-and-contacts-management)
 - [Chat](#chat)
 - [Document Management](#document-management)
@@ -63,6 +64,10 @@ If you are having problems you can:
 
 - [Ghost](software/ghost) - Ghost is a platform for building and running a modern online publication
 
+### Business Tools
+
+- [Invoice Ninja](software/invoice-ninja) - Free Open-Source invoicing
+
 ### Calendaring and Contacts Management
 
 - [NextCloud](software/nextcloud) - Private Cloud Storage, Calendar, Contacts, etc.
@@ -77,6 +82,7 @@ If you are having problems you can:
 
 - [Mayan EDMS](software/mayan) - Free Open Source DMS (document management system).
 - [Paperless](software/paperless) - Document management
+- [Teedy](software/teedy) - Document Management for Everyone
 
 ### E-Books
 
@@ -150,6 +156,7 @@ If you are having problems you can:
 - [Grownetics](software/grownetics) - Open source environmental mapping with plant management and tracking
 - [Hubzilla](software/hubzilla) - a powerful platform for creating interconnected websites featuring a decentralized identity
 - [Inventario](software/inventario) - Home inventory software
+- [Invoice Ninja](software/invoice-ninja) - Free Open-Source Invoicing
 - [Mashio](software/mashio) - Home brewery management software
 - [Monica](software/monica) - Contact / relationship manager
 - [n8n](software/n8n) - n8n is a free and open node based Workflow Automation Tool.
@@ -162,6 +169,7 @@ If you are having problems you can:
 - [Sabnzbd](software/sabnzbd) Free and easy binary newsreader
 - [Searx](software/searx) - A privacy-respecting, hackable metasearch engine.
 - [Shinobi](software/shinobi) Free Open Source CCTV platform.
+- [Taisun](software/taisun) - Powerful Docker Management with Virtual Desktops
 - [Ubooquity](software/ubooquity) - Ubooquity is a free home server for your comics and ebooks library
 - [Watchtower](software/watchtower) - A process for automating Docker container base image updates
 - [WebTrees](software/webtrees) - Online Genealogy

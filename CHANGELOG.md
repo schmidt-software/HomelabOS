@@ -2,6 +2,7 @@
 
 ## Services Added
 
+- Added Invoice Ninja - Free Open-Source Invoicing
 - Added Teedy - Document Management made simple for everyone
 - Added Taisun - Single Server Docker Management for Humans
 - Added matterbridge - Bridges between many different chat protocols.

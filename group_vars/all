@@ -46,6 +46,7 @@ services:
   hubzilla: 
   huginn: 
   inventario: 
+  invoiceninja: 
   jackett: 
   jellyfin: 
   kibitzr: 
@@ -164,6 +165,7 @@ homedash:
 hubzilla: 
 huginn: 
 inventario: 
+invoiceninja:
 jackett: 
 jellyfin: 
 kibitzr: 
@@ -216,9 +218,9 @@ sonarr:
 speedtest: 
 statping: 
 syncthing: 
-taisun:
+taisun: 
 tautulli: 
-teedy:
+teedy: 
 thelounge: 
 tick: 
 tiddlywiki: 
