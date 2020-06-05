@@ -91,10 +91,10 @@ services:
   radarr:
   restic:
   rsshub:
-  sabnzbd:
-  searx:
-  shinobi:
-  sickchill:
+  sabnzbd: 
+  searx: 
+  shinobi: 
+  sickchill: 
   simply_shorten:
   snibox:
   sonarr:
@@ -169,6 +169,7 @@ homedash:
 hubzilla:
 huginn:
 inventario:
+invoiceninja:
 jackett:
 jellyfin:
 keycloak:
@@ -218,15 +219,15 @@ searx:
 shinobi:
 sickchill:
 simply_shorten:
-snibox:
-sonarr:
-speedtest:
-statping:
-syncthing:
-taisun:
-tautulli:
-teedy:
-thelounge:
+snibox: 
+sonarr: 
+speedtest: 
+statping: 
+syncthing: 
+taisun: 
+tautulli: 
+teedy: 
+thelounge: 
 thespaghettidetective:
 tick:
 tiddlywiki:

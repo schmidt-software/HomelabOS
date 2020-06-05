@@ -45,6 +45,8 @@ nav:
       - Kibitzr: software/kibitzr.md
     - Blogging Platforms:
       - Ghost: software/ghost.md
+    - Business Tools:
+      - Invoice Ninja: software/invoice-ninja.md
     - Calendaring and Contacts Management:
       - NextCloud: software/nextcloud.md
     - Chat:
