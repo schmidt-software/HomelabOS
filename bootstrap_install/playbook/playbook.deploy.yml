@@ -4,7 +4,7 @@
 
   tasks:
   ## This one might actually be the only thing to deploy, then we fetch the docker file and what not from in there.
-  ## 
+  ##
   - name: Deploy hlos files to server
     git:
       repo: https://gitlab.com/NickBusey/HomelabOS.git
@@ -23,7 +23,7 @@
     copy:
       src: docker
       dest: "{{ volumes_root }}/ansible-api/"
-      
+
   - name: Copy docker build files into place
     template:
       src: templates/entrypoint.sh.j2
