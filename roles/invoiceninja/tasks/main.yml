@@ -13,6 +13,7 @@
   file:
     path: "{{ volumes_root }}/invoiceninja/config/php"
     state: directory
+<<<<<<< HEAD
 
 - name: Make invoiceninja directories
   file:
@@ -29,6 +30,27 @@
   template:
     src: nginx.conf
     dest: "{{  volumes_root }}/invoiceninja/config/nginx/nginx.conf"
+=======
+    
+- name: Make invoiceninja Public directory.
+  file:
+    path: "{{ volumes_root }}/invoiceninja/public"
+    state: directory
+    owner: systemd-network
+    group: systemd-journal
+
+- name: Make invoiceninja Storage directory.
+  file:
+    path: "{{ volumes_root }}/invoiceninja/storage"
+    state: directory
+    owner: systemd-network
+    group: systemd-journal
+
+# - name: install nginx config
+#   template:
+#     src: nginx.conf
+#     dest: "{{  volumes_root }}/invoiceninja/config/nginx/conf.d/app.conf"
+>>>>>>> initial commit
 
 - name: install php-cli config
   template:
@@ -40,6 +62,7 @@
     src: php.j2
     dest: "{{ volumes_root }}/invoiceninja/config/php/php.ini"
 
+<<<<<<< HEAD
 - name: Generate new encryption key.
   shell: >
     docker run --rm -i invoiceninja/invoiceninja php artisan key:generate --show | awk 'END{print}'
@@ -49,6 +72,14 @@
 - debug:
     msg: "Generated this key for app_key: {{ application_key }}"
 
+=======
+- name: Generate new argon2id compatible password.
+  shell: >
+    docker run --rm -it invoiceninja/invoiceninja php artisan key:generate --show | awk 'END{print}'
+  register: application_key
+  become: false
+
+>>>>>>> initial commit
 - name: Copy invoiceninja docker-compose.yml file into place.
   template:
     src: docker-compose.invoiceninja.yml.j2
