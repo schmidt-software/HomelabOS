@@ -1,99 +1,99 @@
 ---
 services:
-  airsonic:
-  apache2:
-  apple_health_influx:
-  authelia:
-  barcodebuddy:
-  beets:
-  bitwarden:
-  bookstack:
-  bulletnotes:
-  calibre:
-  chowdown:
-  cockpit:
-  codeserver:
-  codimd:
-  dark_sky:
-  dasher:
-  digikam:
-  docs:
-  drone:
-  duckdns:
-  duplicati:
-  elkstack:
-  emby:
-  erpnext:
-  ethercalc:
-  factorio:
-  firefly_iii:
-  folding_at_home:
-  freshrss:
-  funkwhale:
-  ghost:
-  gitea:
-  gitlab:
-  gotify:
-  grafana:
-  grocy:
-  grownetics:
-  guacamole:
-  healthchecks:
-  heimdall:
-  homeassistant:
-  homebridge:
-  homedash:
-  hubzilla:
-  huginn:
-  inventario:
-  jackett:
-  jellyfin:
-  keycloak:
-  kibitzr:
-  lazylibrarian:
-  lidarr:
-  mailu:
-  mashio:
-  massivedecks:
-  matomo:
-  matterbridge:
-  mayan:
-  minecraft:
-  minecraftbedrockserver:
-  miniflux:
-  minio:
-  monicahq:
-  mstream:
-  mylar:
-  n8n:
-  netdata:
-  nextcloud:
-  nodered:
-  nzbget:
-  octoprint:
-  ombi:
-  openldap:
-  openvpn:
-  organizr:
-  ownphotos:
-  paperless:
-  peertube:
-  photoprism:
-  pihole:
-  piwigo:
-  pixelfed:
-  pleroma:
-  plex:
-  poli:
-  portainer:
-  privatebin:
-  qbittorrent:
-  radarr:
-  restic:
-  sabnzbd:
-  searx:
-  shinobi:
-  sickchill:
+  airsonic: 
+  apache2: 
+  apple_health_influx: 
+  authelia: 
+  barcodebuddy: 
+  beets: 
+  bitwarden: 
+  bookstack: 
+  bulletnotes: 
+  calibre: 
+  chowdown: 
+  cockpit: 
+  codeserver: 
+  codimd: 
+  dark_sky: 
+  dasher: 
+  digikam: 
+  docs: 
+  drone: 
+  duckdns: 
+  duplicati: 
+  elkstack: 
+  emby: 
+  erpnext: 
+  ethercalc: 
+  factorio: 
+  firefly_iii: 
+  folding_at_home: 
+  freshrss: 
+  funkwhale: 
+  ghost: 
+  gitea: 
+  gitlab: 
+  gotify: 
+  grafana: 
+  grocy: 
+  grownetics: 
+  guacamole: 
+  healthchecks: 
+  heimdall: 
+  homeassistant: 
+  homebridge: 
+  homedash: 
+  hubzilla: 
+  huginn: 
+  inventario: 
+  invoiceninja: 
+  jackett: 
+  jellyfin: 
+  kibitzr: 
+  lazylibrarian: 
+  lidarr: 
+  mailu: 
+  mashio: 
+  massivedecks: 
+  matomo: 
+  matterbridge: 
+  mayan: 
+  minecraft: 
+  minecraftbedrockserver: 
+  miniflux: 
+  minio: 
+  monicahq: 
+  mstream: 
+  mylar: 
+  n8n: 
+  netdata: 
+  nextcloud: 
+  nodered: 
+  nzbget: 
+  octoprint: 
+  ombi: 
+  openldap: 
+  openvpn: 
+  organizr: 
+  ownphotos: 
+  paperless: 
+  peertube: 
+  photoprism: 
+  pihole: 
+  piwigo: 
+  pixelfed: 
+  pleroma: 
+  plex: 
+  poli: 
+  portainer: 
+  privatebin: 
+  qbittorrent: 
+  radarr: 
+  restic: 
+  sabnzbd: 
+  searx: 
+  shinobi: 
+  sickchill: 
   simply_shorten:
   snibox:
   sonarr:
@@ -167,6 +167,7 @@ homedash:
 hubzilla:
 huginn:
 inventario:
+invoiceninja:
 jackett:
 jellyfin:
 keycloak:
@@ -216,15 +217,15 @@ searx:
 shinobi:
 sickchill:
 simply_shorten:
-snibox:
-sonarr:
-speedtest:
-statping:
-syncthing:
-taisun:
-tautulli:
-teedy:
-thelounge:
+snibox: 
+sonarr: 
+speedtest: 
+statping: 
+syncthing: 
+taisun: 
+tautulli: 
+teedy: 
+thelounge: 
 thespaghettidetective:
 tick:
 tiddlywiki:
