@@ -20,6 +20,7 @@
     group: "{{homelab_ssh_user}}"
   loop:
     - public
+#   template:
     - logo
     - storage
 

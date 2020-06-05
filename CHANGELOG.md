@@ -3,6 +3,7 @@
 ## Services Added
 
 - Added Rsshub - RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's capable of generating RSS feeds from pretty much everything.
+- Added Invoice Ninja - Free Open-Source Invoicing
 - Added Teedy - Document Management made simple for everyone
 - Added Taisun - Single Server Docker Management for Humans
 - Added Keycloak - Open Source Identity and Access Management
