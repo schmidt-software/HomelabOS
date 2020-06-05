@@ -22,7 +22,7 @@ import "./App.css";
 //  Which means I can run the Web UI from any docker-enabled client initially
 //    and bootstrap which everhost I desire.
 //  Which means it is possible to do a fully web UI-based installation.
-//TODO: import ServerInitialisation from "./components/initialise.component";
+import Install from "./components/install.component";
 import Config from "./components/config.component";
 import Service from "./components/service.component";
 import Maintenance from "./components/maintenance.component";
@@ -54,13 +54,11 @@ class App extends Component {
               HomelabOS Control Center
             </a>
             <div className="navbar-nav mr-auto">
-{/*
               <li className="nav-item">
-                <Link to={"/initialise"} className="nav-link">
-                  Initialise
+                <Link to={"/install"} className="nav-link">
+                  Install
                 </Link>
               </li>
-*/}
               <li className="nav-item">
                 <Link to={"/config"} className="nav-link">
                   Configure
@@ -81,6 +79,9 @@ class App extends Component {
 
           <div className="container mt-3">
             <Switch>
+              <Route exact path="/install"
+                  component={(props) => <Install {...props} env={this.env} />}
+              />
               <Route exact path={["/", "/config"]}
                   render={(props) => <Config {...props} env={this.env} />}
               />

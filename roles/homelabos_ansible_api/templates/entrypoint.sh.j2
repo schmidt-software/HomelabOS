@@ -30,7 +30,6 @@ generate_ansible_cfg()
 cat <<EOF
 [local]
 $API_HOST
-#localhost
 
 [all:vars]
 ansible_user="{{ docker_ansible_user }}"
@@ -40,8 +39,8 @@ EOF
 mkdir -p /etc/ansible /ansible
 echo "$(generate_ansible_cfg)" > /etc/ansible/hosts
 
-mkdir -p /playbooks
-mkdir -p /scripts
+mkdir -p $API_PLAYBOOK_PATH
+mkdir -p $API_SCRIPT_PATH
 
 echo "############################################################################"
 echo "##  Starting Ansible API Service"

@@ -50,7 +50,7 @@ fi
 if [ -z $server_has_python ]; then
   echo "* mitogen 0.2.9 needs /usr/bin/python to exist.  We check for it and create a link to /usr/bin/python3 if this is so."
   echo "* If this does not work, then comment out the lines in this script about mitogen in the ansible.cfg part."
-  ssh -t $user@$ip 'rm -f /usr/bin/python'
+  ssh -t $user@$ip 'sudo rm -f /usr/bin/python'
   ssh -t $user@$ip '[ ! -f /usr/bin/python ] && [ -f /usr/bin/python3 ] && echo "/usr/bin/python not found - making symlink" && sudo ln -s /usr/bin/python3 /usr/bin/python'
   echo "server_has_python=yes" >> server_credentials
 else
@@ -60,11 +60,14 @@ fi
 ##
 ## We could require docker on the client PC instead of Python, but for once it takes a lot longer to first install
 ## Docker, and setup permissions for the current user. Secondly it takes time to build the container, and
-## thirdly, this is a one-off operation, whereas all the hard lifting is done onthe server side.
+## thirdly, this is a one-off operation, whereas all the hard lifting is done on the server side.
 ##
 ## All that is left on the client PC is the Python3, and askpass installation, which would be installed on any
 ## usable Linux PC anyway.
 ##
+## TODO: to docker or not to Docker
+## Alternately it could be considered to require docker-ce on the client PC, and build a container.
+## In case the client PC is also the hlos server, this container cound in theory be reused as the ansible-api.
 
 # Install ansible, sshpass to get started
 echo
@@ -86,6 +89,12 @@ else
   echo "* Activating existing ansible virtualenv"
   cd ansible
   source bin/activate
+fi
+
+# Link in needed stuff form upper dirs.
+if [ ! -f "playbook.homelabos_api.yml" ]; then
+  ln -s ../../playbook.homelabos_api.yml
+  ln -s ../../roles
 fi
 
 if [ ! -f "$HOME/.homelabos_vault_pass" ]; then
@@ -191,9 +200,6 @@ $ip
 ansible_user=hlos
 host_ip=$ip
 docker_ansible_user={{ ansible_user }}
-#TODO: Remove docker_ansible_password="$hlospass"
-#TODO: ansible-api Dockerfile must get ssh key installed instead.
-#TODO: Remove ansible_become_pass="{{ docker_ansible_password }}"
 user_name="{{ ansible_user }}"
 volumes_root="/home/{{ ansible_user }}"
 EOF
@@ -210,21 +216,15 @@ else
   echo "* Ansible Ping/Pong succeeded."
 fi
 
-cp -R ../playbook/* .
-cp -R ../docker .
-cp -R ../templates .
+exit 0
 
 if [ -z $deploy_done ]; then
-  echo "* Now installing prerequisites on the server"
-  ansible-playbook  -i inventory_user playbook.bootstrap.yml
-
-  echo "* Now creating the hlos user on the server"
-  ansible-playbook  -i inventory_user playbook.create_user.yml
-
+  echo "* Now installing prerequisites and creating user on the server"
+  ansible-playbook  -i inventory_user --tags=host_deps,create_user playbook.homelabos_api.yml
   echo "deploy_done=yes" >> ../server_credentials
 fi
 
-echo "* Test the hlos user is setup correctly with passwordless connection.  You should see the message 'All is okay'..."
+echo "* Test the hlos user is setup correctly with passwordless connection."
 result=$(ssh hlos@$ip echo "All is okay at \$HOME"|grep okay)
 if [ -z result ]; then
   echo "* SSH connection using SSH keys did not work.  Please check your inputs and try again."
@@ -242,10 +242,8 @@ else
   echo "* Ansible Ping/Pong succeeded."
 fi
 
-#ansible -m ping -i inventory_hlos remotenode
-#read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate."
-echo "* Deploying Ansible API Service"
-ansible-playbook  -i inventory_hlos playbook.deploy.yml
+echo "* Deploying Ansible API and HLOS Web Services"
+ansible-playbook  -i inventory_hlos --tags=deploy_base playbook.homelabos_api.yml
 
 echo "* Test the ansible-api service is running.  You should see a message coming back.  Pause for a few seconds to let the service start up."
 sleep 10

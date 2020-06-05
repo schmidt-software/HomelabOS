@@ -2,13 +2,15 @@
 version: '3'
 
 services:
-  # Web API for Ansible - never expose through Traefik!
+  # Web API for Ansible - never expose to public IP through Traefik!
   ansible-api:
     image: ansible-api:latest
     restart: unless-stopped
     ports:
       - 8765:8765
     environment:
+      # Generally you won't have to override these default environment variables.
+      # They are here for informational value
       - API_HOST={{ host_ip }}
 #      - API_ALLOW_IP={{ host_ip }}
 #      - API_WS_SUB=
@@ -18,13 +20,13 @@ services:
 #      - API_SIGN_KEY secret
 #      - API_SIGN_MODE sha256
 #      - API_PORT 8765
-#      - API_PLAYBOOK_PATH /playbooks
-#      - API_SCRIPT_PATH /scripts
+#      - API_PLAYBOOK_PATH /playbooks/
+#      - API_SCRIPT_PATH /scripts/
       - ANSIBLE_VAULT_PASSWORD_FILE=/ansible_vault_pass
     volumes:
       - "{{ volumes_root }}/install:/playbooks"
       - "{{ volumes_root }}/ansible-api/scripts:/scripts"
-      - "/home/hlos/.ssh/id_rsa:/root/.ssh/id_rsa"
-      - "/home/hlos/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub"
-      - "/home/hlos/.homelabos_vault_pass:/ansible_vault_pass"
+      - "/home/{{ user_name }}/.ssh/id_rsa:/root/.ssh/id_rsa"
+      - "/home/{{ user_name }}/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub"
+      - "/home/{{ user_name }}/.homelabos_vault_pass:/ansible_vault_pass"
 
