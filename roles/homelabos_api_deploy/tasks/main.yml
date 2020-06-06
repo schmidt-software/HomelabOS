@@ -64,14 +64,14 @@
 ## - If variables are supplied to ansible, the configuraton will complete without prompts.
 ## - Setup Traefik, NAS dirs, Tor etc.
 #####################################
-- name: Get UID of {{ user_name }}
-  command: id -u {{ user_name }}
+- name: Get UID of {{ homelab_ssh_user }}
+  command: id -u {{ homelab_ssh_user }}
   register: uid_output
   tags:
     - deploy_host_deps
 
-- name: Get GID of {{ user_name }}
-  command: id -g {{ user_name }}
+- name: Get GID of {{ homelab_ssh_user }}
+  command: id -g {{ homelab_ssh_user }}
   register: gid_output
   tags:
     - deploy_host_deps
