@@ -72,16 +72,16 @@ There are two Docker files: `Dockerfile`and `Dockerfile.prod`
 One is for development purposes, the other builds the projec and deploy an nginx server with the app running.
 
 Build for development:
-docker build -t hlos-web:dev .
+docker build -t hlos_web:dev .
 
 docker run \
     -it \
     --rm \
     -v ${PWD}:/app \
     -v /app/node_modules \
-    -p 3001:3000 \
+    -p 3000:3000 \
     -e CHOKIDAR_USEPOLLING=true \
-    hlos-web:dev
+    hlos_web:dev
 
 docker-compose up -d --build
 docker-compose stop
@@ -89,7 +89,7 @@ docker-compose stop
 Build for production:
 
 docker build -f Dockerfile.prod -t sample:prod .
-docker run -it --rm -p 1337:80 sample:prod
+docker run -it --rm -p 8080:80 sample:prod
 
 
 or docker-compose:

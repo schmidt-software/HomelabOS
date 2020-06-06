@@ -28,13 +28,13 @@
   tags:
     - deploy_base
 
-- name: Import ansible-api installation tasks
+- name: Import ansible_api installation tasks
   import_role:
     name: homelabos_ansible_api
   tags:
     - deploy_base
 
-- name: Import hlos-web installation tasks
+- name: Import hlos_web installation tasks
   import_role:
     name: homelabos_web
   tags:
