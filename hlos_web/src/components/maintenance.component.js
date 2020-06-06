@@ -142,12 +142,12 @@ export default class Maintenance extends Component {
       </>
     );
   }
- 
+
   render() {
     return (
           <div className="submit-form">
             <div>
-              <> 
+              <>
               <div>
                 {this.inputField("Server IP", "hostip",
                     this.state.hostip, this.onChangeHostIp)}

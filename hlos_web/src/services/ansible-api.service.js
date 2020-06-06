@@ -11,7 +11,7 @@ class AnsibleApiDataService {
       this.hostip = process.env.REACT_APP_HOST_IP;
     }
   }
-  /*  
+  /*
   getAll() {
     return http.get("/somepage");
   }
@@ -132,4 +132,3 @@ class AnsibleApiDataService {
 } // class
 
 export default new AnsibleApiDataService();
-

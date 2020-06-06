@@ -7,7 +7,7 @@
   file:
     path: "{{ volumes_root }}/homelabos_web"
     state: directory
- 
+
 - name: Build HomelabOS web-UI container
   docker_image:
     name: homelabos_web

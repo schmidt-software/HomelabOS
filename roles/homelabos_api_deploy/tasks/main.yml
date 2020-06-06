@@ -39,7 +39,7 @@
     name: homelabos_web
   tags:
     - deploy_base
-  
+
 #- name: Get UID of {{ user_name }}
 #  command: id -u {{ user_name }}
 #  register: uid_output
@@ -47,7 +47,7 @@
 #- name: Get GID of {{ user_name }}
 #  command: id -g {{ user_name }}
 #  register: gid_output
-#  
+#
 #- name: Import NAS/Directory tasks
 #  import_tasks: nas_dirs.yml
 #  tags:
