@@ -17,15 +17,16 @@
     - role: tor
       when: enable_tor
 
-- name: "Deploy Bastion Host with Wireguard"
-  hosts: all
-  tags:
-    - bastion
-  become: true
-  tasks:
-    - include_role:
-        name: homelabos_wireguard
-        when: bastion.enable == True
+## TODO: Ansibel complains about include_role ???
+#- name: "Deploy Bastion Host with Wireguard"
+#  hosts: all
+#  tags:
+#    - bastion
+#  become: true
+#  tasks:
+#    - include_role:
+#        name: homelabos_wireguard
+#        when: bastion.enable == True
 
 # Install and configure HomelabOS services
 - name: Install and configure HomelabOS services
@@ -35,5 +36,5 @@
   roles:
     - homelabos_api_deploy_service
 
-- debug:
-  msg: Configuration Completed
+- name: Configuration Completed
+  hosts: all

@@ -81,7 +81,6 @@ class AnsibleApiDataService {
   }
 
   deploySystem() {
-    let hlos="/playbooks"
     let n="deploy_host_deps#id@hlos"
     let f="playbook.homelabos_api.yml"
     let s=sha256(n+this.hostip+f+this.api_key);
@@ -100,7 +99,7 @@ class AnsibleApiDataService {
   cryptVault(crypt_mode) {
     let n=crypt_mode+"-vault#id@hlos";
     let m="command";
-    let a="docker exec ansible-api_ansible-api_1 ansible-vault "+crypt_mode+" /playbooks/settings/vault.yml";
+    let a="docker exec ansible_api_ansible-api_1 ansible-vault "+crypt_mode+" /playbooks/settings/vault.yml";
     let s=sha256(n+m+this.hostip+this.api_key);
     let data = {
       "n":n,

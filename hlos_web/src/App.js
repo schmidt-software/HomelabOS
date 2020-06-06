@@ -42,6 +42,7 @@ class App extends Component {
     //       used in production mode, they are all BAKED INTO the app.
     //       I.e. forget changing them in a docker.compose file for instance.
     // Instead I use localStorage which saves the information in the user's browser.
+    // Maybe: https://create-react-app.dev/docs/title-and-meta-tags#injecting-data-from-the-server-into-the-page
     this.env = {
        hostip:      process.env.REACT_APP_HOST_IP,
 /*

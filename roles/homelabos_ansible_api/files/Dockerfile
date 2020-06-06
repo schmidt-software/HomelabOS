@@ -24,7 +24,7 @@ RUN set -x && \
     pip3 install --upgrade pip && \
     \
     echo "==> Installing Ansible, mitogen and API dependencies..."  && \
-    pip3 install ansible==${ANSIBLE_VERSION} ansible-runner sanic mitogen && \
+    pip3 install ansible==${ANSIBLE_VERSION} ansible-runner sanic sanic-cors mitogen && \
     \
     echo "==> Setting ansible defaults" && \
     mkdir -p /etc/ansible && \
