@@ -51,7 +51,7 @@
 #  roles:
 #    - homelabos_api_deploy
 #
-## Install and configure HomelabOS ansible-api
+## Install and configure ansible-api
 #- name: Install and configure HomelabOS Ansible API
 #  hosts: all
 #  tags:

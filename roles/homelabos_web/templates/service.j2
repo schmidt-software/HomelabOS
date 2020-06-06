@@ -1,5 +1,5 @@
 [Unit]
-Description=HomelabOS ansible-api Service
+Description=HomelabOS Web UI Service
 After=docker.service
 Requires=docker.service
 
@@ -10,10 +10,10 @@ TimeoutStartSec=infinity
 TimeoutStopSec=5min
 Restart=always
 RestartSec=3
-WorkingDirectory={{ volumes_root }}/ansible_api/
+WorkingDirectory={{ volumes_root }}/homelabos_web/
 
-ExecStart=/usr/bin/docker-compose -p ansible-api up
-ExecStop=/usr/bin/docker-compose -p ansible-api down
+ExecStart=/usr/bin/docker-compose -p homelabos_web up
+ExecStop=/usr/bin/docker-compose -p homelabos_web down
 
 [Install]
 WantedBy=multi-user.target

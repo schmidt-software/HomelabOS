@@ -1,0 +1,14 @@
+---
+version: '3'
+
+services:
+  # Web API for Ansible - never expose to public IP through Traefik!
+  homelabos_web:
+    image: homelabos_web:latest
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      # Generally you won't have to override these default environment variables.
+      # They are here for informational value
+      - REACT_APP_HOST_IP={{ host_ip }}

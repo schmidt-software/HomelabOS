@@ -11,19 +11,19 @@
 - name: Copy ansible-api Docker file to remote
   copy:
     src: Dockerfile
-    dest: "{{ volumes_root }}/ansible-api/docker/"
+    dest: "{{ volumes_root }}/ansible_api/docker/"
 
 - name: Copy docker build files into place
   template:
     src: templates/entrypoint.sh.j2
-    dest: "{{ volumes_root }}/ansible-api/docker/entrypoint.sh"
+    dest: "{{ volumes_root }}/ansible_api/docker/entrypoint.sh"
 
 - name: Build ansible-api image
   docker_image:
     name: ansible-api
     tag: latest
     build:
-      path: "{{ volumes_root }}/ansible-api/docker"
+      path: "{{ volumes_root }}/ansible_api/docker"
       pull: true
       rm: true
     source: build
@@ -31,18 +31,18 @@
 
 - name: Copy docker-compose into place
   template:
-    src: docker-compose.yml.j2
-    dest: "{{ volumes_root }}/ansible-api/docker-compose.yml"
+    src: docker-compose.ansible_api.yml.j2
+    dest: "{{ volumes_root }}/ansible_api/docker-compose.yml"
 
-- name: Configure ansible-api systemd service.
+- name: Configure ansible_api systemd service.
   template:
     src: service.j2
-    dest: /etc/systemd/system/ansible-api.service
+    dest: /etc/systemd/system/ansible_api.service
   become: true
 
-- name: Start ansible-api
+- name: Start ansible_api
   systemd:
-    name: ansible-api
+    name: ansible_api
     enabled: true
     daemon-reload: true
     state: started

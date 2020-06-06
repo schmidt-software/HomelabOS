@@ -8,18 +8,17 @@
     path: "{{ volumes_root }}/homelabos_web"
     state: directory
  
-#- name: Build HomelabOS web-UI container
-#  docker_image:
-#    name: homelabos_web
-#    tag: latest
-#    build:
-##      path: "{{ volumes_root }}/ansible-api/docker"
-#      path: "{{ volumes_root }}/install/hlos_web/"
-#      dockerfile: Dockerfile.prod
-#      pull: true
-#      rm: true
-#    source: build
-#    state: present
+- name: Build HomelabOS web-UI container
+  docker_image:
+    name: homelabos_web
+    tag: latest
+    build:
+      path: "{{ volumes_root }}/install/hlos_web/"
+      dockerfile: Dockerfile.prod
+      pull: true
+      rm: true
+    source: build
+    state: present
 
 - name: Copy HomeLabOS Web docker-compose.yml file into place.
   copy:
@@ -40,6 +39,7 @@
     dest: /etc/systemd/system/homelabos_web.service
   vars:
     - service_item: homelabos_web
+  become: yes
 
 - name: Start HomeLabOS Web
   systemd:
@@ -47,3 +47,4 @@
     enabled: "yes"
     daemon-reload: "yes"
     state: started
+  become: yes
