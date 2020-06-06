@@ -35,6 +35,3 @@
     - deploy_service
   roles:
     - homelabos_api_deploy_service
-
-- name: Configuration Completed
-  hosts: all

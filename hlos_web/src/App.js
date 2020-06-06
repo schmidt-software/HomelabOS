@@ -44,8 +44,9 @@ class App extends Component {
     // Instead I use localStorage which saves the information in the user's browser.
     // Maybe: https://create-react-app.dev/docs/title-and-meta-tags#injecting-data-from-the-server-into-the-page
     this.env = {
-       hostip:      process.env.REACT_APP_HOST_IP,
+      hostip: JSON.parse(localStorage.getItem('hostip'))
 /*
+      hostip:      process.env.REACT_APP_HOST_IP,
       defaultuser: process.env.REACT_APP_DEFAULT_USER,
       defaultpass: process.env.REACT_APP_DEFAULT_PASS,
       domain:      process.env.REACT_APP_DOMAIN,

@@ -129,12 +129,12 @@ export default class Config extends Component {
       this.state.admin_email,
       this.state.timezone)
       .then(response => {
+        console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
 //          apiresponse: JSON.stringify(response.data.detail['127.0.0.1']),
           apiresponseerrors: response.data.error,
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -150,11 +150,11 @@ export default class Config extends Component {
       this.state.admin_email,
       this.state.timezone)
       .then(response => {
+        console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
           apiresponseerrors: response.data.error,
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -164,11 +164,11 @@ export default class Config extends Component {
   encryptVault() {
     AnsibleApiDataService.cryptVault("encrypt")
       .then(response => {
+        console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
           apiresponseerrors: response.data.error,
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
