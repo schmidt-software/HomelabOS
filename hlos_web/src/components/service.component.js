@@ -64,6 +64,16 @@ export default class Service extends Component {
     });
   }
 
+  formatResponse(response_detail) {
+    let fmt_text = "";
+    Object.keys(response_detail).forEach(host => {
+      response_detail[host].forEach(line => {
+        fmt_text += line.task_name + "\n";
+      });
+    });
+    return fmt_text;
+  }
+
   checkApiIsUp() {
     AnsibleApiDataService.setBaseURL(this.state.hostip);
     AnsibleApiDataService.getApi()
@@ -82,7 +92,7 @@ export default class Service extends Component {
     AnsibleApiDataService.deployService()
       .then(response => {
         this.setState({
-          apiresponse: JSON.stringify(response.data.detail),
+          apiresponse: this.formatResponse(response.data.detail),
           apiresponseerrors: JSON.stringify(response.data.error),
         });
         console.log(response.data);
@@ -96,7 +106,7 @@ export default class Service extends Component {
     AnsibleApiDataService.setServiceProperty(service_property, value)
       .then(response => {
         this.setState({
-          apiresponse: JSON.stringify(response.data.detail),
+          apiresponse: this.formatResponse(response.data.detail),
           apiresponseerrors: JSON.stringify(response.data.error),
         });
         console.log(response.data);

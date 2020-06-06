@@ -132,8 +132,7 @@ export default class Config extends Component {
         console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
-//          apiresponse: JSON.stringify(response.data.detail['127.0.0.1']),
-          apiresponseerrors: response.data.error,
+          apiresponseerrors: JSON.stringify(response.data.error),
         });
       })
       .catch(e => {
@@ -142,18 +141,12 @@ export default class Config extends Component {
 
     this.encryptVault();
 
-    AnsibleApiDataService.deploySystem(
-      this.state.defaultuser,
-      this.state.defaultpass,
-      this.state.hostip,
-      this.state.domain,
-      this.state.admin_email,
-      this.state.timezone)
+    AnsibleApiDataService.deploySystem()
       .then(response => {
         console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
-          apiresponseerrors: response.data.error,
+          apiresponseerrors: JSON.stringitfy(response.data.error),
         });
       })
       .catch(e => {
@@ -167,7 +160,7 @@ export default class Config extends Component {
         console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
-          apiresponseerrors: response.data.error,
+          apiresponseerrors: JSON.stringify(response.data.error),
         });
       })
       .catch(e => {
