@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. hlos_test_common_vars.sh
+. config_secrets
 
 echo
 echo "# HLOS run config"

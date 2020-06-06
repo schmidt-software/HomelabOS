@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. hlos_test_common_vars.sh
+. config_secrets
 
 # Use this one to just update a single service:
 #  @./docker_helper.sh ansible-playbook --extra-vars='{"services":["$(filter-out $@,$(FILTER_THIS))"]}' --extra-vars="@settings/config.yml" --extra-vars="@settings/vault.yml" -i inventory -t deploy playbook.homelabos.yml
