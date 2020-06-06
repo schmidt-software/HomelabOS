@@ -36,7 +36,7 @@ export default class Config extends Component {
       timezone: props.env.timezone,
 
       sshuser: "",
-      sshpass: "", 
+      sshpass: "",
       published: false,
       onapiresponse: "",
       onapireaponseerrors: "",
@@ -51,13 +51,13 @@ export default class Config extends Component {
       defaultuser: e.target.value
     });
   }
-  
+
   onChangeDefaultPass(e) {
     this.setState({
       defaultpass: e.target.value
     });
   }
-  
+
   onChangeHostIp(e) {
     this.setState({
       hostip: e.target.value
@@ -69,19 +69,19 @@ export default class Config extends Component {
       domain: e.target.value
     });
   }
-  
+
   onChangeAdminEmail(e) {
     this.setState({
       admin_email: e.target.value
     });
   }
-  
+
   onChangeTimezone  (e) {
     this.setState({
       timezone: e.target.value
     });
   }
-  
+
   onChangeSSHUser(e) {
     this.setState({
       sshuser: e.target.value
@@ -231,7 +231,7 @@ export default class Config extends Component {
       </>
     );
   }
- 
+
   render() {
     return (
       <div className="submit-form">

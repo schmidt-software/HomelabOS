@@ -21,7 +21,7 @@ export default class Service extends Component {
       hostip: this.props.env.hostip,
 
       service: "",
-      property: "", 
+      property: "",
       value: "",
       apiresponse: "",
       apiresponseerrors: "",
@@ -204,4 +204,3 @@ export default class Service extends Component {
     );
   }
 }
-

@@ -85,7 +85,7 @@ class App extends Component {
               <Route exact path={["/", "/config"]}
                   render={(props) => <Config {...props} env={this.env} />}
               />
-{/*}              <Route exact path="/service" component={Service} /> */} 
+{/*}              <Route exact path="/service" component={Service} /> */}
               <Route exact path="/service"
                   component={(props) => <Service {...props} env={this.env} />}
               />
