@@ -58,7 +58,7 @@ class AnsibleApiDataService {
     return http.get(`/`);
   }
 
-  config(defaultuser, defaultpass, hostip, domain, admin_email, timezone) {
+  createConfiguration(defaultuser, defaultpass, hostip, domain, admin_email, timezone) {
     let n="config#id@hlos";
     let f="playbook.config.yml";
     let s=sha256(n+hostip+f+this.api_key);
@@ -80,6 +80,23 @@ class AnsibleApiDataService {
    return http.post("/playbook", data);
   }
 
+  deploySystem() {
+    let hlos="/playbooks"
+    let n="deploy_host_deps#id@hlos"
+    let f="playbook.homelabos_api.yml"
+    let s=sha256(n+this.hostip+f+this.api_key);
+    let data = {
+      "n":n,
+      "h":this.hostip,
+      "f":f,
+      "s":s,
+      "e":"/playbooks/settings/config.yml",
+      "c_cmd1":"-e \"@/playbooks/settings/vault.yml\"",
+      "c_cmd2":"--tags deploy_host_deps"
+    }
+    return http.post("/playbook", data);
+  }
+
   cryptVault(crypt_mode) {
     let n=crypt_mode+"-vault#id@hlos";
     let m="command";
@@ -92,7 +109,6 @@ class AnsibleApiDataService {
       "t":this.hostip,
       "s":s
     };
-
     return http.post("/command", data);
   }
 

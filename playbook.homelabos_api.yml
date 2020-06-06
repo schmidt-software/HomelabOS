@@ -7,40 +7,33 @@
     - homelabos_api_deploy
 
 # Configure a TOR hidden service for remote access without a public IP
-# This is stalled directly on the host.
-#ok - name: "Setup TOR"
-#ok   hosts: all
-#ok   tags: tor
-#ok   become: true
-#ok   roles:
-#ok     - role: tor
-#ok       when: enable_tor
+# This is installed directly on the host.
+- name: "Setup TOR"
+  hosts: all
+  tags:
+    - tor
+  become: true
+  roles:
+    - role: tor
+      when: enable_tor
 
-## Configure the server itself
-#- name: configure HomelabOS
-#  hosts: all
-#  become: true
-#  # gather_facts: "True"
-#  tags: common
-#  roles:
-#    # Install Docker, configure basic server settings
-#    - homelabos_common
+- name: "Deploy Bastion Host with Wireguard"
+  hosts: all
+  tags:
+    - bastion
+  become: true
+  tasks:
+    - include_role:
+        name: homelabos_wireguard
+        when: bastion.enable == True
 
-#ok - name: "Deploy Bastion Host with Wireguard"
-#ok   hosts: all
-#ok   tags: bastion
-#ok   become: true
-#ok   tasks:
-#ok     - include_role:
-#ok         name: homelabos_wireguard
-#ok         when: bastion.enable == True
+# Install and configure HomelabOS services
+- name: Install and configure HomelabOS services
+  hosts: all
+  tags:
+    - deploy_service
+  roles:
+    - homelabos_api_deploy_service
 
-
-## Install and configure HomelabOS services
-#- name: Install and configure HomelabOS services
-#  hosts: all
-#  tags:
-#    - deploy_service
-#  roles:
-#    - homelabos_api_deploy_service
-#
+- debug:
+  msg: Configuration Completed

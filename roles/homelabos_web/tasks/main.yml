@@ -16,7 +16,7 @@
       path: "{{ volumes_root }}/install/hlos_web/"
       dockerfile: Dockerfile.prod
       pull: true
-      rm: true
+      #rm: true
     source: build
     state: present
 

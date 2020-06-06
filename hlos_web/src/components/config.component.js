@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import AnsibleApiDataService from "../services/ansible-api.service";
+//import LocalStorage from "./localStorage.component";
 
 export default class Config extends Component {
   constructor(props) {
     super(props);
     // debug fields
-    this.onAPIResponse = this.onAPIResponse.bind(this);
-    this.onAPIResponseErrors = this.onAPIResponseErrors.bind(this);
+    //this.onAPIResponse = this.onAPIResponse.bind(this);
+    //this.onAPIResponseErrors = this.onAPIResponseErrors.bind(this);
 
     // Step 1
     this.onChangeDefaultUser = this.onChangeDefaultUser.bind(this);
@@ -16,18 +17,11 @@ export default class Config extends Component {
     this.onChangeAdminEmail  = this.onChangeAdminEmail.bind(this);
     this.onChangeTimezone    = this.onChangeTimezone.bind(this);
 
-    this.onChangeSSHUser = this.onChangeSSHUser.bind(this);
-    this.onChangeSSHPass = this.onChangeSSHPass.bind(this);
     this.checkApiIsUp = this.checkApiIsUp.bind(this);
     this.configServer = this.configServer.bind(this);
-    this.deployServer = this.deployServer.bind(this);
-    this.decryptVault = this.decryptVault.bind(this);
     this.encryptVault = this.encryptVault.bind(this);
 
     this.state = {
-      step: 1,
-
-      // Step 1
       defaultuser: props.env.defaultuser,
       defaultpass: props.env.defaultpass,
       hostip: props.env.hostip,
@@ -35,8 +29,6 @@ export default class Config extends Component {
       admin_email: props.env.admin_email,
       timezone: props.env.timezone,
 
-      sshuser: "",
-      sshpass: "",
       published: false,
       onapiresponse: "",
       onapireaponseerrors: "",
@@ -82,21 +74,10 @@ export default class Config extends Component {
     });
   }
 
-  onChangeSSHUser(e) {
-    this.setState({
-      sshuser: e.target.value
-    });
-  }
-
-  onChangeSSHPass(e) {
-    this.setState({
-      sshpass: e.target.value
-    });
-  }
-
+/*
   onAPIResponse(e) {
     this.setState({
-      onapireaponse: e.target.value
+      onapiresponse: e.target.value
     });
   }
 
@@ -105,6 +86,7 @@ export default class Config extends Component {
       onapireaponseerrors: e.target.value
     });
   }
+ */
 
   checkApiIsUp() {
     AnsibleApiDataService.setBaseURL(this.state.hostip);
@@ -125,8 +107,21 @@ export default class Config extends Component {
       });
   }
 
+  formatResponse(response_detail) {
+    let fmt_text = "";
+    Object.keys(response_detail).forEach(host => {
+      response_detail[host].forEach(line => {
+        fmt_text += line.task_name + "\n";
+      });
+    });
+    return fmt_text;
+  }
+
   configServer() {
-    AnsibleApiDataService.config(
+    // Two calls are made here:
+    // 1. Configure - create the default config files based on the input given here.
+    // 2. Deploy    - install the remaining system dependencies and Traefik.
+    AnsibleApiDataService.createConfiguration(
       this.state.defaultuser,
       this.state.defaultpass,
       this.state.hostip,
@@ -135,7 +130,8 @@ export default class Config extends Component {
       this.state.timezone)
       .then(response => {
         this.setState({
-          apiresponse: JSON.stringify(response.data.detail),
+          apiresponse: this.formatResponse(response.data.detail),
+//          apiresponse: JSON.stringify(response.data.detail['127.0.0.1']),
           apiresponseerrors: response.data.error,
         });
         console.log(response.data);
@@ -143,17 +139,19 @@ export default class Config extends Component {
       .catch(e => {
         console.log(e);
       });
-  }
 
-  deployServer() {
+    this.encryptVault();
 
-  }
-
-  decryptVault() {
-    AnsibleApiDataService.cryptVault("decrypt")
+    AnsibleApiDataService.deploySystem(
+      this.state.defaultuser,
+      this.state.defaultpass,
+      this.state.hostip,
+      this.state.domain,
+      this.state.admin_email,
+      this.state.timezone)
       .then(response => {
         this.setState({
-          apiresponse: JSON.stringify(response.data.detail),
+          apiresponse: this.formatResponse(response.data.detail),
           apiresponseerrors: response.data.error,
         });
         console.log(response.data);
@@ -167,7 +165,7 @@ export default class Config extends Component {
     AnsibleApiDataService.cryptVault("encrypt")
       .then(response => {
         this.setState({
-          apiresponse: JSON.stringify(response.data.detail),
+          apiresponse: this.formatResponse(response.data.detail),
           apiresponseerrors: response.data.error,
         });
         console.log(response.data);
@@ -209,11 +207,12 @@ export default class Config extends Component {
     return (
       <>
         <div>
+          <br />
           <label htmlFor="apiresponse">API Response</label><br></br>
           <textarea
             //required
             value={this.state.apiresponse}
-            onChange={this.onAPIResponse}
+//            onChange={this.onAPIResponse}
             name="apiresponse"
             style={{ width: 600+'px', height: 300+'px' }}
           />
@@ -223,18 +222,83 @@ export default class Config extends Component {
           <textarea
             //required
             value={this.state.apiresponseerrors}
-            onChange={this.onAPIResponseErrors}
+//            onChange={this.onAPIResponseErrors}
             name="apiresponseerors"
-            style={{ width: 600+'px', height: 300+'px' }}
+            style={{ width: 600+'px', height: 100+'px' }}
           />
         </div>
       </>
     );
   }
 
+  /**********************************************************/
+  /* This part for saving to local browser storage          */
+  hydrateStateWithLocalStorage() {
+    // for all items in state
+    for (let key in this.state) {
+      // if the key exists in localStorage
+      if (localStorage.hasOwnProperty(key)) {
+        // get the key's value from localStorage
+        let value = localStorage.getItem(key);
+
+        // parse the localStorage string and setState
+        try {
+          value = JSON.parse(value);
+          this.setState({ [key]: value });
+        } catch (e) {
+          // handle empty string
+          this.setState({ [key]: value });
+        }
+      }
+    }
+  }
+
+  saveStateToLocalStorage() {
+    // for every item in React state
+    for (let key in this.state) {
+      // save to localStorage
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  }
+    
+  componentDidMount() {
+    this.hydrateStateWithLocalStorage();
+    
+    // add event listener to save state to localStorage
+    // when user leaves/refreshes the page
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+    
+  componentWillUnmount() {
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+    
+    // saves if component has a chance to unmount
+    this.saveStateToLocalStorage();
+  }
+ /*********************************************/
+
   render() {
     return (
       <div className="submit-form">
+{/*        <LocalStorage state={this.state} /> */}
+        <div>
+          <h1>Welcome to HomelabOS Configuration.</h1>
+          Before you can deply services on your new system, we need a few bits and pieces of information.
+          To get here you already succeeded in setting up a specific user account on your server,
+          from which we will run the service.  You have a set of SSH keys and an Ansible vault password in the
+          user account you used to setup the HomelabOS system.  Please back up these files, as it is the
+          only way to login to the HomelabOS user account.
+          <br></br>
+          To complete the installation you need to provide some information below. When ready press the buttons below.
+          <br></br>
+          <br></br>
+        </div>
         {this.inputField("Server IP", "hostip",
             this.state.hostip, this.onChangeHostIp)}
         {this.inputField("Server Domain", "domain",
@@ -248,13 +312,13 @@ export default class Config extends Component {
         {this.inputField("Admin Email", "adminemail",
             this.state.admin_email, this.onChangeAdminEmail)}
         <button onClick={this.checkApiIsUp} className="btn btn-success">
-          Check API is up
+          Check connection is okay
         </button>
         <button
           disabled={!this.state.api_check_ok}
           onClick={this.configServer}
           className="btn btn-success">
-          Create default config
+          Configure HomelabOS
         </button>
         {this.debugAreas()}
       </div>

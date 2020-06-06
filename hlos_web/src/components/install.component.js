@@ -1,3 +1,9 @@
+/*
+
+  AS OF NOW UNUSED - MAYBE USE FOR 100% UI INSTALL IF HLOS
+  BECOMES A DOCKER PULL RELEASE.
+ 
+*/
 import React, { Component } from "react";
 import AnsibleApiDataService from "../services/ansible-api.service";
 
@@ -236,10 +242,13 @@ export default class Install extends Component {
     return (
       <div className="submit-form">
         <div>
-          The first step is installing the software needed on the server to support the containerised services.
+          The first step is entering the basic configuration parameters and installing the software needed on the server to support the containerised services.
           Additionally the installation will setup Traefik to manage routing browser access to your services.
           <br></br>
-          Once the installation is complete, proceed to configuring HomelabOS defaults.
+          Once the installation is complete, proceed to configuring other HomelabOS defaults and services.
+          <br></br>
+          When installation reports back everything went well, you should visit <a href={ `http://traefik.${this.state.domain}:8181` }>your new Traefik container</a>
+          <br></br>
         </div>
         {this.inputField("Server IP", "hostip",
             this.state.hostip, this.onChangeHostIp)}
@@ -253,6 +262,7 @@ export default class Install extends Component {
             this.state.defaultpass, this.onChangeDefaultPass, true)}
         {this.inputField("Admin Email", "adminemail",
             this.state.admin_email, this.onChangeAdminEmail)}
+
         <button onClick={this.checkApiIsUp} className="btn btn-success">
           Check API is up
         </button>

@@ -1,9 +1,14 @@
+// Code written knowing very well that I am not a ReactJS expert by any means.
+// Feel free to do it better, there is noting which cannot be changed outside of the
+// calls to the ansible API service layer.
+
 /* Setting up a fresh project for this:
 npx create-react-app react-crud
 npm install bootstrap
 npm install react-router-dom
 npm install axios
 npm install sha256
+npm install local-storage
 
 To get around CORS in the web browser (development mode):
   google-chrome --disable-web-security --user-data-dir=<<somedir>>
@@ -22,7 +27,6 @@ import "./App.css";
 //  Which means I can run the Web UI from any docker-enabled client initially
 //    and bootstrap which everhost I desire.
 //  Which means it is possible to do a fully web UI-based installation.
-import Install from "./components/install.component";
 import Config from "./components/config.component";
 import Service from "./components/service.component";
 import Maintenance from "./components/maintenance.component";
@@ -34,14 +38,20 @@ class App extends Component {
   constructor() {
     super();
     // Pull in variables from the environment
+    // NOTE: This only works dynamically in development mode.  IF these variables are to be
+    //       used in production mode, they are all BAKED INTO the app.
+    //       I.e. forget changing them in a docker.compose file for instance.
+    // Instead I use localStorage which saves the information in the user's browser.
     this.env = {
-      hostip:      process.env.REACT_APP_HOST_IP,
+       hostip:      process.env.REACT_APP_HOST_IP,
+/*
       defaultuser: process.env.REACT_APP_DEFAULT_USER,
       defaultpass: process.env.REACT_APP_DEFAULT_PASS,
       domain:      process.env.REACT_APP_DOMAIN,
       admin_email: process.env.REACT_APP_ADMIN_EMAIL,
       timezone:    process.env.REACT_APP_TZ,
       api_secret:  process.env.REACT_APP_API_SECRET
+ */
     };
   }
 
@@ -54,11 +64,6 @@ class App extends Component {
               HomelabOS Control Center
             </a>
             <div className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to={"/install"} className="nav-link">
-                  Install
-                </Link>
-              </li>
               <li className="nav-item">
                 <Link to={"/config"} className="nav-link">
                   Configure
@@ -79,9 +84,6 @@ class App extends Component {
 
           <div className="container mt-3">
             <Switch>
-              <Route exact path="/install"
-                  component={(props) => <Install {...props} env={this.env} />}
-              />
               <Route exact path={["/", "/config"]}
                   render={(props) => <Config {...props} env={this.env} />}
               />
