@@ -25,7 +25,7 @@ services:
       - ANSIBLE_VAULT_PASSWORD_FILE=/ansible_vault_pass
     volumes:
       - "{{ volumes_root }}/install:/playbooks"
-      - "{{ volumes_root }}/ansible-api/scripts:/scripts"
+      - "{{ volumes_root }}/ansible_api/scripts:/scripts"
       - "/home/{{ user_name }}/.ssh/id_rsa:/root/.ssh/id_rsa"
       - "/home/{{ user_name }}/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub"
       - "/home/{{ user_name }}/.homelabos_vault_pass:/ansible_vault_pass"
