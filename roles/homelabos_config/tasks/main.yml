@@ -1,4 +1,5 @@
 ---
+# TODO: Move settings dir to {{ volumes_root }}
 - name: Create settings path if it does not exist
   file:
     path: settings/passwords

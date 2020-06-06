@@ -13,6 +13,8 @@
 ##     Setup remaining things after the config has been created. These tasks depend on variables set there.
 ##     Traefik, Tor, NAS/Samba
 #####################################
+
+## Stage 1 of deployment:
 - name: Import Create User tasks
   import_tasks: create_user.yml
   tags:
@@ -39,28 +41,52 @@
     name: homelabos_web
   tags:
     - deploy_base
-  
-#- name: Get UID of {{ user_name }}
-#  command: id -u {{ user_name }}
-#  register: uid_output
-#
-#- name: Get GID of {{ user_name }}
-#  command: id -g {{ user_name }}
-#  register: gid_output
-#  
-#- name: Import NAS/Directory tasks
-#  import_tasks: nas_dirs.yml
-#  tags:
-#    - deploy_after_config
-#  when: nas_enable is defined and nas_enable|bool
-#
-#- name: Import Traefik tasks
-#  import_tasks: traefik.yml
-#  tags:
-#    - deploy_after_config
-#
-#- name: Import Tor tasks
-#  import_tasks: tor.yml
-#  tags:
-#    - deploy_after_config
-#
+
+## Stage 2 of deployment:
+## - Install all on-host dependencies
+#####################################
+- name: Install required system packages
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: ['git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common',
+          'gnupg-agent', 'python3-docker', 'python3-distutils', 'python3-passlib']
+  become: yes
+  tags:
+    - deploy_host_deps
+  # TODO: python3-pip and mkdocs is used by the 'docs' service.  Why are the docs not built in a container?
+  # 'python3-pip', 'mkdocs']
+  # It pulls in a massive amount of packages just for this purpose.
+  # Need theme: material
+  # Need : pymdownx.details , git-revision-date-localized
+  # service docs is non-functional.
+
+## Stage 3 of deployment:
+## Requirement: Default configuration is completed. I.e. settings/config.yml and vault.yml exist.
+## - If variables are supplied to ansible, the configuraton will complete without prompts.
+## - Setup Traefik, NAS dirs, Tor etc.
+#####################################
+- name: Get UID of {{ user_name }}
+  command: id -u {{ user_name }}
+  register: uid_output
+  tags:
+    - deploy_host_deps
+
+- name: Get GID of {{ user_name }}
+  command: id -g {{ user_name }}
+  register: gid_output
+  tags:
+    - deploy_host_deps
+
+- name: Import Traefik tasks
+  import_tasks: traefik.yml
+  tags:
+    - deploy_host_deps
+
+- name: Import NAS/Directory tasks
+  import_tasks: nas_dirs.yml
+  tags:
+    - deploy_host_deps
+
+- name: Import Tor tasks
+  import_tasks: tor.yml
+  tags:
+    - deploy_host_deps

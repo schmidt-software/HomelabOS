@@ -225,40 +225,35 @@ fi
 if [ -z $deploy_done ]; then
   echo "* Now creating hlos user account and switch to that"
   ansible-playbook  -i inventory_user --tags=create_user playbook.homelabos_api.yml
-exit 0
+
+  echo "* Test the hlos user is setup correctly with passwordless connection."
+  result=$(ssh hlos@$ip echo "All is okay at \$HOME"|grep okay)
+  if [ -z result ]; then
+    echo "* SSH connection using SSH keys did not work.  Please check your inputs and try again."
+    exit 1
+  else
+    echo "* SSH connection using SSH keys succeeded."
+  fi
+
+  echo "* Trying to contact your server using the hlos user via ansible"
+  result=$(ansible -m ping -i inventory_hlos remotenode|grep pong)
+  if [ -z result ]; then
+    echo "* Ansible cannot contact the server.  Please check your inputs and try again."
+    exit 1
+  else
+    echo "* Ansible Ping/Pong succeeded."
+  fi
+
   echo "* Now installing docker and initial HomelabOS containers on the server"
-#  ansible-playbook  -i inventory_user --tags=host_deps,create_user playbook.homelabos_api.yml
-#  ansible-playbook  -i inventory_hlos --tags=host_deps, deploy_base playbook.homelabos_api.yml
   ansible-playbook  -i inventory_hlos --tags=deploy_base playbook.homelabos_api.yml
   echo "deploy_done=yes" >> ../server_credentials
 fi
-
-echo "* Test the hlos user is setup correctly with passwordless connection."
-result=$(ssh hlos@$ip echo "All is okay at \$HOME"|grep okay)
-if [ -z result ]; then
-  echo "* SSH connection using SSH keys did not work.  Please check your inputs and try again."
-  exit 1
-else
-  echo "* SSH connection using SSH keys succeeded."
-fi
-
-echo "* Trying to contact your server using the hlos user via ansible"
-result=$(ansible -m ping -i inventory_hlos remotenode|grep pong)
-if [ -z result ]; then
-  echo "* Ansible cannot contact the server.  Please check your inputs and try again."
-  exit 1
-else
-  echo "* Ansible Ping/Pong succeeded."
-fi
-
-echo "* Deploying Ansible API and HLOS Web Services"
-ansible-playbook  -i inventory_hlos --tags=deploy_base playbook.homelabos_api.yml
 
 echo "* Test the ansible-api service is running.  You should see a message coming back.  Pause for a few seconds to let the service start up."
 sleep 10
 wget -q -O - http://$ip:8765/
 echo
 
-echo "* Everything should be in working order now.  Please visit the HLOS Web service at http://$ip:8888 and continue to setup the system from there."
+echo "* Everything should be in working order now.  Please visit the HLOS Web service at http://$ip:8080 and continue to setup the system from there."
 echo
 echo "* You can run this script multiple times in case something did not go as expected. Also feel free to delete everything from this machine."

@@ -1,5 +1,13 @@
 ---
+- name: Create the HomeLabOS user account and install Docker
+  hosts: all
+  tags:
+    - deploy
+  roles:
+    - homelabos_api_deploy
+
 # Configure a TOR hidden service for remote access without a public IP
+# This is stalled directly on the host.
 #ok - name: "Setup TOR"
 #ok   hosts: all
 #ok   tags: tor
@@ -27,48 +35,7 @@
 #ok         name: homelabos_wireguard
 #ok         when: bastion.enable == True
 
-- name: Create the HomeLabOS user account and install Docker
-  hosts: all
-  tags:
-    - deploy
-  roles:
-    - homelabos_api_deploy
 
-## Install server basic needs
-#- name: Install and configure HomelabOS base services
-#  hosts: all
-#  tags:
-#    - deploy
-#  roles:
-#    - homelabos_api_deploy
-#
-#
-## Install and configure HomelabOS base services
-#- name: Install and configure HomelabOS base services
-#  hosts: all
-#  tags:
-#    - deploy
-#  roles:
-#    - homelabos_api_deploy
-#
-## Install and configure ansible-api
-#- name: Install and configure HomelabOS Ansible API
-#  hosts: all
-#  tags:
-#    - deploy
-#    - deploy_ansible_api
-#  roles:
-#    - homelabos_ansible_api
-#
-## Install and configure HomelabOS web-ui
-#- name: Install and configure HomelabOS Web User Interface
-#  hosts: all
-#  tags:
-#    - deploy
-#    - deploy_ansible_web
-#  roles:
-#    - homelabos_web
-#
 ## Install and configure HomelabOS services
 #- name: Install and configure HomelabOS services
 #  hosts: all

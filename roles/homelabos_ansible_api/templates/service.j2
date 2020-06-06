@@ -12,8 +12,8 @@ Restart=always
 RestartSec=3
 WorkingDirectory={{ volumes_root }}/ansible_api/
 
-ExecStart=/usr/bin/docker-compose -p ansible-api up
-ExecStop=/usr/bin/docker-compose -p ansible-api down
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down
 
 [Install]
 WantedBy=multi-user.target

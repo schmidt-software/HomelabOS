@@ -3,7 +3,6 @@
 ##  What this playbook does:
 ##  - Clone the HLOS Git repo (could get the ZIP too, but upgrades are easier this way)
 ##  -- But under consideration if the ZIP is what we want to get rid of the git dependency
-##  - Copy ssh_user HLOS passwords to the hlos user account
 ##  -
 ##################################
 - name: Deploy hlos files to server
@@ -13,5 +12,3 @@
     version: 220_add_remote_deploy_of_hlos_ansible_api
     dest: "{{ volumes_root }}/install"
     accept_hostkey: true
-
-  ### TODO: roles/homelabos_ansible_api do that one now, then do the homelabos_web one
