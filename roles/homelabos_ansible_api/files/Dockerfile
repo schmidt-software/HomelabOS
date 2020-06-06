@@ -59,6 +59,7 @@ ENV API_PLAYBOOK_PATH /playbooks/
 ENV API_SCRIPT_PATH /scripts/
 
 EXPOSE $API_PORT
+VOLUME ["/playbooks","/scripts"]
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
