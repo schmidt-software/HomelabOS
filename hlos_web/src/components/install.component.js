@@ -235,6 +235,12 @@ export default class Install extends Component {
   render() {
     return (
       <div className="submit-form">
+        <div>
+          The first step is installing the software needed on the server to support the containerised services.
+          Additionally the installation will setup Traefik to manage routing browser access to your services.
+          <br></br>
+          Once the installation is complete, proceed to configuring HomelabOS defaults.
+        </div>
         {this.inputField("Server IP", "hostip",
             this.state.hostip, this.onChangeHostIp)}
         {this.inputField("Server Domain", "domain",
