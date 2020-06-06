@@ -13,43 +13,54 @@
 ##     Setup remaining things after the config has been created. These tasks depend on variables set there.
 ##     Traefik, Tor, NAS/Samba
 #####################################
-- name: Get UID
-  command: id -u {{ user_name }}
-  register: uid_output
-  become: false
-
-- name: Get GID
-  command: id -g {{ user_name }}
-  register: gid_output
-  become: false
-
-- name: Import Bootstrap tasks
-  import_tasks: bootstrap.yml
-  tags:
-  - host_deps
-
 - name: Import Create User tasks
   import_tasks: create_user.yml
   tags:
     - create_user
+
+- name: Import Docker installation tasks
+  import_tasks: docker.yml
+  tags:
+    - deploy_base
 
 - name: Import Install HomeLabOS tasks
   import_tasks: deploy.yml
   tags:
     - deploy_base
 
-- name: Import NAS/Directory tasks
-  import_tasks: nas_dirs.yml
+- name: Import ansible-api installation tasks
+  import_role:
+    name: homelabos_ansible_api
   tags:
-    - deploy_after_config
-  when: nas_enable is defined and nas_enable|bool
+    - deploy_base
 
-- name: Import Traefik tasks
-  import_tasks: traefik.yml
+- name: Import hlos-web installation tasks
+  import_role:
+    name: homelabos_web
   tags:
-    - deploy_after_config
-
-- name: Import Tor tasks
-  import_tasks: tor.yml
-  tags:
-    - deploy_after_config
+    - deploy_base
+  
+#- name: Get UID of {{ user_name }}
+#  command: id -u {{ user_name }}
+#  register: uid_output
+#
+#- name: Get GID of {{ user_name }}
+#  command: id -g {{ user_name }}
+#  register: gid_output
+#  
+#- name: Import NAS/Directory tasks
+#  import_tasks: nas_dirs.yml
+#  tags:
+#    - deploy_after_config
+#  when: nas_enable is defined and nas_enable|bool
+#
+#- name: Import Traefik tasks
+#  import_tasks: traefik.yml
+#  tags:
+#    - deploy_after_config
+#
+#- name: Import Tor tasks
+#  import_tasks: tor.yml
+#  tags:
+#    - deploy_after_config
+#

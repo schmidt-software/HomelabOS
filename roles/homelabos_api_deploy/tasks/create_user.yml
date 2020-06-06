@@ -8,11 +8,13 @@
 ## What this means is that no-one will be able to login as this user
 ## without the SSH private key.
 #####################################
-#- name: Create the hlos user for HLOS.  SSH key access only.
-#  hosts: all
-#  become: yes
-#
-#  tasks:
+- name: Ensure group docker exists
+  group:
+    name: docker
+    gid: 998
+    state: present
+  become: yes
+
 - name: Add my user
   # Lock the password.
   # If you don't want this, add this line and remove the password_lock=yes line

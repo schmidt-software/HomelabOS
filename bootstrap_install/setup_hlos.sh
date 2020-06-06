@@ -35,23 +35,35 @@ else
   echo "pass=$pass" >> server_credentials
   chmod 600 server_credentials
 fi
+export SSHPASS=$pass
+
+# Install ansible, sshpass to get started
+echo
+if [ ! -f "/usr/bin/python3" ] || [ ! -f "/usr/bin/sshpass" ]; then
+  echo "* I need sshpass and Python 3 on this machine, you may be asked to enter your sudo credentials:"
+  sudo apt update
+  sudo apt install -qy sshpass python3 python3-pip
+fi
 
 if [ -z $user_can_login ]; then
   ## check the user can access the server with the given credentials
   echo "* Test the server user is setup correctly with password or key connection, and can sudo."
   echo "* You may have to type your server password followed by sudo password (usually the same) now."
-  ssh -t $user@$ip sudo echo "Successful login and upgrade to sudo.  You can continue installation."
+  sshpass -e ssh -t $user@$ip sudo echo "Successful login and upgrade to sudo.  You can continue installation."
   read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate. Maybe a mistyped password?"
   echo "user_can_login=yes" >> server_credentials
 else
   echo "* Already determined the user can login to the server."
 fi
 
+echo
 if [ -z $server_has_python ]; then
   echo "* mitogen 0.2.9 needs /usr/bin/python to exist.  We check for it and create a link to /usr/bin/python3 if this is so."
   echo "* If this does not work, then comment out the lines in this script about mitogen in the ansible.cfg part."
-  ssh -t $user@$ip 'sudo rm -f /usr/bin/python'
-  ssh -t $user@$ip '[ ! -f /usr/bin/python ] && [ -f /usr/bin/python3 ] && echo "/usr/bin/python not found - making symlink" && sudo ln -s /usr/bin/python3 /usr/bin/python'
+  sshpass -e ssh -t $user@$ip 'echo "Forcing /usr/bin/python to be Python 3" && sudo rm -f /usr/bin/python && sudo ln -s /usr/bin/python3 /usr/bin/python'
+  # The line above is aggressively fixing things.  The line below does not work if python is already linked to python2
+  # In any case, once new next mitogen is released, this while section can be removed.
+  #ssh -t $user@$ip '[ ! -f /usr/bin/python ] && [ -f /usr/bin/python3 ] && echo "/usr/bin/python not found - making symlink" && sudo ln -s /usr/bin/python3 /usr/bin/python'
   echo "server_has_python=yes" >> server_credentials
 else
   echo "* Server is known to have /usr/bin/python. Mitogen will work now."
@@ -68,14 +80,6 @@ fi
 ## TODO: to docker or not to Docker
 ## Alternately it could be considered to require docker-ce on the client PC, and build a container.
 ## In case the client PC is also the hlos server, this container cound in theory be reused as the ansible-api.
-
-# Install ansible, sshpass to get started
-echo
-if [ ! -f "/usr/bin/python3" ] || [ ! -f "/usr/bin/sshpass" ]; then
-  echo "* I need sshpass and Python on this PC, you may be asked to enter your sudo credentials (for this machine):"
-  sudo apt update
-  sudo apt install -qy sshpass python3 python3-pip
-fi
 
 if [ ! -f "ansible/bin/ansible" ]; then
   echo "* Installing ansible in a Python virtual environment.  This means you can delete it after bootstrapping the server"
@@ -216,11 +220,16 @@ else
   echo "* Ansible Ping/Pong succeeded."
 fi
 
-exit 0
-
+## From here the actual installation is happening.
+###################################################
 if [ -z $deploy_done ]; then
-  echo "* Now installing prerequisites and creating user on the server"
-  ansible-playbook  -i inventory_user --tags=host_deps,create_user playbook.homelabos_api.yml
+  echo "* Now creating hlos user account and switch to that"
+  ansible-playbook  -i inventory_user --tags=create_user playbook.homelabos_api.yml
+exit 0
+  echo "* Now installing docker and initial HomelabOS containers on the server"
+#  ansible-playbook  -i inventory_user --tags=host_deps,create_user playbook.homelabos_api.yml
+#  ansible-playbook  -i inventory_hlos --tags=host_deps, deploy_base playbook.homelabos_api.yml
+  ansible-playbook  -i inventory_hlos --tags=deploy_base playbook.homelabos_api.yml
   echo "deploy_done=yes" >> ../server_credentials
 fi
 
@@ -233,7 +242,7 @@ else
   echo "* SSH connection using SSH keys succeeded."
 fi
 
-echo "* Trying to contact your server using the hlos user"
+echo "* Trying to contact your server using the hlos user via ansible"
 result=$(ansible -m ping -i inventory_hlos remotenode|grep pong)
 if [ -z result ]; then
   echo "* Ansible cannot contact the server.  Please check your inputs and try again."

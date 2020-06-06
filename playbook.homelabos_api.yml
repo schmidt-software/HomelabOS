@@ -27,52 +27,53 @@
 #ok         name: homelabos_wireguard
 #ok         when: bastion.enable == True
 
-# Install server basic needs
-- name: Install and configure HomelabOS base services
+- name: Create the HomeLabOS user account and install Docker
   hosts: all
   tags:
     - deploy
   roles:
     - homelabos_api_deploy
 
-# Create the hlos user
-- name: Install and configure HomelabOS base services
-  hosts: all
-  tags:
-    - deploy
-  roles:
-    - homelabos_api_deploy
-
-# Install and configure HomelabOS base services
-- name: Install and configure HomelabOS base services
-  hosts: all
-  tags:
-    - deploy
-  roles:
-    - homelabos_api_deploy
-
-# Install and configure HomelabOS ansible-api
-- name: Install and configure HomelabOS Ansible API
-  hosts: all
-  tags:
-    - deploy
-    - deploy_ansible_api
-  roles:
-    - homelabos_ansible_api
-
-# Install and configure HomelabOS web-ui
-- name: Install and configure HomelabOS Web User Interface
-  hosts: all
-  tags:
-    - deploy
-    - deploy_ansible_web
-  roles:
-    - homelabos_web
-
-# Install and configure HomelabOS services
-- name: Install and configure HomelabOS services
-  hosts: all
-  tags:
-    - deploy_service
-  roles:
-    - homelabos_api_deploy_service
+## Install server basic needs
+#- name: Install and configure HomelabOS base services
+#  hosts: all
+#  tags:
+#    - deploy
+#  roles:
+#    - homelabos_api_deploy
+#
+#
+## Install and configure HomelabOS base services
+#- name: Install and configure HomelabOS base services
+#  hosts: all
+#  tags:
+#    - deploy
+#  roles:
+#    - homelabos_api_deploy
+#
+## Install and configure HomelabOS ansible-api
+#- name: Install and configure HomelabOS Ansible API
+#  hosts: all
+#  tags:
+#    - deploy
+#    - deploy_ansible_api
+#  roles:
+#    - homelabos_ansible_api
+#
+## Install and configure HomelabOS web-ui
+#- name: Install and configure HomelabOS Web User Interface
+#  hosts: all
+#  tags:
+#    - deploy
+#    - deploy_ansible_web
+#  roles:
+#    - homelabos_web
+#
+## Install and configure HomelabOS services
+#- name: Install and configure HomelabOS services
+#  hosts: all
+#  tags:
+#    - deploy_service
+#  roles:
+#    - homelabos_api_deploy_service
+#
