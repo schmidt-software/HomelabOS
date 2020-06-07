@@ -44,8 +44,8 @@ services:
         ROOT_LOGLEVEL: INFO # Supported log levels are ALL, DEBUG, ERROR, FATAL, INFO, OFF, TRACE and WARN.
         # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
         #JDBC_PARAMS: "connectTimeout=30000"
-        #JGROUPS_DISCOVERY_PROTOCOL: JDBC_PING
-        #JGROUPS_DISCOVERY_PROPERTIES: datasource_jndi_name=java:jboss/datasources/KeycloakDS,info_writer_sleep_time=500
+        JGROUPS_DISCOVERY_PROTOCOL: JDBC_PING
+        JGROUPS_DISCOVERY_PROPERTIES: datasource_jndi_name=java:jboss/datasources/KeycloakDS,info_writer_sleep_time=500
       depends_on:
         - keycloak-postgres
       networks:
@@ -55,7 +55,7 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
       - "traefik.http.services.keycloak.loadbalancer.server.scheme=http"
-      - "traefik.http.services.keycloak.loadbalancer.server.port=8080" #9990
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
       - "traefik.http.routers.keycloak-http.service=keycloak"
       - "traefik.http.routers.keycloak-http.rule=Host(`{{ service_domain }}`)"
       - "traefik.http.routers.keycloak-http.entrypoints=http"
