@@ -20,8 +20,15 @@ echo "## Press ctrl-c if you do not have sudo access with your user. Otherwise p
 read
 
 if [ -f server_credentials ]; then
-  source server_credentials
-else
+  read -p "Found server_credentials file from earlier run. Type 'yes' to wipe it and start over, or <enter> to continue." ans
+  if [ "$ans" = "yes" ]; then
+    rm server_credentials
+  else
+    source server_credentials
+  fi
+fi
+
+if [ ! -f server_credentials ]; then
   echo
   echo "* First a few questions, then we are off."
   echo "* Enter your server IP and credentials.  Then we can get your ssh keys on the server."
