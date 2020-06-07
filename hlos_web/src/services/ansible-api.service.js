@@ -74,7 +74,7 @@ class AnsibleApiDataService {
       'v_default_password':defaultpass,
       'v_domain':domain,
       'v_admin_email':admin_email,
-      'v_volumes_root':'/home/hlos/',
+      'v_volumes_root':'/home/hlos',
       'v_common_timezone':timezone
    };
    return http.post("/playbook", data);
