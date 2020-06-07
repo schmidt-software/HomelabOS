@@ -146,7 +146,7 @@ export default class Config extends Component {
         console.log(response.data);
         this.setState({
           apiresponse: this.formatResponse(response.data.detail),
-          apiresponseerrors: JSON.stringitfy(response.data.error),
+          apiresponseerrors: JSON.stringify(response.data.error),
         });
       })
       .catch(e => {
