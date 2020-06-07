@@ -253,10 +253,10 @@ export default class Config extends Component {
       localStorage.setItem(key, JSON.stringify(this.state[key]));
     }
   }
-    
+
   componentDidMount() {
     this.hydrateStateWithLocalStorage();
-    
+
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
     window.addEventListener(
@@ -264,13 +264,13 @@ export default class Config extends Component {
       this.saveStateToLocalStorage.bind(this)
     );
   }
-    
+
   componentWillUnmount() {
     window.removeEventListener(
       "beforeunload",
       this.saveStateToLocalStorage.bind(this)
     );
-    
+
     // saves if component has a chance to unmount
     this.saveStateToLocalStorage();
   }
