@@ -35,8 +35,8 @@ services:
         DB_DATABASE: keycloak
         DB_USER: keycloak
         DB_PASSWORD: {{lookup('password', './settings/passwords/keycloak_db_password chars=ascii_letters')}}
-        #KEYCLOAK_USER: {{ default_username }}
-        #KEYCLOAK_PASSWORD: {{ default_password }}
+        KEYCLOAK_USER: {{ default_username }}
+        KEYCLOAK_PASSWORD: {{ default_password }}
         PROXY_ADDRESS_FORWARDING: "true"
         KEYCLOAK_STATISTICS: all
         KEYCLOAK_FRONTEND_URL: "https://{{ service_domain }}/auth/"
