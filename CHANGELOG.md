@@ -3,10 +3,11 @@
 ## Services Added
 
 - Added Simply-Shorten - A simple selfhosted URL shortener with no name because naming is hard
-- Added Teedy - Document Management made simple for everyone
-- Added Taisun - Single Server Docker Management for Humans
+- Added Keycloak - Open Source Identity and Access Management
 - Added matterbridge - Bridges between many different chat protocols.
 - Added OctoPrint - The snappy web interface for your 3D printer.
+- Added Taisun - Single Server Docker Management for Humans
+- Added Teedy - Document Management made simple for everyone
 
 # 0.7.1 - 0.7.2
 

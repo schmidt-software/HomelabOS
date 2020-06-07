@@ -48,6 +48,7 @@ services:
   inventario:
   jackett:
   jellyfin:
+  keycloak:
   kibitzr:
   lazylibrarian:
   lidarr:
@@ -167,6 +168,7 @@ huginn:
 inventario:
 jackett:
 jellyfin:
+keycloak:
 kibitzr:
 lazylibrarian:
 lidarr:
