@@ -2,6 +2,7 @@
 
 ## Services Added
 
+- Added Simply-Shorten - A simple selfhosted URL shortener with no name because naming is hard
 - Added Teedy - Document Management made simple for everyone
 - Added Taisun - Single Server Docker Management for Humans
 - Added matterbridge - Bridges between many different chat protocols.
