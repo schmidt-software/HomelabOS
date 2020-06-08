@@ -2,7 +2,7 @@
 
   AS OF NOW UNUSED - MAYBE USE FOR 100% UI INSTALL IF HLOS
   BECOMES A DOCKER PULL RELEASE.
- 
+
 */
 import React, { Component } from "react";
 import AnsibleApiDataService from "../services/ansible-api.service";
