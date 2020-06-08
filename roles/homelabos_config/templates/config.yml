@@ -504,7 +504,7 @@ invoiceninja:
   auth: {{ invoiceninja.auth | default(False) }}
   domain: {{ invoiceninja.domain | default(False) }}
   subdomain: {{ invoiceninja.subdomain | default("invoiceninja")}}
-  version: {{ invoiceninja.version | default('latest')}}
+  version: {{ invoiceninja.version | default('alpine-4')}}
 jackett:
   enable: {{ jackett.enable | default(enable_jackett, None) | default(False) }}
   https_only: {{ jackett.https_only | default(False) }}
