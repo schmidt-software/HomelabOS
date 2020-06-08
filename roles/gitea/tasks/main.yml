@@ -6,7 +6,7 @@
 
 - name: Check that old db folder exists
   stat:
-    path: {{ volumes_root }}/gitea_db
+  path: {{ volumes_root }}/gitea_db
     register: old_gitea_db
 
 - name: Move old db folder to new location
