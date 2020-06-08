@@ -9,7 +9,7 @@ networks:
 services:
  # Code Hosting
   gitea:
-    image: gitea/gitea:1.8.3
+    image: gitea/gitea:1.11
     networks:
       - traefik_network
     environment:
@@ -63,9 +63,9 @@ services:
 
 {% if gitea.use_mariadb %}
     depends_on:
-      - gitea_db
+      - db
 
-  gitea_db:
+  db:
     image: mariadb
     networks:
       - traefik_network
