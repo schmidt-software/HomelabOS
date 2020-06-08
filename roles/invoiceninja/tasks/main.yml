@@ -28,10 +28,10 @@
     owner: systemd-network
     group: systemd-journal
 
-# - name: install nginx config
-#   template:
-#     src: nginx.conf
-#     dest: "{{  volumes_root }}/invoiceninja/config/nginx/conf.d/app.conf"
+- name: install nginx config
+  template:
+    src: nginx.conf
+    dest: "{{  volumes_root }}/invoiceninja/config/nginx/nginx.conf"
 
 - name: install php-cli config
   template:
@@ -43,11 +43,14 @@
     src: php.j2
     dest: "{{ volumes_root }}/invoiceninja/config/php/php.ini"
 
-- name: Generate new argon2id compatible password.
+- name: Generate new encryption key.
   shell: >
-    docker run --rm -it invoiceninja/invoiceninja php artisan key:generate --show | awk 'END{print}'
+    docker run --rm -i invoiceninja/invoiceninja php artisan key:generate --show | awk 'END{print}'
   register: application_key
   become: false
+
+- debug: 
+    msg: "Generated this key for app_key: {{ application_key }}"
 
 - name: Copy invoiceninja docker-compose.yml file into place.
   template:
