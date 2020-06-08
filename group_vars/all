@@ -105,6 +105,7 @@ services:
   tautulli:
   teedy:
   thelounge:
+  thespaghettidetective:
   tick:
   tiddlywiki:
   transmission:
@@ -224,6 +225,7 @@ taisun:
 tautulli:
 teedy:
 thelounge:
+thespaghettidetective:
 tick:
 tiddlywiki:
 transmission:
