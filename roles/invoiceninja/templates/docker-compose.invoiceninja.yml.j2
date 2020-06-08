@@ -7,35 +7,30 @@ networks:
   traefik_network:
     external:
       name: homelabos_traefik
-<<<<<<< HEAD
   invoiceninja:
-=======
->>>>>>> initial commit
 
 services:
   www:
     image: nginx
     networks:
       - traefik_network
-<<<<<<< HEAD
       - invoiceninja
     environment:
       - APP_URL=https://{{service_domain}}
-=======
     environment: 
+      - APP_KEY={{application_key.stdout}}
       - APP_URL={{service_domain}}
->>>>>>> initial commit
+      - APP_DEBUG=true
+      - APP_CIPHER=AES-256-CBC
+      - TRUSTED_PROXIES=“10.0.0.0/8,172.16.0.0/12,192.168.0.0/16”
+
     volumes:
       - "{{ volumes_root }}/invoiceninja/config/nginx/nginx.conf:/etc/nginx/nginx.conf"
       - "{{ volumes_root }}/invoiceninja/public:/var/www/app/public"
       - "{{ volumes_root }}/invoiceninja/"
       - "{{ volumes_root }}/invoiceninja/storage:/var/www/app/storage"
     depends_on:
-<<<<<<< HEAD
       - invoiceapp
-=======
-      - app
->>>>>>> initial commit
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
@@ -67,7 +62,6 @@ services:
       - "traefik.http.routers.invoiceninja-tor-http.middlewares={% if invoiceninja.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
 {% endif %}
 
-<<<<<<< HEAD
   indb:
     image: mysql:5
     restart: unless-stopped
@@ -77,31 +71,16 @@ services:
       - MYSQL_ROOT_PASSWORD={{lookup('password', './settings/passwords/invoiceNinja_mysql_root_pw')}}
       - MYSQL_USER=ninja
       - MYSQL_PASSWORD={{lookup('password', './settings/passwords/invoiceNinja_mysql_pw')}}
-=======
-  db:
-    image: mysql:5
-    restart: unless-stopped
-    networks:
-      - traefik_network
-    environment:
-      - MYSQL_ROOT_PASSWORD=ninjaAdm1nPassword
-      - MYSQL_USER=ninja
-      - MYSQL_PASSWORD=ninja
->>>>>>> initial commit
       - MYSQL_DATABASE=db-ninja-01
+
     volumes:
       - "{{ volumes_root }}/invoiceninja/mysql-data:/var/lib/mysql:rw"
 
-<<<<<<< HEAD
   invoiceapp:
-=======
-  app:
->>>>>>> initial commit
     # REQUIRED
     image: invoiceninja/invoiceninja:{{invoiceninja.version}}
     restart: unless-stopped
     depends_on:
-<<<<<<< HEAD
       - indb
     networks:
       - invoiceninja
@@ -109,13 +88,21 @@ services:
       # Application environment
       - APP_URL=https://{{ service_domain }}
       - APP_KEY={{application_key.stdout}}
+      - MULTI_DB_ENABLED=false
+      - DB_HOST=indb
       - APP_DEBUG=false
       - APP_CIPHER=AES-256-CBC
+      - MAIL_HOST=smtp.domain.com
+      - MAIL_USERNAME=user@domain.com
+      - MAIL_PASSWORD=
+      - MAIL_DRIVER=smtp
+      - MAIL_FROM_NAME="Kevin Poorman"
+      - MAIL_FROM_ADDRESS=user@domain.com
       - TRUSTED_PROXIES="172.0.0.0/8"
       - REQUIRE_HTTPS=true
       - SESSION_ENCRYPT=true
       - SESSION_SECURE=true
-      - GOOGLE_MAPS_API_KEY=AIzaSyCcugFaqajwHx0cC4m_pOIjeZ4HOYXBWWg
+      - GOOGLE_MAPS_API_KEY=**
       # DB environment
       - MULTI_DB_ENABLED=false
       - DB_HOST=indb
@@ -128,42 +115,21 @@ services:
       - MAIL_PASSWORD={{ smtp.pass }}
       - MAIL_DRIVER=smtp
       - MAIL_FROM_NAME={{ smtp.from_email }}
-      - MAIL_FROM_ADDRESS=user@domain.com
-=======
-      - db
-    networks:
-      - traefik_network
-    environment:
-      - APP_URL={{ service_domain }}
-      - APP_KEY={{application_key.stdout}}
-      - MULTI_DB_ENABLED=false
-      - DB_HOST=db
->>>>>>> initial commit
-    volumes:
-      - "{{ volumes_root }}/invoiceninja/public:/var/www/app/public"
-      - "{{ volumes_root }}/invoiceninja/logo:/var/www/app/public/logo"
-      - "{{ volumes_root }}/invoiceninja/storage:/var/www/app/storage"
-<<<<<<< HEAD
+      
 
-=======
-    
->>>>>>> initial commit
-  cron:
-    image: invoiceninja/invoiceninja:{{invoiceninja.version}}
-    restart: unless-stopped
-    networks:
-      - traefik_network
-    entrypoint: |
-<<<<<<< HEAD
+ #cron:
+ #  image: invoiceninja/invoiceninja:{{invoiceninja.version}}
+ #  restart: unless-stopped
+ #  networks:
+ #    - traefik_network
+ #  entrypoint: |
       sh -c 'sh -s <<EOF
-=======
-      bash -c 'bash -s <<EOF
->>>>>>> initial commit
-      trap "break;exit" SIGHUP SIGINT SIGTERM
-      sleep 300s
-      while /bin/true; do
-        ./artisan ninja:send-invoices
-        ./artisan ninja:send-reminders
-        sleep 1d
-      done
-      EOF'
+ #    bash -c 'bash -s <<EOF
+ #    trap "break;exit" SIGHUP SIGINT SIGTERM
+ #    sleep 300s
+ #    while /bin/true; do
+ #      ./artisan ninja:send-invoices
+ #      ./artisan ninja:send-reminders
+ #      sleep 1d
+ #    done
+ #    EOF'
