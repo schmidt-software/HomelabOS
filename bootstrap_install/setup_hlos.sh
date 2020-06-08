@@ -17,18 +17,42 @@ echo "## If sudo does not work, su to root and add your user to /etc/group -> su
 echo "##"
 echo "##"
 echo "## Press ctrl-c if you do not have sudo access with your user. Otherwise press <enter> to continue"
-read
+read -n1
 
-if [ -f server_credentials ]; then
-  read -p "Found server_credentials file from earlier run. Type 'yes' to wipe it and start over, or <enter> to continue." ans
-  if [ "$ans" = "yes" ]; then
-    rm server_credentials
+repeat()
+{
+  ## Example use:
+  # if repeat "Found server_credentials file from earlier run."; then
+  #   echo "Repeating"
+  # else
+  #   echo "Not repeating"
+  # fi
+  echo "$1"
+  read -n1 -t 5 -p "Type 'r' to repeat step, <enter> or wait to continue: " ans
+  echo
+  if [ "$ans" = "r" ]; then
+    echo "* Repeating step"
+    return 0
   else
-    source server_credentials
+    return 1
   fi
+}
+
+if [ -f /.dockerenv ]; then
+    echo "* Running inside Docker container";
 fi
 
-if [ ! -f server_credentials ]; then
+# If I am root, don't use sudo (this happens in a Docker container)
+SUDO=sudo
+if [ "$USER" = "root" ]; then
+  SUDO=
+fi
+
+
+if [ -f server_credentials ]; then
+  echo "* Found and reusing server_credentials file from earlier run."
+  source server_credentials
+else
   echo
   echo "* First a few questions, then we are off."
   echo "* Enter your server IP and credentials.  Then we can get your ssh keys on the server."
@@ -45,18 +69,21 @@ fi
 export SSHPASS=$pass
 
 # Install ansible, sshpass to get started
-echo
-if [ ! -f "/usr/bin/python3" ] || [ ! -f "/usr/bin/sshpass" ]; then
-  echo "* I need sshpass and Python 3 on this machine, you may be asked to enter your sudo credentials:"
-  sudo apt update
-  sudo apt install -qy sshpass python3 python3-pip
+if [ ! -f /.dockerenv ]; then
+  # Only run this if not in a Docker container
+  echo
+  if [ ! -f "/usr/bin/python3" ] || [ ! -f "/usr/bin/sshpass" ] || [ ! -f "/usr/bin/wget" ]; then
+    echo "* I need sshpass and Python 3 on this machine, you may be asked to enter your sudo credentials:"
+    $SUDO apt update
+    $SUDO apt install -qy sshpass python3 python3-pip wget
+  fi
 fi
 
-if [ -z $user_can_login ]; then
+if [ -z $user_can_login ] || repeat "* Repeat step to determine if user can login and sudo on server?"; then
   ## check the user can access the server with the given credentials
   echo "* Test the server user is setup correctly with password or key connection, and can sudo."
   echo "* You may have to type your server password followed by sudo password (usually the same) now."
-  sshpass -e ssh -t $user@$ip sudo echo "Successful login and upgrade to sudo.  You can continue installation."
+  sshpass -e ssh -o "StrictHostKeyChecking no" -t $user@$ip sudo echo "Successful login and upgrade to sudo.  You can continue installation."
   read -p "Did this succeed? Press <enter> if it did, otherwise <ctrl-c> and investigate. Maybe a mistyped password?"
   echo "user_can_login=yes" >> server_credentials
 else
@@ -64,7 +91,7 @@ else
 fi
 
 echo
-if [ -z $server_has_python ]; then
+if [ -z $server_has_python ] || repeat "* Repeat step setting up Python 3 link on server?"; then
   echo "* mitogen 0.2.9 needs /usr/bin/python to exist.  We check for it and create a link to /usr/bin/python3 if this is so."
   echo "* If this does not work, then comment out the lines in this script about mitogen in the ansible.cfg part."
   sshpass -e ssh -t $user@$ip 'echo "Forcing /usr/bin/python to be Python 3" && sudo rm -f /usr/bin/python && sudo ln -s /usr/bin/python3 /usr/bin/python'
@@ -76,36 +103,35 @@ else
   echo "* Server is known to have /usr/bin/python. Mitogen will work now."
 fi
 
-##
-## We could require docker on the client PC instead of Python, but for once it takes a lot longer to first install
-## Docker, and setup permissions for the current user. Secondly it takes time to build the container, and
-## thirdly, this is a one-off operation, whereas all the hard lifting is done on the server side.
-##
-## All that is left on the client PC is the Python3, and askpass installation, which would be installed on any
-## usable Linux PC anyway.
-##
-## TODO: to docker or not to Docker
-## Alternately it could be considered to require docker-ce on the client PC, and build a container.
-## In case the client PC is also the hlos server, this container cound in theory be reused as the ansible-api.
-
-if [ ! -f "ansible/bin/ansible" ]; then
-  echo "* Installing ansible in a Python virtual environment.  This means you can delete it after bootstrapping the server"
-  echo "* if you want, and no changes were made on your client PC."
-  pip3 install virtualenv
-  python3 -m virtualenv ansible --python=python3
-  cd ansible
-  source bin/activate
-  pip3 install ansible docker-py mitogen
-else
-  echo "* Activating existing ansible virtualenv"
-  cd ansible
-  source bin/activate
+if [ ! -f /.dockerenv ]; then
+  # Only installing virtualenv and setting up symlinks if not in a Docker container
+  if [ ! -f "ansible/bin/ansible" ]; then
+    echo "* Installing ansible in a Python virtual environment.  This means you can delete it after bootstrapping the server"
+    echo "* if you want, and no changes were made on your client PC."
+    pip3 install virtualenv
+    python3 -m virtualenv ansible --python=python3
+    cd ansible
+    source bin/activate
+    pip3 install ansible docker-py mitogen
+  else
+    echo "* Activating existing ansible virtualenv"
+    cd ansible
+    source bin/activate
+  fi
 fi
 
-# Link in needed stuff form upper dirs.
-if [ ! -f "playbook.homelabos_api.yml" ]; then
-  ln -s ../../playbook.homelabos_api.yml
-  ln -s ../../roles
+if [ ! -f /.dockerenv ]; then
+  # Link in needed stuff form upper dirs.
+  if [ ! -f "playbook.homelabos_api.yml" ]; then
+    ln -s ../../playbook.homelabos_api.yml
+    ln -s ../../roles
+  fi
+else
+  # Link in needed stuff form upper dirs.
+  if [ ! -f "playbook.homelabos_api.yml" ]; then
+    ln -s ../playbook.homelabos_api.yml
+    ln -s ../roles
+  fi
 fi
 
 if [ ! -f "$HOME/.homelabos_vault_pass" ]; then
@@ -229,7 +255,7 @@ fi
 
 ## From here the actual installation is happening.
 ###################################################
-if [ -z $deploy_done ]; then
+if [ -z $deploy_done ] || repeat "* Repeat server installation step?"; then
   echo "* Now creating hlos user account and switch to that"
   ansible-playbook  -i inventory_user --tags=create_user playbook.homelabos_api.yml
 
