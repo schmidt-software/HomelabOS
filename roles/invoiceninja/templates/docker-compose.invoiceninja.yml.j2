@@ -82,7 +82,7 @@ services:
       - APP_KEY={{application_key.stdout}}
       - APP_DEBUG=false
       - APP_CIPHER=AES-256-CBC
-      - TRUSTED_PROXIES="172.20.0.0/24"
+      - TRUSTED_PROXIES="172.0.0.0/8"
       - REQUIRE_HTTPS=true
       - SESSION_ENCRYPT=true
       - SESSION_SECURE=true
