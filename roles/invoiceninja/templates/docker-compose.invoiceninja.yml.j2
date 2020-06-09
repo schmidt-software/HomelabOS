@@ -15,7 +15,7 @@ services:
     networks:
       - traefik_network
       - invoiceninja
-    environment: 
+    environment:
       - APP_URL=https://{{service_domain}}
     volumes:
       - "{{ volumes_root }}/invoiceninja/config/nginx/nginx.conf:/etc/nginx/nginx.conf"
@@ -104,7 +104,7 @@ services:
       - "{{ volumes_root }}/invoiceninja/public:/var/www/app/public"
       - "{{ volumes_root }}/invoiceninja/logo:/var/www/app/public/logo"
       - "{{ volumes_root }}/invoiceninja/storage:/var/www/app/storage"
-    
+
   cron:
     image: invoiceninja/invoiceninja:{{invoiceninja.version}}
     restart: unless-stopped

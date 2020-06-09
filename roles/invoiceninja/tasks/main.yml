@@ -13,7 +13,7 @@
   file:
     path: "{{ volumes_root }}/invoiceninja/config/php"
     state: directory
-    
+
 - name: Make invoiceninja directories
   file:
     path: "{{ volumes_root }}/invoiceninja/{{item}}"
@@ -46,7 +46,7 @@
   register: application_key
   become: false
 
-- debug: 
+- debug:
     msg: "Generated this key for app_key: {{ application_key }}"
 
 - name: Copy invoiceninja docker-compose.yml file into place.
