@@ -104,7 +104,7 @@ services:
       - "{{ volumes_root }}/invoiceninja/public:/var/www/app/public"
       - "{{ volumes_root }}/invoiceninja/logo:/var/www/app/public/logo"
       - "{{ volumes_root }}/invoiceninja/storage:/var/www/app/storage"
-    
+
   cron:
     image: invoiceninja/invoiceninja:{{invoiceninja.version}}
     restart: unless-stopped
