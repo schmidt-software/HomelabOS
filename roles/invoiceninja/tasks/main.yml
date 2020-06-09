@@ -36,15 +36,15 @@
   file:
     path: "{{ volumes_root }}/invoiceninja/public"
     state: directory
-    owner: systemd-network
-    group: systemd-journal
+    owner: {{homelab_ssh_user}}
+    group: {{homelab_ssh_user}}
 
 - name: Make invoiceninja Storage directory.
   file:
     path: "{{ volumes_root }}/invoiceninja/storage"
     state: directory
-    owner: systemd-network
-    group: systemd-journal
+    owner: {{homelab_ssh_user}}
+    group: {{homelab_ssh_user}}
 
 - name: install nginx config
   template:

@@ -17,13 +17,6 @@ services:
       - invoiceninja
     environment:
       - APP_URL=https://{{service_domain}}
-    environment: 
-      - APP_KEY={{application_key.stdout}}
-      - APP_URL={{service_domain}}
-      - APP_DEBUG=true
-      - APP_CIPHER=AES-256-CBC
-      - TRUSTED_PROXIES=“10.0.0.0/8,172.16.0.0/12,192.168.0.0/16”
-
     volumes:
       - "{{ volumes_root }}/invoiceninja/config/nginx/nginx.conf:/etc/nginx/nginx.conf"
       - "{{ volumes_root }}/invoiceninja/public:/var/www/app/public"
@@ -72,7 +65,6 @@ services:
       - MYSQL_USER=ninja
       - MYSQL_PASSWORD={{lookup('password', './settings/passwords/invoiceNinja_mysql_pw')}}
       - MYSQL_DATABASE=db-ninja-01
-
     volumes:
       - "{{ volumes_root }}/invoiceninja/mysql-data:/var/lib/mysql:rw"
 
@@ -88,17 +80,9 @@ services:
       # Application environment
       - APP_URL=https://{{ service_domain }}
       - APP_KEY={{application_key.stdout}}
-      - MULTI_DB_ENABLED=false
-      - DB_HOST=indb
       - APP_DEBUG=false
       - APP_CIPHER=AES-256-CBC
-      - MAIL_HOST=smtp.domain.com
-      - MAIL_USERNAME=user@domain.com
-      - MAIL_PASSWORD=
-      - MAIL_DRIVER=smtp
-      - MAIL_FROM_NAME="Kevin Poorman"
-      - MAIL_FROM_ADDRESS=user@domain.com
-      - TRUSTED_PROXIES="172.0.0.0/8"
+      - TRUSTED_PROXIES="172.20.0.0/24"
       - REQUIRE_HTTPS=true
       - SESSION_ENCRYPT=true
       - SESSION_SECURE=true
@@ -115,21 +99,24 @@ services:
       - MAIL_PASSWORD={{ smtp.pass }}
       - MAIL_DRIVER=smtp
       - MAIL_FROM_NAME={{ smtp.from_email }}
-      
-
- #cron:
- #  image: invoiceninja/invoiceninja:{{invoiceninja.version}}
- #  restart: unless-stopped
- #  networks:
- #    - traefik_network
- #  entrypoint: |
+      - MAIL_FROM_ADDRESS=user@domain.com
+    volumes:
+      - "{{ volumes_root }}/invoiceninja/public:/var/www/app/public"
+      - "{{ volumes_root }}/invoiceninja/logo:/var/www/app/public/logo"
+      - "{{ volumes_root }}/invoiceninja/storage:/var/www/app/storage"
+    
+  cron:
+    image: invoiceninja/invoiceninja:{{invoiceninja.version}}
+    restart: unless-stopped
+    networks:
+      - traefik_network
+    entrypoint: |
       sh -c 'sh -s <<EOF
- #    bash -c 'bash -s <<EOF
- #    trap "break;exit" SIGHUP SIGINT SIGTERM
- #    sleep 300s
- #    while /bin/true; do
- #      ./artisan ninja:send-invoices
- #      ./artisan ninja:send-reminders
- #      sleep 1d
- #    done
- #    EOF'
+      trap "break;exit" SIGHUP SIGINT SIGTERM
+      sleep 300s
+      while /bin/true; do
+        ./artisan ninja:send-invoices
+        ./artisan ninja:send-reminders
+        sleep 1d
+      done
+      EOF'
