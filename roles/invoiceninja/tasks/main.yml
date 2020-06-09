@@ -14,19 +14,16 @@
     path: "{{ volumes_root }}/invoiceninja/config/php"
     state: directory
     
-- name: Make invoiceninja Public directory.
+- name: Make invoiceninja directories
   file:
-    path: "{{ volumes_root }}/invoiceninja/public"
+    path: "{{ volumes_root }}/invoiceninja/{{item}}"
     state: directory
-    owner: {{homelab_ssh_user}}
-    group: {{homelab_ssh_user}}
-
-- name: Make invoiceninja Storage directory.
-  file:
-    path: "{{ volumes_root }}/invoiceninja/storage"
-    state: directory
-    owner: {{homelab_ssh_user}}
-    group: {{homelab_ssh_user}}
+    owner: "{{homelab_ssh_user}}"
+    group: "{{homelab_ssh_user}}"
+  loop:
+    - "public"
+    - "logo"
+    - "storage"
 
 - name: install nginx config
   template:
