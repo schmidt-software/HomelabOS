@@ -290,6 +290,10 @@ export default class Config extends Component {
           <br></br>
           To complete the installation you need to provide some information below. When ready press the buttons below.
           <br></br>
+          After you press the "Configure HomelabOS" button you will see the message "command" in the APi reponse window.  This should be the signal for you to continue to the Service screen.
+          <br></br>
+          Please note this is a very rough initial web UI, just functional enough to allow you to configure, and get services running.  Don't expect a very polished experience at this point in time.
+          <br></br>
           <br></br>
         </div>
         {this.inputField("Server IP", "hostip",

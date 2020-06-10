@@ -174,6 +174,21 @@ export default class Service extends Component {
   render() {
     return (
       <div className="submit-form">
+        <div>
+          <h1>Welcome to HomelabOS Service Selection.</h1>
+          Here you can activate services, an/or set properties on the services.  If you just want to enable
+          a service, like 'portainer', simply write 'portainer' n the service field, and click the Enable
+          button below.  Disabling is the same, just click the Disable button instead.
+          <br></br>
+          When you are ready, click the Deploy button to activate your choices.
+          <br></br>
+          The very first time yoy press the deploy button, you get Traefik started as well.
+          <br></br>
+          Please note this is a very rough initial web UI, just functional enough to allow you to configure,
+          and get services running.  Don't expect a very polished experience at this point in time.
+          <br></br>
+          <br></br>
+        </div>
         {this.inputField("Server IP", "hostip",
             this.state.hostip, this.onChangeHostIp)}
         {this.inputField("Service", "service",
