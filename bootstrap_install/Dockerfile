@@ -8,7 +8,11 @@
 ##    Make sure you have SSH keys generated!
 ##    docker run --name homelab_installer -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa -v $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v $HOME/.homelabos_vault_pass:/root/.homelabos_vault_pass homelabos_installer:latest
 ##
-##  You can add -e BRANCH=<branch name> if you want to noe use 'dev' as the branch
+##  Inside the container run:
+##    /entrypoint.sh
+##
+##  You can add -e BRANCH=<branch name> if you want to noe use 'dev' as the branch.
+##  Running the /entrypoint.sh script will switch to this branch first, then start the installation
 ##
 ##################
 FROM ubuntu:focal

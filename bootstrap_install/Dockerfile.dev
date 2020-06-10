@@ -8,6 +8,9 @@
 ##    Make sure you have SSH keys generated!
 ##    docker run --name homelab_installer -it -e BRANCH=dev -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa -v $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v $HOME/.homelabos_vault_pass:/root/.homelabos_vault_pass homelabos_installer:latest
 ##
+##  Inside the container run:
+##    /entrypoint.sh
+##
 ##  Until branch is merged:
 ##    docker run --name homelab_installer -it -e BRANCH=220_add_remote_deploy_of_hlos_ansible_api -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa -v $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v $HOME/.homelabos_vault_pass:/root/.homelabos_vault_pass homelabos_installer:latest
 ##################
