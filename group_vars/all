@@ -48,6 +48,7 @@ services:
   inventario:
   jackett:
   jellyfin:
+  keycloak:
   kibitzr:
   lazylibrarian:
   lidarr:
@@ -93,6 +94,7 @@ services:
   searx:
   shinobi:
   sickchill:
+  simply_shorten:
   snibox:
   sonarr:
   speedtest:
@@ -103,6 +105,7 @@ services:
   tautulli:
   teedy:
   thelounge:
+  thespaghettidetective:
   tick:
   tiddlywiki:
   transmission:
@@ -166,6 +169,7 @@ huginn:
 inventario:
 jackett:
 jellyfin:
+keycloak:
 kibitzr:
 lazylibrarian:
 lidarr:
@@ -211,6 +215,7 @@ sabnzbd:
 searx:
 shinobi:
 sickchill:
+simply_shorten:
 snibox:
 sonarr:
 speedtest:
@@ -220,6 +225,7 @@ taisun:
 tautulli:
 teedy:
 thelounge:
+thespaghettidetective:
 tick:
 tiddlywiki:
 transmission:
