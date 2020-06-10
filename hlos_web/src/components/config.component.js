@@ -290,7 +290,12 @@ export default class Config extends Component {
           <br></br>
           To complete the installation you need to provide some information below. When ready press the buttons below.
           <br></br>
-          After you press the "Configure HomelabOS" button you will see the message "command" in the APi reponse window.  This should be the signal for you to continue to the Service screen.
+          After you press the "Configure HomelabOS" button you will see the message "Start HomelabOS Traefik" in the
+          API reponse window.  This should be the signal for you to continue to the Service screen.
+          <br></br>
+          Note: If you don't see this message, please press the Configure button again :-)
+          <br></br>
+          When installation reports back everything went well, you should visit <a href={ `http://traefik.${this.state.domain}:8181` }>your new Traefik container</a>
           <br></br>
           Please note this is a very rough initial web UI, just functional enough to allow you to configure, and get services running.  Don't expect a very polished experience at this point in time.
           <br></br>
