@@ -1,0 +1,20 @@
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}-http.service={{ lookup('vars', service_item) }}"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}-http.rule=Host(`{{ service_domain }}`)"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}-http.entrypoints=http"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.service={{ lookup('vars', service_item) }}"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.rule=Host(`{{ service_domain }}`)"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.entrypoints=https"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.tls=true"
+{% if traefik.dns_challenge_provider %}
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.tls.certresolver=dns"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.tls.domains[0].sans=*.{{ domain }}"
+{% else %}
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}.tls.certresolver=http"
+{% endif %}
+{% if enable_tor %}
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}-tor-http.rule=Host(`{{ lookup('vars', service_item).subdomain }}.{{ tor_domain }}`)"
+      - "traefik.http.routers.{{ lookup('vars', service_item) }}-tor-http.entrypoints=http"
+{% endif %}
