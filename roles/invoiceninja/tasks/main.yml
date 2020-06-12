@@ -6,7 +6,7 @@
 
 - name: Make config directories
   file:
-    path: "{{ volumes_root }}/invoiceninja/config/{{config}}"
+    path: "{{ volumes_root }}/invoiceninja/config/{{ item }}"
     state: directory
   loop:
     - nginx/conf.d
@@ -14,14 +14,14 @@
 
 - name: Make invoiceninja directories
   file:
-    path: "{{ volumes_root }}/invoiceninja/{{item}}"
+    path: "{{ volumes_root }}/invoiceninja/{{ item }}"
     state: directory
     owner: "{{homelab_ssh_user}}"
     group: "{{homelab_ssh_user}}"
   loop:
-    - "public"
-    - "logo"
-    - "storage"
+    - public
+    - logo
+    - storage
 
 - name: install nginx config
   template:
@@ -30,8 +30,8 @@
 
 - name: install PHP config files
   template:
-    src: php-cli.j2
-    dest: "{{ volumes_root }}/invoiceninja/config/php/{{item}}"
+    src: "{{ item }}.j2"
+    dest: "{{ volumes_root }}/invoiceninja/config/php/"
   loop:
     - php-cli.ini
     - php.ini
