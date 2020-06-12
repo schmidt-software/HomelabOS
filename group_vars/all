@@ -49,7 +49,6 @@ services:
   invoiceninja:
   jackett:
   jellyfin:
-  keycloak:
   kibitzr:
   lazylibrarian:
   lidarr:

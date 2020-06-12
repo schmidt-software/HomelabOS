@@ -13,7 +13,6 @@
   file:
     path: "{{ volumes_root }}/invoiceninja/config/php"
     state: directory
-<<<<<<< HEAD
 
 - name: Make invoiceninja directories
   file:
@@ -30,24 +29,6 @@
   template:
     src: nginx.conf
     dest: "{{  volumes_root }}/invoiceninja/config/nginx/nginx.conf"
-=======
-    
-- name: Make invoiceninja directories
-  file:
-    path: "{{ volumes_root }}/invoiceninja/{{item}}"
-    state: directory
-    owner: "{{homelab_ssh_user}}"
-    group: "{{homelab_ssh_user}}"
-  loop:
-    - "public"
-    - "logo"
-    - "storage"
-
-- name: install nginx config
-  template:
-    src: nginx.conf
-    dest: "{{  volumes_root }}/invoiceninja/config/nginx/nginx.conf"
->>>>>>> initial commit
 
 - name: install php-cli config
   template:
