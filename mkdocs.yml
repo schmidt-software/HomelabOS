@@ -46,6 +46,7 @@ nav:
     - Blogging Platforms:
       - Ghost: software/ghost.md
     - Business Tools:
+      - ERPNext: software/erpnext.md
       - Invoice Ninja: software/invoice-ninja.md
     - Calendaring and Contacts Management:
       - NextCloud: software/nextcloud.md
@@ -111,7 +112,6 @@ nav:
       - Dasher: software/dasher.md
       - DuckDNS: software/duckdns.md
       - EtherCalc: software/ethercalc.md
-      - ERPNext: software/erpnext.md
       - Folding@home: software/folding_at_home.md
       - Gotify: software/gotify.md
       - Grocy: software/grocy.md
