@@ -112,6 +112,7 @@ services:
   trilium:
   turtl:
   ubooquity:
+  unificontroller:
   wallabag:
   watchtower:
   webdavserver:
@@ -233,6 +234,7 @@ transmission:
 trilium:
 turtl:
 ubooquity:
+unificontroller:
 wekan:
 watchtower:
 xfinityusageinfluxdb:
