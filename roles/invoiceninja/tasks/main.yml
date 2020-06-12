@@ -4,15 +4,13 @@
     path: "{{ volumes_root }}/invoiceninja"
     state: directory
 
-- name: Make invoiceninja config/nginx/conf.d directory.
+- name: Make config directories
   file:
-    path: "{{ volumes_root }}/invoiceninja/config/nginx/conf.d"
+    path: "{{ volumes_root }}/invoiceninja/config/{{config}}"
     state: directory
-
-- name: Make invoiceninja config/php directory.
-  file:
-    path: "{{ volumes_root }}/invoiceninja/config/php"
-    state: directory
+  loop:
+    - nginx/conf.d
+    - php
 
 - name: Make invoiceninja directories
   file:
@@ -30,15 +28,13 @@
     src: nginx.conf
     dest: "{{  volumes_root }}/invoiceninja/config/nginx/nginx.conf"
 
-- name: install php-cli config
+- name: install PHP config files
   template:
     src: php-cli.j2
-    dest: "{{ volumes_root }}/invoiceninja/config/php/php-cli.ini"
-
-- name: install php config
-  template:
-    src: php.j2
-    dest: "{{ volumes_root }}/invoiceninja/config/php/php.ini"
+    dest: "{{ volumes_root }}/invoiceninja/config/php/{{item}}"
+  loop:
+    - php-cli.ini
+    - php.ini
 
 - name: Generate new encryption key.
   shell: >
