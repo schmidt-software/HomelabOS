@@ -66,6 +66,7 @@ If you are having problems you can:
 
 ### Business Tools
 
+- [ERPNext](software/erpnext) Open Source ERP for Everyone.
 - [Invoice Ninja](software/invoice-ninja) - Free Open-Source invoicing
 
 ### Calendaring and Contacts Management
@@ -150,7 +151,6 @@ If you are having problems you can:
 - [Dasher](software/dasher) - Amazon Dash button support
 - [DuckDNS](software/duckdns) is free dynamic DNS hosted on AWS. This provides a client to update the IP pointed to by DuckDNS.
 - [EtherCalc](software/ethercalc) - Web Spreadsheet
-- [ERPNext](software/erpnext) Open Source ERP for Everyone.
 - [Folding@home](software/folding_at_home) Folding@home software allows you to share your unused computer power with scientists researching diseases.
 - [Grocy](software/grocy) - ERP beyond your fridge - grocy is a web-based self-hosted groceries & household management solution for your home
 - [Grownetics](software/grownetics) - Open source environmental mapping with plant management and tracking
