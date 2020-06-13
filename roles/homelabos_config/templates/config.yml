@@ -513,42 +513,49 @@ inventario:
   auth: {{ inventario.auth | default(False) }}
   domain: {{ inventario.domain | default(False) }}
   subdomain: {{ inventario.subdomain | default("inventario") }}
+  version: {{ inventario.version | default("latest") }}
 jackett:
   enable: {{ jackett.enable | default(enable_jackett, None) | default(False) }}
   https_only: {{ jackett.https_only | default(False) }}
   auth: {{ jackett.auth | default(False) }}
   domain: {{ jackett.domain | default(False) }}
   subdomain: {{ jackett.subdomain | default("jackett") }}
+  version: {{ jackett.version | default("latest") }}
 jellyfin:
   enable: {{ jellyfin.enable | default(enable_jellyfin, None) | default(False) }}
   https_only: {{ jellyfin.https_only | default(False) }}
   auth: {{ jellyfin.auth | default(False) }}
   domain: {{ jellyfin.domain | default(False) }}
   subdomain: {{ jellyfin.subdomain | default("jellyfin") }}
+  version: {{ jellyfin.version | default ("latest") }}
 keycloak:
   enable: {{ keycloak.enable | default(enable_keycloak, None) | default(False) }}
   https_only: {{ keycloak.https_only | default(False) }}
   auth: {{ keycloak.auth | default(False) }}
   domain: {{ keycloak.domain | default(False) }}
-  subdomain: {{ keycloak.subdomain | default("keycloak")}}
+  subdomain: {{ keycloak.subdomain | default("keycloak") }}
+  version: {{ keycloak.version | default("latest") }}
 kibitzr:
   enable: {{ kibitzr.enable | default(enable_kibitzr, None) | default(False) }}
   https_only: {{ kibitzr.https_only | default(False) }}
   auth: {{ kibitzr.auth | default(False) }}
   domain: {{ kibitzr.domain | default(False) }}
   subdomain: {{ kibitzr.subdomain | default("kibitzr") }}
+  version: {{ kibitzr.version | default("latest") }}
 lazylibrarian:
   enable: {{ lazylibrarian.enable | default(enable_lazylibrarian, None) | default(False) }}
   https_only: {{ lazylibrarian.https_only | default(False) }}
   auth: {{ lazylibrarian.auth | default(False) }}
   domain: {{ lazylibrarian.domain | default(False) }}
   subdomain: {{ lazylibrarian.subdomain | default("lazylibrarian") }}
+  version: {{lazylibrarian.version | default ("latest") }}
 lidarr:
   enable: {{ lidarr.enable | default(enable_lidarr, None) | default(False) }}
   https_only: {{ lidarr.https_only | default(False) }}
   auth: {{ lidarr.auth | default(False) }}
   domain: {{ lidarr.domain | default(False) }}
   subdomain: {{ lidarr.subdomain | default("lidarr") }}
+  version: {{ lidarr.version | default ("latest") }}
 mailu:
   enable: {{ mailu.enable | default(enable_mailu, None) | default(False) }}
   https_only: {{ mailu.https_only | default(False) }}
@@ -941,6 +948,7 @@ ubooquity:
   auth: {{ ubooquity.auth | default(False) }}
   domain: {{ ubooquity.domain | default(False) }}
   subdomain: {{ ubooquity.subdomain | default("ubooquity") }}
+  version: {{ ubooquity.version | default("latest") }}
 wekan:
   enable: {{ wekan.enable | default(enable_wekan, None) | default(False) }}
   https_only: {{ wekan.https_only | default(False) }}
