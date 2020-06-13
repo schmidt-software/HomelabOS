@@ -958,6 +958,7 @@ wekan:
   auth: {{ wekan.auth | default(False) }}
   domain: {{ wekan.domain | default(False) }}
   subdomain: {{ wekan.subdomain | default("wekan") }}
+  version: {{ wekan.version | default("latest") }}
 xfinityusageinfluxdb:
   enable: {{ xfinityusageinfluxdb.enable | default(enable_xfinityusageinfluxdb, None) | default(False) }}
   https_only: {{ xfinityusageinfluxdb.https_only | default(False) }}
@@ -978,6 +979,7 @@ wallabag:
   auth: {{ wallabag.auth | default(False) }}
   domain: {{ wallabag.domain | default(False) }}
   subdomain: {{ wallabag.subdomain | default("wallabag") }}
+  version: {{ wallabag.version | default("latest") }}
 {% raw %}
 watchtower:
   enable: "{{ vault.watchtower.enable | default(enable_watchtower, None) | default(False) }}"
@@ -990,18 +992,21 @@ webtrees:
   auth: {{ webtrees.auth | default(False) }}
   domain: {{ webtrees.domain | default(False) }}
   subdomain: {{ webtrees.subdomain | default("webtrees") }}
+  version: {{ webtrees.version | default("latest") }}
 webdavserver:
   enable: {{ webdavserver.enable | default(enable_webdavserver, None) | default(False) }}
   https_only: {{ webdavserver.https_only | default(False) }}
   auth: {{ webdavserver.auth | default(False) }}
   domain: {{ webdavserver.domain| default(False) }}
   subdomain: {{ webdavserver.subdomain | default("webdav") }}
+  version: {{ webdavserver.version | default("latest") }}
 webvirtmgr:
   enable: {{ webvirtmgr.enable | default(enable_webvirtmgr, None) | default(False) }}
   https_only: {{ webvirtmgr.https_only | default(False) }}
   auth: {{ webvirtmgr.auth | default(False) }}
   domain: {{ webvirtmgr.domain | default(False) }}
   subdomain: {{ webvirtmgr.subdomain | default("webvirtmgr") }}
+  version: {{ webvirtmgr.version | default("latest") }}
 zammad:
   enable: {{ zammad.enable | default(enable_zammad, None) | default(False) }}
   https_only: {{ zammad.https_only | default(False) }}
