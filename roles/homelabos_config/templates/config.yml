@@ -787,6 +787,7 @@ qbittorrent:
   auth: {{ qbittorrent.auth | default(False) }}
   domain: {{ qbittorrent.domain| default(False) }}
   subdomain: {{ qbittorrent.subdomain | default("qbittorrent") }}
+  version: {{ qbittorrent.version | default("latest") }}
   vpn_enabled: !!str '{{ qbittorrent.vpn_enabled | default(false) }}'
   lan_network: {{ qbittorrent.lan_network | default("192.168.1.0/24") }}
 radarr:
@@ -952,6 +953,7 @@ xfinityusageinfluxdb:
   auth: {{ xfinityusageinfluxdb.auth | default(False) }}
   domain: {{ xfinityusageinfluxdb.domain| default(False) }}
   subdomain: {{ xfinityusageinfluxdb.subdomain | default("xfinityusageinfluxdb") }}
+  version: {{ xfinityusageinfluxdb.version | default("latest") }}
 unificontroller:
   enable: {{ unificontroller.enable | default(enable_unificontroller, None) | default(False) }}
   https_only: {{ unificontroller.https_only | default(False) }}
@@ -994,12 +996,14 @@ zammad:
   auth: {{ zammad.auth | default(False) }}
   domain: {{ zammad.domain| default(False) }}
   subdomain: {{ zammad.subdomain | default("zammad") }}
+  version: {{ zammad.version | default("3.3.0-19") }}
 zulip:
   enable: {{ zulip.enable | default(enable_zulip, None) | default(False) }}
   https_only: {{ zulip.https_only | default(False) }}
   auth: {{ zulip.auth | default(False) }}
   domain: {{ zulip.domain | default(False) }}
   subdomain: {{ zulip.subdomain | default("zulip") }}
+  version: {{ zulip.version | default("2.0.2.0") }}
 
 ### OPTIONAL ### These valuse are OPTIONAL and enable extra HomelabOS functionality.
 
