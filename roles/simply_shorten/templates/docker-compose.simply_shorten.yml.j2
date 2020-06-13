@@ -10,7 +10,7 @@ networks:
 
 services:
   url:
-    image: draganczukp/simply-shorten
+    image: draganczukp/simply-shorten:{{ simplyshorten.version }}
     environment:
       username: {{ default_username }}
       password: {{ default_password }}
