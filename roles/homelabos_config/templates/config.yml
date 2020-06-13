@@ -803,18 +803,21 @@ radarr:
   auth: {{ radarr.auth | default(False) }}
   domain: {{ radarr.domain | default(False) }}
   subdomain: {{ radarr.subdomain | default("radarr") }}
+  version: {{ radarr.version | default("latest") }}
 restic:
   enable: {{ restic.enable | default(enable_restic, None) | default(False) }}
   https_only: {{ restic.https_only | default(False) }}
   auth: {{ restic.auth | default(False) }}
   domain: {{ restic.domain | default(False) }}
   subdomain: {{ restic.subdomain | default("restic") }}
+  version: {{ restic.version | default("latest") }}
 rsshub:
   enable: {{ rsshub.enable | default(enable_rsshub, None) | default(False) }}
   https_only: {{ rsshub.https_only | default(False) }}
   auth: {{ rsshub.auth | default(False) }}
   domain: {{ rsshub.domain | default(False) }}
   subdomain: {{ rsshub.subdomain | default("rsshub")}}
+  version: {{ rsshub.version | default("latest") }}
 sabnzbd:
   enable: {{ sabnzbd.enable | default(enable_sabnzbd, None) | default(False) }}
   https_only: {{ sabnzbd.https_only | default(False) }}
