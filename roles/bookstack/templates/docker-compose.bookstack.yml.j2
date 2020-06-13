@@ -5,14 +5,12 @@ networks:
   traefik_network:
     external:
       name: homelabos_traefik
-  bookstack_net:
 
 services:
   bookstack:
     image: solidnerd/bookstack:{{ bookstack.version }}
     networks:
       - traefik_network
-      - bookstack_net
     restart: unless-stopped
     depends_on:
     - mysql
@@ -54,7 +52,7 @@ services:
   mysql:
     image: mysql:5.7.21
     networks:
-      - bookstack_net
+      - traefik_network
     restart: unless-stopped
     environment:
     - MYSQL_ROOT_PASSWORD={{lookup('password', './settings/passwords/bookstack_db_root_password chars=ascii_letters')}}
