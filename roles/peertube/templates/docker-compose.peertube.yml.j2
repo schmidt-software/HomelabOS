@@ -36,7 +36,7 @@ services:
       - .env
   app:
     # REQUIRED
-    image: chocobozzz/peertube:production-buster
+    image: chocobozzz/peertube:{{ peertube.version }}
     restart: unless-stopped
     networks:
       - traefik_network
