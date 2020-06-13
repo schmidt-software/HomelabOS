@@ -9,7 +9,7 @@ networks:
 services:
   # Wallabag - self-hostable app for saving webpages
   wallabag:
-    image: wallabag/wallabag
+    image: wallabag/wallabag:{{ wallabag.version }}
     networks:
       - traefik_network
     restart: unless-stopped
