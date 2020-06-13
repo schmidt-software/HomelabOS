@@ -8,7 +8,7 @@ networks:
 
 services:
   openldap:
-    image: osixia/openldap:1.2.2
+    image: osixia/openldap:{{ openldap.version }}
     restart: unless-stopped
     networks:
       - traefik_network
