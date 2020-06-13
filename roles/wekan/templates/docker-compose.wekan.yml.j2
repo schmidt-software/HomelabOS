@@ -25,7 +25,7 @@ services:
       - "{{ volumes_root }}/wekan/wekan-db-dump:/dump"
 
   wekan:
-    image: quay.io/wekan/wekan
+    image: quay.io/wekan/wekan:{{ wekan.version }}
     container_name: wekan-app
     restart: unless-stopped
     networks:
