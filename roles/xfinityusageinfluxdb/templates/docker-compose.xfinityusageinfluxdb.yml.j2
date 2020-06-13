@@ -10,7 +10,7 @@ services:
   # Bandwidth Usage Logger
   xfinityusageinfluxdb:
     restart: unless-stopped
-    image: nickbusey/xfinityusageinfluxdb
+    image: nickbusey/xfinityusageinfluxdb:{{ xfinityusageinfluxdb.version }}
     networks:
       - traefik_network
     environment:
