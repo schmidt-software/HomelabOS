@@ -967,7 +967,8 @@ unificontroller:
   https_only: {{ unificontroller.https_only | default(False) }}
   auth: {{ unificontroller.auth | default(False) }}
   domain: {{ unificontroller.domain | default(False) }}
-  subdomain: {{ unificontroller.subdomain | default("unificontroller")}}
+  subdomain: {{ unificontroller.subdomain | default("unificontroller") }}
+  version: {{ unificontroller.version | default("latest") }}
 wallabag:
   enable: {{ wallabag.enable | default(enable_wallabag, None) | default(False) }}
   https_only: {{ wallabag.https_only | default(False) }}
