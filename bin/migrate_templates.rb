@@ -39,7 +39,7 @@ BEGIN {
     array_to_insert = [
       "      - \"traefik.http.services.#{service}.loadbalancer.server.scheme=http\"",
       "      - \"traefik.http.services.#{service}.loadbalancer.server.port=#{port}\"",
-      "{% include './labels.j2' %}"
+      "{% include \'./labels.j2\' %}"
     ]
     lines.insert(start_index, *array_to_insert)
     File.open(filepath, 'w+') do |f|
