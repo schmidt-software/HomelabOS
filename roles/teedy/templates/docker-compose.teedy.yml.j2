@@ -19,7 +19,7 @@ services:
     volumes:
       - "{{ volumes_root }}/teedy/postgres_data:/var/lib/postgresql/data"
   app:
-    image: sismics/docs:v1.8
+    image: sismics/docs:{{ teedy.version }}
     restart: unless-stopped
     depends_on:
       - teedydb
