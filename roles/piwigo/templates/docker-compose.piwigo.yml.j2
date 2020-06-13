@@ -16,7 +16,7 @@ services:
       - traefik_network
     ports:
       - 8088:80
-    image: mathieuruellan/piwigo
+    image: mathieuruellan/piwigo:{{ piwigo.version }}
     volumes:
         - "{{ volumes_root }}/piwigo/config:/config"
         - "{{ volumes_root }}/piwigo/data/galleries:/var/www/galleries"
