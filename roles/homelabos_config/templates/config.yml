@@ -692,66 +692,77 @@ octoprint:
   auth: {{ octoprint.auth | default(False) }}
   domain: {{ octoprint.domain | default(False) }}
   subdomain: {{ octoprint.subdomain | default("octoprint")}}
+  version: {{ octoprint.version | default("latest") }}
 ombi:
   enable: {{ ombi.enable | default(enable_ombi, None) | default(False) }}
   https_only: {{ ombi.https_only | default(False) }}
   auth: {{ ombi.auth | default(False) }}
   domain: {{ ombi.domain | default(False) }}
   subdomain: {{ ombi.subdomain | default("ombi") }}
+  version: {{ ombi.version | default("latest") }}
 openldap:
   enable: {{ openldap.enable | default(enable_openldap, None) | default(False) }}
   https_only: {{ openldap.https_only | default(False) }}
   auth: {{ openldap.auth | default(False) }}
   domain: {{ openldap.domain | default(False) }}
   subdomain: {{ openldap.subdomain | default("openldap") }}
+  version: {{ openldap.version | default("1.2.2") }}
 openvpn:
   enable: {{ openvpn.enable | default(enable_openvpn, None) | default(False) }}
   https_only: {{ openvpn.https_only | default(False) }}
   auth: {{ openvpn.auth | default(False) }}
   domain: {{ openvpn.domain | default(False) }}
   subdomain: {{ openvpn.subdomain | default("openvpn") }}
+  version: {{ openvpn.version | default("latest") }}
 organizr:
   enable: {{ organizr.enable | default(enable_organizr, None) | default(False) }}
   https_only: {{ organizr.https_only | default(False) }}
   auth: {{ organizr.auth | default(False) }}
   domain: {{ organizr.domain | default(False) }}
   subdomain: {{ organizr.subdomain | default("organizr") }}
+  version: {{ organizr.version | default("latest") }}
 ownphotos:
   enable: {{ ownphotos.enable | default(enable_ownphotos, None) | default(False) }}
   https_only: {{ ownphotos.https_only | default(False) }}
   auth: {{ ownphotos.auth | default(False) }}
   domain: {{ ownphotos.domain | default(False) }}
   subdomain: {{ ownphotos.subdomain | default("ownphotos") }}
+  version: {{ ownphotos.version | default("dev") }}
 paperless:
   enable: {{ paperless.enable | default(enable_paperless, None) | default(False) }}
   https_only: {{ paperless.https_only | default(False) }}
   auth: {{ paperless.auth | default(False) }}
   domain: {{ paperless.domain | default(False) }}
   subdomain: {{ paperless.subdomain | default("paperless") }}
+  version: {{ paperless.version | default("latest") }}
 peertube:
   enable: {{ peertube.enable | default(enable_peertube, None) | default(False) }}
   https_only: {{ peertube.https_only | default(False) }}
   auth: {{ peertube.auth | default(False) }}
   domain: {{ peertube.domain | default(False) }}
   subdomain: {{ peertube.subdomain | default("peertube") }}
+  version: {{ peertube.version | default("production-buster") }}
 photoprism:
   enable: {{ photoprism.enable | default(enable_photoprism, None) | default(False) }}
   https_only: {{ photoprism.https_only | default(False) }}
   auth: {{ photoprism.auth | default(False) }}
   domain: {{ photoprism.domain | default(False) }}
   subdomain: {{ photoprism.subdomain | default("photoprism") }}
+  version: {{ photoprism.version | default("latest") }}
 pihole:
   enable: {{ pihole.enable | default(enable_pihole, None) | default(False) }}
   https_only: {{ pihole.https_only | default(False) }}
   auth: {{ pihole.auth | default(False) }}
   domain: {{ pihole.domain | default(False) }}
   subdomain: {{ pihole.subdomain | default("pihole") }}
+  version: {{ pihole.version | default("latest") }}
 piwigo:
   enable: {{ piwigo.enable | default(enable_piwigo, None) | default(False) }}
   https_only: {{ piwigo.https_only | default(False) }}
   auth: {{ piwigo.auth | default(False) }}
   domain: {{ piwigo.domain | default(False) }}
   subdomain: {{ piwigo.subdomain | default("piwigo") }}
+  version: {{ piwigo.version | default("latest") }}
 pixelfed:
   enable: {{ pixelfed.enable | default(enable_pixelfed, None) | default(False) }}
   https_only: {{ pixelfed.https_only | default(False) }}
@@ -764,30 +775,35 @@ pleroma:
   auth: {{ pleroma.auth | default(False) }}
   domain: {{ pleroma.domain | default(False) }}
   subdomain: {{ pleroma.subdomain | default("pleroma") }}
+  version: {{ pleroma.version | default("latest") }}
 plex:
   enable: {{ plex.enable | default(enable_plex, None) | default(False) }}
   https_only: {{ plex.https_only | default(False) }}
   auth: {{ plex.auth | default(False) }}
   domain: {{ plex.domain | default(False) }}
   subdomain: {{ plex.subdomain | default("plex") }}
+  version: {{ plex.version | default("latest") }}
 poli:
   enable: {{ poli.enable | default(enable_poli, None) | default(False) }}
   https_only: {{ poli.https_only | default(False) }}
   auth: {{ poli.auth | default(False) }}
   domain: {{ poli.domain | default(False) }}
   subdomain: {{ poli.subdomain | default("poli") }}
+  version: {{ poli.version | default("0.10.1") }}
 portainer:
   enable: {{ portainer.enable | default(enable_portainer, None) | default(False) }}
   https_only: {{ portainer.https_only | default(False) }}
   auth: {{ portainer.auth | default(False) }}
   domain: {{ portainer.domain | default(False) }}
   subdomain: {{ portainer.subdomain | default("portainer") }}
+  version: {{ portainer.version | default("latest") }}
 privatebin:
   enable: {{ privatebin.enable | default(enable_privatebin, None) | default(False) }}
   https_only: {{ privatebin.https_only | default(False) }}
   auth: {{ privatebin.auth | default(False) }}
   domain: {{ privatebin.domain | default(False) }}
   subdomain: {{ privatebin.subdomain | default("privatebin") }}
+  version: {{ privatebin.version | default("1.3.4-alpine3.11") }}
 qbittorrent:
   enable: {{ qbittorrent.enable | default(enable_qbittorrent, None) | default(False) }}
   https_only: {{ qbittorrent.https_only | default(False) }}
