@@ -1003,7 +1003,7 @@ zulip:
   auth: {{ zulip.auth | default(False) }}
   domain: {{ zulip.domain | default(False) }}
   subdomain: {{ zulip.subdomain | default("zulip") }}
-  version: {{ zulip.version | default("2.0.2.0") }}
+  version: {{ zulip.version | default("2.0.2-0") }}
 
 ### OPTIONAL ### These valuse are OPTIONAL and enable extra HomelabOS functionality.
 
