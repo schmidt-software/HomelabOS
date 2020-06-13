@@ -34,9 +34,4 @@ services:
     labels:
       - "traefik.http.services.codimd.loadbalancer.server.scheme=http"
       - "traefik.http.services.codimd.loadbalancer.server.port=3000"
-      - "traefik.http.routers.codimd-http.middlewares={% if codimd.https_only %}redirect@file, {% else %}{% if codimd.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.codimd.middlewares={% if codimd.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.codimd-tor-http.middlewares={% if codimd.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

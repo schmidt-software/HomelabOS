@@ -18,9 +18,4 @@ services:
     labels:
       - "traefik.http.services.organizr.loadbalancer.server.scheme=http"
       - "traefik.http.services.organizr.loadbalancer.server.port=80"
-      - "traefik.http.routers.organizr-http.middlewares={% if organizr.https_only %}redirect@file, {% else %}{% if organizr.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.organizr.middlewares={% if organizr.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.organizr-tor-http.middlewares={% if organizr.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

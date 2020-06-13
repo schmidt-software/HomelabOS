@@ -49,9 +49,4 @@ services:
     labels:
       - "traefik.http.services.transmission.loadbalancer.server.scheme=http"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
-      - "traefik.http.routers.transmission-http.middlewares={% if transmission.https_only %}redirect@file, {% else %}{% if transmission.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.transmission.middlewares={% if transmission.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.transmission-tor-http.middlewares={% if transmission.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

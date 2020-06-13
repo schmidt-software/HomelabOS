@@ -54,9 +54,4 @@ services:
       labels:
       - "traefik.http.services.keycloak.loadbalancer.server.scheme=http"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
-      - "traefik.http.routers.keycloak-http.middlewares={% if keycloak.https_only %}redirect@file, {% else %}{% if keycloak.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.keycloak.middlewares={% if keycloak.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.keycloak-tor-http.middlewares={% if keycloak.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

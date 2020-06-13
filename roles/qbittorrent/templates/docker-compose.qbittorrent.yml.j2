@@ -29,9 +29,4 @@ services:
     labels:
       - "traefik.http.services.qbittorrent.loadbalancer.server.scheme=http"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
-      - "traefik.http.routers.qbittorrent-http.middlewares={% if qbittorrent.https_only %}redirect@file, {% else %}{% if qbittorrent.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.qbittorrent.middlewares={% if qbittorrent.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.qbittorrent-tor-http.middlewares={% if qbittorrent.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

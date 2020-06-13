@@ -34,11 +34,6 @@ services:
     labels:
       - "traefik.http.services.paperless.loadbalancer.server.scheme=http"
       - "traefik.http.services.paperless.loadbalancer.server.port=8000"
-      - "traefik.http.routers.paperless-http.middlewares={% if paperless.https_only %}redirect@file, {% else %}{% if paperless.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.paperless.middlewares={% if paperless.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.paperless-tor-http.middlewares={% if paperless.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
 
   paperless_consumer:

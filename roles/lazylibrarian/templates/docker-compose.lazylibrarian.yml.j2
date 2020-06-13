@@ -25,9 +25,4 @@ services:
     labels:
       - "traefik.http.services.lazylibrarian.loadbalancer.server.scheme=http"
       - "traefik.http.services.lazylibrarian.loadbalancer.server.port=5299"
-      - "traefik.http.routers.lazylibrarian-http.middlewares={% if lazylibrarian.https_only %}redirect@file, {% else %}{% if lazylibrarian.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.lazylibrarian.middlewares={% if lazylibrarian.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.lazylibrarian-tor-http.middlewares={% if lazylibrarian.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

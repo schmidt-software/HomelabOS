@@ -19,9 +19,4 @@ services:
     labels:
       - "traefik.http.services.grocy.loadbalancer.server.scheme=http"
       - "traefik.http.services.grocy.loadbalancer.server.port=80"
-      - "traefik.http.routers.grocy-http.middlewares={% if grocy.https_only %}redirect@file, {% else %}{% if grocy.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.grocy.middlewares={% if grocy.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.grocy-tor-http.middlewares={% if grocy.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

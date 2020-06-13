@@ -37,9 +37,4 @@ services:
     labels:
       - "traefik.http.services.plex.loadbalancer.server.scheme=http"
       - "traefik.http.services.plex.loadbalancer.server.port=32400"
-      - "traefik.http.routers.plex-http.middlewares={% if plex.https_only %}redirect@file, {% else %}{% if plex.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.plex.middlewares={% if plex.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.plex-tor-http.middlewares={% if plex.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

@@ -35,9 +35,4 @@ services:
     labels:
       - "traefik.http.services.bitwarden.loadbalancer.server.scheme=http"
       - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
-      - "traefik.http.routers.bitwarden-http.middlewares={% if bitwarden.https_only %}redirect@file, {% else %}{% if bitwarden.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.bitwarden.middlewares={% if bitwarden.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.bitwarden-tor-http.middlewares={% if bitwarden.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

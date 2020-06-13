@@ -46,11 +46,6 @@ services:
     labels:
       - "traefik.http.services.tick.loadbalancer.server.scheme=http"
       - "traefik.http.services.tick.loadbalancer.server.port=8888"
-      - "traefik.http.routers.tick-http.middlewares={% if tick.https_only %}redirect@file, {% else %}{% if tick.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.tick.middlewares={% if tick.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.tick-tor-http.middlewares={% if tick.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
 
   # Define a Kapacitor service

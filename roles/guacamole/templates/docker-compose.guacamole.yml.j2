@@ -53,9 +53,4 @@ services:
     labels:
       - "traefik.http.services.guacamole.loadbalancer.server.scheme=http"
       - "traefik.http.services.guacamole.loadbalancer.server.port=8080"
-      - "traefik.http.routers.guacamole-http.middlewares={% if guacamole.https_only %}redirect@file, {% else %}{% if guacamole.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.guacamole.middlewares={% if guacamole.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.guacamole-tor-http.middlewares={% if guacamole.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

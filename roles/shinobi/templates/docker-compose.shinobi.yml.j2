@@ -39,11 +39,6 @@ services:
     labels:
       - "traefik.http.services.shinobi.loadbalancer.server.scheme=http"
       - "traefik.http.services.shinobi.loadbalancer.server.port=8080"
-      - "traefik.http.routers.shinobi-http.middlewares={% if shinobi.https_only %}redirect@file, {% else %}{% if shinobi.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.shinobi.middlewares={% if shinobi.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.shinobi-tor-http.middlewares={% if shinobi.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
     depends_on:
       - shinobi_db

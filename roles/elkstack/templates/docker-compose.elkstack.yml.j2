@@ -15,9 +15,4 @@ services:
     labels:
       - "traefik.http.services.elkstack.loadbalancer.server.scheme=http"
       - "traefik.http.services.elkstack.loadbalancer.server.port=5601"
-      - "traefik.http.routers.elkstack-http.middlewares={% if elkstack.https_only %}redirect@file, {% else %}{% if elkstack.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.elkstack.middlewares={% if elkstack.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.elkstack-tor-http.middlewares={% if elkstack.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

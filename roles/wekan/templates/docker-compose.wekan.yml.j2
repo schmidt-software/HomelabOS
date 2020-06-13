@@ -37,9 +37,4 @@ services:
     labels:
       - "traefik.http.services.wekan.loadbalancer.server.scheme=http"
       - "traefik.http.services.wekan.loadbalancer.server.port=8080"
-      - "traefik.http.routers.wekan-http.middlewares={% if wekan.https_only %}redirect@file, {% else %}{% if wekan.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.wekan.middlewares={% if wekan.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.wekan-tor-http.middlewares={% if wekan.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

@@ -23,11 +23,6 @@ services:
     labels:
       - "traefik.http.services.mashio.loadbalancer.server.scheme=http"
       - "traefik.http.services.mashio.loadbalancer.server.port=80"
-      - "traefik.http.routers.PackageFileName-http.middlewares={% if PackageFileName.https_only %}redirect@file, {% else %}{% if PackageFileName.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.PackageFileName.middlewares={% if PackageFileName.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.PackageFileName-tor-http.middlewares={% if PackageFileName.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
 
   mashio_db:

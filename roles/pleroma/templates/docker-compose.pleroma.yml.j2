@@ -41,9 +41,4 @@ services:
     labels:
       - "traefik.http.services.pleroma.loadbalancer.server.scheme=http"
       - "traefik.http.services.pleroma.loadbalancer.server.port=4000"
-      - "traefik.http.routers.pleroma-http.middlewares={% if pleroma.https_only %}redirect@file, {% else %}{% if pleroma.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.pleroma.middlewares={% if pleroma.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.pleroma-tor-http.middlewares={% if pleroma.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

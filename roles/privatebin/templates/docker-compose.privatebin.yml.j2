@@ -20,9 +20,4 @@ services:
     labels:
       - "traefik.http.services.privatebin.loadbalancer.server.scheme=http"
       - "traefik.http.services.privatebin.loadbalancer.server.port=8080"
-      - "traefik.http.routers.privatebin-http.middlewares={% if privatebin.https_only %}redirect@file, {% else %}{% if privatebin.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.privatebin.middlewares={% if privatebin.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.privatebin-tor-http.middlewares={% if privatebin.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

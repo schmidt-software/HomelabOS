@@ -25,9 +25,4 @@ services:
     labels:
       - "traefik.http.services.netdata.loadbalancer.server.scheme=http"
       - "traefik.http.services.netdata.loadbalancer.server.port=19999"
-      - "traefik.http.routers.netdata-http.middlewares={% if netdata.https_only %}redirect@file, {% else %}{% if netdata.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.netdata.middlewares={% if netdata.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.netdata-tor-http.middlewares={% if netdata.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

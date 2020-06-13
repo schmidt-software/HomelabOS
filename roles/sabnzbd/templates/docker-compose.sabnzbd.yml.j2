@@ -25,9 +25,4 @@ services:
     labels:
       - "traefik.http.services.sabnzbd.loadbalancer.server.scheme=http"
       - "traefik.http.services.sabnzbd.loadbalancer.server.port=8080"
-      - "traefik.http.routers.sabnzbd-http.middlewares={% if sabnzbd.https_only %}redirect@file, {% else %}{% if sabnzbd.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.sabnzbd.middlewares={% if sabnzbd.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.sabnzbd-tor-http.middlewares={% if sabnzbd.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

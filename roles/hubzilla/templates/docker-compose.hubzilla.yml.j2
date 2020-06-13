@@ -25,11 +25,6 @@ services:
     labels:
       - "traefik.http.services.hubzilla.loadbalancer.server.scheme=http"
       - "traefik.http.services.hubzilla.loadbalancer.server.port=80"
-      - "traefik.http.routers.hubzilla-http.middlewares={% if hubzilla.https_only %}redirect@file, {% else %}{% if hubzilla.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.hubzilla.middlewares={% if hubzilla.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.hubzilla-tor-http.middlewares={% if hubzilla.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
 
   hubzilla:

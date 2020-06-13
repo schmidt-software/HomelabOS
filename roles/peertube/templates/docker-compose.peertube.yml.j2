@@ -58,9 +58,4 @@ services:
     labels:
       - "traefik.http.services.peertube.loadbalancer.server.scheme=http"
       - "traefik.http.services.peertube.loadbalancer.server.port=9000"
-      - "traefik.http.routers.peertube-http.middlewares={% if peertube.https_only %}redirect@file, {% else %}{% if peertube.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.peertube.middlewares={% if peertube.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.peertube-tor-http.middlewares={% if peertube.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

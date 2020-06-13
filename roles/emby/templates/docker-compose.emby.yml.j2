@@ -22,9 +22,4 @@ services:
     labels:
       - "traefik.http.services.emby.loadbalancer.server.scheme=http"
       - "traefik.http.services.emby.loadbalancer.server.port=8096"
-      - "traefik.http.routers.emby-http.middlewares={% if emby.https_only %}redirect@file, {% else %}{% if emby.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.emby.middlewares={% if emby.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.emby-tor-http.middlewares={% if emby.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

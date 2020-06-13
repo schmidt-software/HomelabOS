@@ -36,9 +36,4 @@ services:
     labels:
       - "traefik.http.services.openldap.loadbalancer.server.scheme=http"
       - "traefik.http.services.openldap.loadbalancer.server.port=80"
-      - "traefik.http.routers.openldap-http.middlewares={% if openldap.https_only %}redirect@file, {% else %}{% if openldap.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.openldap.middlewares={% if openldap.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.openldap-tor-http.middlewares={% if openldap.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

@@ -22,9 +22,4 @@ services:
     labels:
       - "traefik.http.services.mylar.loadbalancer.server.scheme=http"
       - "traefik.http.services.mylar.loadbalancer.server.port=8090"
-      - "traefik.http.routers.mylar-http.middlewares={% if mylar.https_only %}redirect@file, {% else %}{% if mylar.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.mylar.middlewares={% if mylar.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.mylar-tor-http.middlewares={% if mylar.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

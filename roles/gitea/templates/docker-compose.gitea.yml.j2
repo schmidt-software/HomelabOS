@@ -42,11 +42,6 @@ services:
     labels:
       - "traefik.http.services.gitea.loadbalancer.server.scheme=http"
       - "traefik.http.services.gitea.loadbalancer.server.port=3000"
-      - "traefik.http.routers.gitea-http.middlewares={% if gitea.https_only %}redirect@file, {% else %}{% if gitea.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.gitea.middlewares={% if gitea.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.gitea-tor-http.middlewares={% if gitea.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
 {% if gitea.use_mariadb %}
     depends_on:

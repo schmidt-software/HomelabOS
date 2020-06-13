@@ -82,9 +82,4 @@ services:
     labels:
       - "traefik.http.services.zulip.loadbalancer.server.scheme=http"
       - "traefik.http.services.zulip.loadbalancer.server.port=80"
-      - "traefik.http.routers.zulip-http.middlewares={% if zulip.https_only %}redirect@file, {% else %}{% if zulip.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.zulip.middlewares={% if zulip.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.zulip-tor-http.middlewares={% if zulip.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

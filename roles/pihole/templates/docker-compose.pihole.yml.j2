@@ -31,13 +31,11 @@ services:
       - 53:53/udp
     labels:
       - "traefik.http.services.pihole.loadbalancer.server.scheme=http"
-      - "traefik.http.services.pihole.loadbalancer.server.port=80"      - "traefik.http.routers.pihole-http.middlewares={% if pihole.https_only %}redirect@file, {% else %}{% if pihole.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.pihole.middlewares={% if pihole.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.pihole-tor-http.middlewares={% if pihole.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
 {% include './labels.j2' %}
     extra_hosts:
 {% for service in services %}
       - {{ service }}.{{ domain }}:{{ homelab_ip }}
 {% endfor %}
+
+#Checking

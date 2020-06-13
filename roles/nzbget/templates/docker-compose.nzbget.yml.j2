@@ -25,9 +25,4 @@ services:
     labels:
       - "traefik.http.services.nzbget.loadbalancer.server.scheme=http"
       - "traefik.http.services.nzbget.loadbalancer.server.port=6789"
-      - "traefik.http.routers.nzbget-http.middlewares={% if nzbget.https_only %}redirect@file, {% else %}{% if nzbget.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.nzbget.middlewares={% if nzbget.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.nzbget-tor-http.middlewares={% if nzbget.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

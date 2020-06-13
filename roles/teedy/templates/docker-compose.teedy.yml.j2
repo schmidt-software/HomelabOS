@@ -38,9 +38,4 @@ services:
     labels:
       - "traefik.http.services.teedy.loadbalancer.server.scheme=http"
       - "traefik.http.services.teedy.loadbalancer.server.port=8080"
-      - "traefik.http.routers.teedy-http.middlewares={% if teedy.https_only %}redirect@file, {% else %}{% if teedy.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.teedy.middlewares={% if teedy.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.teedy-tor-http.middlewares={% if teedy.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}

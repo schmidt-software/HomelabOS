@@ -80,11 +80,6 @@ services:
     labels:
       - "traefik.http.services.mayan.loadbalancer.server.scheme=http"
       - "traefik.http.services.mayan.loadbalancer.server.port=8000"
-      - "traefik.http.routers.mayan-http.middlewares={% if mayan.https_only %}redirect@file, {% else %}{% if mayan.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.mayan.middlewares={% if mayan.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.mayan-tor-http.middlewares={% if mayan.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
     volumes:
       - "{{ volumes_root }}/mayan/app:/var/lib/mayan"

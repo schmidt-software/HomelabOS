@@ -66,11 +66,6 @@ services:
     labels:
       - "traefik.http.services.thespaghettidetective.loadbalancer.server.scheme=http"
       - "traefik.http.services.thespaghettidetective.loadbalancer.server.port=3334"
-      - "traefik.http.routers.thespaghettidetective-http.middlewares={% if thespaghettidetective.https_only %}redirect@file, {% else %}{% if thespaghettidetective.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
-      - "traefik.http.routers.thespaghettidetective.middlewares={% if thespaghettidetective.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
-{% if enable_tor %}
-      - "traefik.http.routers.thespaghettidetective-tor-http.middlewares={% if thespaghettidetective.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
-{% endif %}
 {% include './labels.j2' %}
     ports:
       - "3334:3334"
