@@ -5,11 +5,12 @@ networks:
   traefik_network:
     external:
       name: homelabos_traefik
+  calibre_net:
 
 services:
-  calibre-alpine:
+  backend:
     networks:
-      - traefik_network
+      - calibre_net
     ports:
       - '8082:8080'
     volumes:
@@ -20,6 +21,7 @@ services:
   calibre-web:
     networks:
       - traefik_network
+      - calibre-net
     restart: always
     volumes:
       - "{{ storage_dir }}/Books:/books"
@@ -30,7 +32,7 @@ services:
       - CONTAINER_TIMEZONE={{common_timezone}}
       - PGID={{gid}}
       - PUID={{uid}}
-    image: technosoft2000/calibre-web
+    image: technosoft2000/calibre-web:{{ calibre.version }}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=homelabos_traefik"
