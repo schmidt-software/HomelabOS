@@ -7,26 +7,16 @@ networks:
   traefik_network:
     external:
       name: homelabos_traefik
+  codimd_net:
 
 services:
-  codiMdDatabase:
-    networks:
-      - traefik_network
-    image: postgres:9.6-alpine
-    environment:
-      # MYSQL_PASSWORD={{"lookup('password', './settings/passwords/package_name_db_password chars=ascii_letters')"}}
-      - POSTGRES_USER=codimd
-      - POSTGRES_PASSWORD={{lookup('password', './settings/passwords/codimd_postgressPass chars=ascii_letters length=32')}}
-      - POSTGRES_DB=codimd
-    volumes:
-      - "{{ volumes_root }}/codimd/postgresql/data:/var/lib/postgresql/data"
-    restart: unless-stopped
   codiMdApp:
     # REQUIRED
-    image: quay.io/codimd/server:latest
+    image: quay.io/codimd/server:{{ codimd.version }}
     restart: unless-stopped
     networks:
       - traefik_network
+      - codimd_net
     environment:
       - CMD_DB_URL=postgres://codimd:{{lookup('password', './settings/passwords/codimd_postgressPass chars=ascii_letters length=32')}}@codiMdDatabase:5432/codimd
     labels:
@@ -55,3 +45,16 @@ services:
 {% endif %}
     depends_on:
       - codiMdDatabase
+
+  codiMdDatabase:
+    networks:
+      - codimd_net
+    image: postgres:9.6-alpine
+    environment:
+      # MYSQL_PASSWORD={{"lookup('password', './settings/passwords/package_name_db_password chars=ascii_letters')"}}
+      - POSTGRES_USER=codimd
+      - POSTGRES_PASSWORD={{lookup('password', './settings/passwords/codimd_postgressPass chars=ascii_letters length=32')}}
+      - POSTGRES_DB=codimd
+    volumes:
+      - "{{ volumes_root }}/codimd/postgresql/data:/var/lib/postgresql/data"
+    restart: unless-stopped
