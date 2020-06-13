@@ -9,7 +9,7 @@ networks:
 services:
   # Document Storage
   paperless:
-    image: thepaperlessproject/paperless
+    image: thepaperlessproject/paperless:{{ paperless.version }}
     restart: unless-stopped
     networks:
       - traefik_network
@@ -55,7 +55,7 @@ services:
 {% endif %}
 
   paperless_consumer:
-    image: thepaperlessproject/paperless
+    image: thepaperlessproject/paperless:{{ paperless.version }}
     restart: unless-stopped
     networks:
       - traefik_network
