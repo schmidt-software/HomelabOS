@@ -824,48 +824,57 @@ sabnzbd:
   auth: {{ sabnzbd.auth | default(False) }}
   domain: {{ sabnzbd.domain | default(False) }}
   subdomain: {{ sabnzbd.subdomain | default("sabnzbd") }}
+  version: {{ sabnzbd.version | default("latest") }}
 searx:
   enable: {{ searx.enable | default(enable_searx, None) | default(False) }}
   https_only: {{ searx.https_only | default(False) }}
   auth: {{ searx.auth | default(False) }}
   domain: {{ searx.domain | default(False) }}
   subdomain: {{ searx.subdomain | default("searx") }}
+  version: {{ searx.version | default("latest") }}
 shinobi:
   enable: {{ shinobi.enable | default(enable_shinobi, None) | default(False) }}
   https_only: {{ shinobi.https_only | default(False) }}
   auth: {{ shinobi.auth | default(False) }}
   domain: {{ shinobi.domain | default(False) }}
   subdomain: {{ shinobi.subdomain | default("shinobi") }}
+  version: {{ shinobi.version | default("latest") }}
 sickchill:
   enable: {{ sickchill.enable | default(enable_sickchill, None) | default(False) }}
   https_only: {{ sickchill.https_only | default(False) }}
   auth: {{ sickchill.auth | default(False) }}
   domain: {{ sickchill.domain | default(False) }}
   subdomain: {{ sickchill.subdomain | default("sickchill") }}
+  version: {{ sickchill.version | default("latest") }}
 simply_shorten:
   enable: {{ simply_shorten.enable | default(enable_simply_shorten, None) | default(False) }}
   https_only: {{ simply_shorten.https_only | default(False) }}
   auth: {{ simply_shorten.auth | default(False) }}
   domain: {{ simply_shorten.domain | default(False) }}
   subdomain: {{ simply_shorten.subdomain | default("simply_shorten")}}
+  version: {{ simply_shorten.version | default("latest") }}
 snibox:
   enable: {{ snibox.enable | default(enable_snibox, None) | default(False) }}
   https_only: {{ snibox.https_only | default(False) }}
   auth: {{ snibox.auth | default(False) }}
   domain: {{ snibox.domain | default(False) }}
   subdomain: {{ snibox.subdomain | default("snibox") }}
+  snibox_version: {{ snibox.version | default("latest") }}
+  sniboxpuma_version: {{ sniboxpuma.version | default("1.15.9") }}
 sonarr:
   enable: {{ sonarr.enable | default(enable_sonarr, None) | default(False) }}
   https_only: {{ sonarr.https_only | default(False) }}
   auth: {{ sonarr.auth | default(False) }}
   domain: {{ sonarr.domain | default(False) }}
   subdomain: {{ sonarr.subdomain | default("sonarr") }}
+  version: {{ sonarr.version | default("latest") }}
 speedtest:
   enable: {{ speedtest.enable | default(enable_speedtest, None) | default(False) }}
   https_only: {{ speedtest.https_only | default(False) }}
   auth: {{ speedtest.auth | default(False) }}
   domain: {{ speedtest.domain | default(False) }}
   subdomain: {{ speedtest.subdomain | default("speedtest") }}
+  version: {{ speedtest.version | default("latest") }}
   server: {{ speedtest.server | default (11441) }}
 statping:
   enable: {{ statping.enable | default(enable_statping, None) | default(False) }}
@@ -873,42 +882,49 @@ statping:
   auth: {{ statping.auth | default(False) }}
   domain: {{ statping.domain | default(False) }}
   subdomain: {{ statping.subdomain | default("statping") }}
+  version: {{ statping.version | default("latest") }}
 sui:
   enable: {{ sui.enable | default(enable_sui, None) | default(False) }}
   https_only: {{ sui.https_only | default(False) }}
   auth: {{ sui.auth | default(False) }}
   domain: {{ sui.domain | default(False) }}
   subdomain: {{ sui.subdomain | default("sui") }}
+  version: {{ sui.version | default("latest") }}
 syncthing:
   enable: {{ syncthing.enable | default(enable_syncthing, None) | default(False) }}
   https_only: {{ syncthing.https_only | default(False) }}
   auth: {{ syncthing.auth | default(False) }}
   domain: {{ syncthing.domain | default(False) }}
   subdomain: {{ syncthing.subdomain | default("syncthing") }}
+  version: {{ syncthing.version | default("latest") }}
 taisun:
   enable: {{ taisun.enable | default(enable_taisun, None) | default(False) }}
   https_only: {{ taisun.https_only | default(False) }}
   auth: {{ taisun.auth | default(False) }}
   domain: {{ taisun.domain | default(False) }}
-  subdomain: {{ taisun.subdomain | default("taisun")}}
+  subdomain: {{ taisun.subdomain | default("taisun") }}
+  version: {{ taisun.version | default("latest") }}
 tautulli:
   enable: {{ tautulli.enable | default(enable_tautulli, None) | default(False) }}
   https_only: {{ tautulli.https_only | default(False) }}
   auth: {{ tautulli.auth | default(False) }}
   domain: {{ tautulli.domain | default(False) }}
   subdomain: {{ tautulli.subdomain | default("tautulli") }}
+  version: {{ tautulli.version | default("latest") }}
 teedy:
   enable: {{ teedy.enable | default(enable_teedy, None) | default(False) }}
   https_only: {{ teedy.https_only | default(False) }}
   auth: {{ teedy.auth | default(False) }}
   domain: {{ teedy.domain | default(False) }}
-  subdomain: {{ teedy.subdomain | default("teedy")}}
+  subdomain: {{ teedy.subdomain | default("teedy") }}
+  version: {{ teedy.version | default("v1.8") }}
 thelounge:
   enable: {{ thelounge.enable | default(enable_thelounge, None) | default(False) }}
   https_only: {{ thelounge.https_only | default(False) }}
   auth: {{ thelounge.auth | default(False) }}
   domain: {{ thelounge.domain | default(False) }}
   subdomain: {{ thelounge.subdomain | default("thelounge") }}
+  version: {{ thelounge.version | default("latest") }}
 thespaghettidetective:
   enable: {{ thespaghettidetective.enable | default(enable_thespaghettidetective, None) | default(False) }}
   https_only: {{ thespaghettidetective.https_only | default(False) }}
@@ -921,24 +937,31 @@ tick:
   auth: {{ tick.auth | default(False) }}
   domain: {{ tick.domain | default(False) }}
   subdomain: {{ tick.subdomain | default("tick") }}
+  telegraf_version: {{ tick.telegraf_version | default("latest") }}
+  influxdb_version: {{ tick.influxdb_version | default("latest") }}
+  chronograf_version: {{ tick.chronograf_version | default("latest") }}
+  kapacitor_version: {{ tick.kapacitor_version | default("1.3.3") }}
 tiddlywiki:
   enable: {{ tiddlywiki.enable | default(enable_tiddlywiki, None) | default(False) }}
   https_only: {{ tiddlywiki.https_only | default(False) }}
   auth: {{ tiddlywiki.auth | default(False) }}
   domain: {{ tiddlywiki.domain| default(False) }}
   subdomain: {{ tiddlywiki.subdomain | default("tiddlywiki") }}
+  version: {{ tiddlywiki.version | default("latest") }}
 transmission:
   enable: {{ transmission.enable | default(enable_transmission, None) | default(False) }}
   https_only: {{ transmission.https_only | default(False) }}
   auth: {{ transmission.auth | default(False) }}
   domain: {{ transmission.domain | default(False) }}
   subdomain: {{ transmission.subdomain | default("transmission") }}
+  version: {{ transmission.version | default("latest") }}
 trilium:
   enable: {{ trilium.enable | default(enable_trilium, None) | default(False) }}
   https_only: {{ trilium.https_only | default(False) }}
   auth: {{ trilium.auth | default(False) }}
   domain: {{ trilium.domain| default(False) }}
   subdomain: {{ trilium.subdomain | default("trilium") }}
+  version: {{ trilium.version | default("latest") }}
 turtl:
   enable: {{ turtl.enable | default(enable_turtl, None) | default(False) }}
   https_only: {{ turtl.https_only | default(False) }}
@@ -952,20 +975,6 @@ ubooquity:
   domain: {{ ubooquity.domain | default(False) }}
   subdomain: {{ ubooquity.subdomain | default("ubooquity") }}
   version: {{ ubooquity.version | default("latest") }}
-wekan:
-  enable: {{ wekan.enable | default(enable_wekan, None) | default(False) }}
-  https_only: {{ wekan.https_only | default(False) }}
-  auth: {{ wekan.auth | default(False) }}
-  domain: {{ wekan.domain | default(False) }}
-  subdomain: {{ wekan.subdomain | default("wekan") }}
-  version: {{ wekan.version | default("latest") }}
-xfinityusageinfluxdb:
-  enable: {{ xfinityusageinfluxdb.enable | default(enable_xfinityusageinfluxdb, None) | default(False) }}
-  https_only: {{ xfinityusageinfluxdb.https_only | default(False) }}
-  auth: {{ xfinityusageinfluxdb.auth | default(False) }}
-  domain: {{ xfinityusageinfluxdb.domain| default(False) }}
-  subdomain: {{ xfinityusageinfluxdb.subdomain | default("xfinityusageinfluxdb") }}
-  version: {{ xfinityusageinfluxdb.version | default("latest") }}
 unificontroller:
   enable: {{ unificontroller.enable | default(enable_unificontroller, None) | default(False) }}
   https_only: {{ unificontroller.https_only | default(False) }}
@@ -1007,6 +1016,20 @@ webvirtmgr:
   domain: {{ webvirtmgr.domain | default(False) }}
   subdomain: {{ webvirtmgr.subdomain | default("webvirtmgr") }}
   version: {{ webvirtmgr.version | default("latest") }}
+wekan:
+  enable: {{ wekan.enable | default(enable_wekan, None) | default(False) }}
+  https_only: {{ wekan.https_only | default(False) }}
+  auth: {{ wekan.auth | default(False) }}
+  domain: {{ wekan.domain | default(False) }}
+  subdomain: {{ wekan.subdomain | default("wekan") }}
+  version: {{ wekan.version | default("latest") }}
+xfinityusageinfluxdb:
+  enable: {{ xfinityusageinfluxdb.enable | default(enable_xfinityusageinfluxdb, None) | default(False) }}
+  https_only: {{ xfinityusageinfluxdb.https_only | default(False) }}
+  auth: {{ xfinityusageinfluxdb.auth | default(False) }}
+  domain: {{ xfinityusageinfluxdb.domain| default(False) }}
+  subdomain: {{ xfinityusageinfluxdb.subdomain | default("xfinityusageinfluxdb") }}
+  version: {{ xfinityusageinfluxdb.version | default("latest") }}
 zammad:
   enable: {{ zammad.enable | default(enable_zammad, None) | default(False) }}
   https_only: {{ zammad.https_only | default(False) }}
