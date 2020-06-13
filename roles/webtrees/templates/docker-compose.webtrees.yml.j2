@@ -21,7 +21,7 @@ services:
       - MYSQL_PASSWORD={{lookup('password', './settings/passwords/webtrees_db_password chars=ascii_letters')}}
   app:
     # REQUIRED
-    image: dtjs48jkt/webtrees
+    image: dtjs48jkt/webtrees:{{ webtrees.version }}
     restart: unless-stopped
     environment:
       - GROUP_ID={{gid_output.stdout }}
