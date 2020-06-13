@@ -5,10 +5,9 @@ networks:
   traefik_network:
     external:
       name: homelabos_traefik
-  calibre_net:
 
 services:
-  backend:
+  calibre-alpine:
     networks:
       - traefik_network
     ports:
