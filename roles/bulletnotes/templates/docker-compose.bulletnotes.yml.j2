@@ -20,7 +20,7 @@ services:
       - ./data/bulletnotes-db-dump:/dump
 
   bulletnotes:
-    image: nickbusey/bulletnotes
+    image: nickbusey/bulletnotes:{{ bulletnotes.version }}
     networks:
       - traefik_network
     command: meteor --allow-superuser run
