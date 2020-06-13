@@ -21,7 +21,7 @@ services:
       - HOLD_DAYS=10
       - POSTGRESQL_USER=zammad
       - "POSTGRESQL_PASSWORD={{lookup('password', './settings/passwords/zammad_db_password')}}"
-    image: zammad/zammad-docker-compose:zammad-postgresql-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-postgresql-{{ zammad.version }}
     links:
       - zammad-postgresql
     networks:
@@ -34,7 +34,7 @@ services:
   zammad-elasticsearch:
     environment:
       - discovery.type=single-node
-    image: zammad/zammad-docker-compose:zammad-elasticsearch-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-elasticsearch-{{ zammad.version }}
     restart: unless-stopped
     networks:
       - default
@@ -48,7 +48,7 @@ services:
     environment:
       - POSTGRESQL_USER=zammad
       - "POSTGRESQL_PASS={{lookup('password', './settings/passwords/zammad_db_password')}}"
-    image: zammad/zammad-docker-compose:zammad-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-{{ zammad.version }}
     links:
       - zammad-elasticsearch
       - zammad-postgresql
@@ -69,7 +69,7 @@ services:
     command: ["zammad-nginx"]
     depends_on:
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-{{ zammad.version }}
     links:
       - zammad-railsserver
       - zammad-websocket
@@ -108,7 +108,7 @@ services:
     environment:
       - POSTGRES_USER=zammad
       - "POSTGRES_PASSWORD={{lookup('password', './settings/passwords/zammad_db_password')}}"
-    image: zammad/zammad-docker-compose:zammad-postgresql-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-postgresql-{{ zammad.version }}
     restart: unless-stopped
     networks:
       - default
@@ -120,7 +120,7 @@ services:
     depends_on:
       - zammad-memcached
       - zammad-postgresql
-    image: zammad/zammad-docker-compose:zammad-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-{{ zammad.version }}
     links:
       - zammad-elasticsearch
       - zammad-memcached
@@ -136,7 +136,7 @@ services:
     depends_on:
       - zammad-memcached
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-{{ zammad.version }}
     links:
       - zammad-elasticsearch
       - zammad-memcached
@@ -152,7 +152,7 @@ services:
     depends_on:
       - zammad-memcached
       - zammad-railsserver
-    image: zammad/zammad-docker-compose:zammad-3.3.0-19
+    image: zammad/zammad-docker-compose:zammad-{{ zammad.version }}
     links:
       - zammad-postgresql
       - zammad-memcached
