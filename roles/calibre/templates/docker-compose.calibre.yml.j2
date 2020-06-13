@@ -10,7 +10,7 @@ networks:
 services:
   backend:
     networks:
-      - calibre_net
+      - traefik_network
     ports:
       - '8082:8080'
     volumes:
@@ -21,7 +21,6 @@ services:
   calibre-web:
     networks:
       - traefik_network
-      - calibre-net
     restart: always
     volumes:
       - "{{ storage_dir }}/Books:/books"
