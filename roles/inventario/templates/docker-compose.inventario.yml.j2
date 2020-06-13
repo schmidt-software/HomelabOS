@@ -9,7 +9,7 @@ networks:
 services:
   # Home Inventory Management
   app:
-    image: nickbusey/inventario
+    image: nickbusey/inventario:{{ inventario.version }}
     restart: unless-stopped
     networks:
       - traefik_network
