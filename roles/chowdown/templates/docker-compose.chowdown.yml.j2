@@ -11,7 +11,7 @@ networks:
 services:
   app:
     # REQUIRED
-    image: gregyankovoy/chowdown:latest
+    image: gregyankovoy/chowdown:{{ chowdown.version }}
     restart: unless-stopped
     networks:
       - traefik_network
