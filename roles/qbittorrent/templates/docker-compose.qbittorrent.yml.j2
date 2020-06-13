@@ -11,7 +11,7 @@ networks:
 services:
   app:
     # REQUIRED
-    image: markusmcnugen/qbittorrentvpn
+    image: markusmcnugen/qbittorrentvpn:{{ qbittorrent.version }}
     privileged: true
     volumes:
       - "{{ volumes_root }}/qbittorrent/config:/config"
