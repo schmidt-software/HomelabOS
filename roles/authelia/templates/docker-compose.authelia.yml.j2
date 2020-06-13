@@ -10,7 +10,7 @@ networks:
 
 services:
   auth:
-    image: authelia/authelia:latest
+    image: authelia/authelia:{{ authelia.version }}
     restart: unless-stopped
     depends_on:
       - redis
