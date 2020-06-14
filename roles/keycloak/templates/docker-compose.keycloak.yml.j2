@@ -11,7 +11,7 @@ networks:
 
 services:
   keycloak-postgres:
-    image: postgres:{{ keycloak_db.version }}
+    image: postgres:{{ keycloak.db_version }}
     volumes:
       - "{{ volumes_root }}/keycloak/db-data:/var/lib/postgresql/data"
     restart: 'unless-stopped'
