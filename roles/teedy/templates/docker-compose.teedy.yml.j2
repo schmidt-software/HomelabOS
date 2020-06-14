@@ -12,7 +12,7 @@ services:
   teedydb:
     networks:
       - traefik_network
-    image: postgres:{{ teedy_db.version }}
+    image: postgres:{{ teedy.db_version }}
     environment:
       - POSTGRES_DB=docs
       - POSTGRES_PASSWORD={{lookup('password', './settings/passwords/teedy_postgres_password')}}
