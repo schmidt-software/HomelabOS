@@ -500,18 +500,21 @@ healthchecks:
   auth: {{ healthchecks.auth | default(False) }}
   domain: {{ healthchecks.domain | default(False) }}
   subdomain: {{ healthchecks.subdomain | default("healthchecks") }}
+  version: {{ healthchecks.version | default("latest") }}
 heimdall:
   enable: {{ heimdall.enable | default(enable_heimdall, None) | default(False) }}
   https_only: {{ heimdall.https_only | default(False) }}
   auth: {{ heimdall.auth | default(False) }}
   domain: {{ heimdall.domain| default(False) }}
   subdomain: {{ heimdall.subdomain | default("heimdall") }}
+  version: {{ heimdall.version | default("latest") }}
 homeassistant:
   enable: {{ homeassistant.enable | default(enable_homeassistant, None) | default(False) }}
   https_only: {{ homeassistant.https_only | default(False) }}
   auth: {{ homeassistant.auth | default(False) }}
   domain: {{ homeassistant.domain | default(False) }}
   subdomain: {{ homeassistant.subdomain | default("homeassistant") }}
+  version: {{ homeassistant.version | default("latest") }}
   use_supervisord: {{ homeassistant.use_supervisord | default(False)}}
 homebridge:
   enable: {{ homebridge.enable | default(enable_homebridge, None) | default(False) }}
@@ -519,24 +522,31 @@ homebridge:
   auth: {{ homebridge.auth | default(False) }}
   domain: {{ homebridge.domain | default(False) }}
   subdomain: {{ homebridge.subdomain | default("homebridge") }}
+  version: {{homebridge.version | default("latest") }}
 homedash:
   enable: {{ homedash.enable | default(enable_homedash, None) | default(False) }}
   https_only: {{ homedash.https_only | default(False) }}
   auth: {{ homedash.auth | default(False) }}
   domain: {{ homedash.domain | default(False) }}
   subdomain: {{ homedash.subdomain | default("homedash") }}
+  version: {{ homedash.version | default("latest") }}
 hubzilla:
   enable: {{ hubzilla.enable | default(enable_hubzilla, None) | default(False) }}
   https_only: {{ hubzilla.https_only | default(False) }}
   auth: {{ hubzilla.auth | default(False) }}
   domain: {{ hubzilla.domain | default(False) }}
   subdomain: {{ hubzilla.subdomain | default("hubzilla") }}
+  version: {{ hubzilla.version | default("4.6") }}
+  db_version: {{ hubzilla.db_version | default("12.2-alpine") }}
+  web_version: {{ hubzilla.web_version | default("1.17.10-alpine") }}
 huginn:
   enable: {{ huginn.enable | default(enable_huginn, None) | default(False) }}
   https_only: {{ huginn.https_only | default(False) }}
   auth: {{ huginn.auth | default(False) }}
   domain: {{ huginn.domain | default(False) }}
   subdomain: {{ huginn.subdomain | default("huginn") }}
+  version: {{ huginn.version | default("latest") }}
+  db_version: {{ huginn.db_version | default("10.3") }}
 inventario:
   enable: {{ inventario.enable | default(enable_inventario, None) | default(False) }}
   https_only: {{ inventario.https_only | default(False) }}
@@ -690,24 +700,30 @@ n8n:
   auth: {{ n8n.auth | default(False) }}
   domain: {{ n8n.domain| default(False) }}
   subdomain: {{ n8n.subdomain | default("n8n") }}
+  version: {{ n8n.version | default("latest") }}
 netdata:
   enable: {{ netdata.enable | default(enable_netdata, None) | default(False) }}
   https_only: {{ netdata.https_only | default(False) }}
   auth: {{ netdata.auth | default(False) }}
   domain: {{ netdata.domain | default(False) }}
   subdomain: {{ netdata.subdomain | default("netdata") }}
+  version: {{ netdata.version | default("latest") }}
 nextcloud:
   enable: {{ nextcloud.enable | default(enable_nextcloud, None) | default(False) }}
   https_only: {{ nextcloud.https_only | default(False) }}
   auth: {{ nextcloud.auth | default(False) }}
   domain: {{ nextcloud.domain | default(False) }}
   subdomain: {{ nextcloud.subdomain | default("nextcloud") }}
+  version: {{ nextcloud.version | default("apache") }}
+  db_version: {{ nextcloud.db_version | default("alpine") }}
+  redis_version: {{ nextcloud.redis_version | default("5.0-alpine") }}
 nodered:
   enable: {{ nodered.enable | default(enable_nodered, None) | default(False) }}
   https_only: {{ nodered.https_only | default(False) }}
   auth: {{ nodered.auth | default(False) }}
   domain: {{ nodered.domain| default(False) }}
   subdomain: {{ nodered.subdomain | default("nodered") }}
+  version: {{ nodered.version | default("latest-12-minimal") }}
   node_options: {{ nodered.node_options | default("") }}
   enable_projects: {{ nodered.enable_projects | default(False) }}
   safe_mode: {{ nodered.safe_mode | default(False) }}
@@ -717,6 +733,7 @@ nzbget:
   auth: {{ nzbget.auth | default(False) }}
   domain: {{ nzbget.domain | default(False) }}
   subdomain: {{ nzbget.subdomain | default("nzbget") }}
+  version: {{ nzbget.version | default("latest") }}
 octoprint:
   enable: {{ octoprint.enable | default(enable_octoprint, None) | default(False) }}
   https_only: {{ octoprint.https_only | default(False) }}
