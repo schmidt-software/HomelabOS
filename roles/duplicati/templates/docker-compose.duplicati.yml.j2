@@ -9,7 +9,7 @@ services:
   duplicati:
     networks:
       - traefik_network
-    image: linuxserver/duplicati
+    image: linuxserver/duplicati:{{ duplicati.version }}
     container_name: duplicati
     environment:
       - PUID=1000
