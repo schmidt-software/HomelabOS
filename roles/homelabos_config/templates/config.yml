@@ -157,6 +157,7 @@ docs:
   auth: {{ docs.auth | default(False) }}
   domain: {{ docs.domain | default(False) }}
   subdomain: {{ docs.subdomain | default("docs") }}
+  version: {{docs.version | default("latest") }}
 apache2:
   enable: {{ apache2.enable | default(enable_apache2, None) | default(False) }}
   https_only: {{ apache2.https_only | default(False) }}
@@ -315,29 +316,37 @@ dark_sky:
   auth: {{ dark_sky.auth | default(False) }}
   domain: {{ dark_sky.domain | default(False) }}
   subdomain: {{ dark_sky.subdomain | default("dark_sky") }}
+  version: {{ dark_sky.version | default("latest") }}
 dasher:
   enable: {{ dasher.enable | default(enable_dasher, None) | default(False) }}
   https_only: {{ dasher.https_only | default(False) }}
   auth: {{ dasher.auth | default(False) }}
   domain: {{ dasher.domain | default(False) }}
   subdomain: {{ dasher.subdomain | default("dasher") }}
+  version: {{ dasher.version | default("latest") }}
 digikam:
   enable: {{ digikam.enable | default(enable_digikam, None) | default(False) }}
   https_only: {{ digikam.https_only | default(False) }}
   auth: {{ digikam.auth | default(False) }}
   domain: {{ digikam.domain | default(False) }}
   subdomain: {{ digikam.subdomain | default("digikam") }}
+  version: {{ digikam.version | default("stable") }}
 drone:
   enable: {{ drone.enable | default(enable_drone, None) | default(False) }}
   https_only: {{ drone.https_only | default(False) }}
   auth: {{ drone.auth | default(False) }}
   domain: {{ drone.domain | default(False) }}
   subdomain: {{ drone.subdomain | default("drone") }}
+  version: {{ drone.version | default("1.0") }}
+  agent_version: {{ drone.agent_version | default("1.0") }}
 {% raw %}
   gitea_id: "{{ vault.drone.gitea_id | default(False) }}"
   gitea_secret: "{{ vault.drone.gitea_secret | default(False) }}"
+{% endraw %}
 duckdns:
-  enable: "{{ vault.duckdns.enable | default(enable_duckdns, None) | default(False) }}"
+  enable: {{ duckdns.enable | default(enable_duckdns, None) | default(False) }}
+  version: {{ duckdns.version | default("latest") }}
+{% raw %}
   token: "{{ vault.duckdns.token | default(False) }}"
 {% endraw %}
 duplicati:
@@ -346,48 +355,60 @@ duplicati:
   auth: {{ duplicati.auth | default(False) }}
   domain: {{ duplicati.domain | default(False) }}
   subdomain: {{ duplicati.subdomain | default("duplicati") }}
+  version: {{ duplicati.version | default("latest") }}
 elkstack:
   enable: {{ elkstack.enable | default(enable_elkstack, None) | default(False) }}
   https_only: {{ elkstack.https_only | default(False) }}
   auth: {{ elkstack.auth | default(False) }}
   domain: {{ elkstack.domain | default(False) }}
   subdomain: {{ elkstack.subdomain | default("elkstack") }}
+  version: {{ elkstack.version | default("latest") }}
 emby:
   enable: {{ emby.enable | default(enable_emby, None) | default(False) }}
   https_only: {{ emby.https_only | default(False) }}
   auth: {{ emby.auth | default(False) }}
   domain: {{ emby.domain | default(False) }}
   subdomain: {{ emby.subdomain | default("emby") }}
+  version: {{ emby.version | default("latest") }}
 erpnext:
   enable: {{ erpnext.enable | default(enable_erpnext, None) | default(False) }}
   https_only: {{ erpnext.https_only | default(False) }}
   auth: {{ erpnext.auth | default(False) }}
   domain: {{ erpnext.domain | default(False) }}
   subdomain: {{ erpnext.subdomain | default("erpnext") }}
+  version: {{ erpnext.version | default("v11") }}
+  db_version: {{ erpnext.db_version | default("10.3") }}
+  redis_version: {{ erpnext.redis_version | default("latest") }}
 ethercalc:
   enable: {{ ethercalc.enable | default(enable_ethercalc, None) | default(False) }}
   https_only: {{ ethercalc.https_only | default(False) }}
   auth: {{ ethercalc.auth | default(False) }}
   domain: {{ ethercalc.domain | default(False) }}
   subdomain: {{ ethercalc.subdomain | default("ethercalc") }}
+  version: {{ ethercalc.version | default("latest") }}
+  redis_version: {{ ethercalc.redis_version | default("latest") }}
 factorio:
   enable: {{ factorio.enable | default(enable_factorio, None) | default(False) }}
   https_only: {{ factorio.https_only | default(False) }}
   auth: {{ factorio.auth | default(False) }}
   domain: {{ factorio.domain | default(False) }}
   subdomain: {{ factorio.subdomain | default("factorio") }}
+  version: {{ factorio.version | default("latest") }}
 firefly_iii:
   enable: {{ firefly_iii.enable | default(enable_firefly_iii, None) | default(False) }}
   https_only: {{ firefly_iii.https_only | default(False) }}
   auth: {{ firefly_iii.auth | default(False) }}
   domain: {{ firefly_iii.domain | default(False) }}
   subdomain: {{ firefly_iii.subdomain | default("firefly_iii") }}
+  version: {{ firefly_iii.version | default("latest") }}
+  db_version: {{ firefly_iii.db_version | default("12") }}
 folding_at_home:
   enable: {{ folding_at_home.enable | default(enable_folding_at_home, None) | default(False) }}
   https_only: {{ folding_at_home.https_only | default(False) }}
   auth: {{ folding_at_home.auth | default(False) }}
   domain: {{ folding_at_home.domain | default(False) }}
   subdomain: {{ folding_at_home.subdomain | default("folding_at_home") }}
+  version: {{ folding_at_home.version | default("latest") }}
   username: {{ folding_at_home.username | default( default_username ) }}
   # Team HomelabOS - https://stats.foldingathome.org/team/261443
   team: {{ folding_at_home.team | default( "261443" ) }}
@@ -399,12 +420,14 @@ freshrss:
   auth: {{ freshrss.auth | default(False) }}
   domain: {{ freshrss.domain | default(False) }}
   subdomain: {{ freshrss.subdomain | default("freshrss") }}
+  version: {{ freshrss.version | default("alpine") }}
 funkwhale:
   enable: {{ funkwhale.enable | default(enable_funkwhale, None) | default(False) }}
   https_only: {{ funkwhale.https_only | default(False) }}
   auth: {{ funkwhale.auth | default(False) }}
   domain: {{ funkwhale.domain| default(False) }}
   subdomain: {{ funkwhale.subdomain | default("funkwhale") }}
+  version: {{ funkwhale.version | default("latest") }}
 ghost:
   enable: {{ ghost.enable | default(enable_ghost, None) | default(False) }}
   https_only: {{ ghost.https_only | default(False) }}
