@@ -11,7 +11,7 @@ networks:
 services:
   app:
     # REQUIRED
-    image: factoriotools/factorio
+    image: factoriotools/factorio:{{ factorio.version }}
     restart: unless-stopped
     networks:
       - traefik_network
