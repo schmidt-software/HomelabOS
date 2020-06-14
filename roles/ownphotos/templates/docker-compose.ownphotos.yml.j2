@@ -41,7 +41,7 @@ services:
 {% endif %}
 
   ownphotos-db:
-    image: postgres
+    image: postgres:{{ ownphotos_db.version }}
     networks:
       - traefik_network
     restart: always
