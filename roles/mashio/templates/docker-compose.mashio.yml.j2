@@ -9,7 +9,7 @@ networks:
 services:
   # Home Brewery Management
   app:
-    image: nickbusey/mashio
+    image: nickbusey/mashio:{{ mashio.version }}
     restart: unless-stopped
     networks:
       - traefik_network
@@ -44,7 +44,7 @@ services:
 {% endif %}
 
   mashio_db:
-    image: mariadb
+    image: mariadb:{{ mashio.db_version }}
     restart: unless-stopped
     networks:
       - traefik_network
