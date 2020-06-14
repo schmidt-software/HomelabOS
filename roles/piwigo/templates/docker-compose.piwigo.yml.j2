@@ -53,7 +53,7 @@ services:
 
   mysqlpiwigo:
     restart: unless-stopped
-    image: mariadb:10.4
+    image: mariadb:{{ piwigo_db.version }}
     networks:
       - traefik_network
     volumes:
