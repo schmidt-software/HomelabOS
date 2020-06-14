@@ -170,6 +170,7 @@ apple_health_influx:
   auth: {{ apple_health_influx.auth | default(False) }}
   domain: {{ apple_health_influx.domain | default(False) }}
   subdomain: {{ apple_health_influx.subdomain | default("apple_health_influx") }}
+  version: {{apple_health_influx.version | default("cron") }}
 airsonic:
   enable: {{ airsonic.enable | default(enable_airsonic, None) | default(False) }}
   https_only: {{ airsonic.https_only | default(False) }}
@@ -187,6 +188,8 @@ authelia:
   domain: "{{ vault.authelia.domain }}"
   subdomain: "{{ vault.authelia.subdomain }}"
   version: {{ authelia.version | default("latest") }}
+  redis_version: {{ authelia.redis_version | default("5.0.5-alpine") }}
+  db_version: {{ authelia.db_version | default("latest") }}
   redirect_url:  "{{ vault.authelia.redirect_url }}"
   # Determines how verbose the logs are
   log_level: "{{ vault.authelia.log_level }}"
@@ -228,7 +231,7 @@ barcodebuddy:
   auth: {{ barcodebuddy.auth | default(False) }}
   domain: {{ barcodebuddy.domain | default(False) }}
   subdomain: {{ barcodebuddy.subdomain | default("barcodebuddy") }}
-  image_tag: {{ barcodebuddy.version | default("latest") }}
+  version: {{ barcodebuddy.version | default("latest") }}
 beets:
   enable: {{ beets.enable | default(enable_beets, None) | default(False) }}
   https_only: {{ beets.https_only | default(False) }}
@@ -263,6 +266,7 @@ bookstack:
   domain: {{ bookstack.domain | default(False) }}
   subdomain: {{ bookstack.subdomain | default("bookstack") }}
   version: {{ bookstack.version | default("0.29.2") }}
+  db_version: {{bookstack.db_version | default("5.7.21") }}
 bulletnotes:
   enable: {{ bulletnotes.enable | default(enable_bulletnotes, None) | default(False) }}
   https_only: {{ bulletnotes.https_only | default(False) }}
@@ -270,6 +274,7 @@ bulletnotes:
   domain: {{ bulletnotes.domain | default(False) }}
   subdomain: {{ bulletnotes.subdomain | default("bulletnotes") }}
   version: {{ bulletnotes.version | default("latest") }}
+  db_version: {{ bulletnotes.db_version | default("3.2.21") }}
 calibre:
   enable: {{ calibre.enable | default(enable_calibre, None) | default(False) }}
   https_only: {{ calibre.https_only | default(False) }}
@@ -277,6 +282,7 @@ calibre:
   domain: {{ calibre.domain | default(False) }}
   subdomain: {{ calibre.subdomain | default("calibre") }}
   version: {{ calibre.version | default("latest") }}
+  server_version: {{ calibre.server_version | default("latest") }}
 chowdown:
   enable: {{ chowdown.enable | default(enable_chowdown, None) | default(False) }}
   https_only: {{ chowdown.https_only | default(False) }}
@@ -302,6 +308,7 @@ codimd:
   domain: {{ codimd.domain | default(False) }}
   subdomain: {{ codimd.subdomain | default("codimd") }}
   version: {{ codimd.version | default("latest") }}
+  db_version {{ codimd.db_version | default("9.6-alpine") }}
 dark_sky:
   enable: {{ dark_sky.enable | default(enable_dark_sky, None) | default(False) }}
   https_only: {{ dark_sky.https_only | default(False) }}
@@ -514,6 +521,7 @@ inventario:
   domain: {{ inventario.domain | default(False) }}
   subdomain: {{ inventario.subdomain | default("inventario") }}
   version: {{ inventario.version | default("latest") }}
+  db_version: {{ inventario.db_version | default("latest") }}
 jackett:
   enable: {{ jackett.enable | default(enable_jackett, None) | default(False) }}
   https_only: {{ jackett.https_only | default(False) }}
@@ -535,6 +543,7 @@ keycloak:
   domain: {{ keycloak.domain | default(False) }}
   subdomain: {{ keycloak.subdomain | default("keycloak") }}
   version: {{ keycloak.version | default("latest") }}
+  db_version: {{ keycloak.db_version | default("alpine") }}
 kibitzr:
   enable: {{ kibitzr.enable | default(enable_kibitzr, None) | default(False) }}
   https_only: {{ kibitzr.https_only | default(False) }}
@@ -707,6 +716,7 @@ openldap:
   domain: {{ openldap.domain | default(False) }}
   subdomain: {{ openldap.subdomain | default("openldap") }}
   version: {{ openldap.version | default("1.2.2") }}
+  phpldapadmin: {{ openldap.phpldapadmin | default("0.7.2") }}
 openvpn:
   enable: {{ openvpn.enable | default(enable_openvpn, None) | default(False) }}
   https_only: {{ openvpn.https_only | default(False) }}
@@ -728,6 +738,7 @@ ownphotos:
   domain: {{ ownphotos.domain | default(False) }}
   subdomain: {{ ownphotos.subdomain | default("ownphotos") }}
   version: {{ ownphotos.version | default("dev") }}
+  db_version: {{ ownphotos.db_version | default("latest") }}
 paperless:
   enable: {{ paperless.enable | default(enable_paperless, None) | default(False) }}
   https_only: {{ paperless.https_only | default(False) }}
@@ -742,6 +753,9 @@ peertube:
   domain: {{ peertube.domain | default(False) }}
   subdomain: {{ peertube.subdomain | default("peertube") }}
   version: {{ peertube.version | default("production-buster") }}
+  db_version: {{ peertube.db_version | default("10-alpine") }}
+  redis_version: {{ peertube.redis_version | default("4-alpine") }}
+  
 photoprism:
   enable: {{ photoprism.enable | default(enable_photoprism, None) | default(False) }}
   https_only: {{ photoprism.https_only | default(False) }}
@@ -763,19 +777,22 @@ piwigo:
   domain: {{ piwigo.domain | default(False) }}
   subdomain: {{ piwigo.subdomain | default("piwigo") }}
   version: {{ piwigo.version | default("latest") }}
+  db_version: {{ piwigo.db_version | default("10.4") }}
 pixelfed:
   enable: {{ pixelfed.enable | default(enable_pixelfed, None) | default(False) }}
   https_only: {{ pixelfed.https_only | default(False) }}
   auth: {{ pixelfed.auth | default(False) }}
   domain: {{ pixelfed.domain | default(False) }}
   subdomain: {{ pixelfed.subdomain | default("pixelfed") }}
+  db_version: {{ pixelfed.db_version | default("10.4") }}
+  redis_version: {{ pixelfed.redis_version | default("5-alpine") }}
 pleroma:
   enable: {{ pleroma.enable | default(enable_pleroma, None) | default(False) }}
   https_only: {{ pleroma.https_only | default(False) }}
   auth: {{ pleroma.auth | default(False) }}
   domain: {{ pleroma.domain | default(False) }}
   subdomain: {{ pleroma.subdomain | default("pleroma") }}
-  version: {{ pleroma.version | default("latest") }}
+  db_version: {{ pleroma.db_version | default("9.6-alpine") }}
 plex:
   enable: {{ plex.enable | default(enable_plex, None) | default(False) }}
   https_only: {{ plex.https_only | default(False) }}
@@ -855,6 +872,7 @@ shinobi:
   domain: {{ shinobi.domain | default(False) }}
   subdomain: {{ shinobi.subdomain | default("shinobi") }}
   version: {{ shinobi.version | default("latest") }}
+  db_version: {{ shinobi.db_version | default("latest") }}
 sickchill:
   enable: {{ sickchill.enable | default(enable_sickchill, None) | default(False) }}
   https_only: {{ sickchill.https_only | default(False) }}
@@ -875,8 +893,10 @@ snibox:
   auth: {{ snibox.auth | default(False) }}
   domain: {{ snibox.domain | default(False) }}
   subdomain: {{ snibox.subdomain | default("snibox") }}
-  snibox_version: {{ snibox.version | default("latest") }}
-  sniboxpuma_version: {{ sniboxpuma.version | default("1.15.9") }}
+  version: {{ snibox.version | default("latest") }}
+  web_version: {{ snibox.web_version | default("1.15.9") }}
+  db_version: {{ snibox.db_version | default("10.7-alpine") }}
+  
 sonarr:
   enable: {{ sonarr.enable | default(enable_sonarr, None) | default(False) }}
   https_only: {{ sonarr.https_only | default(False) }}
@@ -934,6 +954,7 @@ teedy:
   domain: {{ teedy.domain | default(False) }}
   subdomain: {{ teedy.subdomain | default("teedy") }}
   version: {{ teedy.version | default("v1.8") }}
+  db_version: {{ teedy.db_version | default("latest") }}
 thelounge:
   enable: {{ thelounge.enable | default(enable_thelounge, None) | default(False) }}
   https_only: {{ thelounge.https_only | default(False) }}
@@ -1005,6 +1026,8 @@ wallabag:
   domain: {{ wallabag.domain | default(False) }}
   subdomain: {{ wallabag.subdomain | default("wallabag") }}
   version: {{ wallabag.version | default("latest") }}
+  db_version: {{ wallabag.db_version | default("10.4") }}
+  redis_version: {{ wallabag.redis_version | default("alpine") }}
 {% raw %}
 watchtower:
   enable: "{{ vault.watchtower.enable | default(enable_watchtower, None) | default(False) }}"
@@ -1018,6 +1041,7 @@ webtrees:
   domain: {{ webtrees.domain | default(False) }}
   subdomain: {{ webtrees.subdomain | default("webtrees") }}
   version: {{ webtrees.version | default("latest") }}
+  db_version: {{ webtrees.db_version | default("10.4") }}
 webdavserver:
   enable: {{ webdavserver.enable | default(enable_webdavserver, None) | default(False) }}
   https_only: {{ webdavserver.https_only | default(False) }}
@@ -1039,6 +1063,7 @@ wekan:
   domain: {{ wekan.domain | default(False) }}
   subdomain: {{ wekan.subdomain | default("wekan") }}
   version: {{ wekan.version | default("latest") }}
+  db_version: {{ wekan.db_version | default("3.2.12") }}
 xfinityusageinfluxdb:
   enable: {{ xfinityusageinfluxdb.enable | default(enable_xfinityusageinfluxdb, None) | default(False) }}
   https_only: {{ xfinityusageinfluxdb.https_only | default(False) }}
@@ -1060,6 +1085,8 @@ zulip:
   domain: {{ zulip.domain | default(False) }}
   subdomain: {{ zulip.subdomain | default("zulip") }}
   version: {{ zulip.version | default("2.0.2-0") }}
+  db_version: {{ zulip.db_version | default("latest") }}
+  redis_version: {{ zulip.redis_version | default("latest") }}
 
 ### OPTIONAL ### These valuse are OPTIONAL and enable extra HomelabOS functionality.
 
