@@ -44,7 +44,7 @@ services:
 {% endif %}
 
   inventario_db:
-    image: mariadb:{{ inventario_db.version }}
+    image: mariadb:{{ inventario.db_version }}
     restart: unless-stopped
     networks:
       - traefik_network
