@@ -11,7 +11,7 @@ networks:
 services:
   codiMdApp:
     # REQUIRED
-    image: quay.io/codimd/server:{{ codimd_app.version }}
+    image: quay.io/codimd/server:{{ codimd.version }}
     restart: unless-stopped
     networks:
       - traefik_network
@@ -47,7 +47,7 @@ services:
   codiMdDatabase:
     networks:
       - traefik_network
-    image: postgres:{{ codimd_db.version }}
+    image: postgres:{{ codimd.db_version }}
     environment:
       # MYSQL_PASSWORD={{"lookup('password', './settings/passwords/package_name_db_password chars=ascii_letters')"}}
       - POSTGRES_USER=codimd
