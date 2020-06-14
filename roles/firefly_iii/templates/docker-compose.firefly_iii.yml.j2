@@ -34,7 +34,7 @@ services:
       - MAIL_ENCRYPTION=tls
       - TZ={{ common_timezone }}
       - ServerName=money.{{ domain }}
-    image: jc5x/firefly-iii
+    image: jc5x/firefly-iii:{{ firefly-iii.version }}
     networks:
       - traefik_network
     volumes:
@@ -66,7 +66,7 @@ services:
 {% endif %}
 
   firefly_iii_db:
-    image: "postgres:12"
+    image: postgres:{{ firefly-iii.db_version }}
     restart: unless-stopped
     environment:
       - POSTGRES_PASSWORD={{ lookup('password', './settings/passwords/firefly_db_password chars=ascii_letters') }}
