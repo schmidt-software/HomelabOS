@@ -11,7 +11,7 @@ networks:
 services:
   app:
     # REQUIRED
-    image: funkwhale/all-in-one:latest
+    image: funkwhale/all-in-one:{{ funkwhale.version }}
     restart: unless-stopped
     networks:
       - traefik_network
