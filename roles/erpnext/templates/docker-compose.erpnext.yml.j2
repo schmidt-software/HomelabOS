@@ -12,7 +12,7 @@ services:
   redis-cache:
     networks:
       - traefik_network
-    image: redis:latest
+    image: redis:{{ erpnext.redis_version }}
     restart: on-failure
     volumes:
       - "{{ volumes_root }}/erpnext/redis-cache-vol:/data"
@@ -20,7 +20,7 @@ services:
   redis-queue:
     networks:
       - traefik_network
-    image: redis:latest
+    image: redis:{{ erpnext.redis_version }}
     restart: on-failure
     volumes:
       - "{{ volumes_root }}/erpnext/redis-queue-vol:/data"
@@ -28,7 +28,7 @@ services:
   redis-socketio:
     networks:
       - traefik_network
-    image: redis:latest
+    image: redis:{{ erpnext.redis_version }}
     restart: on-failure
     volumes:
       - "{{ volumes_root }}/erpnext/redis-socketi-vol:/data"
@@ -36,7 +36,7 @@ services:
   mariadb:
     networks:
       - traefik_network
-    image: mariadb:10.3
+    image: mariadb:{{ erpnext.db_version }}
     restart: on-failure
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -45,7 +45,7 @@ services:
       - "{{ volumes_root }}/erpnext/mariadb-vol:/var/lib/mysql"
 
   erpnext-nginx:
-    image: frappe/erpnext-nginx:${VERSION}
+    image: frappe/erpnext-nginx:{{ erpnext.version }}
     restart: on-failure
     environment:
       - FRAPPE_PY=erpnext-python
@@ -98,7 +98,7 @@ services:
 {% endif %}
 
   erpnext-python:
-    image: frappe/erpnext-worker:${VERSION}
+    image: frappe/erpnext-worker:{{ erpnext.version }}
     restart: on-failure
     networks:
       - traefik_network
@@ -116,7 +116,7 @@ services:
   frappe-socketio:
     networks:
       - traefik_network
-    image: frappe/frappe-socketio:${VERSION}
+    image: frappe/frappe-socketio:{{ erpnext.version }}
     restart: on-failure
     depends_on:
       - redis-socketio
@@ -129,7 +129,7 @@ services:
   frappe-worker-default:
     networks:
       - traefik_network
-    image: frappe/erpnext-worker:${VERSION}
+    image: frappe/erpnext-worker:{{ erpnext.version }}
     restart: on-failure
     command: worker
     depends_on:
@@ -142,7 +142,7 @@ services:
       - "{{ volumes_root }}/erpnext/sites:/home/frappe/frappe-bench/sites"
 
   frappe-worker-short:
-    image: frappe/erpnext-worker:${VERSION}
+    image: frappe/erpnext-worker:{{ erpnext.version }}
     networks:
       - traefik_network
     restart: on-failure
@@ -159,7 +159,7 @@ services:
       - "{{ volumes_root }}/erpnext/sites:/home/frappe/frappe-bench/sites"
 
   frappe-worker-long:
-    image: frappe/erpnext-worker:${VERSION}
+    image: frappe/erpnext-worker:{{ erpnext.version }}
     networks:
       - traefik_network
     restart: on-failure
@@ -176,7 +176,7 @@ services:
       - "{{ volumes_root }}/erpnext/sites:/home/frappe/frappe-bench/sites"
 
   frappe-schedule:
-    image: frappe/erpnext-worker:${VERSION}
+    image: frappe/erpnext-worker:{{ erpnext.version }}
     networks:
       - traefik_network
     restart: on-failure
