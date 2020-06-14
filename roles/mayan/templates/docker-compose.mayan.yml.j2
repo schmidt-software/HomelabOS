@@ -18,7 +18,7 @@ volumes:
 
 services:
   broker:
-    image: healthcheck/rabbitmq
+    image: healthcheck/rabbitmq:{{ mayan.rabbitmq_version }}
     networks:
       - traefik_network
     environment:
@@ -32,11 +32,11 @@ services:
   results:
     networks:
       - traefik_network
-    image: healthcheck/redis
+    image: healthcheck/redis:{{ mayan.redis_version }}
     volumes:
       - "{{ volumes_root }}/mayan/results:/data"
   db:
-    image: healthcheck/postgres
+    image: healthcheck/postgres:{{ mayan.db_version }}
     networks:
       - traefik_network
     environment:
@@ -50,7 +50,7 @@ services:
   mayan-edms:
     networks:
       - traefik_network
-    image: mayanedms/mayanedms:latest
+    image: mayanedms/mayanedms::{{ mayan.version }}
     depends_on:
       broker:
         condition: service_healthy
