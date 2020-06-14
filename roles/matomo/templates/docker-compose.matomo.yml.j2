@@ -9,7 +9,7 @@ networks:
 services:
  # Web Analytics
   app:
-    image: matomo
+    image: matomo:{{ matomo.version }}
     restart: unless-stopped
     networks:
       - traefik_network
@@ -46,7 +46,7 @@ services:
 {% endif %}
 
   matomo_db:
-    image: mariadb
+    image: mariadb:{{ matomo.db_version }}
     restart: unless-stopped
     networks:
       - traefik_network
