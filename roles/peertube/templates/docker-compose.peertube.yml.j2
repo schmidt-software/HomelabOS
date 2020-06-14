@@ -10,7 +10,7 @@ networks:
 
 services:
   pt_db:
-    image: postgres:{{ peertube_db.version }}
+    image: postgres:{{ peertube.db_version }}
     networks:
       - traefik_network
     env_file:
@@ -21,7 +21,7 @@ services:
   pt_redis:
     networks:
       - traefik_network
-    image: redis:{{ peertube_redis.version }}
+    image: redis:{{ peertube.redis_version }}
     volumes:
       - "{{ volumes_root }}/peertube/redis:/data"
     env_file:
