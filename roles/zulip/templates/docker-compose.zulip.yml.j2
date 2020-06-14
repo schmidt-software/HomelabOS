@@ -8,7 +8,7 @@ networks:
 
 services:
   database:
-    image: 'zulip/zulip-postgresql'
+    image: zulip/zulip-postgresql:{{ zulip.db_version }}
     networks:
       - traefik_network
     environment:
@@ -37,14 +37,14 @@ services:
       - '{{ volumes_root }}/zulip/rabbitmq:/var/lib/rabbitmq:rw'
 
   redis:
-    image: 'quay.io/sameersbn/redis:latest'
+    image: quay.io/sameersbn/redis:{{ zulip.redis_version }}
     networks:
       - traefik_network
     volumes:
       - '{{ volumes_root }}/zulip/redis:/var/lib/redis:rw'
 
   zulip:
-    image: 'zulip/docker-zulip:2.0.2-0'
+    image: zulip/docker-zulip:{{ zulip.version }}
     networks:
       - traefik_network
     environment:

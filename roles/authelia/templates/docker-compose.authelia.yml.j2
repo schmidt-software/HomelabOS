@@ -10,7 +10,7 @@ networks:
 
 services:
   auth:
-    image: authelia/authelia:latest
+    image: authelia/authelia:{{ authelia_auth.version }}
     restart: unless-stopped
     depends_on:
       - redis
@@ -47,12 +47,12 @@ services:
   redis:
     networks:
       - traefik_network
-    image: redis:5.0.5-alpine
+    image: redis:{{ authelia_redis.version }}
 
   postgres:
     networks:
       - traefik_network
-    image: postgres:latest
+    image: postgres:{{ authelia_postgres.version }}
     environment:
       POSTGRES_DB: my_authelia
       POSTGRES_PASSWORD: {{lookup('password', './settings/passwords/authelia_postgres_password')}}

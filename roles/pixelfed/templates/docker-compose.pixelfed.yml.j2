@@ -55,7 +55,7 @@ services:
     command: gosu www-data php artisan horizon
 
   db:
-    image: mariadb:10.4
+    image: mariadb:{{ pixelfed.db_version }}
     restart: unless-stopped
     networks:
       - traefik_network
@@ -68,7 +68,7 @@ services:
       - "{{ volumes_root }}/pixelfed/mariadb:/var/lib/mysql"
 
   redis:
-    image: redis:5-alpine
+    image: redis:{{ pixelfed.redis_version }}
     restart: unless-stopped
     volumes:
       - "{{ volumes_root }}/pixelfed/redis:/data"

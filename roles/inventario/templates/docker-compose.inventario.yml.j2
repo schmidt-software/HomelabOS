@@ -9,7 +9,7 @@ networks:
 services:
   # Home Inventory Management
   app:
-    image: nickbusey/inventario
+    image: nickbusey/inventario:{{ inventario.version }}
     restart: unless-stopped
     networks:
       - traefik_network
@@ -44,7 +44,7 @@ services:
 {% endif %}
 
   inventario_db:
-    image: mariadb
+    image: mariadb:{{ inventario_db.version }}
     restart: unless-stopped
     networks:
       - traefik_network

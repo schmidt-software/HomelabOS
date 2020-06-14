@@ -10,7 +10,7 @@ networks:
 
 services:
   pt_db:
-    image: postgres:10-alpine
+    image: postgres:{{ peertube.db_version }}
     networks:
       - traefik_network
     env_file:
@@ -21,7 +21,7 @@ services:
   pt_redis:
     networks:
       - traefik_network
-    image: redis:4-alpine
+    image: redis:{{ peertube.redis_version }}
     volumes:
       - "{{ volumes_root }}/peertube/redis:/data"
     env_file:
@@ -36,7 +36,7 @@ services:
       - .env
   app:
     # REQUIRED
-    image: chocobozzz/peertube:production-buster
+    image: chocobozzz/peertube:{{ peertube.version }}
     restart: unless-stopped
     networks:
       - traefik_network
