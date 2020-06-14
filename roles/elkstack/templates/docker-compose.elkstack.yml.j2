@@ -11,7 +11,7 @@ networks:
 services:
   app:
     # REQUIRED
-    image: sebp/elk
+    image: sebp/elk:{{ elkstack.version }}
     restart: unless-stopped
     networks:
       - traefik_network
