@@ -10,7 +10,7 @@ networks:
 
 services:
   minecraft:
-    image: itzg/minecraft-server
+    image: itzg/minecraft-server:{{ minecraft.version }}
     volumes:
       - "{{ volumes_root }}/minecraft/data:/data"
     environment:
