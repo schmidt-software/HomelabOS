@@ -9,7 +9,7 @@ networks:
 services:
   # Weather Data Importer
   darksky_influx:
-    image: erwinsteffens/darksky-influxdb:latest
+    image: erwinsteffens/darksky-influxdb:{{ darksky_influx.version }}
     restart: always
     networks:
       - traefik_network
