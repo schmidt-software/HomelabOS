@@ -66,7 +66,7 @@
           depends_on:
             - shinobi_db
 
-        shinobi_db:{{ shinobi_db.version }}
+        shinobi_db:{{ shinobi.db_version }}
           image: mariadb
           restart: unless-stopped
           networks:
