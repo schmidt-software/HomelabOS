@@ -10,7 +10,7 @@ networks:
 
 services:
   webtrees_db:
-    image: mariadb:10.4
+    image: mariadb:{{ webtrees.db_version }}
     networks:
       - traefik_network
     restart: unless-stopped
