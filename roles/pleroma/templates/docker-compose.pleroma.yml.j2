@@ -10,7 +10,7 @@ networks:
 
 services:
   db:
-    image: postgres:{{ pleroma_db.version }}
+    image: postgres:{{ pleroma.db_version }}
     restart: always
     networks:
       - traefik_network
