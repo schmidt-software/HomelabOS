@@ -11,7 +11,7 @@ networks:
 services:
   heimdall:
     # REQUIRED
-    image: linuxserver/heimdall
+    image: linuxserver/heimdall:{{ heimdall.version }}
     restart: unless-stopped
     environment:
       - PUID={{ uid_output.stdout }}
