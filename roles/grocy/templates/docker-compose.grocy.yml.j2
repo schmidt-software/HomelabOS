@@ -7,7 +7,7 @@ networks:
 
 services:
   app:
-    image: linuxserver/grocy
+    image: linuxserver/grocy:{{ grocy.version }}
     restart: unless-stopped
     environment:
       - TZ={{ common_timezone }}
