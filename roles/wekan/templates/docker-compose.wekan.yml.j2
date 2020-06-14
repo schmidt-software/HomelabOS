@@ -12,7 +12,7 @@ networks:
 
 services:
   wekandb:
-    image: mongo:3.2.12
+    image: mongo:{{ wekan.db_version }}
     container_name: wekan-db
     restart: unless-stopped
     command: mongod --smallfiles --oplogSize 128
