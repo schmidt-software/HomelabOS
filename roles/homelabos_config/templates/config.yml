@@ -434,6 +434,7 @@ ghost:
   auth: {{ ghost.auth | default(False) }}
   domain: {{ ghost.domain | default(False) }}
   subdomain: {{ ghost.subdomain | default("ghost") }}
+  version: {{ ghost.version | default("3-alpine") }}
 gitea:
   enable: {{ gitea.enable | default(enable_gitea, None) | default(False) }}
   https_only: {{ gitea.https_only | default(False) }}
@@ -449,6 +450,10 @@ gitlab:
   auth: {{ gitlab.auth | default(False) }}
   domain: {{ gitlab.domain | default(False) }}
   subdomain: {{ gitlab.subdomain | default("gitlab") }}
+  version: {{ gitlab.version | default("latest") }}
+  runner_version: {{ gitlab.runner_version | default("alpine") }}
+  version: {{ gitlab.db_version | default("latest") }}
+  version: {{ gitlab.registry_version | default("latest") }}
   # Currently using default AWS vault entries for region/access_key/secret_key
   aws_lfs_enabled: {{ gitlab.aws_lfs_enabled | default(False) }}
   aws_lfs_bucket: {{ gitlab.aws_lfs_bucket | default(False) }}
@@ -470,18 +475,21 @@ gotify:
   auth: {{ gotify.auth | default(False) }}
   domain: {{ gotify.domain | default(False) }}
   subdomain: {{ gotify.subdomain | default("gotify") }}
+  version: {{ gotify.version | default("latest") }}
 grafana:
   enable: {{ grafana.enable | default(enable_grafana, None) | default(False) }}
   https_only: {{ grafana.https_only | default(False) }}
   auth: {{ grafana.auth | default(False) }}
   domain: {{ grafana.domain | default(False) }}
   subdomain: {{ grafana.subdomain | default("grafana") }}
+  version: {{ grafana.version | default("latest") }}
 grocy:
   enable: {{ grocy.enable | default(enable_grocy, None) | default(False) }}
   https_only: {{ grocy.https_only | default(False) }}
   auth: {{ grocy.auth | default(False) }}
   domain: {{ grocy.domain | default(False) }}
   subdomain: {{ grocy.subdomain | default("grocy") }}
+  version: {{ grocy.version | default("latest") }}
 grownetics:
   enable: {{ grownetics.enable | default(enable_grownetics, None) | default(False) }}
   https_only: {{ grownetics.https_only | default(False) }}
@@ -494,6 +502,9 @@ guacamole:
   auth: {{ guacamole.auth | default(False) }}
   domain: {{ guacamole.domain | default(False) }}
   subdomain: {{ guacamole.subdomain | default("guacamole") }}
+  version: {{ guacamole.version | default("latest") }}
+  db_version: {{ guacamole.db_version | default("latest") }}
+  proxy_version: {{ guacamole.proxy_version | default("latest") }}
 healthchecks:
   enable: {{ healthchecks.enable | default(enable_healthchecks, None) | default(False) }}
   https_only: {{ healthchecks.https_only | default(False) }}
@@ -604,6 +615,8 @@ mailu:
   auth: {{ mailu.auth | default(False) }}
   domain: {{ mailu.domain | default(False) }}
   subdomain: {{ mailu.subdomain | default("mailu") }}
+  version: {{ mailu.version | default ("1.7") }}
+  redis_version: {{ mailu.redis_version | default ("alpine") }}
   forward_to_smtp: {{ mailu.forward_to_smtp | default(False)  }}
 mashio:
   enable: {{ mashio.enable | default(enable_mashio, None) | default(False) }}
@@ -611,32 +624,44 @@ mashio:
   auth: {{ mashio.auth | default(False) }}
   domain: {{ mashio.domain | default(False) }}
   subdomain: {{ mashio.subdomain | default("mashio") }}
+  version: {{ mashio.version | default ("latest") }}
+  db_version: {{ mashio.db_version | default ("latest") }}
 massivedecks:
   enable: {{ massivedecks.enable | default(enable_massivedecks, None) | default(False) }}
   https_only: {{ massivedecks.https_only | default(False) }}
   auth: {{ massivedecks.auth | default(False) }}
   domain: {{ massivedecks.domain | default(False) }}
   subdomain: {{ massivedecks.subdomain | default("massivedecks") }}
+  server_version: {{ massivedecks.server_version | default ("latest") }}
+  client_version: {{ massivedecks.client_version | default ("latest") }}
 matomo:
   enable: {{ matomo.enable | default(enable_matomo, None) | default(False) }}
   https_only: {{ matomo.https_only | default(False) }}
   auth: {{ matomo.auth | default(False) }}
   domain: {{ matomo.domain | default(False) }}
   subdomain: {{ matomo.subdomain | default("matomo") }}
+  version: {{ matomo.version | default ("latest") }}
+  db_version: {{ matomo.db_version | default ("latest") }}
 matterbridge:
   enable: {{ matterbridge.enable | default(enable_matterbridge, None) | default(False) }}
+  version: {{ matterbridge.version | default("latest") }}
 mayan:
   enable: {{ mayan.enable | default(enable_mayan, None) | default(False) }}
   https_only: {{ mayan.https_only | default(False) }}
   auth: {{ mayan.auth | default(False) }}
   domain: {{ mayan.domain | default(False) }}
   subdomain: {{ mayan.subdomain | default("mayan") }}
+  version: {{ mayan.version | default("latest") }}
+  db_version: {{ mayan.db_version | default("latest") }}
+  redis_version: {{ mayan.redis_version | default("latest") }}
+  rabbitmq_version: {{ mayan.rabbitmq_version | default("latest") }}
 minecraft:
   enable: {{ minecraft.enable | default(enable_minecraft, None) | default(False) }}
   https_only: {{ minecraft.https_only | default(False) }}
   auth: {{ minecraft.auth | default(False) }}
   domain: {{ minecraft.domain | default(False) }}
   subdomain: {{ minecraft.subdomain | default("minecraft") }}
+  version: {{ minecraft.version | default("latest") }}
   online_mode: {{ minecraft.online_mode | default(True) }}
   server_type: {{ minecraft.server_type | default("VANILLA") }}
   server_version: {{ minecraft.server_version | default("LATEST") }}
@@ -646,6 +671,7 @@ minecraftbedrockserver:
   auth: {{ minecraftbedrockserver.auth | default(False) }}
   domain: {{ minecraftbedrockserver.domain| default(False) }}
   subdomain: {{ minecraftbedrockserver.subdomain | default("minecraftbedrockserver") }}
+  version: {{ minecraftbedrockserver.version | default("latest") }}
   eula: {{ minecraftbedrockserver.eula | default("TRUE") }}
   server_name: {{ minecraftbedrockserver.server_name | default("HomelabOS") }} #any string
   server_port: {{ minecraftbedrockserver.server_port | default("19132") }} #any integer, 19132 is default
@@ -670,30 +696,37 @@ miniflux:
   auth: {{ miniflux.auth | default(False) }}
   domain: {{ miniflux.domain | default(False) }}
   subdomain: {{ miniflux.subdomain | default("miniflux") }}
+  version: {{ miniflux.version | default("2.0.21") }}
+  db_version: {{ miniflux.db_version | default("10.1") }}
 minio:
   enable: {{ minio.enable | default(enable_minio, None) | default(False) }}
   https_only: {{ minio.https_only | default(False) }}
   auth: {{ minio.auth | default(False) }}
   domain: {{ minio.domain | default(False) }}
   subdomain: {{ minio.subdomain | default("minio") }}
+  version: {{ minio.version | default("latest") }}
 monicahq:
   enable: {{ monicahq.enable | default(enable_monicahq, None) | default(False) }}
   https_only: {{ monicahq.https_only | default(False) }}
   auth: {{ monicahq.auth | default(False) }}
   domain: {{ monicahq.domain | default(False) }}
   subdomain: {{ monicahq.subdomain | default("monicahq") }}
+  version: {{ monicahq.version | default("latest") }}
+  db_version: {{ monicahq.db_version | default("latest") }}
 mstream:
   enable: {{ mstream.enable | default(enable_mstream, None) | default(False) }}
   https_only: {{ mstream.https_only | default(False) }}
   auth: {{ mstream.auth | default(False) }}
   domain: {{ mstream.domain | default(False) }}
   subdomain: {{ mstream.subdomain | default("mstream") }}
+  version: {{ mstream.version | default("latest") }}
 mylar:
   enable: {{ mylar.enable | default(enable_mylar, None) | default(False) }}
   https_only: {{ mylar.https_only | default(False) }}
   auth: {{ mylar.auth | default(False) }}
   domain: {{ mylar.domain | default(False) }}
   subdomain: {{ mylar.subdomain | default("mylar") }}
+  version: {{ mylar.version | default("latest") }}
 n8n:
   enable: {{ n8n.enable | default(enable_n8n, None) | default(False) }}
   https_only: {{ n8n.https_only | default(False) }}
