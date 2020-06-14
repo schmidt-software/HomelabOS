@@ -61,7 +61,7 @@ services:
 {% endif %}
 
   wallabag_db:
-    image: mariadb:10.4
+    image: mariadb:{{ wallabag.db_version }}
     networks:
       - traefik_network
     restart: unless-stopped
@@ -72,4 +72,4 @@ services:
       - MYSQL_PASSWORD={{lookup('password', './settings/passwords/wallabag_db_password chars=ascii_letters')}}
 
   redis:
-    image: redis:alpine
+    image: redis:{{ wallabag.redis_version }}
