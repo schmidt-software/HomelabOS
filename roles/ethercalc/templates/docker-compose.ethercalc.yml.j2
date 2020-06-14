@@ -10,14 +10,14 @@ networks:
 
 services:
   ethercalc_redis:
-    image: redis:latest
+    image: redis:{{ ethercalc.redis_version }}
     volumes:
       - {{ volumes_root }}/ethercalc/redis:/data
     command: redis-server --appendonly yes
     restart: unless-stopped
   ethercalc:
     # REQUIRED
-    image: audreyt/ethercalc
+    image: audreyt/ethercalc:{{ ethercalc.redis_version }}
     restart: unless-stopped
     networks:
       - traefik_network
