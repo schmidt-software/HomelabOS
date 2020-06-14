@@ -34,7 +34,7 @@ services:
       - MAIL_ENCRYPTION=tls
       - TZ={{ common_timezone }}
       - ServerName=money.{{ domain }}
-    image: jc5x/firefly-iii:{{ firefly-iii.version }}
+    image: jc5x/firefly-iii:{{ firefly_iii.version }}
     networks:
       - traefik_network
     volumes:
