@@ -50,7 +50,7 @@ services:
 {% endif %}
 
   mysql:
-    image: mysql:{{ bookstack_mysql.version }}
+    image: mysql:{{ bookstack.db_version }}
     networks:
       - traefik_network
     restart: unless-stopped
