@@ -67,7 +67,8 @@ vault:
     duo:
       integration_key: {{ vault.authelia.duo.integration_key | default() }}
       secret_key: {{ vault.authelia.duo.secret_key | default() }}
-    migration: {{ vault.authelia.migration | default(False) }} # Don't change these unless you know what you're doing
+    # Don't change these unless you know what you're doing
+    migration: {{ vault.authelia.migration | default(False) }}
     
   bitwarden:
     token: {{ vault.bitwarden.token | default(default_password) }}
