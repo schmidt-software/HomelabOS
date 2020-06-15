@@ -65,6 +65,7 @@ vault:
 
   authelia:
     duo:
+      hostname: {{ vault.authelia.duo.hostname | default() }}
       integration_key: {{ vault.authelia.duo.integration_key | default() }}
       secret_key: {{ vault.authelia.duo.secret_key | default() }}
     # Don't change these unless you know what you're doing
