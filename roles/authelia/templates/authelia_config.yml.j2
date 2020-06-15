@@ -129,7 +129,7 @@ access_control:
     - domain: portainer.{{ domain }}
       policy: one_factor
 
-    - domain: auth.{{ domain }}
+    - domain: {{ service_domain }}
       policy: bypass
 
     - domain: '*.{{ domain }}'
