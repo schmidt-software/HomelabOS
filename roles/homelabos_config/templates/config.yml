@@ -189,24 +189,35 @@ authelia:
   redis_version: {{ authelia.redis_version | default("5.0.5-alpine") }}
   db_version: {{ authelia.db_version | default("latest") }}
   redirect_url:  {{ authelia.redirect_url | default("https://organizr." + domain) }}
-  log_level: {{ authelia.log_level | default('debug') }} # Determines how verbose the logs are
-  use_username: {{ authelia.use_username | default(True) }} # Use common name "john doe" or username "jdoe"?
-  default_user_email: "{{ authelia.default_user_email | default() }} # MUST be a REAL, ACCESSABLE address!
+  # Determines how verbose the logs are
+  log_level: {{ authelia.log_level | default('debug') }}
+   # Use common name "john doe" or username "jdoe"?
+  use_username: {{ authelia.use_username | default(True) }}
+   # MUST be a REAL, ACCESSABLE address!
+  default_user_email: "{{ authelia.default_user_email | default() }}
   max:
-    retries: {{ authelia.max.retries | default(5) }}  # max # of retries to authenticate (default 5)
-    retries_in_time: {{ authelia.max.retries_in_time | default(120) }} # max time before the retry count resets (default 2 min)
-    retries_ban_time: {{ authelia.max.retries_ban_time | default(300) }} # ban if max retry count within the time frame (in seconds) is exceeded 
+     # max # of retries to authenticate (default 5)
+    retries: {{ authelia.max.retries | default(5) }}
+     # max time before the retry count resets (default 2 min)
+    retries_in_time: {{ authelia.max.retries_in_time | default(120) }}
+    # ban if max retry count within the time frame (in seconds) is exceeded
+    retries_ban_time: {{ authelia.max.retries_ban_time | default(300) }}
   default:
-    factor_count: {{ authelia.default.factor_count | default('one_factor') }} # the number of authentication factors required by default
-    cookie_expiration: {{ authelia.default.cookie_expiration | default(3600000) }} # how long it takes for the cookie to expire (default, 1hr)
-    cookie_inactivity: {{ authelia.default.cookie_inactivity | default(300000) }}  # inactivity time for the cookie default (5m)
-    policy: {{ authelia.default.policy | default('deny') }} # default policy - deny by default
+    # the number of authentication factors required by default
+    factor_count: {{ authelia.default.factor_count | default('one_factor') }}
+    # how long it takes for the cookie to expire (default, 1hr)
+    cookie_expiration: {{ authelia.default.cookie_expiration | default(3600000) }}
+    # inactivity time for the cookie default (5m)
+    cookie_inactivity: {{ authelia.default.cookie_inactivity | default(300000) }}
+    # default policy - deny by default
+    policy: {{ authelia.default.policy | default('deny') }}
   duo:
     hostname: {{ authelia.duo.hostname | default() }}
 {% raw %}
     integration_key: "{{ vault.authelia.duo.integration_key }}"
     secret_key: "{{ vault.authelia.duo.secret_key }}"
-  migration: "{{ vault.authelia.migration }}" # Don't change these unless you know what you're doing
+  # Don't change these unless you know what you're doing
+  migration: "{{ vault.authelia.migration }}"
 {% endraw %}
 barcodebuddy:
   enable: {{ barcodebuddy.enable | default(enable_barcodebuddy, None) | default(False) }}
