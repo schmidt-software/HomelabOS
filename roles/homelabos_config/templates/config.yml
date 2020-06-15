@@ -194,7 +194,7 @@ authelia:
    # Use common name "john doe" or username "jdoe"?
   use_username: {{ authelia.use_username | default(True) }}
    # MUST be a REAL, ACCESSABLE address!
-  default_user_email: "{{ authelia.default_user_email | default() }}
+  default_user_email: {{ authelia.default_user_email | default() }}
   max:
      # max # of retries to authenticate (default 5)
     retries: {{ authelia.max.retries | default(5) }}
