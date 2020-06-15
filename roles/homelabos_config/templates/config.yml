@@ -214,9 +214,9 @@ authelia:
     cookie_inactivity: {{ authelia.default.cookie_inactivity | default(vault.authelia.default.cookie_inactivity, None) | default(300000) }}
     # default policy - deny by default
     policy: {{ authelia.default.policy | default(vault.authelia.default.policy, None) | default('deny') }}
-  duo:
-    hostname: {{ authelia.duo.hostname | default(vault.authelia.duo.hostname, None) | default() }}
 {% raw %}
+  duo:
+    hostname: "{{ authelia.duo.hostname}}"
     integration_key: "{{ vault.authelia.duo.integration_key }}"
     secret_key: "{{ vault.authelia.duo.secret_key }}"
   # Don't change these unless you know what you're doing
