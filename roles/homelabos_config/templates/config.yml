@@ -196,6 +196,8 @@ authelia:
    # MUST be a REAL, ACCESSABLE address!
   default_user_email: {{ authelia.default_user_email | default() }}
   max:
+    # Value is in seconds, or duration notation. See: https://docs.authelia.com/configuration/index.html#duration-notation-format
+    remember_me_duration: {{ authelia.max.remember_me_duration | default('1M') }}
      # max # of retries to authenticate (default 5)
     retries: {{ authelia.max.retries | default(5) }}
      # max time before the retry count resets (default 2 min)
