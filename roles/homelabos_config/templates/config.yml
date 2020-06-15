@@ -188,9 +188,9 @@ authelia:
   auth: "{{ vault.authelia.enable }}"
   domain: "{{ vault.authelia.domain }}"
   subdomain: "{{ vault.authelia.subdomain }}"
-  version: {{ authelia.version | default("latest") }}
-  redis_version: {{ authelia.redis_version | default("5.0.5-alpine") }}
-  db_version: {{ authelia.db_version | default("latest") }}
+  version: "{{ vault.authelia.version }}"
+  redis_version: "{{ vault.authelia.redis_version }}"
+  db_version: "{{ vault.authelia.db_version }}"
   redirect_url:  "{{ vault.authelia.redirect_url }}"
   # Determines how verbose the logs are
   log_level: "{{ vault.authelia.log_level }}"
@@ -243,21 +243,21 @@ beets:
 
 {% raw %}
 bitwarden:
-    enable: "{{ vault.bitwarden.enable | default(enable_bitwarden, None) | default(False) }}"
-    https_only: "{{ vault.bitwarden.https_only | default(False) }}"
-    auth: "{{ vault.bitwarden.auth | default(False) }}"
-    domain: "{{ vault.bitwarden.domain | default(False) }}"
-    subdomain: "{{ vault.bitwarden.subdomain | default('bitwarden') }}"
-    version: "{{ bitwarden.version | default('latest') }}"
+    enable: "{{ vault.bitwarden.enable }}"
+    https_only: "{{ vault.bitwarden.https_only }}"
+    auth: "{{ vault.bitwarden.auth }}"
+    domain: "{{ vault.bitwarden.domain }}"
+    subdomain: "{{ vault.bitwarden.subdomain }}"
+    version: "{{ vault.bitwarden.version }}"
     # Enable admin page
     # IMPORTANT: Activate HTTPS before enabling this feature, to avoid possible MITM attacks.
     # Reference: https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
-    token: "{{ vault.bitwarden.token | default(default_password) }}"
-    signups_allowed: "{{ vault.bitwarden.signups_allowed | default('true') }}"
+    token: "{{ vault.bitwarden.token }}"
+    signups_allowed: "{{ vault.bitwarden.signups_allowed }}"
     # Only allow signups from certain domains (set signups_allowed to "false")
     # Note that no e-mail validation is done, only e-mail domain that's provided on registration
     # Can be a single entry "example.com", or multiple comma separated: "example.com,example.net,example.org"
-    signups_domains_whitelist: "{{ vault.bitwarden.signups_domains_whitelist | default(False) }}"
+    signups_domains_whitelist: "{{ vault.bitwarden.signups_domains_whitelist }}"
 {% endraw %}
 
 bookstack:
@@ -340,12 +340,12 @@ drone:
   version: {{ drone.version | default("1.0") }}
   agent_version: {{ drone.agent_version | default("1.0") }}
 {% raw %}
-  gitea_id: "{{ vault.drone.gitea_id | default(False) }}"
-  gitea_secret: "{{ vault.drone.gitea_secret | default(False) }}"
+  gitea_id: "{{ vault.drone.gitea_id }}"
+  gitea_secret: "{{ vault.drone.gitea_secret }}"
 duckdns:
-  enable: "{{ vault.duckdns.enable | default(enable_duckdns, None) | default(False) }}"
-  version: "{{ duckdns.version | default('latest') }}"
-  token: "{{ vault.duckdns.token | default(False) }}"
+  enable: "{{ vault.duckdns.enable }}"
+  version: "{{ vault.duckdns.version }}"
+  token: "{{ vault.duckdns.token }}"
 {% endraw %}
 duplicati:
   enable: {{ duplicati.enable | default(enable_duplicati, None) | default(False) }}
@@ -1102,9 +1102,9 @@ wallabag:
   redis_version: {{ wallabag.redis_version | default("alpine") }}
 {% raw %}
 watchtower:
-  enable: "{{ vault.watchtower.enable | default(enable_watchtower, None) | default(False) }}"
-  notification: "{{ vault.watchtower.notification | default (False) }}"
-  gotify_token: "{{ vault.watchtower.gotify_token | default (False) }}"
+  enable: "{{ vault.watchtower.enable }}"
+  notification: "{{ vault.watchtower.notification }}"
+  gotify_token: "{{ vault.watchtower.gotify_token }}"
 {% endraw %}
 webtrees:
   enable: {{ webtrees.enable | default(enable_webtrees, None) | default(False) }}

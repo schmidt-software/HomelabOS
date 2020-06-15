@@ -69,7 +69,10 @@ vault:
     https_only: {{ vault.authelia.https_only | default(False) }}
     auth: {{ vault.authelia.enable | default(authelia.enable, None) | default(False) }}
     domain: {{ vault.authelia.domain | default(False) }}
-    subdomain: {{ vault.authelia.subdomain | default("auth") }}
+    subdomain: {{ vault.authelia.subdomain | default('auth') }}
+    version: {{ vault.authelia.version | default('latest') }}
+    redis_version: {{ vault.authelia.redis_version | default('5.0.5-alpine') }}
+    db_version: {{ vault.authelia.db_version | default('latest') }}
     redirect_url:  {{ vault.authelia.redirect_url | default("https://organizr." + domain) }}
     # Determines how verbose the logs are
     log_level: {{ vault.authelia.log_level | default('debug') }}
@@ -110,6 +113,7 @@ vault:
     auth: {{ vault.bitwarden.auth | default(False) }}
     domain: {{ vault.bitwarden.domain | default(False) }}
     subdomain: {{ vault.bitwarden.subdomain | default("bitwarden") }}
+    version: {{ vault.bitwarden.version | default('latest') }}
     # Enable admin page
     # IMPORTANT: Activate HTTPS before enabling this feature, to avoid possible MITM attacks.
     # Reference: https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
@@ -127,6 +131,7 @@ vault:
   duckdns:
     enable: {{ vault.duckdns.enable | default(enable_duckdns, None) | default(False) }}
     token: {{ vault.duckdns.token | default(False) }}
+    version: {{ vault.duckdns.version | default('latest')}}
 
   watchtower:
     enable: {{ vault.watchtower.enable | default(enable_watchtower, None) | default(False) }}
