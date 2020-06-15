@@ -1,4 +1,47 @@
 ---
+# by default, the FreshRSS image can use SQLite (and thus requires no separate database container)
+# some PostgresSQL example information is included for demonstration purposes (especially environment-variable-based configuration)
+
+version: '2.3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+  #freshrss:
+
+services:
+  # RSS Reader
+  freshrss:
+    image: freshrss/freshrss:{{ freshrss.version }}
+    networks:
+      - traefik_network
+      #- freshrss
+    restart: unless-stopped
+    environment:
+      - CRON_MIN=*/20
+    volumes:
+      - "{{ volumes_root }}/freshrss/data:/var/www/FreshRSS/data"
+    labels:
+      - "traefik.http.services.freshrss.loadbalancer.server.scheme=http"
+      - "traefik.http.services.freshrss.loadbalancer.server.port=80"
+{% include './labels.j2' %}
+
+
+# see https://github.com/FreshRSS/FreshRSS/blob/master/Docker/docker-compose.yml
+#  postgresql:
+#    image: postgres:latest
+#    networks:
+#      - freshrss
+#    restart: unless-stopped
+#    environment:
+#      - POSTGRES_USER=freshrss
+#      - POSTGRES_DB=freshrss
+#      - POSTGRES_PASSWORD="{{lookup('password', './settings/passwords/freshrss_db_password chars=ascii_letters')}}"
+#      - POSTGRES_PASSWORD=freshrss
+#    volumes:
+#      - "{{ volumes_root }}/freshrss/db:/var/lib/postgresql/data"
+---
 version: '3'
 
 networks:
