@@ -216,7 +216,7 @@ authelia:
     policy: {{ authelia.default.policy | default(vault.authelia.default.policy, None) | default('deny') }}
 {% raw %}
   duo:
-    hostname: "{{ authelia.duo.hostname}}"
+    hostname: "{{ vault.authelia.duo.hostname}}"
     integration_key: "{{ vault.authelia.duo.integration_key }}"
     secret_key: "{{ vault.authelia.duo.secret_key }}"
   # Don't change these unless you know what you're doing
