@@ -49,6 +49,7 @@ services:
   invoiceninja:
   jackett:
   jellyfin:
+  jenkins:
   keycloak:
   kibitzr:
   lazylibrarian:
@@ -173,6 +174,7 @@ inventario:
 invoiceninja:
 jackett:
 jellyfin:
+jenkins:
 keycloak:
 kibitzr:
 lazylibrarian:
