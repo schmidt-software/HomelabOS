@@ -11,6 +11,11 @@
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
+- name: Copy pkgtemplate documentation into place.
+  copy:
+    src: pkgtemplate.md
+    dest: "{{ volumes_root }}/docs/docs/software/"
+
 - name: Configure pkgtemplate systemd service.
   template:
     src: service.j2

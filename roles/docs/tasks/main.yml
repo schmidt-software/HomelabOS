@@ -1,24 +1,8 @@
 ---
-
-- name: Install pipenv
-  pip:
-    name: pipenv
-    executable: /usr/bin/pip3
-
 - name: Make HomelabOS documentation directory.
   file:
     path: "{{ volumes_root }}/docs"
     state: directory
-
-- name: Read Tor connection info
-  shell: cat /var/lib/tor/http-onion/hostname
-  register: tor_domain_file
-  when: enable_tor
-
-- name: Read Tor connection info
-  shell: cat /var/lib/tor/ssh-onion/hostname
-  register: tor_ssh_domain_file
-  when: enable_tor
 
 - name: Ensure directory structure exists
   file:
@@ -32,26 +16,14 @@
     src: "{{ item.src }}"
     dest: "{{ volumes_root }}/docs/docs/{{ item.path }}"
   with_filetree: "docs/"
-  when: item.state == 'file' and item.src is match(".md")
+  when: item.state == 'file'
 
 - name: copy configuration files
   copy:
     src: "{{ item }}"
     dest: "{{ volumes_root }}/docs/{{ item }}"
   loop:
-    - Pipfile
-    - Pipfile.lock
     - mkdocs.yml
-
-- name: fetch pipenv dependencies
-  shell: pipenv --three install
-  args:
-    chdir: "{{ volumes_root }}/docs"
-
-- name: build the documentation with mkdocs
-  shell: pipenv --three run mkdocs build
-  args:
-    chdir: "{{ volumes_root }}/docs"
 
 - name: Copy HomelabOS docker-compose.yml file into place.
   template:
@@ -60,7 +32,7 @@
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
-- name: Configure HomelabOS systemd service.
+- name: Configure HomelabOS Docs systemd service.
   template:
     src: service.j2
     dest: /etc/systemd/system/docs.service
