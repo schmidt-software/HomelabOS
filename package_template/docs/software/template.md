@@ -16,7 +16,7 @@ To finalise any changes made, please run:
 
 **`make update_one PackageFileName`**
 
-More information about available commands can be found in the documentation, [here]() 
+More information about available commands can be found in the documentation, [here]()
 
 ## First run
 ### Admin setup
