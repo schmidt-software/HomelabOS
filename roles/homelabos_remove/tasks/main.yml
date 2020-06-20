@@ -30,6 +30,15 @@
   loop_control:
     loop_var: service_item
 
+- name: remove services' docs.
+  file:
+    state: absent
+    path: "{{ volumes_root }}/docs/docs/software/{{ service_item }}.md"
+  when: confirm_remove|bool
+  loop: "{{ services|flatten(levels=1) }}"
+  loop_control:
+    loop_var: service_item
+
 - when: confirm_remove|bool
   debug:
     msg: "Package removed successfully! Go to https://{{ domain }}/ to get started."
