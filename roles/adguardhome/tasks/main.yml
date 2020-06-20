@@ -35,6 +35,11 @@
   vars:
     password: "{{passwrd.stdout}}"
 
+- name: Copy adguardhome documentation into place.
+  copy:
+    src: adguardhome.md
+    dest: "{{ volumes_root }}/docs/docs/software/adguardhome/{{ adguardhome.version }}/"
+
 - name: Configure adguardhome systemd service.
   template:
     src: service.j2
