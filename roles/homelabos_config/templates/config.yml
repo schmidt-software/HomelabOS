@@ -152,12 +152,12 @@ enable_tor: {{ enable_tor | default(False) }}
 
 # Services
 docs:
-  enable: {{ docs.enable | default(enable_docs, None) | default(False) }}
+  enable: {{ docs.enable | default(enable_docs, None) | default(True) }}
   https_only: {{ docs.https_only | default(False) }}
   auth: {{ docs.auth | default(False) }}
   domain: {{ docs.domain | default(False) }}
   subdomain: {{ docs.subdomain | default("docs") }}
-  version: {{docs.version | default("latest") }}
+  version: {{docs.version | default("1.1.2") }}
 apache2:
   enable: {{ apache2.enable | default(enable_apache2, None) | default(False) }}
   https_only: {{ apache2.https_only | default(False) }}
