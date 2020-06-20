@@ -2,9 +2,9 @@
 
 [PackageTitleCase](PackageURL) PackageOneLiner
 
-**Version** {{ PackageFilename.version }}  (if a version is not displayed here, then it is built during deployment of HomelabOS)
+**Current Version**: {% if PackageFilename.version %}{{ PackageFilename.version }}{% else %}This package is built during deployment of HomelabOS.{% endif %}
 
-**Supported Architectures:** amd64, <NOTICE: maintainer!!!, complete this yourself, if you don't know what architectures it supports, dont add it!>
+**Supported Architectures:** amd64, !!! NOTICE: complete this yourself, if you don't know what architectures it supports, dont add it !!!
 
 ## Setup
 
@@ -14,14 +14,15 @@ To enable PackageTitleCase, run the following command:
 
 To finalise any changes made, please run:
 
-**`make update_one PackageFileName`**
+**`make update_one PackageFileName`** or just run **`make`**
 
 More information about available commands can be found in the documentation, [here]()
 
 ## First run
 ### Admin setup
 
-navigate to ...
+!!! INCLUDE: how to set up an admin account !!!
+!!! If there are any things to note, please add them in another heading or above admin setup !!!
 
 ## Access
 
@@ -45,3 +46,8 @@ PackageFileName:
   https_only: True
   auth: True
 ```
+
+## PackageTitleCase without HomelabOS? Can I do that?!
+
+If this line is here, the user that added this package, did not include a way to use PackageTitleCase without HomelabOS.
+Please use 

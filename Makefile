@@ -1,4 +1,4 @@
-.PHONY: logo decrypt build deploy docs_build restore develop lint docs_local count_services
+.PHONY: logo decrypt build deploy restore develop lint count_services
 
 VERSION := $(cat VERSION)
 bold := $(shell tput bold)
@@ -188,16 +188,6 @@ develop: logo build config
 	@[ -f settings/test_config.yml ] || cp settings/config.yml settings/test_config.yml
 	@vagrant up --provision
 	@printf "$(byel)========== Done spinning up dev stack! ==========$(end)"
-
-# Serve the HomelabOS Documentation locally
-docs_local:
-	@docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
-
-# Build the HomelabOs Documentation - Requires mkdocs with the Material Theme
-docs_build: logo build git_sync config
-	@printf "$(byel)========== Building docs ==========$(end)"
-	@which mkdocs && mkdocs build || printf 'Unable to build the documentation. Please install mkdocs.'
-	@printf "$(byel)========== Done building docs ==========$(end)"
 
 # Return the amount of services included in this version of HomelabOS
 count_services:
