@@ -16,9 +16,9 @@ services:
     networks:
       - traefik_network
     environment:
-      - PLUGINS: "jinja2, mk2pdf, awesome-pages, git-revision-date-localized, mermaid2"
+      - PLUGINS="jinja2, mk2pdf, awesome-pages, git-revision-date-localized, mermaid2"
     volumes:
-      - {{ volumes_root }}/docs/mkdocs.yml:/mkdocs.yml
+      - {{ volumes_root }}/docs/mkdocs.yml:/mkdocs.yml:ro
       - {{ volumes_root }}/docs/software:/docs
     labels:
       - "traefik.http.services.docs.loadbalancer.server.scheme=http"

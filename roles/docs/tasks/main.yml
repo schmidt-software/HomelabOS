@@ -1,29 +1,24 @@
 ---
 - name: Make HomelabOS documentation directory.
   file:
-    path: "{{ volumes_root }}/docs"
+    path: "{{ item }}"
     state: directory
+  loop:
+    - "{{ volumes_root }}/docs/conf"
+    - "{{ volumes_root }}/docs/docs"
+    - "{{ volumes_root }}/docs/docs/software"
 
-- name: Ensure directory structure exists
-  file:
-    path: "{{ volumes_root }}/docs/docs/{{ item.path }}"
-    state: directory
-  with_filetree: "docs/"
-  when: item.state == 'directory'
-
-- name: Configure HomelabOS Documentation.
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ volumes_root }}/docs/docs/{{ item.path }}"
-  with_filetree: "docs/"
-  when: item.state == 'file'
-
-- name: copy configuration files
+- name: Copy configuration files
   copy:
     src: "{{ item }}"
-    dest: "{{ volumes_root }}/docs/{{ item }}"
+    dest: "{{ volumes_root }}/docs/conf/{{ item }}"
   loop:
     - mkdocs.yml
+
+- name: Copy docs folder contents
+  copy:
+    src: ../docs
+    dest: "{{ volumes_root }}/docs/docs"
 
 - name: Copy HomelabOS docker-compose.yml file into place.
   template:
