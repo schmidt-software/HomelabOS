@@ -7,9 +7,9 @@ edit_uri: "/NickBusey/HomelabOS/edit/dev/docs"
 plugins:
   - search # necessary for search to work
   - awesome-pages:
-    - filename: .index
-    - collapse_single_pages: false
-    - strict: false
+    filename: .index
+    collapse_single_pages: false
+    strict: false
   - mkdocs-versioning
   - git-revision-date-localized
   - mk2pdf-export
