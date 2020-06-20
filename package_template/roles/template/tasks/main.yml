@@ -14,7 +14,7 @@
 - name: Copy pkgtemplate documentation into place.
   copy:
     src: pkgtemplate.md
-    dest: "{{ volumes_root }}/docs/docs/software/"
+    dest: "{{ volumes_root }}/docs/docs/software/{{ pkgtemplate.version }}/"
 
 - name: Configure pkgtemplate systemd service.
   template:
