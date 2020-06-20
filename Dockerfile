@@ -73,6 +73,7 @@ RUN set -x && \
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
 ENV ANSIBLE_RETRY_FILES_ENABLED false
+# The first path in ANSIBLE_ROLES_PATH will be used by ansible-galaxy to download roles to.
 ENV ANSIBLE_ROLES_PATH /data/roles/galaxy:/data/roles/core:/data/roles/services
 ENV ANSIBLE_SSH_PIPELINING True
 ENV ANSIBLE_VAULT_PASSWORD_FILE /ansible_vault_pass
