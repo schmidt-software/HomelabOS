@@ -15,6 +15,13 @@ if [ -f "$HOME/.ssh/id_rsa" -a -f "$HOME/.ssh/id_rsa.pub" -a -f "$HOME/.homelabo
       -v $(pwd):/data \
       -v $HOME/.homelabos_vault_pass:/ansible_vault_pass \
       homelabos:${VERSION} "$@"
+elif [ -f "$HOME/.ssh/id_ed25519" -a -f "$HOME/.ssh/id_ed25519.pub" -a -f "$HOME/.homelabos_vault_pass" ]; then
+    docker run --rm -it \
+      -v $HOME/.ssh/id_ed25519:/root/.ssh/id_ed25519 \
+      -v $HOME/.ssh/id_ed25519.pub:/root/.ssh/id_ed25519.pub \
+      -v $(pwd):/data \
+      -v $HOME/.homelabos_vault_pass:/ansible_vault_pass \
+      homelabos:${VERSION} "$@"
 else
     echo "You have no SSH keys in your home directory: $HOME"
     echo "Please generate a set of keys using the command:"
