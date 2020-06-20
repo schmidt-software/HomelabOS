@@ -18,8 +18,8 @@ services:
     environment:
       - PLUGINS="jinja2, mk2pdf, awesome-pages, git-revision-date-localized, mermaid2"
     volumes:
-      - {{ volumes_root }}/docs/mkdocs.yml:/mkdocs.yml:ro
-      - {{ volumes_root }}/docs/software:/docs
+      - {{ volumes_root }}/docs/conf/mkdocs.yml:/mkdocs.yml:ro
+      - {{ volumes_root }}/docs/docs/software:/docs
     labels:
       - "traefik.http.services.docs.loadbalancer.server.scheme=http"
       - "traefik.http.services.docs.loadbalancer.server.port=8000"
