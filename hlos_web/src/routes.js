@@ -37,7 +37,7 @@ import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 
-const DEVMODE=true;
+const DEVMODE=false;
 
 const devRoutes = [
   {
