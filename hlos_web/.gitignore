@@ -24,3 +24,6 @@ yarn-error.log*
 
 .env*
 /**/.vscode
+
+**/node_modules/**
+src_old/

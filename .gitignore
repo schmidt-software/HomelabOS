@@ -15,3 +15,4 @@ pkg/
 *.swp
 idea/
 bootstrap_install/server_credentials
+bootstrap_install/scripts/config_secrets

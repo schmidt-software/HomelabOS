@@ -1,28 +1,32 @@
+/*!
+  HomelabOS Web UI starter file
+  This UI uses Material Dashboard React:
+   * Product Page: https://www.creative-tim.com/product/material-dashboard-react
+   * Copyright 2020 Creative Tim (https://www.creative-tim.com)
+   * Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
+   * Coded by Creative Tim
+   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+   The HomelabOS UI was initially coded by kpoppel (github/gitlab) - 2020
+*/
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
-import './index.css';
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+// core components
+import Main from "layouts/Main.js";
+
+import "assets/css/material-dashboard-react.css?v=1.9.0";
+
+const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Router history={hist}>
+    <Switch>
+      <Route path="/main" component={Main} />
+      <Redirect from="/" to="/main/dashboard" />
+    </Switch>
+  </Router>,
   document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
-
-/*
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-*/
