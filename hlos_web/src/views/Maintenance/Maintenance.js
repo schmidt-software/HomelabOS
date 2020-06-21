@@ -42,7 +42,6 @@ export default function Maintenance(props) {
   const classes = useStyles();
 
   // Initial state using React Hooks: [variable, setter function] = ... (initial value)
-//  const [hostip, setHostIP] = React.useState(AnsibleApiDataService.hostip);
   const [hostip, setHostIP] = React.useState(props.state.restore().hostip);
 
   // onchange handler functions
