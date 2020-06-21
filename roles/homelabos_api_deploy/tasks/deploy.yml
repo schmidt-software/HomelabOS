@@ -9,6 +9,6 @@
   git:
     repo: https://gitlab.com/NickBusey/HomelabOS.git
     # version: master
-    version: 220_hlos_web_ui_iteration_2
+    version: "{{ ansible_web_ui_branch | default('dev') }}"
     dest: "{{ volumes_root }}/install"
     accept_hostkey: true
