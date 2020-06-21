@@ -1,3 +1,33 @@
+# Docker
+There are two Docker files: `Dockerfile`and `Dockerfile.prod`
+One is for development purposes, the other builds the projec and deploy an nginx server with the app running.
+
+Build for development:
+docker build -t hlos_web:dev .
+
+docker run \
+    -it \
+    --rm \
+    -v ${PWD}:/app \
+    -v /app/node_modules \
+    -p 3000:3000 \
+    -e CHOKIDAR_USEPOLLING=true \
+    hlos_web:dev
+
+docker-compose up -d --build
+docker-compose stop
+
+Build for production:
+
+docker build -f Dockerfile.prod -t sample:prod .
+docker run -it --rm -p 8080:80 sample:prod
+
+
+or docker-compose:
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# React docs
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,31 +96,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-# Docker
-There are two Docker files: `Dockerfile`and `Dockerfile.prod`
-One is for development purposes, the other builds the projec and deploy an nginx server with the app running.
-
-Build for development:
-docker build -t hlos_web:dev .
-
-docker run \
-    -it \
-    --rm \
-    -v ${PWD}:/app \
-    -v /app/node_modules \
-    -p 3000:3000 \
-    -e CHOKIDAR_USEPOLLING=true \
-    hlos_web:dev
-
-docker-compose up -d --build
-docker-compose stop
-
-Build for production:
-
-docker build -f Dockerfile.prod -t sample:prod .
-docker run -it --rm -p 8080:80 sample:prod
-
-
-or docker-compose:
-docker-compose -f docker-compose.prod.yml up -d --build
