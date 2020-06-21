@@ -42,46 +42,53 @@ const useStyles = makeStyles(styles);
 
 // The component doing it all.
 //-------------------------------------------
-export default function Install() {
+export default function Install(props) {
   // Styling
   const classes = useStyles();
 
   // Initial state using React Hooks: [variable, setter function] = ... (initial value)
-  const [hostip, setHostIP] = React.useState("");
-  const [domain, setDomain] = React.useState("");
-  const [timezone, setTimezone] = React.useState("");
-  const [user, setUser] = React.useState("");
-  const [pass, setPass] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [select_dashboard, setSelectDashboard] = React.useState('sui');
+  const [hostip, setHostIP] = React.useState(props.state.restore().hostip);
+  const [domain, setDomain] = React.useState(props.state.restore().domain);
+  const [timezone, setTimezone] = React.useState(props.state.restore().timezone);
+  const [user, setUser] = React.useState(props.state.restore().user);
+  const [pass, setPass] = React.useState(props.state.restore().pass);
+  const [email, setEmail] = React.useState(props.state.restore().email);
+  const [select_dashboard, setSelectDashboard] = React.useState( (props.state.restore().select_dashboard ? props.state.restore().select_dashboard : 'sui') );
 
   // onchange handler functions
   const onChangeHostIP = (event) => {
     setHostIP(event.target.value);
+    props.state.save("hostip", event.target.value)
   };
 
   const onChangeDomain = (event) => {
     setDomain(event.target.value);
+    props.state.save("domain", event.target.value)
   };
 
   const onChangeUser = (event) => {
     setUser(event.target.value);
+    props.state.save("user", event.target.value)
   };
 
   const onChangePass = (event) => {
     setPass(event.target.value);
+    props.state.save("pass", event.target.value)
   };
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
+    props.state.save("email", event.target.value)
   };
 
   const onChangeTimezone = (event) => {
     setTimezone(event.target.value);
+    props.state.save("timezone", event.target.value)
   };
 
   const onChangeSelectDashboard = (event) => {
     setSelectDashboard(event.target.value);
+    props.state.save("select_dashboard", event.target.value)
   };
 
   const onClickInstall = () => {
@@ -233,7 +240,8 @@ var debugAreas = (
                     inputProps={{
                       required: true,
                       autoFocus: true,
-                      onChange: onChangeHostIP
+                      onChange: onChangeHostIP,
+                      defaultValue: hostip
                     }}
                     formControlProps={{
                       fullWidth: true
@@ -246,7 +254,8 @@ var debugAreas = (
                     id="server-domain"
                     inputProps={{
                       required: true,
-                      onChange: onChangeDomain
+                      onChange: onChangeDomain,
+                      defaultValue: domain
                     }}
                     formControlProps={{
                       fullWidth: true
@@ -259,7 +268,8 @@ var debugAreas = (
                     id="server-timezone"
                     inputProps={{
                       required: true,
-                      onChange: onChangeTimezone
+                      onChange: onChangeTimezone,
+                      defaultValue: timezone
                     }}
                     formControlProps={{
                       fullWidth: true
@@ -274,7 +284,8 @@ var debugAreas = (
                     id="default-user"
                     inputProps={{
                       required: true,
-                      onChange: onChangeUser
+                      onChange: onChangeUser,
+                      defaultValue: user
                     }}
                     formControlProps={{
                       fullWidth: true
@@ -288,7 +299,8 @@ var debugAreas = (
                     inputProps={{
                       required: true,
                       type: 'password',
-                      onChange: onChangePass
+                      onChange: onChangePass,
+                      defaultValue: pass
                     }}
                     formControlProps={{
                       fullWidth: true
@@ -303,7 +315,8 @@ var debugAreas = (
                     id="default-email"
                     inputProps={{
                       required: true,
-                      onChange: onChangeEmail
+                      onChange: onChangeEmail,
+                      defaultValue: email
                     }}
                     formControlProps={{
                       fullWidth: true

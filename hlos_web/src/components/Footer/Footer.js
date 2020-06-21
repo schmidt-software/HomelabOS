@@ -21,7 +21,7 @@ export default function Footer(props) {
               <a href="https://homelabos.com/" className={classes.block}
                 target="_blank"
               >
-                HomalabOS Home
+                HomelabOS Home
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>

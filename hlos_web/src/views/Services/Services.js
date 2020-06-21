@@ -38,12 +38,12 @@ const useStyles = makeStyles(styles);
 
 // The component doing it all.
 //-------------------------------------------
-export default function Services() {
+export default function Services(props) {
   // Styling
   const classes = useStyles();
 
   // Initial state using React Hooks: [variable, setter function] = ... (initial value)
-  const [hostip, setHostIP] = React.useState("");
+  const [hostip, setHostIP] = React.useState(props.state.restore().hostip);
   const [service, setService] = React.useState("");
   const [service_property, setServiceProperty] = React.useState("");
   const [service_value, setServiceValue] = React.useState("");
@@ -51,6 +51,7 @@ export default function Services() {
   // onchange handler functions
   const onChangeHostIP = (event) => {
     setHostIP(event.target.value);
+    props.state.save("hostip", event.target.value)
   };
 
   const onChangeService = (event) => {
@@ -177,7 +178,7 @@ export default function Services() {
                       required: true,
                       autoFocus: false,
                       onChange: onChangeHostIP,
-                      defaultValue: AnsibleApiDataService.hostip
+                      defaultValue: hostip
                     }}
                     formControlProps={{
                       fullWidth: true

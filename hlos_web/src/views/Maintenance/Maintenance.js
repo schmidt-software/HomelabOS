@@ -37,16 +37,18 @@ const useStyles = makeStyles(styles);
 
 // The component doing it all.
 //-------------------------------------------
-export default function Maintenance() {
+export default function Maintenance(props) {
   // Styling
   const classes = useStyles();
 
   // Initial state using React Hooks: [variable, setter function] = ... (initial value)
-  const [hostip, setHostIP] = React.useState("");
+//  const [hostip, setHostIP] = React.useState(AnsibleApiDataService.hostip);
+  const [hostip, setHostIP] = React.useState(props.state.restore().hostip);
 
   // onchange handler functions
   const onChangeHostIP = (event) => {
     setHostIP(event.target.value);
+    props.state.save("hostip", event.target.value)
   };
 
   const onClickButton = (id) => {
@@ -150,7 +152,7 @@ export default function Maintenance() {
                       required: true,
                       autoFocus: false,
                       onChange: onChangeHostIP,
-                      defaultValue: AnsibleApiDataService.hostip
+                      defaultValue: hostip
                     }}
                     formControlProps={{
                       fullWidth: true
