@@ -19,6 +19,16 @@ echo "##"
 echo "## Press ctrl-c if you do not have sudo access with your user. Otherwise press <enter> to continue"
 read -n1
 
+###
+### Select the Git branch to use for deployment.  It is useful when developing on the system in a feature branch
+### The default should be 'dev', and later probably the latest release, once this is a member of a release.
+###
+### Also note that roles/homelabos_api_deploy/tasks/deploy.yml has a default which is 'dev'.
+### At release, maybe that default should be baked in as well
+git_branch=dev
+### Remove the comment from this line to override and use another branch:
+#git_branch=220_hlos_web_ui_iteration_2
+
 repeat()
 {
   ## Example use:
@@ -278,7 +288,7 @@ if [ -z $deploy_done ] || repeat "* Repeat server installation step?"; then
   fi
 
   echo "* Now installing docker and initial HomelabOS containers on the server"
-  ansible-playbook  -i inventory_hlos --tags=deploy_base playbook.homelabos_api.yml
+  ansible-playbook  -i inventory_hlos --tags=deploy_base playbook.homelabos_api.yml --extra-vars "ansible_web_ui_branch=$git_branch"
   echo "deploy_done=yes" >> ../server_credentials
 fi
 
