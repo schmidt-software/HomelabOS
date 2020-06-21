@@ -20,6 +20,24 @@ import logo from "assets/img/android-chrome-192x192.png";
 
 // Perfect ScrollBar variable: let ps;
 
+// Create a state object.  The data is saved in this after creating an instance.
+function createStateInstance() {
+  var state = {};
+  return {
+    save: function(key, value) {
+      state = {
+        ...state,
+        [key]:value
+      }
+      //console.log(state);
+    },
+    restore: function() {
+      return state;
+    }
+  }
+}
+const globalState = createStateInstance();
+
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
@@ -27,8 +45,10 @@ const switchRoutes = (
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
+            // Not using this because we want to pass in our own props for the global state
+            //component={prop.component}
             key={key}
+            render={props => <prop.component {...props} state={globalState} />}
           />
         );
       }
@@ -113,7 +133,6 @@ return (
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
-
         <Navbar
           routes={routes}
           {...rest}
