@@ -35,8 +35,8 @@ RUN set -x && \
     echo "strategy=mitogen_linear" >> /etc/ansible/ansible.cfg && \
     \
     echo "==> Install yq" && \
-    if [ uname -m == "x86_64" ]; then key="yq_linux_amd64"; else key="yq_linux_arm64"; fi && \
-    wget $(curl -s https://api.github.com/repos/mikefarah/yq/releases/latest | grep browser_download_url | grep $key | cut -d '"' -f 4) -O /usr/bin/yq && \
+    if [ $(uname -m) == "x86_64" ]; then key="yq_linux_amd64"; else key="yq_linux_arm64"; fi && \
+    wget $(wget -q -O - https://api.github.com/repos/mikefarah/yq/releases/latest | grep browser_download_url | grep $key | cut -d '"' -f 4) -O /usr/bin/yq && \
     chmod +x /usr/bin/yq && \
     \
     echo "==> Cleaning up..."  && \
