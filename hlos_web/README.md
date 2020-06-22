@@ -19,8 +19,8 @@ docker-compose stop
 
 Build for production:
 
-docker build -f Dockerfile.prod -t sample:prod .
-docker run -it --rm -p 8080:80 sample:prod
+docker build -f Dockerfile.prod -t hlos_web:prod .
+docker run -it --rm -p 8080:80 hlos_web:prod
 
 
 or docker-compose:

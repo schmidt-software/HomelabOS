@@ -38,7 +38,7 @@ Please let us know if you find such dependencies, so they can be added to the se
     * This playbook will setup and run a service.  It is a parallel implementation to the one used by the Makefile currently.
     * It is stripped down to just the essentials for this specific function.
 * bootstrap_install/*
-    * You found this README - alne that makes this directory interesting.
+    * You found this README - alone that makes this directory interesting.
     * But there is more!
     * The main installation script (which replaces the Makefile, docker-helper, install_homelabos.sh script and maybe more)
       is here.
