@@ -45,6 +45,14 @@
 ## Stage 2 of deployment:
 ## - Install all on-host dependencies
 #####################################
+- name: Set timezone
+  timezone:
+    name: "{{ common_timezone }}"
+    hwclock: "UTC"
+  tags:
+    - deploy_host_deps
+  become: yes
+
 - name: Install required system packages
   apt: name={{ item }} state=latest update_cache=yes
   loop: ['git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'gnupg-agent', 'python3-docker', 'python3-distutils', 'python3-passlib']

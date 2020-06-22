@@ -13,30 +13,30 @@
 
 
 # Try to figure out where key is defined
-FILE=settings/config.yml
-SETTING_VALUE=$(docker run  --rm -v ${PWD}:/workdir ansible_api_ansible-api_1 yq r "$FILE" "$1" "$2")
+FILE=/playbooks/settings/config.yml
+SETTING_VALUE=$(docker exec ansible_api_ansible-api_1 yq r "$FILE" "$1" "$2")
 if [ -z "${SETTING_VALUE}" ]; then
-    FILE=settings/vault.yml
+    FILE=/playbooks/settings/vault.yml
     # Decrypt vault
-    docker exec ansible-api_ansible-api_1 ansible-vault decrypt --vault-password-file /ansible_vault_pass /playbooks/settings/vault.yml
-    SETTING_VALUE=$(docker run --rm -v ${PWD}:/workdir ansible_api_ansible-api_1 yq r "$FILE" "$1" "$2")
+    docker exec ansible_api_ansible-api_1 ansible-vault decrypt --vault-password-file /ansible_vault_pass /playbooks/settings/vault.yml
+    SETTING_VALUE=$(docker exec ansible_api_ansible-api_1 yq r "$FILE" "$1" "$2")
     if [ -z "${SETTING_VALUE}" ]; then
         echo "Key does not exist in config.yml nor vault.yml."
         # Re-encrypt vault
-        docker exec ansible-api_ansible-api_1 ansible-vault encrypt --vault-password-file /ansible_vault_pass /playbooks/settings/vault.yml
+        docker exec ansible_api_ansible-api_1 ansible-vault encrypt --vault-password-file /ansible_vault_pass /playbooks/settings/vault.yml
         # We failed to find the key anywhere
         exit 1
     fi
 fi
 
 # Setting the new value
-docker run  --rm -v ${PWD}:/workdir mikefarah/yq yq w -i "$FILE" "$1" "$2"
-NEW_SETTING_VALUE=$(docker run --rm -v ${PWD}:/workdir ansible_api_ansible-api_1 yq r "$FILE" "$1" "$2")
+docker exec ansible_api_ansible-api_1 yq w -i "$FILE" "$1" "$2"
+NEW_SETTING_VALUE=$(docker exec ansible_api_ansible-api_1 yq r "$FILE" "$1" "$2")
 echo "Changed ${FILE} - $1"
 echo "From: ${SETTING_VALUE}"
 echo "To  : ${NEW_SETTING_VALUE}"
 
-if [ $FILE == "settings/vault.yml" ]; then
+if [ $FILE == "/playbooks/settings/vault.yml" ]; then
   # Re-encrypt vault
-  docker exec ansible-api_ansible-api_1 ansible-vault encrypt --vault-password-file /ansible_vault_pass /playbooks/settings/vault.yml
+  docker exec ansible_api_ansible-api_1 ansible-vault encrypt --vault-password-file /ansible_vault_pass $FILE
 fi
