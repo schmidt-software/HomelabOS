@@ -1,4 +1,9 @@
 ---
+- name: Check quick install
+  stat:
+    path: /var/homelabos/install/QUICK
+  register: quick_install
+
 - name: Install necessities and nice-to-haves
   apt:
     name:
@@ -27,7 +32,7 @@
       - python3-openssl
   tags:
     - dependencies
-    
+
 - name: Ensure Docker is not installed via Snap
   snap:
     name: docker
@@ -45,16 +50,19 @@
       - runc
       - docker-engine
     state: absent
+  when: not quick_install.stat.exists
 
 - name: Add an apt key for Docker-ce Repo
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
+  when: not quick_install.stat.exists
 
 - name: Add the Docker-ce Repo
   apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu {{ubuntu_release}} stable
     state: present
+  when: not quick_install.stat.exists
 
 - name: Install Docker and docker-compose
   apt:
@@ -65,6 +73,7 @@
       - containerd.io
   tags:
     - dependencies
+  when: not quick_install.stat.exists
 
 - name: Correct Python version selected
   alternatives:
