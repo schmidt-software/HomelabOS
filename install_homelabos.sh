@@ -39,7 +39,7 @@ hlos_install() {
     sudo chmod +x /usr/local/bin/docker-compose
 
     printf "\x1B[01;93m========== Install make ==========\n\x1B[0m"
-    sudo apt-get install -y make
+    sudo apt-get install -y make python-setuptools
     
     printf "\x1B[01;93m========== Setting docker permissions ==========\n\x1B[0m"
     sudo addgroup docker
