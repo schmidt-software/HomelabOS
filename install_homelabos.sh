@@ -70,7 +70,10 @@ hlos_install() {
     USER=$(whoami)
     sudo chown -R $USER ./
     mkdir settings
-    
+
+    # Tell ansible that this script was run, don't re-install docker
+    touch /var/homelabos/install/QUICK
+
     # Setup IP configuration
     printf "\x1B[01;93m========== Configure networking ==========\n\x1B[0m"
     export HOMELAB_IP=$(hostname -I | awk '{print $1}')
