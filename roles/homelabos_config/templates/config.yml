@@ -948,6 +948,9 @@ sabnzbd:
   domain: {{ sabnzbd.domain | default(False) }}
   subdomain: {{ sabnzbd.subdomain | default("sabnzbd") }}
   version: {{ sabnzbd.version | default("latest") }}
+samba:
+  enable: {{ samba.enable | default(enable_samba, None) | default(False) }}
+  version: {{ samba.version | default("latest") }}
 searx:
   enable: {{ searx.enable | default(enable_searx, None) | default(False) }}
   https_only: {{ searx.https_only | default(False) }}
