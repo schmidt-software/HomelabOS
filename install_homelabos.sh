@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=525-oneliner-install-breaking-issue-with-python-and-docker-2
+VERSION=dev
 REPO=NickBusey
 
 while getopts r:v: option
