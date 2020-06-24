@@ -7,12 +7,15 @@
   become_method: sudo
   any_errors_fatal: true
 <<<<<<< HEAD
+<<<<<<< HEAD
   # Hacky fix for Ansible not following it's own configuration settings.
 =======
   # See https://stackoverflow.com/questions/57167091/ansible-python-version-wont-change
 >>>>>>> e428ee97... Update playbook.homelabos.yml
   vars:
     ansible_python_interpreter: /usr/bin/python3
+=======
+>>>>>>> 7187a108... Update install_homelabos.sh, playbook.homelabos.yml files
   pre_tasks:
     - name: "Update Apt Cache"
       raw: sudo apt-get update
