@@ -6,7 +6,11 @@
   become: "True"
   become_method: sudo
   any_errors_fatal: true
+<<<<<<< HEAD
   # Hacky fix for Ansible not following it's own configuration settings.
+=======
+  # See https://stackoverflow.com/questions/57167091/ansible-python-version-wont-change
+>>>>>>> e428ee97... Update playbook.homelabos.yml
   vars:
     ansible_python_interpreter: /usr/bin/python3
   pre_tasks:
