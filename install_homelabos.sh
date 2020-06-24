@@ -27,7 +27,7 @@ hlos_install() {
 
     printf "\x1B[01;93m========== Install docker ==========\n\x1B[0m"
     # This will get replaced with docker repo with ansible.
-    sudo apt-get install docker
+    sudo apt-get install docker.io
     
     printf "\x1B[01;93m========== Install make ==========\n\x1B[0m"
     sudo apt-get install -y make
