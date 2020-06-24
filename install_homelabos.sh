@@ -33,6 +33,7 @@ hlos_install() {
     sudo apt-get install -y make
     
     printf "\x1B[01;93m========== Setting docker permissions ==========\n\x1B[0m"
+    sudo addgroup docker
     sudo gpasswd -a $(whoami) docker # New permissions not applied until new shell or sg.
 
     printf "\x1B[01;93m========== Ensure keys exist ==========\n\x1B[0m"
