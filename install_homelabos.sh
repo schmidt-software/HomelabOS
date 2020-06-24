@@ -25,13 +25,9 @@ hlos_install() {
     sudo apt-get update
     sudo apt-get upgrade -y
 
-    printf "\x1B[01;93m========== Removing old docker ==========\n\x1B[0m"
-    # Remove docker if already installed form ubuntu/debian repo.
-    sudo apt-get remove docker docker-engine docker.io containerd runc
-
     printf "\x1B[01;93m========== Install docker ==========\n\x1B[0m"
-    # Install docker from official repo.
-    bash <(curl https://get.docker.com)
+    # This will get replaced with docker repo with ansible.
+    sudo apt-get install docker
     
     printf "\x1B[01;93m========== Install make ==========\n\x1B[0m"
     sudo apt-get install -y make
