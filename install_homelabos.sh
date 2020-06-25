@@ -39,7 +39,11 @@ hlos_install() {
     sudo chmod +x /usr/local/bin/docker-compose
 
     printf "\x1B[01;93m========== Install make ==========\n\x1B[0m"
-    sudo apt-get install -y make python-setuptools python-passlib
+    sudo apt-get install -y make
+    
+    printf "\x1B[01;93m========== Installing python tools ==========\n\x1B[0m"
+    # Python-setuptools and python-passlib are needed until ansible python nonsense is fixed
+    sudo apt-get install -y python-setuptools python-passlib
     
     printf "\x1B[01;93m========== Setting docker permissions ==========\n\x1B[0m"
     sudo addgroup docker
@@ -92,6 +96,7 @@ hlos_install() {
 
 #Check if distro is tested, warn if not.
 if is_tested; then
+    # Do absolutely nothing. Echo is needed or script will fail.
     echo
 else
     printf "\n\033[0;31mUntested operating system detected! You may press Ctrl+C now to abort this script.\nInstallation will proceed in 10 seconds.\n\n"
