@@ -36,7 +36,7 @@ hlos_install() {
 
     printf "\x1B[01;93m========== Install docker-compose ==========\n\x1B[0m"
     sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+    sudo chmod +x /usr/bin/docker-compose
 
     printf "\x1B[01;93m========== Install make ==========\n\x1B[0m"
     sudo apt-get install -y make
