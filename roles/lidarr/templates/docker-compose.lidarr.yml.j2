@@ -14,6 +14,7 @@ services:
     volumes:
       - "{{ volumes_root }}/lidarr/config:/config"
       - "{{ storage_dir }}/Music:/media/Music"
+      - "{{ storage_dir }}/Downloads/complete/music:/downloads"
     environment:
       - TZ={{ common_timezone }}
       - PUID={{ uid }}
