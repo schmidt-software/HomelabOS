@@ -49,8 +49,8 @@ build:
 # First build the docker images needed to deploy
 	@chmod +x docker_setup.sh
 	@./docker_setup.sh
-	@sudo docker pull nickbusey/homelabos:$(VERSION) || true
-	@sudo docker inspect --type=image nickbusey/homelabos:$(VERSION) > /dev/null && printf "\033[92m========== Docker image already built ==========\033[0m\n" || sudo docker build . -t nickbusey/homelabos:$(VERSION)
+	@./docker.sh pull nickbusey/homelabos:$(VERSION) || true
+	@./docker.sh inspect --type=image nickbusey/homelabos:$(VERSION) > /dev/null && printf "\033[92m========== Docker image already built ==========\033[0m\n" || ./docker.sh build . -t nickbusey/homelabos:$(VERSION)
 
 # Attempt to sync user settings to a git repo
 git_sync:
@@ -195,7 +195,7 @@ vagrant: logo build config
 
 # Serve the HomelabOS Documentation locally
 docs_local:
-	@docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+	@./docker.sh run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 
 # Build the HomelabOs Documentation - Requires mkdocs with the Material Theme
 docs_build: logo build git_sync config
