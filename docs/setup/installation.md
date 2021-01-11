@@ -192,3 +192,100 @@ Re-run `hlos deploy` to configure and enable your NAS.
     nas_pass: 12345
     nas_workgroup: WORKGROUP
     ```
+
+## Local Storage Configuration
+
+!!! warning
+    There's ample opportunity to nuke essential data with the guide below, so please make sure you're aware of the changes you are making. Use with caution!
+
+As described above, different HomelabOS services operate on libraries of media and in your situation you may wish to store these on a large local disk.
+This guide describes how to achieve that with logical volume groups. In the example below we assume a fresh install of Ubuntu 20.04 with a large local disk residing on `/dev/sdb1`.
+We describe how to create two volumes from the large local disk (in our case 3TB) , one for local docker image and container volume storage and the other for local media storage.
+Note - we assume docker hasn't been installed yet for this scenario.
+
+1. Use gparted to format the entire disk, in our case `/dev/sdb` as `lvm2-pv` (logical volume manager physical volume).
+2. Create volume group `vg-hdd` and within it, create two logical volumes, `lv-homelab-data` and `lv-docker-data`
+```
+user@homelab:~$ sudo lvm
+lvm> vgcreate vg-hdd /dev/sdb1
+  Volume group "vg-hdd" successfully created
+lvm> lvcreate -l 50%FREE -n lv-homelab-data vg-hdd
+  Logical volume "lv-homelab-data" created.
+lvm> lvcreate -l 50%FREE -n lv-docker-data vg-hdd
+  Logical volume "lv-docker-data" created.
+```
+3. Confirm logical volumes have been created 
+```
+lvm> lvs
+  LV              VG            Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv-docker-data  vg-hdd        -wi-a----- <698.63g                                                    
+  lv-homelab-data vg-hdd        -wi-a-----    1.36t                                                    
+  root            vgubuntu-mate -wi-ao---- <110.33g                                                    
+  swap_1          vgubuntu-mate -wi-ao----  980.00m                                                    
+lvm> pvs
+  PV         VG            Fmt  Attr PSize    PFree   
+  /dev/sda5  vgubuntu-mate lvm2 a--  <111.29g       0 
+  /dev/sdb1  vg-hdd        lvm2 a--    <2.73t <698.63g
+```
+4. Format the new logical volumes as `ext4` partitions
+```
+user@homelab:~$ sudo mkfs -t ext4 /dev/vg-hdd/lv-docker-data
+[sudo] password for user: 
+mke2fs 1.45.5 (07-Jan-2020)
+Creating filesystem with 183141376 4k blocks and 45793280 inodes
+Filesystem UUID: c643b378-bb6a-4fcd-bd1d-92ff2583c901
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968, 
+	102400000
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information: done     
+
+user@homelab:~$ sudo mkfs -t ext4 /dev/vg-hdd/lv-homelab-data
+mke2fs 1.45.5 (07-Jan-2020)
+Creating filesystem with 366282752 4k blocks and 91578368 inodes
+Filesystem UUID: 97872479-4e94-425f-b36f-bb1c37fc09d5
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968, 
+	102400000, 214990848
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information: done
+```
+5. Make directories for the new partitions to be mounted to and mount them 
+```
+user@homelab:~$ sudo mkdir /mnt/homelabos-data
+user@homelab:~$ sudo mount -t ext4 /dev/vg-hdd/lv-homelab-data /mnt/homelabos-data/
+user@homelab:~$ sudo mkdir /mnt/docker-data
+user@homelab:~$ sudo mount -t ext4 /dev/vg-hdd/lv-docker-data /mnt/docker-data/
+```
+6. Confirm filesystem layout
+```
+user@homelab:~$ df -h
+Filesystem                             Size  Used Avail Use% Mounted on
+udev                                   5.9G     0  5.9G   0% /dev
+tmpfs                                  1.2G  1.9M  1.2G   1% /run
+/dev/mapper/vgubuntu--mate-root        109G  6.2G   97G   6% /
+tmpfs                                  5.9G   47M  5.9G   1% /dev/shm
+tmpfs                                  5.0M  4.0K  5.0M   1% /run/lock
+tmpfs                                  5.9G     0  5.9G   0% /sys/fs/cgroup
+/dev/sda1                              511M  4.0K  511M   1% /boot/efi
+/dev/loop0                              28M   28M     0 100% /snap/snapd/7264
+tmpfs                                  1.2G   60K  1.2G   1% /run/user/1000
+/dev/loop1                              55M   55M     0 100% /snap/core18/1705
+/dev/loop2                             128K  128K     0 100% /snap/software-boutique/54
+/dev/loop3                              15M   15M     0 100% /snap/ubuntu-mate-welcome/524
+/dev/mapper/vg--hdd-lv--homelab--data  1.4T   77M  1.3T   1% /mnt/homelab-data
+/dev/mapper/vg--hdd-lv--docker--data   687G   73M  652G   1% /mnt/docker-data
+```
+7. Map the docker storage folder to our newly created and mounted lv via symbolic link
+```
+user@homelab:/mnt/docker-data$ sudo ln -s /mnt/docker-data/docker/ /var/lib/docker
+```
+8. Install docker as usual continue with your installation of HomelabOS
