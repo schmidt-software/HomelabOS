@@ -270,6 +270,13 @@ bitwarden:
     # Note that no e-mail validation is done, only e-mail domain that's provided on registration
     # Can be a single entry "example.com", or multiple comma separated: "example.com,example.net,example.org"
     signups_domains_whitelist: {{ bitwarden.signups_domains_whitelist  | default(vault.bitwarden.signups_domains_whitelist, None) | default(False) }}
+booksonic:
+  enable: {{ booksonic.enable | default(enable_booksonic, None) | default(False) }}
+  https_only: {{ booksonic.https_only | default(False) }}
+  auth: {{ booksonic.auth | default(False) }}
+  domain: {{ booksonic.domain | default(False) }}
+  subdomain: {{ booksonic.subdomain | default("booksonic")}}
+  version: {{ booksonic.version | default("latest") }}
 bookstack:
   enable: {{ bookstack.enable | default(enable_bookstack, None) | default(False) }}
   https_only: {{ bookstack.https_only | default(False) }}
