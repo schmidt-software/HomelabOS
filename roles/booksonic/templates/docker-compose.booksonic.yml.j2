@@ -14,7 +14,6 @@ services:
       - PUID={{ uid_output.stdout }}
       - PGID={{ gid_output.stdout }}
       - TZ={{ common_timezone }}
-      - CONTEXT_PATH=url-base
     networks:
       - traefik_network
     volumes:
