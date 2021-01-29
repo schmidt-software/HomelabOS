@@ -69,7 +69,7 @@ services:
 
 Notice how we only need to rewrite to the indentation level where our change will be, that is: under `services` > `jellyfin` > `ports`. Docker will lay these changes overtop of the main compose file.
 
-And if we wanted to also change th media mount point?
+And if we wanted to also change the media mount point?
 ```yaml
 ---
 version: '3'
