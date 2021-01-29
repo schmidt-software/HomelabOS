@@ -79,5 +79,5 @@ services:
     ports:
       - 9999:8096
     volumes:
-      "{{ storage_dir }}/media/video:/media"
+      "/mnt/NAS/media/video:/media"
 ```
