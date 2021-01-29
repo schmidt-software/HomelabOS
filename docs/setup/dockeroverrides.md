@@ -11,7 +11,7 @@ As well as add anything extra; a database, additional ports or mount points.
 
 ## How does it work?
 
-Homelabos will create a directory for you at `settings/overrides`, here you can create a file named like `servicename.override.yml`. If you do not have one yet you can either run `make config` or create the directory yourself, until the below issue is resolved it is bes to create the directory if it doesn't exist.
+Homelabos will create a directory for you at `settings/overrides`, here you can create a file named like `servicename.override.yml`. If you do not have one yet you can either run `make config` or create the directory yourself, until the below issue is resolved it is best to create the directory if it doesn't exist.
 
 > NOTE: there is a [known issue](https://gitlab.com/NickBusey/HomelabOS/-/issues/638) where the directory might get created with root permissions, until it is fixed you can change the permissions with `sudo chown USERNAME:GROUPNAME settings/overrides`. You will only have to do this once.
 
