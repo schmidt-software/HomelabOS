@@ -431,6 +431,13 @@ freshrss:
   domain: {{ freshrss.domain | default(False) }}
   subdomain: {{ freshrss.subdomain | default("freshrss") }}
   version: {{ freshrss.version | default("alpine") }}
+friendica:
+  enable: {{ friendica.enable | default(enable_friendica, None) | default(False) }}
+  https_only: {{ friendica.https_only | default(False) }}
+  auth: {{ friendica.auth | default(False) }}
+  domain: {{ friendica.domain | default(False) }}
+  subdomain: {{ friendica.subdomain | default("friendica")}}
+  version: {{ friendica.version | default("latest") }}
 funkwhale:
   enable: {{ funkwhale.enable | default(enable_funkwhale, None) | default(False) }}
   https_only: {{ funkwhale.https_only | default(False) }}
