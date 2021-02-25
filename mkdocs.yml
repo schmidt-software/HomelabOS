@@ -127,6 +127,7 @@ nav:
       - n8n: software/n8n.md
       - NodeRED: software/nodered.md
       - OctoPrint: software/octoprint.md
+      - Papercups: software/papercups.md
       - Pi-hole: software/pihole.md
       - Poli: software/poli.md
       - PrivateBin: software/privatebin.md

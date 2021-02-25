@@ -79,6 +79,7 @@ services:
   openvpn:
   organizr:
   ownphotos:
+  papercups:
   paperless:
   peertube:
   photoprism:
