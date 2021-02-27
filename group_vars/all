@@ -125,6 +125,7 @@ services:
   webtrees:
   webvirtmgr:
   wekan:
+  wordpress:
   xfinityusageinfluxdb:
   xteve:
   zammad:
@@ -254,6 +255,7 @@ wallabag:
 webdavserver:
 webtrees:
 webvirtmgr:
+wordpress:
 zammad:
 zulip:
 enable_tinc: false

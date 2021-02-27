@@ -1187,6 +1187,14 @@ wekan:
   subdomain: {{ wekan.subdomain | default("wekan") }}
   version: {{ wekan.version | default("latest") }}
   db_version: {{ wekan.db_version | default("3.2.12") }}
+wordpress:
+  enable: {{ wordpress.enable | default(enable_wordpress, None) | default(False) }}
+  https_only: {{ wordpress.https_only | default(False) }}
+  auth: {{ wordpress.auth | default(False) }}
+  domain: {{ wordpress.domain | default(False) }}
+  subdomain: {{ wordpress.subdomain | default("wordpress") }}
+  version: {{ wordpress.version | default("latest") }}
+  db_version: {{ wordpress.db_version | default("5.7") }}
 xfinityusageinfluxdb:
   enable: {{ xfinityusageinfluxdb.enable | default(enable_xfinityusageinfluxdb, None) | default(False) }}
   https_only: {{ xfinityusageinfluxdb.https_only | default(False) }}
