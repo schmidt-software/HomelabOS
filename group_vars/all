@@ -90,6 +90,7 @@ services:
   poli:
   portainer:
   privatebin:
+  prosody:
   qbittorrent:
   quakejs:
   radarr:
@@ -219,6 +220,7 @@ plex:
 poli:
 portainer:
 privatebin:
+prosody:
 qbittorrent:
 quakejs:
 radarr:
