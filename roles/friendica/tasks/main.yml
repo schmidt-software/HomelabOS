@@ -1,0 +1,29 @@
+---
+- name: Make friendica directory.
+  file:
+    path: "{{ volumes_root }}/friendica"
+    state: directory
+
+- name: Copy friendica docker-compose.yml file into place.
+  template:
+    src: docker-compose.friendica.yml.j2
+    dest: "{{ volumes_root }}/friendica/docker-compose.yml"
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+
+- name: Copy friendica nginx.conf file into place.
+  template:
+    src: nginx.conf.j2
+    dest: "{{ volumes_root }}/friendica/nginx.conf"
+
+- name: Configure friendica systemd service.
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/friendica.service
+
+- name: Start friendica
+  systemd:
+    name: friendica
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started

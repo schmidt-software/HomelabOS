@@ -235,6 +235,7 @@ If you are having problems you can:
 
 ### Social Networking
 
+- [Friendica](software/friendica) - Friendica is a federated social networking platform, compatible with ActivityPub and OStatus implementations.
 - [Pleroma](software/pleroma) - Pleroma is a federated social networking platform, compatible with GNU social and other OStatus implementations. It is free software licensed under the AGPLv3.
 
 ### Software Development
