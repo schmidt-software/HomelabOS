@@ -1,0 +1,75 @@
+---
+version: "3.3"
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+  plausible:
+
+services:
+  mail:
+    image: bytemark/smtp
+    networks:
+      - plausible
+    restart: always
+
+  plausible_db:
+    image: postgres:12
+    networks:
+      - plausible
+    volumes:
+      - "{{ volumes_root }}/plausible/db-data:/var/lib/postgresql/data"
+
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+  plausible_events_db:
+    image: yandex/clickhouse-server:latest
+    networks:
+      - plausible
+    volumes:
+      - "{{ volumes_root }}/plausible/event-data:/var/lib/clickhouse"
+      - ./clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro
+      - ./clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  plausible:
+    image: plausible/analytics:latest
+    networks:
+      - traefik_network
+      - plausible
+    command: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh db init-admin && /entrypoint.sh run"
+    depends_on:
+      - plausible_db
+      - plausible_events_db
+      - mail
+    env_file:
+      - plausible-conf.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=homelabos_traefik"
+      - "traefik.http.services.plausible.loadbalancer.server.scheme=http"
+      - "traefik.http.services.plausible.loadbalancer.server.port=8000"
+      - "traefik.http.routers.plausible-http.rule=Host(`{{ service_domain }}`)"
+      - "traefik.http.routers.plausible-http.entrypoints=http"
+      - "traefik.http.routers.plausible-http.middlewares={% if plausible.https_only %}redirect@file, security-headers@file, {% else %}{% if plausible.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}{% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.plausible.rule=Host(`{{ service_domain }}`)"
+      - "traefik.http.routers.plausible.entrypoints=https"
+      - "traefik.http.routers.plausible.middlewares={% if plausible.auth %}{% if authelia.enable %}authelia@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab@file"
+      - "traefik.http.routers.plausible.tls=true"
+{% if traefik.dns_challenge_provider %}
+      - "traefik.http.routers.plausible.tls.certresolver=dns"
+      - "traefik.http.routers.plausible.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.plausible.tls.domains[0].sans=*.{{ domain }}"
+{% else %}
+      - "traefik.http.routers.plausible.tls.certresolver=http"
+{% endif %}
+{% if enable_tor %}
+      - "traefik.http.routers.plausible-tor-http.rule=Host(`{{ lookup('vars', service_item).subdomain }}.{{ tor_domain }}`)"
+      - "traefik.http.routers.plausible-tor-http.entrypoints=http"
+      - "traefik.http.routers.plausible-tor-http.middlewares={% if plausible.auth %}{% if authelia.enable %}authelia-tor@file{% else %}basicAuth@file{% endif %}, {% endif %}customFrameHomelab-tor@file"
+{% endif %}
