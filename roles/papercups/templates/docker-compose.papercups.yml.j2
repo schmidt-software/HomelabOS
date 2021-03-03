@@ -10,9 +10,6 @@ networks:
 services:
   papercups:
     image: papercups/papercups:latest
-    ports:
-      - "3000:3000"
-      - "4000:4000"
     command: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && echo 'running' && /entrypoint.sh run"
     depends_on:
       - db
@@ -22,17 +19,16 @@ services:
     environment:
       DATABASE_URL: "ecto://postgres:postgres@db/postgres"
       # PUT YOUR OWN SECRET KEYBASE HERE
-      SECRET_KEY_BASE: "{{ papercups.secret_key_base }}"
+      SECRET_KEY_BASE: "{{lookup('password', './settings/passwords/papercups_secret_key chars=ascii_letters')}}"
       BACKEND_URL: "localhost"
       MIX_ENV: "prod"
+      REQUIRE_DB_SSL: "false"
     labels:
       - "traefik.http.services.papercups.loadbalancer.server.scheme=http"
       - "traefik.http.services.papercups.loadbalancer.server.port=4000"
 {% include './labels.j2' %}
   db:
     image: postgres:{{ papercups.db_version }}
-    ports:
-      - "5432:5432"
     volumes:
       - "{{ volumes_root }}/papercups/db-data:/var/lib/postgresql/data"
     networks:
