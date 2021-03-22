@@ -1,0 +1,24 @@
+---
+version: '3'
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  gonic:
+    restart: unless-stopped
+    image: sentriz/gonic:latest
+    networks:
+      - traefik_network
+    environment:
+      - TZ={{ common_timezone }}
+    volumes:
+      - "{{ volumes_root }}/gonic/data:/data"
+      - "{{ volumes_root }}/gonic/cache:/cache"
+      - "{{ storage_dir }}/Music:/music:ro"
+      - "{{ storage_dir }}/Podcasts:/podcasts"
+    labels:
+      - "traefik.http.services.gonic.loadbalancer.server.scheme=http"
+      - "traefik.http.services.gonic.loadbalancer.server.port=80"
+{% include './labels.j2' %}

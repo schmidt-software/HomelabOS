@@ -143,6 +143,7 @@ If you are having problems you can:
 - [Beets](software/beets) - Beets is the media library management system for obsessive-compulsive music geeks.
 - [Emby](software/emby) - Personal Media Server
 - [Funkwhale](software/funkwhale) - A social platform to enjoy and share music
+- [Gonic](software/gonic) - Subsonic server API implementation in Go
 - [Jellyfin](software/jellyfin) - The Free Software Media System
 - [Massive Decks](software/massivedecks) - Comedy party game based on Cards against Humanity
 - [mStream](software/mstream) - All your music, everywhere you go.

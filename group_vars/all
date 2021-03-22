@@ -35,6 +35,7 @@ services:
   gitea:
   gitlab:
   gotify:
+  gonic:
   grafana:
   grocy:
   grownetics:
@@ -164,6 +165,7 @@ ghost:
 gitea:
 gitlab:
 gotify:
+gonic:
 grafana:
 grocy:
 grownetics:

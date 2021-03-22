@@ -1,0 +1,24 @@
+---
+- name: Make gonic directory.
+  file:
+    path: "{{ volumes_root }}/gonic"
+    state: directory
+
+- name: Copy gonic docker-compose.yml file into place.
+  template:
+    src: docker-compose.gonic.yml.j2
+    dest: "{{ volumes_root }}/gonic/docker-compose.yml"
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+
+- name: Configure gonic systemd service.
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/gonic.service
+
+- name: Start gonic
+  systemd:
+    name: gonic
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started
