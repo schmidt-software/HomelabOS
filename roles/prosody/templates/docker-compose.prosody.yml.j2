@@ -38,8 +38,10 @@ services:
       - traefik_network
 
   # mailu certdumper
-  xmpp-certdump:
-    image: idez/traefik-certs-dumper:v2.7.4
+  xmpp-certdumper:
+    build:
+      context: certdumper
+      dockerfile: certdumper/Dockerfile
     restart: unless-stopped
     volumes:
       - "{{ volumes_root }}/traefik/acme.json:/data/acme.json:ro"

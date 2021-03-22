@@ -1,0 +1,32 @@
+#!/bin/bash
+
+function dump() {
+    echo "$(date) Dumping certificates"
+
+    traefik-certs-dumper file --version v2} \
+      --dest /tmp/work \
+      --source /data/acme.json > /dev/null
+
+    {% for domain in prosody.vhosts %}
+      if [[ -f /tmp/work/certs/{{ domain }}.crt && \
+        -f /tmp/work/private/{{ domain }}.key && \
+        -f /output/{{ domain }}.crt && \
+        -f /output/{{ domain }}.key ]] && \
+        diff -q /tmp/work/certs/{{ domain }}.crt /output/{{ domain }}.crt >/dev/null && \
+        diff -q /tmp/work/private/{{ domain }}.key /output/{{ domain }}.key >/dev/null ; \
+      then
+        echo "$(date) Certificates and keys still up to date for {{ domain }}, doing nothing"
+      else
+        echo "$(date) Certificates or keys differ for {{ domain }}, updating"
+        mv /tmp/work/{certs/{{ domain }}.crt,private/{{ doman }}.key} /output/
+      fi
+      {% endfor %}
+}
+
+mkdir -p /tmp/work
+dump
+
+while true; do
+    inotifywait -qq -e modify /data/acme.json
+    dump
+done

@@ -942,6 +942,7 @@ prosody:
   domain: {{ prosody.domain | default(False) }}
   subdomain: {{ prosody.subdomain | default("prosody")}}
   version: {{ prosody.version | default("latest") }}
+  muc_domain: {{ prosody.muc_domain | default("muc." + {{ domain }})}}
   vhosts: {{ prosody.vhosts | default([]) }}
 qbittorrent:
   enable: {{ qbittorrent.enable | default(enable_qbittorrent, None) | default(False) }}

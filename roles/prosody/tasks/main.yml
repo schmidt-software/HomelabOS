@@ -19,6 +19,12 @@
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
+- name: Copy prosody certdumper Dockerfile and run.sh
+  template:
+    src: {{ item.src }}
+    dest: "{{ volumes_root }}/prosody/{{ item.dest }}"
+    loop: [{ src: 'certdumper.Dockerfile', dest: 'certdumper/Dockerfile' }, { src: 'certdumper/run.sh.j2', dest: 'certdumper/run.sh' }]
+
 - name: Configure prosody systemd service.
   template:
     src: service.j2
