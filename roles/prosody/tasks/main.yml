@@ -13,11 +13,6 @@
   vars:
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
 
-- name: Copy prosody env file into place.
-  template:
-    src: .env.j2
-    dest: "{{ volumes_root }}/prosody/.env"
-
 - name: Configure prosody systemd service.
   template:
     src: service.j2

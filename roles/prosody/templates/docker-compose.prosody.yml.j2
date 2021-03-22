@@ -1,46 +1,41 @@
 ---
 version: '3'
 
-# This networks section required for the package to be visible to Traefik.
-# DO NOT Remove
 networks:
   traefik_network:
     external:
       name: homelabos_traefik
-  prosody:
 
 services:
-# XMPP chat server: prosody
   xmpp-server:
-    image: xamanu/xmpp-prosody:version-0.11
+    image: joschi/prosody-alpine:{{ prosody.version }}
     restart: unless-stopped
-    env_file: .env
     volumes:
-      - "{{ volumes_root }}/prosody/conf:/etc/prosody/conf.d"
-      - "{{ volumes_root }}/traefik/cert:/cert/:ro"
+      - "{{ volumes_root }}/prosody/vhosts:/etc/prosody/conf.d"
+      - "{{ volumes_root }}/prosody/modules:/usr/local/lib/prosody/modules"
       - "{{ volumes_root }}/prosody/data:/var/lib/prosody/data"
+      - "{{ volumes_root }}/prosody/prosody.pid:/var/run/prosody/prosody.pid"
     ports:
       - '5222:5222'
-      - '5223:5223'
       - '5269:5269'
-      - '5280:5280'
     labels:
       - traefik.enable=true
       - traefik.docker.network=homelabos_traefik
-      - traefik.http.routers.xmpp-server.rule=Host(`$XMPP_SERVER_URL`) && PathPrefix(`/_xmpp`)
+      - traefik.http.routers.xmpp-server.rule=Host(`{{ service_domain }}`)
       - traefik.http.routers.xmpp-server.entrypoints=https
       - traefik.http.routers.xmpp-server.service=xmpp-server
       - traefik.http.routers.xmpp-server.tls=true
-      - traefik.http.routers.xmpp-server.tls.domains[0].main=${XMPP_SERVER_URL}
+      - traefik.http.routers.xmpp-server.tls.domains[0].main={{ service_domain }}
       - traefik.http.routers.xmpp-server.tls.domains[1].main=${XMPP_GROUPS_URL}
+      - traefik.http.routers.xmpp-server.tls.domains[2].main=${XMPP_GROUPS_URL}
 {% if prosody.host_1 %}
-      - traefik.http.routers.xmpp-server.tls.domains[3].main=${XMPP_HOST_URL_1}
+      - traefik.http.routers.xmpp-server.tls.domains[3].main={{ prosody.host_1 }}
 {% endif %}
 {% if prosody.host_2 %}
-      - traefik.http.routers.xmpp-server.tls.domains[4].main=${XMPP_HOST_URL_2}
+      - traefik.http.routers.xmpp-server.tls.domains[4].main={{ prosody.host_2 }}
 {% endif %}
 {% if prosody.host_3 %}
-      - traefik.http.routers.xmpp-server.tls.domains[5].main=${XMPP_HOST_URL_3}
+      - traefik.http.routers.xmpp-server.tls.domains[5].main={{ prosody.host_3 }}
 {% endif %}
       - traefik.http.routers.xmpp-server.tls.certresolver=http
       - traefik.http.services.xmpp-server.loadbalancer.server.scheme=http
@@ -48,44 +43,8 @@ services:
     networks:
       - traefik_network
 
+  # mailu certdumper
+
   # XMPP http external upload: prosody-filer
-  xmpp-filer:
-    image: xamanu/xmpp-filer:version-0.11
-    restart: unless-stopped
-    env_file: .env
-    volumes:
-      - "{{ volumes_root }}/prosody/http-upload:/app/uploads"
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=homelabos_traefik
-      - traefik.http.routers.xmpp-filer.rule=Host(`$XMPP_SERVER_URL`) && PathPrefix(`/_xmpp/upload`)
-      - traefik.http.routers.xmpp-filer.entrypoints=https
-      - traefik.http.routers.xmpp-filer.service=xmpp-filer
-      - traefik.http.routers.xmpp-filer.tls=true
-      - traefik.http.routers.xmpp-filer.tls.certresolver=http
-      - traefik.http.services.xmpp-filer.loadbalancer.server.scheme=http
-      - traefik.http.services.xmpp-filer.loadbalancer.server.port=5050
-    networks:
-      - traefik_network
 
   # XMPP stun/turn server: eturnal
-  xmpp-turn:
-    image: xamanu/xmpp-turn:version-0.11
-    restart: unless-stopped
-    env_file: .env
-    volumes:
-      - "{{ volumes_root }}/traefik/cert:/cert/:ro"
-    ports:
-      - "3478:3478"
-      - "5349:5349"
-      - "49160-49200:49160-49200/udp"
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=homelabos_traefik
-      - traefik.http.routers.xmpp-turn.service=xmpp-turn
-      - traefik.http.routers.xmpp-turn.tls=true
-      - traefik.http.routers.xmpp-turn.rule=Host(`$TURN_HOST`)
-      - traefik.http.routers.xmpp-turn.entrypoints=https
-      - traefik.http.routers.xmpp-turn.tls.certresolver=http
-    networks:
-      - traefik_network

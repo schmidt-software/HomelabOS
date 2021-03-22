@@ -947,9 +947,6 @@ prosody:
   domain: {{ prosody.domain | default(False) }}
   subdomain: {{ prosody.subdomain | default("prosody")}}
   version: {{ prosody.version | default("latest") }}
-  name: {{ prosody.name | default("Another homelabos prosody server")}}
-  admin_email: {{ prosody.admin_email | default(admin_email) }}
-  admin_account: {{ prosody.admin_account | default(admin_email) }}
   host_1: {{ prosody.host_1 | default(False) }}
   host_2: {{ prosody.host_2 | default(False) }}
   host_3: {{ prosody.host_3 | default(False) }}
