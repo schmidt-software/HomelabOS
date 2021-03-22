@@ -6,6 +6,12 @@
     owner: "{{ uid_output.stdout }}"
     group: "{{ uid_output.stdout }}"
 
+- name: Create vhosts if needed
+  template:
+    src: vhost.cfg.lua.j2
+    dest: "{{ volumes_root }}/prosody/vhosts/{{ item }}.cfg.lua"
+  loop: "{{ prosody_vhosts }}"
+
 - name: Copy prosody docker-compose.yml file into place.
   template:
     src: docker-compose.prosody.yml.j2

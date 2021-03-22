@@ -942,9 +942,7 @@ prosody:
   domain: {{ prosody.domain | default(False) }}
   subdomain: {{ prosody.subdomain | default("prosody")}}
   version: {{ prosody.version | default("latest") }}
-  host_1: {{ prosody.host_1 | default(False) }}
-  host_2: {{ prosody.host_2 | default(False) }}
-  host_3: {{ prosody.host_3 | default(False) }}
+  vhosts: {{ prosody.vhosts | default([]) }}
 qbittorrent:
   enable: {{ qbittorrent.enable | default(enable_qbittorrent, None) | default(False) }}
   https_only: {{ qbittorrent.https_only | default(False) }}
