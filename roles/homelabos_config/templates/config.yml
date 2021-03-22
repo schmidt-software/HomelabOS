@@ -79,12 +79,7 @@ bastion:
     995: 995
     # prosody
     5222: 5222
-    5223: 5223
     5269: 5269
-    5280: 5280
-    # prosody - xmpp-stun/turn
-    3478: 3478
-    5349: 5349
   # MIGRATION v0.7
   # Should HomelabOS reset the bastion server IP tables rules?
   # Enable this if you are upgrading a Tinc bastion host
