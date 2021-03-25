@@ -4,13 +4,26 @@
     path: "{{ volumes_root }}/prosody"
     state: directory
     owner: "{{ uid_output.stdout }}"
-    group: "{{ uid_output.stdout }}"
+    group: "{{ gid_output.stdout }}"
 
-- name: Create vhosts if needed
+- name: Make extra prosody directories.
+  file:
+    path: "{{ volumes_root }}/prosody/{{ item }}"
+    state: directory
+    owner: "{{ uid_output.stdout }}"
+    group: "{{ gid_output.stdout }}"
+  with_items:
+    - "vhosts"
+    - "certdump"
+
+- name: Copy new vhosts configs
   template:
     src: vhost.cfg.lua.j2
     dest: "{{ volumes_root }}/prosody/vhosts/{{ item }}.cfg.lua"
-  loop: "{{ prosody_vhosts }}"
+    force: no
+    owner: "{{ uid_output.stdout }}"
+    group: "{{ gid_output.stdout }}"
+  loop: "{{ prosody.vhosts }}"
 
 - name: Copy prosody docker-compose.yml file into place.
   template:
@@ -21,9 +34,10 @@
 
 - name: Copy prosody certdumper Dockerfile and run.sh
   template:
-    src: {{ item.src }}
+    src: "{{ item.src }}"
     dest: "{{ volumes_root }}/prosody/{{ item.dest }}"
-    loop: [{ src: 'certdumper.Dockerfile', dest: 'certdumper/Dockerfile' }, { src: 'certdumper/run.sh.j2', dest: 'certdumper/run.sh' }]
+    mode: "{{ item.mode }}"
+  loop: [{ src: 'certdump.Dockerfile', dest: 'certdump/Dockerfile', mode: 'a' }, { src: 'run.sh.j2', dest: 'certdump/run.sh', mode: 'a+x' }]
 
 - name: Configure prosody systemd service.
   template:

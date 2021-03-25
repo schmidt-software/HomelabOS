@@ -8,13 +8,14 @@ networks:
 
 services:
   xmpp-server:
-    image: joschi/prosody-alpine:{{ prosody.version }}
+    image: joschi/prosody-alpine:0.11.7-0
     restart: unless-stopped
+    user: "{{ uid_output.stdout }}:{{ gid_output.stdout }}"
     volumes:
       - "{{ volumes_root }}/prosody/vhosts:/etc/prosody/conf.d"
       - "{{ volumes_root }}/prosody/modules:/usr/local/lib/prosody/modules"
-      - "{{ volumes_root }}/prosody/data:/var/lib/prosody/data"
-      - "{{ volumes_root }}/prosody/certs:/etc/prosody/certs:ro/"
+      - "{{ volumes_root }}/prosody/data:/var/lib/prosody"
+      - "{{ volumes_root }}/prosody/certs:/etc/prosody/certs:ro"
       - "{{ volumes_root }}/prosody/prosody.pid:/var/run/prosody/prosody.pid"
     ports:
       - '5222:5222'
@@ -27,9 +28,8 @@ services:
       - traefik.http.routers.xmpp-server.service=xmpp-server
       - traefik.http.routers.xmpp-server.tls=true
       - traefik.http.routers.xmpp-server.tls.domains[0].main={{ service_domain }}
-      - traefik.http.routers.xmpp-server.tls.domains[1].main={{ prosody.muc_domain }}
 {% for vhost in prosody.vhosts %}
-      - traefik.http.routers.xmpp-server.tls.domains[{{ loop.index + 1 }}].main={{ vhost }}
+      - traefik.http.routers.xmpp-server.tls.domains[{{ loop.index }}].main={{ vhost }}
 {% endfor %}
       - traefik.http.routers.xmpp-server.tls.certresolver=http
       - traefik.http.services.xmpp-server.loadbalancer.server.scheme=http
@@ -40,12 +40,13 @@ services:
   # mailu certdumper
   xmpp-certdumper:
     build:
-      context: certdumper
-      dockerfile: certdumper/Dockerfile
+      context: certdump
+      dockerfile: Dockerfile
     restart: unless-stopped
+    user: "{{ uid_output.stdout }}:{{ gid_output.stdout }}"
     volumes:
       - "{{ volumes_root }}/traefik/acme.json:/data/acme.json:ro"
-      - "{{ volumes_root }}/prosody/certs:/data/certs"
+      - "{{ volumes_root }}/prosody/certs:/output"
 
   # XMPP http external upload: prosody-filer
 

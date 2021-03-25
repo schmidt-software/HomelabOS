@@ -3,7 +3,7 @@
 function dump() {
     echo "$(date) Dumping certificates"
 
-    traefik-certs-dumper file --version v2} \
+    traefik-certs-dumper file --version v2 \
       --dest /tmp/work \
       --source /data/acme.json > /dev/null
 
@@ -18,7 +18,7 @@ function dump() {
         echo "$(date) Certificates and keys still up to date for {{ domain }}, doing nothing"
       else
         echo "$(date) Certificates or keys differ for {{ domain }}, updating"
-        mv /tmp/work/{certs/{{ domain }}.crt,private/{{ doman }}.key} /output/
+        mv /tmp/work/{certs/{{ domain }}.crt,private/{{ domain }}.key} /output/
       fi
       {% endfor %}
 }
