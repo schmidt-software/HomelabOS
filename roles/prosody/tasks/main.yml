@@ -37,7 +37,7 @@
     src: "{{ item.src }}"
     dest: "{{ volumes_root }}/prosody/{{ item.dest }}"
     mode: "{{ item.mode }}"
-  loop: [{ src: 'certdump.Dockerfile', dest: 'certdump/Dockerfile', mode: 'a' }, { src: 'run.sh.j2', dest: 'certdump/run.sh', mode: 'a+x' }]
+  loop: [{src: 'certdump.Dockerfile', dest: 'certdump/Dockerfile', mode: 'a'}, {src: 'run.sh.j2', dest: 'certdump/run.sh', mode: 'a+x'}]
 
 - name: Configure prosody systemd service.
   template:
