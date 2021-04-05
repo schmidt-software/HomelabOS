@@ -7,20 +7,23 @@ function dump() {
       --dest /tmp/work \
       --source /data/acme.json > /dev/null
 
-    {% for domain in prosody.vhosts %}
-      if [[ -f /tmp/work/certs/{{ domain }}.crt && \
-        -f /tmp/work/private/{{ domain }}.key && \
-        -f /output/{{ domain }}.crt && \
-        -f /output/{{ domain }}.key ]] && \
-        diff -q /tmp/work/certs/{{ domain }}.crt /output/{{ domain }}.crt >/dev/null && \
-        diff -q /tmp/work/private/{{ domain }}.key /output/{{ domain }}.key >/dev/null ; \
+    host_array=($(echo $DUMP_HOSTS | tr -d [ | tr -d ] | tr -d \' | tr ", " "\n"))
+
+    for domain in ${host_array[@]}
+    do
+      if [[ -f /tmp/work/certs/${domain}.crt && \
+        -f /tmp/work/private/${domain}.key && \
+        -f /output/${domain}.crt && \
+        -f /output/${domain}.key ]] && \
+        diff -q /tmp/work/certs/${domain}.crt /output/${domain}.crt >/dev/null && \
+        diff -q /tmp/work/private/${domain}.key /output/${domain}.key >/dev/null ; \
       then
-        echo "$(date) Certificates and keys still up to date for {{ domain }}, doing nothing"
+        echo "$(date) Certificates and keys still up to date for ${domain}, doing nothing"
       else
-        echo "$(date) Certificates or keys differ for {{ domain }}, updating"
-        mv /tmp/work/{certs/{{ domain }}.crt,private/{{ domain }}.key} /output/
+        echo "$(date) Certificates or keys differ for ${domain}, updating"
+        mv /tmp/work/{certs/${domain}.crt,private/${domain}.key} /output/
       fi
-      {% endfor %}
+    done
 }
 
 mkdir -p /tmp/work

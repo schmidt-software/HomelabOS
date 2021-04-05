@@ -20,6 +20,8 @@ services:
     ports:
       - '5222:5222'
       - '5269:5269'
+      - '5280:5280'
+      - '5281:5281'
     labels:
       - traefik.enable=true
       - traefik.docker.network=homelabos_traefik
@@ -32,22 +34,17 @@ services:
       - traefik.http.routers.xmpp-server.tls.domains[{{ loop.index }}].main={{ vhost }}
 {% endfor %}
       - traefik.http.routers.xmpp-server.tls.certresolver=http
-      - traefik.http.services.xmpp-server.loadbalancer.server.scheme=http
-      - traefik.http.services.xmpp-server.loadbalancer.server.port=5280
     networks:
       - traefik_network
 
-  # mailu certdumper
   xmpp-certdumper:
     build:
       context: certdump
       dockerfile: Dockerfile
     restart: unless-stopped
     user: "{{ uid_output.stdout }}:{{ gid_output.stdout }}"
+    environment:
+      - DUMP_HOSTS={{ prosody.vhosts + [ service_domain ] }}
     volumes:
       - "{{ volumes_root }}/traefik/acme.json:/data/acme.json:ro"
       - "{{ volumes_root }}/prosody/certs:/output"
-
-  # XMPP http external upload: prosody-filer
-
-  # XMPP stun/turn server: eturnal
