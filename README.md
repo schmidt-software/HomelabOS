@@ -30,6 +30,7 @@ To make it easy for anyone to own all their data in an easy and secure way, with
 ### [Planned Features](https://gitlab.com/NickBusey/HomelabOS/issues?label_name%5B%5D=enhancement)
 
 ## [Available Software](https://homelabos.com/docs/#available-software)
+- ResilioSync
 
 ## Alternatives
 

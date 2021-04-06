@@ -965,6 +965,13 @@ restic:
   domain: {{ restic.domain | default(False) }}
   subdomain: {{ restic.subdomain | default("restic") }}
   version: {{ restic.version | default("latest") }}
+resiliosync:
+  enable: {{ resiliosync.enable | default(enable_resiliosync, None) | default(False) }}
+  https_only: {{ resiliosync.https_only | default(False) }}
+  auth: {{ resiliosync.auth | default(False) }}
+  domain: {{ resiliosync.domain | default(False) }}
+  subdomain: {{ resiliosync.subdomain | default("resiliosync") }}
+  version: {{ resiliosync.version | default("latest") }}
 rsshub:
   enable: {{ rsshub.enable | default(enable_rsshub, None) | default(False) }}
   https_only: {{ rsshub.https_only | default(False) }}
