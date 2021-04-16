@@ -72,7 +72,7 @@ services:
       - "traefik.http.routers.mailu-admin.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.mailu-admin.tls.certresolver=dns"
-      - "traefik.http.routers.mailu-admin.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.mailu-admin.tls.domains[0].main={{ registered_domain | domain }}"
       - "traefik.http.routers.mailu-admin.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.mailu-admin.tls.certresolver=http"
@@ -176,7 +176,7 @@ services:
       - "traefik.http.routers.mailu-webmail.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.mailu-webmail.tls.certresolver=dns"
-      - "traefik.http.routers.mailu-webmail.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.mailu-webmail.tls.domains[0].main={{ registered_domain | domain }}"
       - "traefik.http.routers.mailu-webmail.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.mailu-webmail.tls.certresolver=http"

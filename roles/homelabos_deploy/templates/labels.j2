@@ -14,7 +14,7 @@
 {% if custom_domain != False %}
       - "traefik.http.routers.{{ service_item }}.tls.domains[0].main={{ service_domain }}"
 {% else %}
-      - "traefik.http.routers.{{ service_item }}.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.{{ service_item }}.tls.domains[0].main={{ registered_domain | domain }}"
       - "traefik.http.routers.{{ service_item }}.tls.domains[0].sans=*.{{ domain }}"
 {% endif %}
 {% else %}
