@@ -52,8 +52,8 @@ Task::check_for_git(){
 }
 
 Task::check_ssh_with_keys(){
-  IP=$(Task::run_docker yq r "settings/config.yml" "homelab_ip" | tr -d '[:space:]')
-  USERNAME=$(Task::run_docker yq r "settings/config.yml" "homelab_ssh_user" | tr -d '[:space:]')
+  IP=$(Task::run_docker yq e ".homelab_ip" "settings/config.yml" | tr -d '[:space:]')
+  USERNAME=$(Task::run_docker yq e ".homelab_ssh_user" "settings/config.yml" | tr -d '[:space:]')
   Task::run_docker ssh -q -o StrictHostKeyChecking=no -o ConnectTimeout=3 "$USERNAME@$IP" exit 2>&1 && echo $?
   if ! [ $? -eq 0 ]; then
     colorize red "HomelabOS is unable to ssh to your server using the information in your config.yml: $USERNAME at $IP, and your $HOME/.ssh/id_rsa keypair to SSH into your server. Because the HomelabOS docker container cannot ssh to your server with the specified key, HomelabOS cannot deploy"

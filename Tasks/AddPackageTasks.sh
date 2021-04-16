@@ -45,7 +45,7 @@ Task::add_package(){
 #   highlight "Adding Docs to mkdocs.yml"
 
 #   highlight "Adding Package to the group_vars/all file"
-#   Task::run_docker yq w -i group_vars/all "services.$package_file_name" ''
+#   Task::run_docker yq e -i ".services.${package_file_name} = ''" group_vars/all
 
 #   #puts 'Step 7. Adding service to Readme.md'
 #   highlight "Adding Service to Readme.md"
@@ -62,8 +62,8 @@ Task::add_package(){
 # EOL
 #   # Edit the config tempfile
 #   search_and_replace_in_file 'package_file_name' $package_file_name package_template/tmpfile.yml
-#   # yq merge -i roles/homelabos_config/templates/config.yml tmpfile
-#   Task::run_docker yq merge -i roles/homelabos_config/templates/config.yml package_template/tmpfile.yml
+#   # yq eval-all -i "select(fileIndex == 0) * select(fileIndex == 1)" roles/homelabos_config/templates/config.yml tmpfile
+#   Task::run_docker yq eval-all -i "select(fileIndex == 0) * select(fileIndex == 1)" roles/homelabos_config/templates/config.yml package_template/tmpfile.yml
 #   # Remove tmp file
 #   rm package_template/tmpfile.yml
 
