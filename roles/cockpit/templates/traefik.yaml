@@ -17,7 +17,7 @@ http:
       tls:
         certResolver: "dns"
         domains:
-          - main: "{{domain}}"
+          - main: "{{ registered_domain | domain }}"
             sans:
               - "*.{{domain}}"
               - "{{ service_domain }}"

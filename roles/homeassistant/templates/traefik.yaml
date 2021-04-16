@@ -18,7 +18,7 @@ http:
 {% if traefik.dns_challenge_provider %}
         certResolver: "dns"
           domains:
-            - main: "{{domain}}"
+            - main: "{{ registered_domain | domain }}"
               sans:
                 - "*.{{domain}}"
                 - "{{ service_domain }}"
