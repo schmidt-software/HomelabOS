@@ -30,6 +30,11 @@
       private: "False"
       when: domain is not defined
 
+    - name: registered_domain
+      prompt: "What is the registered domain you bought from domain seller? (Press return if none.)"
+      private: "False"
+      when: registered_domain is not defined
+
     - name: admin_email
       prompt: "What is a current valid email address for the admin? (Required for HTTPS via LetsEncrypt) (Press return if none.)"
       private: "False"
