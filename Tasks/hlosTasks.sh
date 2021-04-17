@@ -41,12 +41,13 @@ Task::build() {
 
   if [[ -v "already_ran[${FUNCNAME[0]}]" ]] ;  then return ; fi
 
-  if [[ -n ${_force-false} ]] ; then
-    hlos_dockerimage=$(docker images -a | grep "homelabos" | awk '{print $3}')
-    if [[ -n ${hlos_dockerimage} ]]; then
-      docker rmi --force ${hlos_dockerimage}
-    fi
-  fi
+  # if [[ -n ${_force-false} ]] ; then
+  #   highlight "Force rebuilding HomelabOS docker image."
+  #   hlos_dockerimage=$(docker images -a | grep "homelabos" | awk '{print $3}')
+  #   if [[ -n ${hlos_dockerimage} ]]; then
+  #     docker rmi --force ${hlos_dockerimage}
+  #   fi
+  # fi
 
   if [[ -v "already_ran[${FUNCNAME[0]}]" ]] ;  then exit 0; fi
   already_ran[${FUNCNAME[0]}]=1
@@ -85,17 +86,26 @@ Task::git_sync() {
 # Encrypt the vault
 Task::encrypt(){
   : @desc "Encrypts the vault"
+
+  local userID=$(id -u)
+  local groupID=$(id -g) 
+
   Task::run_docker ansible-vault encrypt settings/vault.yml
   sudo chmod 640 settings/vault.yml
+  sudo chown $userID:$groupID settings/vault.yml
 }
 
 # Decrypts the vault
 Task::decrypt(){
   : @desc "Decrypts the vault"
 
+  local userID=$(id -u)
+  local groupID=$(id -g) 
+
   highlight "Decrypting Vault"
   Task::run_docker ansible-vault decrypt settings/vault.yml || true
   sudo chmod 640 settings/vault.yml
+  sudo chown $userID:$groupID settings/vault.yml
   highlight "Vault decrypted!"
 }
 

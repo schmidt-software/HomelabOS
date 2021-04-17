@@ -91,6 +91,7 @@ services:
   portainer:
   privatebin:
   qbittorrent:
+  quakejs:
   radarr:
   restic:
   rsshub:
@@ -125,6 +126,7 @@ services:
   webvirtmgr:
   wekan:
   xfinityusageinfluxdb:
+  xteve:
   zammad:
   zulip:
 docs:
@@ -218,6 +220,7 @@ poli:
 portainer:
 privatebin:
 qbittorrent:
+quakejs:
 radarr:
 restic:
 sabnzbd:
@@ -246,6 +249,7 @@ unificontroller:
 wekan:
 watchtower:
 xfinityusageinfluxdb:
+xteve:
 wallabag:
 webdavserver:
 webtrees:

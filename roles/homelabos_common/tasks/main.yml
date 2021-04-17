@@ -23,28 +23,11 @@
       - python3
       - python3-pip
       - python3-virtualenv
+      - python3-setuptools
       - python3-passlib
       - python3-openssl
   tags:
     - dependencies
-
-- name: Ensure Docker is not installed via Snap
-  snap:
-    name: docker
-    state: absent
-  when:
-    - ansible_facts['distribution'] == 'Ubuntu'
-    - ansible_facts['distribution_major_version'] is version('20.04', '>=')
-
-- name: Remove older docker.io based packages
-  apt:
-    name:
-      - docker
-      - docker.io
-      - containerd
-      - runc
-      - docker-engine
-    state: absent
 
 - name: Add an apt key for Docker-ce Repo
   apt_key:
@@ -53,7 +36,7 @@
 
 - name: Add the Docker-ce Repo
   apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu {{ubuntu_release}} stable
+    repo: deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} stable
     state: present
 
 - name: Install Docker and docker-compose
@@ -71,11 +54,6 @@
     name: python
     link: /usr/bin/python
     path: /usr/bin/python3
-
-- name: Install Passlib
-  pip:
-    name: passlib
-    executable: pip3
 
 - name: timezone - configure /etc/timezone
   copy:

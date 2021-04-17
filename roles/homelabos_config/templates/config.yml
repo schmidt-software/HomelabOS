@@ -42,6 +42,9 @@ ubuntu_release: {{ ubuntu_release | default('focal') }}
 # Set this to true if you are deploying to an ARM infrastructure, such as a Raspberry Pi.
 arm: {{ arm | default('False') }}
 
+# Used by OpenLDAP
+ldap_org_name: {{ ldap_org_name | default('My LDAP Org') }}
+
 # This configuration dictionary sets various details of your bastion host.
 # see the docs for more information about what a bastion host is and how
 # the HomelabOS bastion host works.
@@ -62,6 +65,7 @@ bastion:
     keepalive: {{ bastion.wireguard.keepalive | default("25") }}
   ports_to_forward:
     2222: 22
+    222: 222
     80: 80
     443: 443
     25: 25
@@ -69,6 +73,10 @@ bastion:
     587: 587
     998: 998
     4190: 4190
+    465: 465
+    110: 110
+    993: 993
+    995: 995
   # MIGRATION v0.7
   # Should HomelabOS reset the bastion server IP tables rules?
   # Enable this if you are upgrading a Tinc bastion host
@@ -348,6 +356,7 @@ drone:
 duckdns:
   enable: {{ duckdns.enable | default(vault.duckdns.enable, None) | default(False) }}
   version: {{ duckdns.version | default("latest") }}
+  subdomains: {{ duckdns.subdomains | default("mysubdomain") }}
 {% raw %}
   token: "{{ vault.duckdns.token | default(False) }}"
 {% endraw %}
@@ -597,6 +606,7 @@ jenkins:
   domain: {{ jenkins.domain | default(False) }}
   subdomain: {{ jenkins.subdomain | default("jenkins")}}
   allow_docker: {{ jenkins.allow_docker | default(False)}}
+  additional_packages: {{ jenkins.additional_packages | default([]) }}
   version: {{ jenkins.version | default ("latest") }}
 keycloak:
   enable: {{ keycloak.enable | default(enable_keycloak, None) | default(False) }}
@@ -635,7 +645,13 @@ mailu:
   subdomain: {{ mailu.subdomain | default("mailu") }}
   version: {{ mailu.version | default ("1.7") }}
   redis_version: {{ mailu.redis_version | default ("alpine") }}
+  certdumper_version: {{ mailu.certdumper_version | default ("master") }}
   forward_to_smtp: {{ mailu.forward_to_smtp | default(False)  }}
+  enable_secure_imap: {{ mailu.enable_secure_imap | default(True) }} #port 993
+  enable_secure_pop3: {{ mailu.enable_secure_pop3 | default(False) }} #port 995
+  enable_unsecure_pop3: {{ mailu.enable_unsecure_pop3 | default(False) }} #port 110
+  enable_unsecure_imap: {{ mailu.enable_unsecure_imap | default(False) }} #port 143
+  enable_legacy_smtps: {{ mailu.enable_legacy_smtps | default(False) }}   #port 465
 mashio:
   enable: {{ mashio.enable | default(enable_mashio, None) | default(False) }}
   https_only: {{ mashio.https_only | default(False) }}
@@ -731,6 +747,7 @@ monicahq:
   subdomain: {{ monicahq.subdomain | default("monicahq") }}
   version: {{ monicahq.version | default("latest") }}
   db_version: {{ monicahq.db_version | default("latest") }}
+  disable_signup: {{ monicahq.disable_signup | default(True) }}
 mstream:
   enable: {{ mstream.enable | default(enable_mstream, None) | default(False) }}
   https_only: {{ mstream.https_only | default(False) }}
@@ -816,11 +833,13 @@ openvpn:
   subdomain: {{ openvpn.subdomain | default("openvpn") }}
   version: {{ openvpn.version | default("latest") }}
 organizr:
-  enable: {{ organizr.enable | default(enable_organizr, None) | default(False) }}
+  enable: {{ organizr.enable | default(enable_organizr, None) | default(True) }}
   https_only: {{ organizr.https_only | default(False) }}
   auth: {{ organizr.auth | default(False) }}
   domain: {{ organizr.domain | default(False) }}
   subdomain: {{ organizr.subdomain | default("organizr") }}
+  fpm: {{ organizr.fpm | default("false") }} 
+  branch: {{ organizr.branch | default("master") }}
   version: {{ organizr.version | default("latest") }}
 ownphotos:
   enable: {{ ownphotos.enable | default(enable_ownphotos, None) | default(False) }}
@@ -877,6 +896,7 @@ pixelfed:
   subdomain: {{ pixelfed.subdomain | default("pixelfed") }}
   db_version: {{ pixelfed.db_version | default("10.4") }}
   redis_version: {{ pixelfed.redis_version | default("5-alpine") }}
+  open_registration: {{ pixelfed.open_registration | default(True) }}
 pleroma:
   enable: {{ pleroma.enable | default(enable_pleroma, None) | default(False) }}
   https_only: {{ pleroma.https_only | default(False) }}
@@ -919,8 +939,18 @@ qbittorrent:
   domain: {{ qbittorrent.domain| default(False) }}
   subdomain: {{ qbittorrent.subdomain | default("qbittorrent") }}
   version: {{ qbittorrent.version | default("latest") }}
-  vpn_enabled: !!str '{{ qbittorrent.vpn_enabled | default(false) }}'
+  vpn_enabled: '{{ qbittorrent.vpn_enabled | default(false) }}'
   lan_network: {{ qbittorrent.lan_network | default("192.168.1.0/24") }}
+quakejs:
+  enable: {{ quakejs.enable | default(enable_quakejs, None) | default(False) }}
+  https_only: {{ quakejs.https_only | default(False) }}
+  auth: {{ quakejs.auth | default(False) }}
+  domain: {{ quakejs.domain | default(False) }}
+  subdomain: {{ quakejs.subdomain | default("quakejs")}}
+  version: {{ quakejs.version | default("latest") }}
+  server: {{ quakejs.server | default("homelabIp")}}
+  bastion_ports:
+    27960: 27960
 radarr:
   enable: {{ radarr.enable | default(enable_radarr, None) | default(False) }}
   https_only: {{ radarr.https_only | default(False) }}
@@ -1164,6 +1194,13 @@ xfinityusageinfluxdb:
   domain: {{ xfinityusageinfluxdb.domain| default(False) }}
   subdomain: {{ xfinityusageinfluxdb.subdomain | default("xfinityusageinfluxdb") }}
   version: {{ xfinityusageinfluxdb.version | default("latest") }}
+xteve:
+  enable: {{ xteve.enable | default(enable_xteve, None) | default(False) }}
+  https_only: {{ xteve.https_only | default(False) }}
+  auth: {{ xteve.auth | default(False) }}
+  domain: {{ xteve.domain | default(False) }}
+  subdomain: {{ xteve.subdomain | default("xteve") }}
+  version: {{ xteve.version | default("lastest") }}
 zammad:
   enable: {{ zammad.enable | default(enable_zammad, None) | default(False) }}
   https_only: {{ zammad.https_only | default(False) }}

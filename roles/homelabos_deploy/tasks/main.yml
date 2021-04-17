@@ -175,9 +175,6 @@
     tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
     tor_ssh_domain: "{{ tor_ssh_domain_file.stdout | default('') }}"
 
-- name: Pull HomelabOS Traefik Image
-  command: chdir={{ volumes_root }}/traefik/ docker-compose pull
-
 - name: Makefile helper to guide users
   template:
     src: helper.Makefile.j2
@@ -239,6 +236,30 @@
   ignore_errors: "yes"
   vars:
     query: "not {{ service_item + '.enable' }}"
+
+- name: Remove old docker overrides
+  file:
+    path: "{{ volumes_root }}/{{ service_item }}/docker-compose.override.yml"
+    state: absent
+  when: query
+  loop: "{{ services | flatten(1) }}"
+  loop_control:
+    loop_var: service_item
+  vars:
+    query: "{{ service_item + '.enable' }}"
+  ignore_errors: true
+
+- name: Copy current docker overrides
+  copy:
+    src: "settings/overrides/{{ service_item }}.override.yml"
+    dest: "{{ volumes_root }}/{{ service_item }}/docker-compose.override.yml"
+  when: query
+  loop: "{{ services | flatten(1) }}"
+  loop_control:
+    loop_var: service_item
+  vars:
+    query: "{{ service_item + '.enable' }}"
+  ignore_errors: true
 
 # Migration v0.7
 - name: remove docker-compose.SERVICENAME.yml

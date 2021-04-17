@@ -6,6 +6,7 @@ ENV ANSIBLE_VERSION 2.9.6
 
 ENV BUILD_PACKAGES \
   bash \
+  cargo \
   curl \
   tar \
   openssh-client \
@@ -21,6 +22,8 @@ ENV BUILD_PACKAGES \
   jq
 
 ENV PYTHON_PACKAGES \
+  setuptools-rust \
+  rust \
   python3-keyczar \
   boto3 \
   docker-py \
