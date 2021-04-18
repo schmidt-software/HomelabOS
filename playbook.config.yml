@@ -26,12 +26,12 @@
       when: default_password is not defined
 
     - name: domain
-      prompt: "What is the domain you have pointed at your Homelab server with ports 80 and 443? (Press return if none.)"
+      prompt: "What is the domain you have pointed at your Homelab server with ports 80 and 443? e.g. mydomain.com or myserver.mydomain.com (Press return if none.)"
       private: "False"
       when: domain is not defined
 
     - name: registered_domain
-      prompt: "What is the registered domain you bought from domain seller? (Press return if none.)"
+      prompt: "What is the registered domain you bought from domain seller? e.g. mydomain.com or mydomain.org (Press return if same as domain.)"
       private: "False"
       when: registered_domain is not defined
 
