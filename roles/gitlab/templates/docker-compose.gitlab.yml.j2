@@ -192,7 +192,7 @@ services:
       - "traefik.http.routers.registry.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.registry.tls.certresolver=dns"
-      - "traefik.http.routers.registry.tls.domains[0].main={{ registered_domain | domain }}"
+      - "traefik.http.routers.registry.tls.domains[0].main={{ registered_domain | default(domain) }}"
       - "traefik.http.routers.registry.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.registry.tls.certresolver=http"

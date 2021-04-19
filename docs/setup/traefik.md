@@ -29,7 +29,7 @@ http:
       tls:
         certResolver: "{certresolver (dns/web)}"
         domains:
-           - main: "{registered_domain | domain}"
+           - main: "{registered_domain | default(domain)}"
              sans:
                - "*.{domain}"
 

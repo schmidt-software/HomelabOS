@@ -44,7 +44,7 @@ services:
       - "traefik.http.routers.invoiceninja.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.invoiceninja.tls.certresolver=dns"
-      - "traefik.http.routers.invoiceninja.tls.domains[0].main={{ registered_domain | domain }}"
+      - "traefik.http.routers.invoiceninja.tls.domains[0].main={{ registered_domain | default(domain) }}"
       - "traefik.http.routers.invoiceninja.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.invoiceninja.tls.certresolver=http"
