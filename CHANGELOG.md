@@ -25,6 +25,10 @@
 
 - Fixes for migrate_vault.sh
 
+## Services Added
+
+- Added Plausible - Simple, open-source, lightweight and privacy-friendly web analytics alternative to Google Analytics.
+
 # 0.7
 
 ## Features

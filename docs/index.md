@@ -54,7 +54,8 @@ If you are having problems you can:
 
 ### Analytics
 
-- [Matomo](software/matomo/) - Web analytics
+- [Matomo](software/matomo) - Web analytics
+- [Plausible](software/plausible) - Privacy-focused web analytics
 
 ### Automation
 

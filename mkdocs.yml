@@ -39,6 +39,7 @@ nav:
   - Included Software:
     - Analytics:
       - Matomo: software/matomo.md
+      - Plausible: software/plausible.md
     - Automation:
       - Home Assistant: software/homeassistant.md
       - HomeBridge: software/homebridge.md
