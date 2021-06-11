@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.rsshub.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.rsshub.tls.certresolver=dns"
-      - "traefik.http.routers.rsshub.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.rsshub.tls.domains[0].main={{ registered_domain | default(domain) }}"
       - "traefik.http.routers.rsshub.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.rsshub.tls.certresolver=http"

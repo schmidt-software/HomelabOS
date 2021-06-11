@@ -35,7 +35,7 @@ entryPoints:
 {% if traefik.dns_challenge_provider %}
 
         domains:
-          - main: "{{ domain }}"
+          - main: "{{ registered_domain | default(domain) }}"
             sans:
               - "*.{{ domain }}"
 {% endif %}
@@ -140,6 +140,8 @@ api:
 certificatesResolvers:
   dns:
     acme:
+      # If you want to test acme, just uncomment next line and comment the next line of next line. :D
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       caServer: https://acme-v02.api.letsencrypt.org/directory
       email: {{ ((admin_email == None) | ternary('test@test.com', admin_email)) }}
       keyType: EC256
@@ -152,6 +154,8 @@ certificatesResolvers:
           - '1.0.0.1:53'
   http:
     acme:
+      # If you want to test acme, just uncomment next line and comment the next line of next line. :D
+      # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       caServer: https://acme-v02.api.letsencrypt.org/directory
       email: {{ ((admin_email == None) | ternary('test@test.com', admin_email)) }}
       keyType: EC256

@@ -5,6 +5,10 @@
 # Must have a DNS A record of `*.yourserver.com` pointing at your server's IP.
 domain: {{ domain | default('localhost') }}
 
+# The registered domain you bought from domain seller. Only for DNS certificate.
+# e.g. mydomain.com or mydomain.org.
+registered_domain: {{ registered_domain }}
+
 # SSH accessible IP address
 homelab_ip: {{ homelab_ip }}
 

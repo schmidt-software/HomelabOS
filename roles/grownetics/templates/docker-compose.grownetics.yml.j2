@@ -155,7 +155,7 @@ services:
       - "traefik.http.routers.socket.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.socket.tls.certresolver=dns"
-      - "traefik.http.routers.socket.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.socket.tls.domains[0].main={{ registered_domain | default(domain) }}"
       - "traefik.http.routers.socket.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.socket.tls.certresolver=http"
@@ -249,7 +249,7 @@ services:
       - "traefik.http.routers.consul.tls=true"
 {% if traefik.dns_challenge_provider %}
       - "traefik.http.routers.consul.tls.certresolver=dns"
-      - "traefik.http.routers.consul.tls.domains[0].main={{ domain }}"
+      - "traefik.http.routers.consul.tls.domains[0].main={{ registered_domain | default(domain) }}"
       - "traefik.http.routers.consul.tls.domains[0].sans=*.{{ domain }}"
 {% else %}
       - "traefik.http.routers.consul.tls.certresolver=http"
