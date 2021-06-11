@@ -23,8 +23,8 @@ echo "Found value in file: $FILE"
 
 echo "Old setting value: " ${SETTING_VALUE}
 # Setting the new value
-sudo docker run -it --rm -v ${PWD}:/workdir mikefarah/yq:3 yq w -i "$FILE" "$1" "$2"
-NEW_SETTING_VALUE=$(sudo docker run -it --rm -v ${PWD}:/workdir mikefarah/yq:3 yq r "$FILE" "$1" "$2")
+sudo docker run -it --rm -v ${PWD}:/workdir mikefarah/yq:3 yq e -i ".${1} = ${2}" "${FILE}"
+NEW_SETTING_VALUE=$(sudo docker run -it --rm -v ${PWD}:/workdir mikefarah/yq:3 yq e ".${1}" "${FILE}")
 echo "New setting value: " ${NEW_SETTING_VALUE}
 
 # Re-encrypt vault

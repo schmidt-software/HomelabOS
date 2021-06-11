@@ -28,8 +28,7 @@ Task::show_config(){
   : @desc "Shows the configuration settings for the specified service"
   : @param service! "The name of the service. Use: service=serviceName"
 
-  Task::run_docker yq r -C "settings/config.yml" $_service
-
+  Task::run_docker yq e -C ".${_service}" "settings/config.yml"
 }
 
 # Resets the local settings
@@ -60,10 +59,10 @@ Task::set(){
 
   # Try to figure out where key is defined
   FILE=settings/config.yml
-  SETTING_VALUE=$(Task::run_docker yq r "$FILE" "$key" "$value")
+  SETTING_VALUE=$(Task::run_docker yq e ".${key}" "$FILE")
   if [ -z ${SETTING_VALUE} ]; then
       FILE=settings/vault.yml
-      SETTING_VALUE=$(Task::run_docker yq r "$FILE" "$key" "$value")
+      SETTING_VALUE=$(Task::run_docker yq e ".${key}" "$FILE")
       if [ -z ${SETTING_VALUE} ]; then
           echo "Key does not exist in config.yml nor vault.yml."
           # Re-encrypt vault
@@ -76,8 +75,8 @@ Task::set(){
 
   colorize red "Old setting value: " ${SETTING_VALUE}
   # Setting the new value
-  Task::run_docker yq w -i "$FILE" "$key" "$value"
-  NEW_SETTING_VALUE=$(Task::run_docker yq r "$FILE" "$key" "$value")
+  Task::run_docker yq e -i ".${key} = ${value}" "$FILE"
+  NEW_SETTING_VALUE=$(Task::run_docker yq e ".${key}" "$FILE")
   colorize green "New setting value: " ${NEW_SETTING_VALUE}
 
   Task::encrypt
