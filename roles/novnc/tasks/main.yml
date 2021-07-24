@@ -1,0 +1,22 @@
+---
+- name: Make novnc directory.
+  file:
+    path: "{{ volumes_root }}/novnc"
+    state: directory
+
+- name: Copy novnc docker-compose.yml file into place.
+  template:
+    src: docker-compose.novnc.yml.j2
+    dest: "{{ volumes_root }}/novnc/docker-compose.yml"
+
+- name: Configure novnc systemd service.
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/novnc.service
+
+- name: Start novnc
+  systemd:
+    name: novnc
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started

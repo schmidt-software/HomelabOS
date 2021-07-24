@@ -93,6 +93,7 @@ nav:
       - QuakeJS: software/quakejs.md
     - Gateways and terminal sharing:
       - Guacamole: software/guacamole.md
+      - NoVNC: software/novnc.md
       - WebVirtMgr: software/webvirtmgr.md
     - Media Streaming:
       - Airsonic: software/airsonic.md
