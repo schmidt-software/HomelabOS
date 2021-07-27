@@ -1,0 +1,15 @@
+#Syncing Settings via Git
+Get your SSH Public key
+    [more /home/USER/.ssh/id_rsa.pub]
+Copy the key provided to your Git account
+Test SSH access to Git
+    [ssh -T git@gitlab.com]
+Should receive Welcome message
+Create new private repository in Gitlab web access
+Copy code from Gitlab 'Push an existing folder'
+    cd ./settings
+    git init
+    git remote add origin git@gitlab.com.........
+    git add .
+    git commit -m "Initial commit"
+    git push -u origin main
