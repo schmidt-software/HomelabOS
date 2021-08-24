@@ -19,7 +19,7 @@ services:
       - "{{ volumes_root }}/invidious/repo/docker/init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh"
     environment:
       POSTGRES_DB: invidious
-      POSTGRES_USER: invidious
+      POSTGRES_USER: kemal
       POSTGRES_PASSWORD: "{{ lookup('password', './settings/passwords/invidious_db_password chars=ascii_letters') }}"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
@@ -39,13 +39,14 @@ services:
         check_tables: true
         feed_threads: 1
         db:
-          user: invidious
+          user: kemal
           dbname: invidious
           host: invidious_db
           port: 5432
           password: "{{  lookup('password', './settings/passwords/invidious_db_password chars=ascii_letters')  }}"
         full_refresh: false
         https_only: false
+        registration_enabled: false
         domain:
       # external_port:
     labels:
