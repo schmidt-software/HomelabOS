@@ -1,6 +1,7 @@
 # 0.8.4
 
-Documentation clean up
+- Documentation clean up
+- Add configuration options to change Firefly's image and database
 
 # 0.8.3
 
