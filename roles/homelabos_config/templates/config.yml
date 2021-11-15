@@ -875,6 +875,14 @@ ownphotos:
   version: {{ ownphotos.version | default("dev") }}
   db_version: {{ ownphotos.db_version | default("latest") }}
   redis_version: {{ ownphotos.redis_version | default("latest") }}
+papercups:
+  enable: {{ papercups.enable | default(enable_papercups, None) | default(False) }}
+  https_only: {{ papercups.https_only | default(False) }}
+  auth: {{ papercups.auth | default(False) }}
+  domain: {{ papercups.domain | default(False) }}
+  subdomain: {{ papercups.subdomain | default("papercups") }}
+  version: {{ papercups.version | default("latest") }}
+  db_version: {{ papercups.db_version | default("latest") }}
 paperless:
   enable: {{ paperless.enable | default(enable_paperless, None) | default(False) }}
   https_only: {{ paperless.https_only | default(False) }}
