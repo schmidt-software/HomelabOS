@@ -1,0 +1,24 @@
+---
+- name: Make resilio directory.
+  file:
+    path: "{{ volumes_root }}/resiliosync"
+    state: directory
+
+- name: Copy resilio docker-compose.yml file into place.
+  template:
+    src: docker-compose.resiliosync.yml.j2
+    dest: "{{ volumes_root }}/resiliosync/docker-compose.yml"
+  vars:
+    tor_domain: "{{ tor_http_domain_file.stdout | default('') }}"
+
+- name: Configure resiliosync systemd service.
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/resiliosync.service
+
+- name: Start resilio sync
+  systemd:
+    name: resiliosync
+    enabled: "yes"
+    daemon-reload: "yes"
+    state: started

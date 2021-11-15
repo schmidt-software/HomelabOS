@@ -80,6 +80,7 @@ nav:
       - Ombi: software/ombi.md
       - qBittorrent: software/qbittorrent.md
       - Radarr: software/radarr-sonarr.md
+      - ResilioSync: software/resiliosync.md
       - Samba: software/samba.md
       - SickChill: software/sickchill.md
       - Sonarr: software/radarr-sonarr.md

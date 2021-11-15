@@ -96,6 +96,7 @@ services:
   qbittorrent:
   quakejs:
   radarr:
+  resiliosync:
   restic:
   rsshub:
   sabnzbd:
@@ -230,6 +231,7 @@ qbittorrent:
 quakejs:
 radarr:
 restic:
+resiliosync:
 sabnzbd:
 samba:
 searx:

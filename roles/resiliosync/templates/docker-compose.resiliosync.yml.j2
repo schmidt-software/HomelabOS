@@ -1,0 +1,30 @@
+---
+version: '2.1'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  # Resilio Sync Server
+  resiliosync:
+    image: linuxserver/resilio-sync:{{ resiliosync.version }}
+    networks:
+      - traefik_network
+    restart: unless-stopped
+    volumes:
+      - "{{ volumes_root }}/resiliosync/config:/config"
+      - "{{ storage_dir }}/Documents/resiliosync:/sync"
+      - "{{ storage_dir }}/Downloads/resiliosync:/downloads"
+    environment:
+      - PUID={{ uid_output.stdout }}
+      - PGID={{ gid_output.stdout }}
+      - TZ={{ common_timezone }}
+    ports:
+      - 8888:8888
+      - 55555:55555
+    labels:
+      - "traefik.http.services.resiliosync.loadbalancer.server.scheme=http"
+      - "traefik.http.services.resiliosync.loadbalancer.server.port=8888"
+{% include './labels.j2' %}
