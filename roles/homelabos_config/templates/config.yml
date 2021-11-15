@@ -481,6 +481,13 @@ gitlab:
     auth: {{ gitlab.registry.auth | default(False) }}
     domain: {{ gitlab.registry.domain | default(False) }}
     subdomain: {{ gitlab.registry.subdomain | default("registry") }}
+gonic:
+  enable: {{ gonic.enable | default(enable_gonic, None) | default(False) }}
+  https_only: {{ gonic.https_only | default(False) }}
+  auth: {{ gonic.auth | default(False) }}
+  domain: {{ gonic.domain | default(False) }}
+  subdomain: {{ gonic.subdomain | default("gonic")}}
+  version: {{ gonic.version | default("latest") }}
 gotify:
   enable: {{ gotify.enable | default(enable_gotify, None) | default(False) }}
   https_only: {{ gotify.https_only | default(False) }}
