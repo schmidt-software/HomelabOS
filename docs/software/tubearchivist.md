@@ -2,6 +2,14 @@
 
 [Tubearchivist](https://github.com/bbilly1/tubearchivist) Your self hosted YouTube media server
 
+## Deleting channels
+
+Please notice that when you delete a channel from, Tubearchivist will automatically delete all videos from the channel.
+
+Tubearchivist is not meant to be a personal Youtube subscription backup!
+
+For backups purposes you would better check, for example, [TheFrenchGhostys-Ultimate-YouTube-DL-Scripts-Collection](https://github.com/TheFrenchGhosty/TheFrenchGhostys-Ultimate-YouTube-DL-Scripts-Collection/)
+
 ## Access
 
 Admin credentials:
