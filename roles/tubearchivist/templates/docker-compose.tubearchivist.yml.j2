@@ -19,11 +19,11 @@ services:
       - "{{ storage_dir }}/Video/Tubearchivist/media:/youtube"
     environment:
       - TA_USERNAME=tubearchivist
+      - "TA_PASSWORD={{lookup('password', './settings/passwords/tubearchivist_ta_passphrase chars=ascii_letters')}}"
       - ES_URL=http://tubearchivist-es:9200
       - REDIS_HOST=tubearchivist-redis
       - HOST_UID={{ uid_output.stdout }}
       - HOST_GID={{ gid_output.stdout }}
-      - "TA_PASSWORD={{lookup('password', './settings/passwords/tubearchivist_ta_passphrase chars=ascii_letters')}}"
       - "ELASTIC_PASSWORD={{lookup('password', './settings/passwords/tubearchivist_elasticsearch_passphrase chars=ascii_letters')}}"
     depends_on:
       - tubearchivist-es
