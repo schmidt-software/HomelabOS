@@ -4,7 +4,7 @@
 
 ## Deleting channels
 
-Please notice that when you delete a channel from, Tubearchivist will automatically delete all videos from the channel.
+Please notice that when you delete a channel Tubearchivist will automatically delete all videos from the channel.
 
 Tubearchivist is not meant to be a personal Youtube subscription backup!
 
@@ -12,7 +12,7 @@ For backups purposes you would better check, for example, [TheFrenchGhostys-Ulti
 
 ## Access
 
-Admin credentials:
+Admin credentials can be found in the generated `/var/homelabos/tubearchivist/docker-compose.yml`:
 - Admin username is defined in `TA_USERNAME` variable which is `tubearchivist` by default
 - Admin password is defined in `TA_PASSWORD` variable. Ansible will generate a random password
 
