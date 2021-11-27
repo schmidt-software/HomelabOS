@@ -29,8 +29,8 @@ services:
       - tubearchivist-es
       - tubearchivist-redis
     labels:
-      - "traefik.http.services.paperless.loadbalancer.server.scheme=http"
-      - "traefik.http.services.paperless.loadbalancer.server.port=8000"
+      - "traefik.http.services.tubearchivist.loadbalancer.server.scheme=http"
+      - "traefik.http.services.tubearchivist.loadbalancer.server.port=8000"
 {% include './labels.j2' %}
 
   tubearchivist-redis:
