@@ -125,6 +125,7 @@ services:
   turtl:
   ubooquity:
   unificontroller:
+  vikunja:
   wallabag:
   watchtower:
   webdavserver:
@@ -259,6 +260,7 @@ tubearchivist:
 turtl:
 ubooquity:
 unificontroller:
+vikunja:
 wekan:
 watchtower:
 xfinityusageinfluxdb:
