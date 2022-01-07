@@ -13,6 +13,6 @@
     - "{{ volumes_root }}/zammad/postgresql-data"
     - "{{ volumes_root }}/zammad/elasticsearch-data"
     - "{{ volumes_root }}/zammad/zammad-backup"
-    
+
 - name: Start {{service_item}}
   include: includes/start.yml
