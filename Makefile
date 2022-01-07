@@ -35,9 +35,7 @@ build:
 	@$(eval VERSION=`cat VERSION`)
 	@printf "\033[92m========== Preparing HomelabOS docker image ==========\033[0m\n"
 # First build the docker images needed to deploy
-	@printf	"\033[92m========== Check if user is in the docker group ==========\033[0m\n"
-	@[ id -Gn | grep docker ] || sudo usermod -a -G docker $(whoami) && printf "\033[92m========== You are not in the user group, Ctrl + C now or you will be prompted for sudo to automatically do it ==========\033[0m\n"
-
+	@./docker_setup.sh
 	@sudo docker pull nickbusey/homelabos:$(VERSION) || true
 	@sudo docker inspect --type=image nickbusey/homelabos:$(VERSION) > /dev/null && printf "\033[92m========== Docker image already built ==========\033[0m\n" || sudo docker build . -t nickbusey/homelabos:$(VERSION)
 
