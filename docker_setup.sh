@@ -5,6 +5,11 @@ if [ "$(id -u)" == "0" ]; then
     exit 0
 fi
 
+# MacOS doesn't need user to be in docker group
+if [[ $OSTYPE == "darwin"* ]]; then
+    exit 0
+fi
+
 # If user is not root, check if the user has a group named "docker".
 if [ $(id -Gn | grep -c "docker") -eq 0 ]; then
     printf "\033[92m========== This account is NOT in the docker group ==========\033[0m\n"
