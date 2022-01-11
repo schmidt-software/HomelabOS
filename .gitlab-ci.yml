@@ -18,4 +18,5 @@ super_linter:
     VALIDATE_SHELL_SHFMT: "false"
     VALIDATE_DOCKERFILE: "false"
     VALIDATE_RUBY: "false"
-
+    VALIDATE_JSON: "false"
+    VALIDATE_MARKDOWN: "false"
