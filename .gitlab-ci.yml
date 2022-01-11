@@ -2,13 +2,15 @@
 
 stages:
   - static_test
+  - build
   - deploy
 
 include:
   - remote: 'https://jobs.r2devops.io/pages.yml'
+  - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
+
 
 lint_yaml_files:
-
   stage: static_test
 
   image: python:3.8.2
