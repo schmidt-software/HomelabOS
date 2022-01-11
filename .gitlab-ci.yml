@@ -6,15 +6,6 @@ stages:
   - deploy
 
 include:
-  - remote: 'https://jobs.r2devops.io/pages.yml'
+  - remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
-
-
-lint_yaml_files:
-  stage: static_test
-
-  image: python:3.8.2
-
-  script:
-    - pip install yamllint
-    - find . -type f -name '*.yml' | sed 's|\./||g' | egrep -v '(\.kitchen/|\[warning\]|\.molecule/)' | xargs yamllint -c yamllint.conf -f parsable
+  - remote: 'https://jobs.r2devops.io/pages.yml'
