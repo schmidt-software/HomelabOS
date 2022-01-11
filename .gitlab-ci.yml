@@ -9,3 +9,13 @@ include:
   - remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
+
+super_linter:
+  variables:
+    VALIDATE_ANSIBLE: "false"
+    VALIDATE_HTML: "false"
+    VALIDATE_CSS: "false"
+    VALIDATE_SHELL_SHFMT: "false"
+    VALIDATE_DOCKERFILE: "false"
+    VALIDATE_RUBY: "false"
+
