@@ -1,7 +1,7 @@
 # Job from R2Devops hub --> r2devops.io
 
 stages:
-  - static_test
+  - static_tests
   - build
   - deploy
 
