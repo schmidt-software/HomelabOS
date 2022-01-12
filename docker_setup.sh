@@ -10,7 +10,7 @@ if [ "$(id -u)" = "0" ]; then
     exit 0
 fi
 
-# if the user is not in the docker group, then we need to add them
+# If the user is not in the docker group, then add them to the group.
 if ! groups $USER | grep -q '\bdocker\b'; then
     printf "\033[92m========== This account is NOT in the docker group ==========\033[0m\n"
     # Ask the user if they want to add the user to the docker group.
