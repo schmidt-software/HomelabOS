@@ -5,7 +5,7 @@ if [ "$(uname)" == "Darwin" ]; then
     exit 0
 fi
 
-# if the user is root then we don't need to do anything
+# If the user is root, then nothing needs to be done.
 if [ "$(id -u)" = "0" ]; then
     exit 0
 fi
