@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# if we are on a macos system, we don't need to do anything
+# If the OS is MacOS, then nothing needs to be done.
 if [ "$(uname)" == "Darwin" ]; then
     exit 0
 fi
