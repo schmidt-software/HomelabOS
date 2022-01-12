@@ -19,7 +19,6 @@ if ! groups $USER | grep -q '\bdocker\b'; then
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         # Add the user to the docker group.
         sudo usermod -aG docker $USER
-
         # Tell the user to log out and log back in for changes to take effect.
         printf "\033[92m========== You must log out and back in for changes to take effect ==========\033[0m\n"
         exit 1
