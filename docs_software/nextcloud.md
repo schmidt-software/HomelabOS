@@ -32,6 +32,9 @@ Specifically, HomelabOS configures Nextcloud in the following ways:
     * Database
     * Default User & Password - check your config and vault files for details on what these are set to.
 
+!!! Warning "Nextcloud only supports upgrading to the next major version." 
+    If the version of nextcloud.version field is not 21-apache, then iteratively update one major version at a time from the version currently running to 22-apache. This can be done by changing the version number explicitly in the nextcloud.version field of settings/config.yml to the next major version and running `make restart_one nextcloud`.
+
 ## Post Installation Configuration
 
 Nextcloud, as an application, is *designed* to silo users' data apart from one-another. (this is a good thing). However, this causes issues when you want to allow users to access a common data store - like a NAS. To facilitate this, HomelabOS mounts your hosts' {{storage_dir}} in the container as the /mnt/homelabos folder. Once you've installed and configured Nextcloud, you'll need to take the following steps to make your {{storage_dir}} available to users:
