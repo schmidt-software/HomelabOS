@@ -8,7 +8,22 @@ stages:
 include:
   - remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
-  - remote: 'https://jobs.r2devops.io/pages.yml'
+
+pages:
+  stage: deploy
+  variables:
+    PAGES_BUILD_PATH: 'website_build/'
+  script:
+    - if [ "$PAGES_BUILD_PATH" != "public" -a "$PAGES_BUILD_PATH" != "public/" ]; then
+    -   if [ -d "public" ]; then rm -rf public; fi
+    -   mv "$PAGES_BUILD_PATH" public
+    - fi
+
+    - if [ ! -d "public" ]; then echo "Nothing to deploy"; exit 1; fi
+  artifacts:
+    paths:
+      - public
+    when: always
 
 super_linter:
   variables:
