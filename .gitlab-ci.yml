@@ -25,6 +25,7 @@ pages:
       - public
     when: always
 
+# Check mega linter
 super_linter:
   variables:
     VALIDATE_ANSIBLE: "false"
