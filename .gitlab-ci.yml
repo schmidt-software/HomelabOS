@@ -1,12 +1,16 @@
 # Job from R2Devops hub --> r2devops.io
 
-## EVALUATION OF TIME WITH SUPER_LINTER##
+## EVALUATION OF TIME WITH SUPER_LINTER ##
 # 3 minutes for this pipeline to run in dev, against 45 secondes for the current pipeline.
-# 4 minutes for this pipeline to run in master, against 1 minutes for the current pipeline.
+# 4 minutes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
 
-## EVALUATION OF TIME WITH MEGA_LINTER##
-# ? minutes for this pipeline to run in dev, against 45 secondes for the current pipeline.
-# ? minutes for this pipeline to run in master, against 1 minutes for the current pipeline.
+## EVALUATION OF TIME WITH MEGA_LINTER ##
+# 1 minutes and 30 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 2 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
+
+## EVALUATION OF TIME WITH YAML_LINTER ##
+# 1 minutes and 30 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 1 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
 
 stages:
   - static_tests
@@ -14,13 +18,26 @@ stages:
   - deploy
 
 include:
-  - remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
+  #- remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
   #- remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
-# We could be faster with the mega_linter since it is using a lighter image
-mega_linter:
+yaml_linter:
+
+  image: 
+    name: python:3.8.2
+    entrypoint: [""]
+
+  stage: static_tests
+
+  script:
+    - pip install yamllint
+    - find . -type f -name '*.yml' | sed 's|\./||g' | egrep -v '(\.kitchen/|\[warning\]|\.molecule/)' | xargs yamllint -c yamllint.conf -f parsable
+
+
+# The mega_linter is faster than the super_linter
+.mega_linter:
   image:
     name: nvuillam/mega-linter-ci_light:v4
   
