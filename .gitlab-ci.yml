@@ -1,31 +1,106 @@
-image: python:3.8.2
+# Job from R2Devops hub --> r2devops.io
 
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-  HUGO_VERSION: 0.68.3
+## EVALUATION OF TIME WITH SUPER_LINTER ##
+# 3 minutes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 4 minutes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
 
-lint_yaml_files:
+## EVALUATION OF TIME WITH MEGA_LINTER ##
+# 1 minutes and 30 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 2 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
+
+## EVALUATION OF TIME WITH YAML_LINTER ##
+# 45 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 1 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
+
+## TIME OF EACH JOBS ##
+# yaml_linter: 45 secondes
+# mega_linter: 1 minutes and 30 secondes
+# super_linter: 3 minutes
+# 
+
+stages:
+  - static_tests
+  - build
+  - deploy
+
+include:
+  #- remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
+  #- remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
+  - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
+  - remote: 'https://jobs.r2devops.io/pages.yml'
+
+# Their linter is the fastest
+yaml_linter:
+
+  image: 
+    name: python:3.8.2
+    entrypoint: [""]
+
+  stage: static_tests
+
   script:
     - pip install yamllint
     - find . -type f -name '*.yml' | sed 's|\./||g' | egrep -v '(\.kitchen/|\[warning\]|\.molecule/)' | xargs yamllint -c yamllint.conf -f parsable
 
+
+# The mega_linter is faster than the super_linter
+.mega_linter:
+  image:
+    name: nvuillam/mega-linter-ci_light:v4
+  
+  variables:
+    ENABLE_LINTERS: "YAML_YAMLLINT"
+    YAML_YAMLLINT_ARGUMENTS: "-f parsable"
+    YAML_YAMLLINT_CONFIG_FILE: "yamllint.conf"
+
+# The super_linter image is too heavy for the pipeline, thus too slow
+.super_linter:
+  before_script:
+    - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
+  
+  variables:
+    YAML_CONFIG_FILE: "yamllint.conf"
+    VALIDATE_YAML: "true"
+
 hugo:
+  image:
+    name: golang:1.17.6-buster
+    entrypoint: [""]
+
+  stage: build
+
+  variables:
+    PROJECT_ROOT: "."
+    HUGO_VERSION: "0.68.3"
+    HUGO_SOURCE: "website"
+    HUGO_OUTPUT: "public/"
+    ADDITIONAL_OPTIONS: ""
+
   script:
+    - cd ${PROJECT_ROOT}
     - curl -SL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -o /tmp/hugo.tar.gz
     - tar -xzf /tmp/hugo.tar.gz -C /tmp
     - mv /tmp/hugo /usr/local/bin/
-    - hugo -s website -d ../public
+    - hugo -s ${HUGO_SOURCE} -d ${CI_PROJECT_DIR}/${HUGO_OUTPUT} ${ADDITIONAL_OPTIONS}
 
-mkdocs:
-  script:
-    - pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin
-    # For debugging in the pipeline logs
-    - mkdocs --version
-    - mv docs_software docs/software
-    - mkdocs build
-    - mv site public/docs
   artifacts:
+    when: always
     paths:
-    - public
+      - ${CI_PROJECT_DIR}/${HUGO_OUTPUT}
+  
   only:
     - master
+
+mkdocs:
+  variables:
+    MKDOCS_OUTPUT_PATH: 'public/docs/'
+  
+  only:
+    - master
+
+pages:
+  variables:
+    PAGES_BUILD_PATH: 'public/'
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
