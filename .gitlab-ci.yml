@@ -10,23 +10,23 @@ stages:
   - deploy
 
 include:
-  #- remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
+  - remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
 # We could be faster with the mega_linter since it is using a lighter image
-.mega_linter:
+mega_linter:
   image:
     name: nvuillam/mega-linter-ci_light:v4
 
-super_linter:
+# The super_linter image is too heavy for the pipeline
+.super_linter:
   before_script:
     - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
   
   variables:
     YAML_CONFIG_FILE: "yamllint.conf"
-    LOG_LEVEL: "TRACE"
     VALIDATE_YAML: "true"
 
 hugo:
