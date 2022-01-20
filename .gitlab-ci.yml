@@ -1,8 +1,12 @@
 # Job from R2Devops hub --> r2devops.io
 
-## EVALUATION OF TIME ##
-# 3 minutes for this pipeline to run in dev, against 45 secondes for the current pipeline
-# 4 minutes for this pipeline to run in master, against 1 minutes for the current pipeline
+## EVALUATION OF TIME WITH SUPER_LINTER##
+# 3 minutes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 4 minutes for this pipeline to run in master, against 1 minutes for the current pipeline.
+
+## EVALUATION OF TIME WITH MEGA_LINTER##
+# ? minutes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# ? minutes for this pipeline to run in master, against 1 minutes for the current pipeline.
 
 stages:
   - static_tests
@@ -11,7 +15,7 @@ stages:
 
 include:
   - remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
-  - remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
+  #- remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
@@ -19,6 +23,11 @@ include:
 mega_linter:
   image:
     name: nvuillam/mega-linter-ci_light:v4
+  
+  variables:
+    ENABLE_LINTERS: "YAML_YAMLLINT"
+    YAML_YAMLLINT_ARGUMENTS: "-f parsable"
+    YAML_YAMLLINT_CONFIG_FILE: "yamllint.conf"
 
 # The super_linter image is too heavy for the pipeline
 .super_linter:
