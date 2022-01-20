@@ -15,14 +15,9 @@ include:
   image:
     name: nvuillam/mega-linter-ci_light:v4
 
-  variables:
-    MEGALINTER_CONFIG: "yamllint.conf"
-
-
 super_linter:
   variables:
-    #YAML_CONFIG_FILE: "yamllint.conf"
-
+    YAML_CONFIG_FILE: "yamllint.conf"
     VALIDATE_YAML: "true"
 
 hugo:
