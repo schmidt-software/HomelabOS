@@ -1,5 +1,9 @@
 # Job from R2Devops hub --> r2devops.io
 
+## EVALUATION OF TIME ##
+# 3 minutes for this pipeline to run in dev, against 1 minute for the current pipeline
+# 4 minutes for this pipeline to run in master, against 1 minutes for the current pipeline
+
 stages:
   - static_tests
   - build
@@ -11,6 +15,7 @@ include:
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
+# We could be faster with the mega_linter since it is using a lighter image
 .mega_linter:
   image:
     name: nvuillam/mega-linter-ci_light:v4
@@ -20,7 +25,7 @@ super_linter:
     - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
   
   variables:
-    YAML_CONFIG_FILE: "yamllint.conf -f parsable"
+    YAML_CONFIG_FILE: "yamllint.conf"
     VALIDATE_YAML: "true"
 
 hugo:
