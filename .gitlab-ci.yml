@@ -36,7 +36,7 @@ hugo:
 
   variables:
     PROJECT_ROOT: "."
-    HUGO_VERSION: "0.92.0"
+    HUGO_VERSION: "0.68.3"
     HUGO_SOURCE: "website"
     HUGO_OUTPUT: "public/"
     ADDITIONAL_OPTIONS: ""
@@ -52,11 +52,20 @@ hugo:
     when: always
     paths:
       - ${CI_PROJECT_DIR}/${HUGO_OUTPUT}
+  
+  only:
+    - master
 
 mkdocs:
   variables:
     MKDOCS_OUTPUT_PATH: 'public/docs/'
+  
+  only:
+    - master
 
 pages:
   variables:
     PAGES_BUILD_PATH: 'public/'
+
+  only:
+    - master
