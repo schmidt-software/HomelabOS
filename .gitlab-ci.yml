@@ -6,11 +6,14 @@ stages:
   - deploy
 
 include:
-  - remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
+  #- remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
-mega_linter:
+.mega_linter:
+  image:
+    name: nvuillam/mega-linter-ci_light:v4
+
   variables:
     MEGALINTER_CONFIG: "yamllint.conf"
 
@@ -31,7 +34,6 @@ mega_linter:
     VALIDATE_JAVASCRIPT_STANDARD: "false"
 
 hugo:
-
   image:
     name: golang:1.17.6-buster
     entrypoint: [""]
@@ -57,16 +59,22 @@ hugo:
     paths:
       - ${CI_PROJECT_DIR}/${HUGO_OUTPUT}
   
-  #only:
-  #  - master
+  only:
+    - master
 
 mkdocs:
   variables:
     MKDOCS_OUTPUT_PATH: 'public/docs/'
   
-  #only:
-  #  - master
+  only:
+    - master
 
 pages:
   variables:
     PAGES_BUILD_PATH: 'public/'
+  
+  #only:
+  #  - master
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
