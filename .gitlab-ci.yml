@@ -16,8 +16,11 @@ include:
     name: nvuillam/mega-linter-ci_light:v4
 
 super_linter:
+  before_script:
+    - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
+  
   variables:
-    YAML_CONFIG_FILE: "/${CI_PROJECT_DIR}/yamllint.conf"
+    YAML_CONFIG_FILE: "yamllint.conf"
     VALIDATE_YAML: "true"
 
 hugo:
