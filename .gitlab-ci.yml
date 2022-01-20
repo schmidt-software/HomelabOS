@@ -20,7 +20,7 @@ super_linter:
     - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
   
   variables:
-    YAML_CONFIG_FILE: "yamllint.conf"
+    YAML_CONFIG_FILE: "yamllint.conf -f parsable"
     VALIDATE_YAML: "true"
 
 hugo:
