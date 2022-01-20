@@ -21,7 +21,6 @@ include:
 
 super_linter:
   variables:
-    VALIDATE_YAML: "true"
     YAML_CONFIG_FILE: "yamllint.conf"
 
     VALIDATE_ANSIBLE: "false"
