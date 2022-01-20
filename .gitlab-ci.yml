@@ -9,7 +9,7 @@
 # 2 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
 
 ## EVALUATION OF TIME WITH YAML_LINTER ##
-# 1 minutes and 30 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
+# 45 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
 # 1 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
 
 stages:
@@ -23,6 +23,7 @@ include:
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
+# Their linter is the fastest
 yaml_linter:
 
   image: 
@@ -46,7 +47,7 @@ yaml_linter:
     YAML_YAMLLINT_ARGUMENTS: "-f parsable"
     YAML_YAMLLINT_CONFIG_FILE: "yamllint.conf"
 
-# The super_linter image is too heavy for the pipeline
+# The super_linter image is too heavy for the pipeline, thus too slow
 .super_linter:
   before_script:
     - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
