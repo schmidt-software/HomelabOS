@@ -17,7 +17,7 @@ include:
 
 super_linter:
   variables:
-    YAML_CONFIG_FILE: "yamllint.conf"
+    YAML_CONFIG_FILE: "-f parsable"
     VALIDATE_YAML: "true"
 
 hugo:
