@@ -53,19 +53,16 @@ hugo:
     paths:
       - ${CI_PROJECT_DIR}/${HUGO_OUTPUT}
   
-  only:
-    - master
+  #only:
+  #  - master
 
 mkdocs:
   variables:
     MKDOCS_OUTPUT_PATH: 'public/docs/'
   
-  only:
-    - master
+  #only:
+  #  - master
 
 pages:
   variables:
     PAGES_BUILD_PATH: 'public/'
-
-  only:
-    - master
