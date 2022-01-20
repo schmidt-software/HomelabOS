@@ -8,22 +8,7 @@ stages:
 include:
   - remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
-
-pages:
-  stage: deploy
-  variables:
-    PAGES_BUILD_PATH: 'website_build/'
-  script:
-    - if [ "$PAGES_BUILD_PATH" != "public" -a "$PAGES_BUILD_PATH" != "public/" ]; then
-    -   if [ -d "public" ]; then rm -rf public; fi
-    -   mv "$PAGES_BUILD_PATH" public
-    - fi
-
-    - if [ ! -d "public" ]; then echo "Nothing to deploy"; exit 1; fi
-  artifacts:
-    paths:
-      - public
-    when: always
+  - remote: 'https://jobs.r2devops.io/pages.yml'
 
 # Check mega linter
 super_linter:
@@ -41,3 +26,37 @@ super_linter:
     VALIDATE_JAVASCRIPT_ES: "false"
     VALIDATE_JAVASCRIPT_STANDARD: "false"
 
+hugo:
+
+  image:
+    name: golang:1.17.6-buster
+    entrypoint: [""]
+
+  stage: build
+
+  variables:
+    PROJECT_ROOT: "."
+    HUGO_VERSION: "0.92.0"
+    HUGO_SOURCE: "website"
+    HUGO_OUTPUT: "public/"
+    ADDITIONAL_OPTIONS: ""
+
+  script:
+    - cd ${PROJECT_ROOT}
+    - curl -SL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -o /tmp/hugo.tar.gz
+    - tar -xzf /tmp/hugo.tar.gz -C /tmp
+    - mv /tmp/hugo /usr/local/bin/
+    - hugo -s ${HUGO_SOURCE} -d ${CI_PROJECT_DIR}/${HUGO_OUTPUT} ${ADDITIONAL_OPTIONS}
+
+  artifacts:
+    when: always
+    paths:
+      - ${CI_PROJECT_DIR}/${HUGO_OUTPUT}
+
+mkdocs:
+  variables:
+    MKDOCS_OUTPUT_PATH: 'public/docs/'
+
+pages:
+  variables:
+    PAGES_BUILD_PATH: 'public/'
