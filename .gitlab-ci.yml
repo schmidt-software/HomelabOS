@@ -16,7 +16,17 @@
 # yaml_linter: 45 secondes
 # mega_linter: 1 minutes and 30 secondes
 # super_linter: 3 minutes
-# 
+# hugo (r2): 45 secondes
+# hugo (Homelab): 45 secondes
+# mkdocs (r2): 45 secondes
+# mkdocs (Homelab): ??? mistery 
+# pages (r2): 20 secondes
+# pages (Homelab): ??? I supposed 20 secondes 
+# pages + mkdocs + hugo (Homelab): 1 minute and 5 secondes
+
+## CONCLUSION ##
+# They optimisez the pipeline to be the fastest possible, I don't think we can do faster...
+# ...But we can organised the pipeline way better (with a loss of 35 secondes)
 
 stages:
   - static_tests
