@@ -19,14 +19,14 @@
 # hugo (r2): 45 secondes
 # hugo (Homelab): 45 secondes
 # mkdocs (r2): 45 secondes
-# mkdocs (Homelab): ??? mistery 
+# mkdocs (Homelab): 45 secondes
 # pages (r2): 20 secondes
-# pages (Homelab): ??? I supposed 20 secondes 
+# pages (Homelab): 20 secondes
 # pages + mkdocs + hugo (Homelab): 1 minute and 5 secondes
 
 ## CONCLUSION ##
-# They optimisez the pipeline to be the fastest possible, I don't think we can do faster...
-# ...But we can organised the pipeline way better (with a loss of 35 secondes)
+# They optimized the pipeline to be the fastest possible, I don't think we can do faster...
+# ...But we can organised the pipeline way better with R2 (with a loss of 35 secondes)
 
 stages:
   - static_tests
@@ -36,12 +36,15 @@ stages:
 include:
   #- remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
   #- remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
+  - remote: 'https://jobs.r2devops.io/latest/hugo.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
 # Their linter is the fastest
 yaml_linter:
-
   image: 
     name: python:3.8.2
     entrypoint: [""]
@@ -73,30 +76,8 @@ yaml_linter:
     VALIDATE_YAML: "true"
 
 hugo:
-  image:
-    name: golang:1.17.6-buster
-    entrypoint: [""]
-
-  stage: build
-
   variables:
-    PROJECT_ROOT: "."
     HUGO_VERSION: "0.68.3"
-    HUGO_SOURCE: "website"
-    HUGO_OUTPUT: "public/"
-    ADDITIONAL_OPTIONS: ""
-
-  script:
-    - cd ${PROJECT_ROOT}
-    - curl -SL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -o /tmp/hugo.tar.gz
-    - tar -xzf /tmp/hugo.tar.gz -C /tmp
-    - mv /tmp/hugo /usr/local/bin/
-    - hugo -s ${HUGO_SOURCE} -d ${CI_PROJECT_DIR}/${HUGO_OUTPUT} ${ADDITIONAL_OPTIONS}
-
-  artifacts:
-    when: always
-    paths:
-      - ${CI_PROJECT_DIR}/${HUGO_OUTPUT}
   
   only:
     - master
