@@ -23,6 +23,8 @@
 # pages (r2): 20 secondes
 # pages (Homelab): 20 secondes
 # pages + mkdocs + hugo (Homelab): 1 minute and 5 secondes
+# mkdocs + hugo (Homelab): 1 minute
+## The more you put jobs together the faster they are, this is probably because it doesn't have to download an image for each job...
 
 ## CONCLUSION ##
 # They optimized the pipeline to be the fastest possible, I don't think we can do faster...
@@ -54,7 +56,6 @@ yaml_linter:
   script:
     - pip install yamllint
     - find . -type f -name '*.yml' | sed 's|\./||g' | egrep -v '(\.kitchen/|\[warning\]|\.molecule/)' | xargs yamllint -c yamllint.conf -f parsable
-
 
 # The mega_linter is faster than the super_linter
 .mega_linter:
