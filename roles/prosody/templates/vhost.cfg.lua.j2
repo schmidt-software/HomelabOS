@@ -1,0 +1,34 @@
+VirtualHost "{{ item }}"
+  enabled = true
+  http_default_host = "{{ service_domain }}"
+
+----------Admins------------
+-- uncomment and edit this list to make an user and admin
+-- admins = { "admin@{{ item }}", "admin2@{{ item }}" }
+
+-------Registrations--------
+-- uncomment the following the enable open registrations
+-- for this virtual host
+-- allow_registration = true
+
+----------Modules-----------
+-- add any extra modules you want to enable here
+modules_enabled = {
+  "carbons"; -- sync conversations across clients
+  "csi_simple"; -- client status information
+  "groups"; -- shared rosters
+  "mam"; -- archives for messages while offline
+  "server_contact_info"; -- publish admin contacts
+  "vcard4"; -- allows users to set vcards, contact info
+  "vcard_legacy"; -- legacy support for above
+}
+
+--Disable Default Modules---
+-- vcard is replaced by vcard_legacy
+modules_disabled = { "vcard" }
+
+--------Group Chat----------
+-- comment the following if you want to disable multi user
+-- chat on this virtual host
+Component "conference.{{ item }}" "muc"
+modules_enabled = { "muc_mam" }

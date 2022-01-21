@@ -1,0 +1,50 @@
+---
+version: '3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  xmpp-server:
+    image: joschi/prosody-alpine:0.11.7-0
+    restart: unless-stopped
+    user: "{{ uid_output.stdout }}:{{ gid_output.stdout }}"
+    volumes:
+      - "{{ volumes_root }}/prosody/vhosts:/etc/prosody/conf.d"
+      - "{{ volumes_root }}/prosody/modules:/usr/local/lib/prosody/modules"
+      - "{{ volumes_root }}/prosody/data:/var/lib/prosody"
+      - "{{ volumes_root }}/prosody/certs:/etc/prosody/certs:ro"
+      - "{{ volumes_root }}/prosody/prosody.pid:/var/run/prosody/prosody.pid"
+    ports:
+      - '5222:5222'
+      - '5269:5269'
+      - '5280:5280'
+      - '5281:5281'
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=homelabos_traefik
+      - traefik.http.routers.xmpp-server.rule=Host(`{{ service_domain }}`)
+      - traefik.http.routers.xmpp-server.entrypoints=https
+      - traefik.http.routers.xmpp-server.service=xmpp-server
+      - traefik.http.routers.xmpp-server.tls=true
+      - traefik.http.routers.xmpp-server.tls.domains[0].main={{ service_domain }}
+{% for vhost in prosody.vhosts %}
+      - traefik.http.routers.xmpp-server.tls.domains[{{ loop.index }}].main={{ vhost }}
+{% endfor %}
+      - traefik.http.routers.xmpp-server.tls.certresolver=http
+    networks:
+      - traefik_network
+
+  xmpp-certdumper:
+    build:
+      context: certdump
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    user: "{{ uid_output.stdout }}:{{ gid_output.stdout }}"
+    environment:
+      - DUMP_HOSTS={{ prosody.vhosts + [ service_domain ] }}
+    volumes:
+      - "{{ volumes_root }}/traefik/acme.json:/data/acme.json:ro"
+      - "{{ volumes_root }}/prosody/certs:/output"

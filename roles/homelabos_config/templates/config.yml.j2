@@ -77,6 +77,11 @@ bastion:
     110: 110
     993: 993
     995: 995
+    # prosody
+    5222: 5222
+    5269: 5269
+    5280: 5280
+    5281: 5281
   # MIGRATION v0.7
   # Should HomelabOS reset the bastion server IP tables rules?
   # Enable this if you are upgrading a Tinc bastion host
@@ -972,6 +977,14 @@ privatebin:
   domain: {{ privatebin.domain | default(False) }}
   subdomain: {{ privatebin.subdomain | default("privatebin") }}
   version: {{ privatebin.version | default("1.3.4-alpine3.11") }}
+prosody:
+  enable: {{ prosody.enable | default(enable_prosody, None) | default(False) }}
+  https_only: {{ prosody.https_only | default(False) }}
+  auth: {{ prosody.auth | default(False) }}
+  domain: {{ prosody.domain | default(False) }}
+  subdomain: {{ prosody.subdomain | default("prosody")}}
+  version: {{ prosody.version | default("latest") }}
+  vhosts: {{ prosody.vhosts | default([domain]) }}
 qbittorrent:
   enable: {{ qbittorrent.enable | default(enable_qbittorrent, None) | default(False) }}
   https_only: {{ qbittorrent.https_only | default(False) }}
