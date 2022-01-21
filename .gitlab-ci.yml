@@ -28,7 +28,8 @@
 
 ## CONCLUSION ##
 # They optimized the pipeline to be the fastest possible, I don't think we can do faster...
-# ...But we can organised the pipeline way better with R2 (with a loss of 35 secondes)
+# ...But we can organised the pipeline way better with R2 (with a loss of 35 secondes only on master)
+# This CI has the same result as the HomelabOS CI. The pages results are the same and if we don't use their linter the mega_linter has similar results 
 
 stages:
   - static_tests
