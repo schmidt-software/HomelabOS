@@ -1,44 +1,11 @@
 # Job from R2Devops hub --> r2devops.io
 
-## EVALUATION OF TIME WITH SUPER_LINTER ##
-# 3 minutes for this pipeline to run in dev, against 45 secondes for the current pipeline.
-# 4 minutes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
-
-## EVALUATION OF TIME WITH MEGA_LINTER ##
-# 1 minutes and 30 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
-# 2 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
-
-## EVALUATION OF TIME WITH YAML_LINTER ##
-# 45 secondes for this pipeline to run in dev, against 45 secondes for the current pipeline.
-# 1 minutes and 45 secondes for this pipeline to run in master, against 1 minutes and 10 secondes for the current pipeline.
-
-## TIME OF EACH JOBS ##
-# yaml_linter: 45 secondes
-# mega_linter: 1 minutes and 30 secondes
-# super_linter: 3 minutes
-# hugo (r2): 45 secondes
-# hugo (Homelab): 45 secondes
-# mkdocs (r2): 45 secondes
-# mkdocs (Homelab): 45 secondes
-# pages (r2): 20 secondes
-# pages (Homelab): 20 secondes
-# pages + mkdocs + hugo (Homelab): 1 minute and 5 secondes
-# mkdocs + hugo (Homelab): 1 minute
-## The more you put jobs together the faster they are, this is probably because it doesn't have to download an image for each job...
-
-## CONCLUSION ##
-# They optimized the pipeline to be the fastest possible, I don't think we can do faster...
-# ...But we can organised the pipeline way better with R2 (with a loss of 35 secondes only on master)
-# This CI has the same result as the HomelabOS CI. The pages results are the same and if we don't use their linter the mega_linter has similar results 
-
 stages:
   - static_tests
   - build
   - deploy
 
 include:
-  #- remote: 'https://jobs.r2devops.io/latest/mega_linter.yml'
-  #- remote: 'https://jobs.r2devops.io/latest/super_linter.yml'
   - remote: 'https://jobs.r2devops.io/latest/hugo.yml'
   - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
   - remote: 'https://jobs.r2devops.io/pages.yml'
@@ -46,7 +13,6 @@ include:
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-# Their linter is the fastest
 yaml_linter:
   image: 
     name: python:3.8.2
@@ -57,25 +23,6 @@ yaml_linter:
   script:
     - pip install yamllint
     - find . -type f -name '*.yml' | sed 's|\./||g' | egrep -v '(\.kitchen/|\[warning\]|\.molecule/)' | xargs yamllint -c yamllint.conf -f parsable
-
-# The mega_linter is faster than the super_linter
-.mega_linter:
-  image:
-    name: nvuillam/mega-linter-ci_light:v4
-  
-  variables:
-    ENABLE_LINTERS: "YAML_YAMLLINT"
-    YAML_YAMLLINT_ARGUMENTS: "-f parsable"
-    YAML_YAMLLINT_CONFIG_FILE: "yamllint.conf"
-
-# The super_linter image is too heavy for the pipeline, thus too slow
-.super_linter:
-  before_script:
-    - cp ${CI_PROJECT_DIR}/yamllint.conf /action/lib/.automation/yamllint.conf
-  
-  variables:
-    YAML_CONFIG_FILE: "yamllint.conf"
-    VALIDATE_YAML: "true"
 
 hugo:
   variables:
