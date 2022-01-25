@@ -1,0 +1,26 @@
+---
+version: '3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  booksonic:
+    image: linuxserver/booksonic-air:{{ booksonic.version }}
+    restart: unless-stopped
+    environment:
+      - PUID={{ uid_output.stdout }}
+      - PGID={{ gid_output.stdout }}
+      - TZ={{ common_timezone }}
+    networks:
+      - traefik_network
+    volumes:
+      - "{{ volumes_root }}/booksonic/config:/config"
+      - "{{ storage_dir }}/AudioBooks:/audiobooks"
+      - "{{ storage_dir }}/Music/Podcasts:/podcasts"
+    labels:
+      - "traefik.http.services.booksonic.loadbalancer.server.scheme=http"
+      - "traefik.http.services.booksonic.loadbalancer.server.port=4040"
+{% include './labels.j2' %}
