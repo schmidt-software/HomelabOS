@@ -1,0 +1,44 @@
+---
+
+version: '3.3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+  wordpress:
+
+services:
+  mysql:
+    image: mysql:{{ wordpress.db_version }}
+    networks:
+      - wordpress
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD={{lookup('password', './settings/passwords/wordpress_db_root_password chars=ascii_letters')}}
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD={{lookup('password', './settings/passwords/wordpress_db_password chars=ascii_letters')}}
+    volumes:
+      - "{{ volumes_root }}/wordpress/mysql-data:/var/lib/mysql"
+
+  wordpress:
+    image: wordpress:{{ wordpress.version }}
+    networks:
+      - traefik_network
+      - wordpress
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      - WORDPRESS_DB_HOST=mysql:3306
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD={{lookup('password', './settings/passwords/wordpress_db_password chars=ascii_letters')}}
+      - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - "{{ volumes_root }}/wordpress/html:/var/www/html"
+      - "{{ volumes_root }}/wordpress/mysql-data:/var/lib/mysql"
+    labels:
+      - "traefik.http.services.wordpress.loadbalancer.server.scheme=http"
+      - "traefik.http.services.wordpress.loadbalancer.server.port=80"
+{% include './labels.j2' %}
