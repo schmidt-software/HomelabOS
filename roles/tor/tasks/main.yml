@@ -41,4 +41,4 @@
   - name: wait for all tor hidden services hostname files
     wait_for: state=present path="{{ item.dir }}/hostname" delay=5
     with_items: "{{ tor_hidden_services }}"
-  when: ansible_distribution != "MacOSX"
+  when: homelabos_distribution != "MacOSX"

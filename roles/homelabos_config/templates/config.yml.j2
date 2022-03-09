@@ -35,6 +35,17 @@ storage_dir: {{ storage_dir | default('/mnt/nas') }}
 # Default Ubuntu release name to follow. Valid examples include: bionic, cosmic, disco
 ubuntu_release: {{ ubuntu_release | default('focal') }}
 
+# Default distribution of the homelabos release.
+# In most cases ansible_distribution resolves to MacOSX, Debian, Ubuntu, or Windows, but
+# there are some unsupported OS's that do not resolve to the correct variable. This variable
+# allows distribution to be overridden.
+homelabos_distribution: {{ homelabos_distribution | default(ansible_distribution_release) }}
+
+# Default distribution release of the server.
+# In most cases ansible_distribution_release resolves to a release, but there are some unsupported OS's
+# that do not resolve to the correct variable. This variable allows release to be overridden.
+homelabos_distribution_release: {{ homelabos_distribution_release | default(ansible_distribution_release) }}
+
 # For technical reasons these can't live here.
 #ansible_become_password: In vault.yml
 #default_password: In vault.yml
