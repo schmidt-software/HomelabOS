@@ -1,31 +1,46 @@
----
-image: python:3.8.2
+# Job from R2Devops hub --> r2devops.io
+
+stages:
+  - static_tests
+  - build
+  - deploy
+
+include:
+  - remote: 'https://jobs.r2devops.io/latest/hugo.yml'
+  - remote: 'https://jobs.r2devops.io/latest/mkdocs.yml'
+  - remote: 'https://jobs.r2devops.io/pages.yml'
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  HUGO_VERSION: 0.68.3
 
-lint_yaml_files:
+yaml_linter:
+  image: 
+    name: python:3.8.2
+    entrypoint: [""]
+
+  stage: static_tests
+
   script:
     - pip install yamllint
     - find . -type f -name '*.yml' | sed 's|\./||g' | egrep -v '(\.kitchen/|\[warning\]|\.molecule/)' | xargs yamllint -c yamllint.conf -f parsable
 
-pages:
-  script:
-  - curl -SL https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -o /tmp/hugo.tar.gz
-  - tar -xzf /tmp/hugo.tar.gz -C /tmp
-  - mv /tmp/hugo /usr/local/bin/
-  - hugo -s website -d ../public
-  - pip install mkdocs mkdocs-material mkdocs-git-revision-date-localized-plugin
-  # For debugging in the pipeline logs
-  - mkdocs --version
-  - mv docs_software docs/software
-  - mkdocs build
-  - mv site public/docs
-  artifacts:
-    paths:
-    - public
+hugo:
+  variables:
+    HUGO_VERSION: "0.68.3"
+  
   only:
     - master
 
-...
+mkdocs:
+  variables:
+    MKDOCS_OUTPUT_PATH: 'public/docs/'
+  
+  only:
+    - master
+
+pages:
+  variables:
+    PAGES_BUILD_PATH: 'public/'
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
