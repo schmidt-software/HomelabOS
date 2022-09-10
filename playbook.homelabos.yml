@@ -1,7 +1,7 @@
 ---
 # Initial setup so Ansible can actually work.
 - name: Install python (required by Ansible).
-  gather_facts: "False"
+  gather_facts: "True"
   hosts: all
   become: "True"
   become_method: sudo
