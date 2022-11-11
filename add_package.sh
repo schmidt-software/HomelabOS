@@ -1,8 +1,8 @@
 #!/bin/bash
 
-sudo docker run -v $(pwd):/data -d --name addPackage -it -w /data ruby bash
-sudo docker exec addPackage bundle update --bundler
-sudo docker exec addPackage bundle install
-sudo docker exec -it addPackage ./bin/addPkg.rb
-sudo docker stop addPackage
-sudo docker rm addPackage
+./docker.sh run -v $(pwd):/data:Z -d --name addPackage -it -w /data ruby bash
+./docker.sh exec addPackage bundle update --bundler
+./docker.sh exec addPackage bundle install
+./docker.sh exec -it addPackage ./bin/addPkg.rb
+./docker.sh stop addPackage
+./docker.sh rm addPackage
