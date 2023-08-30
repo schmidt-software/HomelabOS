@@ -29,8 +29,17 @@ var colorBlue string = "\033[34m"
 var maxTests = 5
 var testsRunning = 0
 var servicesRemaining = 0
-var maxPoints = 7
+var maxPoints = 8
 var totalPoints = 0
+
+var totalDocsFilesMissing = 0
+var totalServiceFileMissing = 0
+var totalServicePortMissing = 0
+var totalTaskFileMissing = 0
+var totalOldIncludeStyleUsed = 0
+var totalLatestTagUsed = 0
+var totalDockerComposeFileMissing = 0
+var totalOldLabelStyleUsed = 0
 
 var servicesList map[string]services.Service
 
@@ -63,6 +72,15 @@ var testCmd = &cobra.Command{
 		fmt.Printf("Remaining points to fix: %d\n", serviceCount*maxPoints-totalPoints)
 		fmt.Printf("Max possible points: %d\n", serviceCount*maxPoints)
 		fmt.Printf("Percent: %.2f\n", float64(totalPoints)/float64(serviceCount*maxPoints)*100)
+		fmt.Print("\n")
+		fmt.Printf("Services missing docs file: %d\n", totalDocsFilesMissing)
+		fmt.Printf("Services missing service file: %d\n", totalServiceFileMissing)
+		fmt.Printf("Services missing service port: %d\n", totalServicePortMissing)
+		fmt.Printf("Services missing task file: %d\n", totalTaskFileMissing)
+		fmt.Printf("Services using old include style: %d\n", totalOldIncludeStyleUsed)
+		fmt.Printf("Services using latest tag for Docker images: %d\n", totalLatestTagUsed)
+		fmt.Printf("Services missing docker compose file: %d\n", totalDockerComposeFileMissing)
+		fmt.Printf("Services using old label style: %d\n", totalOldLabelStyleUsed)
 	},
 }
 
@@ -108,6 +126,7 @@ func sanityCheck(service services.Service, verbosity int) {
 			fmt.Println("No doc file found for " + service.Name)
 		}
 		serviceOk = false
+		totalDocsFilesMissing += 1
 	} else {
 		service.Status++
 	}
@@ -119,6 +138,7 @@ func sanityCheck(service services.Service, verbosity int) {
 			fmt.Println("No service file found for " + service.Name)
 		}
 		serviceOk = false
+		totalServiceFileMissing += 1
 	} else {
 		service.Status++
 	}
@@ -130,6 +150,7 @@ func sanityCheck(service services.Service, verbosity int) {
 			fmt.Println("Service.yml didn't define a port for " + service.Name)
 		}
 		serviceOk = false
+		totalServicePortMissing += 1
 	} else {
 		service.Status++
 	}
@@ -142,6 +163,7 @@ func sanityCheck(service services.Service, verbosity int) {
 		}
 		// File doesn't exist
 		serviceOk = false
+		totalTaskFileMissing += 1
 	} else {
 		service.Status++
 	}
@@ -153,6 +175,19 @@ func sanityCheck(service services.Service, verbosity int) {
 			fmt.Println("Task file not using imports for " + service.Name)
 		}
 		serviceOk = false
+		totalOldIncludeStyleUsed += 1
+	} else {
+		service.Status++
+	}
+
+	// Detect if "latest" tag is used
+	latestTagIsUsed := isLatestTagUsed(service.Name)
+	if latestTagIsUsed {
+		if verbosity > 0 {
+			fmt.Println("Latest tag is used for " + service.Name)
+		}
+		serviceOk = false
+		totalLatestTagUsed += 1
 	} else {
 		service.Status++
 	}
@@ -165,6 +200,7 @@ func sanityCheck(service services.Service, verbosity int) {
 		}
 		// File doesn't exist
 		serviceOk = false
+		totalDockerComposeFileMissing += 1
 	} else {
 		service.Status++
 	}
@@ -176,6 +212,7 @@ func sanityCheck(service services.Service, verbosity int) {
 			fmt.Println("Compose file not using new label format for " + service.Name)
 		}
 		serviceOk = false
+		totalOldLabelStyleUsed += 1
 	} else {
 		service.Status++
 	}
@@ -278,4 +315,35 @@ func deployTest(service services.Service) {
 
 	// If test is perfect, add to verified service list
 	testsRunning--
+}
+
+func isLatestTagUsed(serviceName string) bool {
+	var contentSlice []string
+	var filePaths = []string{
+		"./roles/" + serviceName + "/service.yml",
+		"./roles/" + serviceName + "/additional_configs.yml",
+		"./roles/" + serviceName + "/templates/docker-compose." + serviceName + ".yml.j2",
+	}
+
+	for _, path := range filePaths {
+		if content, err := os.ReadFile(path); !errors.Is(err, os.ErrNotExist) {
+			contentSlice = append(contentSlice, string(content))
+		}
+	}
+
+	var latestTagStrings = []string{
+		":latest",                  // docker-compose
+		"version: latest",          // service.yml
+		"| default(\"latest\") }}", // additional_configs.yml
+	}
+
+	for _, content := range contentSlice {
+		for _, latestTagString := range latestTagStrings {
+			if strings.Contains(content, latestTagString) {
+				return true
+			}
+		}
+	}
+
+	return false
 }
