@@ -17,7 +17,6 @@ HomelabOS is a collection of various separate services. You can find more inform
 If you are having problems you can:
 
 - [File an issue on GitLab](https://gitlab.com/NickBusey/HomelabOS/issues).
-- [Ask a question on HomelabOS Reddit](https://www.reddit.com/r/HomelabOS/)
 - [Ask a question HomelabOS Zulip Chat](https://homelabos.zulipchat.com/)
 
 ## Available Software

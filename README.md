@@ -39,7 +39,6 @@ To make it easy for anyone to own all their data in an easy and secure way, with
 ## Get Support
 
 - [File an issue](https://gitlab.com/NickBusey/HomelabOS/issues/new?issue%5Bassignee_id%5D=&issue%5Bmilestone_id%5D=)
-- [Ask a question on Reddit](https://www.reddit.com/r/HomelabOS/)
 - Threaded community support and development discussion on [Zulip](https://homelabos.zulipchat.com/)
 
 ## [Contributing](https://homelabos.com/docs/development/contributing/)

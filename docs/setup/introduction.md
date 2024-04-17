@@ -12,4 +12,4 @@ It uses a combination of a Makefile, several bash scripts, and ansible playbooks
 
 ## Why does it do it that way?
 
-Through much trial and error we have ended up on this configuration, but we are always more than happy to discuss better ways to do things. Please open an issue on GitLab, submit a topic to Reddit, or join us on the chat.
+Through much trial and error we have ended up on this configuration, but we are always more than happy to discuss better ways to do things. Please open an issue on GitLab or join us on the chat.

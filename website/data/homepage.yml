@@ -154,14 +154,6 @@ community:
         label : "Join the Chat"
         link : "https://homelabos.zulipchat.com/"
 
-    - image : "images/reddit.png"
-      title : "Reddit"
-      content : "Join 550+ Redditors discussing HomelabOS"
-      button:
-        enable : true
-        label : "HomelabOS on Reddit"
-        link : "https://reddit.com/r/HomelabOS"
-
     - image : "images/twitch.png"
       title : "Twitch"
       content : "Watch Nick Busey work on HomelabOS in real time live on Twitch.tv. Get in the chat and talk about the development."
