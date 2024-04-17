@@ -178,6 +178,9 @@ Automated movie downloader
 #### [restic](./software/restic)
 Backup software
 
+#### [samba](./software/samba)
+Export your HomelabOS storage_dirs as file shares to other computers on your local network
+
 #### [sickchill](./software/sickchill)
 SickChill is an automatic Video Library Manager for TV Shows.
 
@@ -208,6 +211,9 @@ QuakeJS is a port of IOQuake3 to JavaScript with the help of Emscripten
 EVE Online Auth
 
 ### Gateways and terminal sharing
+
+#### [guacamole](./software/guacamole)
+Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH.
 
 #### [webvirtmgr](./software/webvirtmgr)
 WebVirtMgr is a complete Kernel Virtual Machine (KVM) hypervisor manager.
@@ -256,7 +262,7 @@ Network-wide software for blocking ads and tracking.
 Simple recipes in Markdown format
 
 #### [cockpit](./software/cockpit)
-
+Cockpit admin interface package for configuring and troubleshooting a system
 
 #### [codimd](./software/codimd)
 The best platform to write and share markdown
@@ -273,9 +279,6 @@ EtherCalc is a web spreadsheet
 #### [folding_at_home](./software/folding_at_home)
 Folding@home software allows you to share your unused computer power with scientists researching diseases.
 
-#### [gitlab](./software/gitlab)
-
-
 #### [gotify](./software/gotify)
 A simple server for sending and receiving messages in real-time per WebSocket. (Includes a sleek web-ui)
 
@@ -284,9 +287,6 @@ ERP beyond your fridge - grocy is a web-based self-hosted groceries & household 
 
 #### [grownetics](./software/grownetics)
 Growentics is an open source environmental mapping with plant management and tracking software suite.
-
-#### [guacamole](./software/guacamole)
-
 
 #### [hubzilla](./software/hubzilla)
 HubZilla is a powerful platform for creating interconnected websites featuring a decentralized/nomadic identity.
@@ -312,6 +312,9 @@ Node-RED is a programming tool for wiring together hardware devices, APIs and on
 #### [octoprint](./software/octoprint)
 The snappy web interface for your 3D printer.
 
+#### [ollama](./software/ollama)
+Ollama makes it easy to get up and running with large language models locally.
+
 #### [pihole](./software/pihole)
 Pi-hole provides network-wide ad blocking via your own Linux hardware.
 
@@ -324,10 +327,10 @@ RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's 
 #### [sabnzbd](./software/sabnzbd)
 Free and easy binary newsreader
 
-#### [samba](./software/samba)
-
-
 #### [searx](./software/searx)
+A privacy-respecting, hackable metasearch engine.
+
+#### [searxng](./software/searxng)
 A privacy-respecting, hackable metasearch engine.
 
 #### [shinobi](./software/shinobi)
@@ -340,16 +343,13 @@ A simple selfhosted URL shortener with no name because naming is hard
 AI-based failure detection for 3D printer remote management and monitoring.
 
 #### [ubooquity](./software/ubooquity)
-
+Ubooquity is a free home server for your comics and ebooks library
 
 #### [unificontroller](./software/unificontroller)
 The Unifi-controller Controller software is a powerful, enterprise wireless software engine ideal for high-density client deployments requiring low latency and high uptime performance.
 
 #### [unofficial_ddns](./software/unofficial_ddns)
 UnofficialDDNSnix is a service which provides dynamic DNS for name.com
-
-#### [vikunja](./software/vikunja)
-
 
 #### [watchtower](./software/watchtower)
 Watchtower is a process for automating Docker container base image updates
@@ -474,11 +474,17 @@ Drone is a self-service continuous delivery platform
 #### [gitea](./software/gitea)
 Git hosting platform
 
+#### [gitlab](./software/gitlab)
+Gitlab the single application for the entire DevOps lifecycle
+
 #### [jenkins](./software/jenkins)
 The leading open source automation server, Jenkins provides hundreds of plugins to support building, deploying and automating any project.
 
 #### [snibox](./software/snibox)
 Self-hosted snippet manager. Developed to collect and organize code snippets.
+
+#### [vikunja](./software/vikunja)
+Vikunja is a web-based project management tool
 
 ### Task management/To-do lists
 

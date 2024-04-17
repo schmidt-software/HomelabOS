@@ -1,0 +1,17 @@
+---
+version: '3'
+
+networks:
+  traefik_network:
+    external:
+      name: homelabos_traefik
+
+services:
+  ollama:
+    image: ollama/ollama:{{ ollama.version }}
+    restart: unless-stopped
+    networks:
+      - traefik_network
+    volumes:
+      - "{{ volumes_root }}/ollama/data:/root/.ollama"
+{% include './labels.j2' %}
