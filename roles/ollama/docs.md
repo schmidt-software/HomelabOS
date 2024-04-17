@@ -1,6 +1,6 @@
 # Ollama
 
-Ollama makes it easy to get up and running with large language models locally.
+[Ollama](https://github.com/ollama/ollama) makes it easy to get up and running with large language models locally.
 
 ## Setup
 
