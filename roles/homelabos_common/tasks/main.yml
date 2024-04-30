@@ -1,4 +1,8 @@
 ---
+- name: APT Update
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400  # Optional: cache valid for 1 day, avoids re-updating if run multiple times.
 - name: Install necessities and nice-to-haves
   apt:
     name:
