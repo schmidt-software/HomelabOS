@@ -27,6 +27,7 @@
     - name: domain
       prompt: "What is the domain you have pointed at your Homelab server with ports 80 and 443? \
               (Press return if none and to use https://sslip.io/.)"
+      default: "localhost"
       private: "False"
 
     - name: admin_email

@@ -20,7 +20,7 @@ HomelabOS sets up `{{ volumes_root }}` on your server, which maps to `/var/homel
 
 ## Organizr
 
-You should be able to load Organizr at [http://{% if organizr.domain %}{{ organizr.domain }}{% else %}{{ organizr.subdomain + "." + domain }}{% endif %}/](http://{% if organizr.domain %}{{ organizr.domain }}{% else %}{{ organizr.subdomain + "." + domain }}{% endif %}/).
+You should be able to load Organizr at [http://{% if organizr.domain %}{{ organizr.domain }}{% else %}{{ organizr.subdomain + "." + domain }}{% endif %}/](http://{% if organizr.domain %}{{ organizr.domain }}{% else %}{{ organizr.subdomain + "." {% if domain %}{{+ domain }}{% endif %} }}{% endif %}/).
 
 You can click the `Settings` link, then `Edit Tabs` to be able to add links to all the various HomelabOS services.
 
